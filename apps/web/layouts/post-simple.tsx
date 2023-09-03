@@ -17,6 +17,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, next, prev, children }: LayoutProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { path, slug, date, title } = content;
 
   return (

@@ -2,7 +2,15 @@
   "name": "@computing-atman-v4-mk2/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "----TOOLS SECTION----": "-------------------------",
+    "verify": "nx affected:lint --fix --all && nx format:write && nx format:check && nx affected --target=lint --fix --parallel=3 && npx nx affected --target=test --parallel=3 && nx affected --target=build --parallel=3 --exclude=web",
+    "----DEPLOY SECTION----": "-----------------------",
+    "cd:web": "npx nx build web --prod"
+  },
   "private": true,
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.4.0",

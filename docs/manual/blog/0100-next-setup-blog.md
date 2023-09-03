@@ -77,7 +77,8 @@ npm i next-contentlayer
 
 ```json
   "include": [
-    "../../.contentlayer/generated"
+    "../../.contentlayer/generated",
+    "../../.contentlayer/generated/**/*.json",
 ```
 
 ### update .gitignore

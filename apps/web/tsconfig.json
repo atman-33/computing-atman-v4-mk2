@@ -25,7 +25,9 @@
     "**/*.jsx",
     "../../apps/web/.next/types/**/*.ts",
     "../../dist/apps/web/.next/types/**/*.ts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "../../.contentlayer/generated",
+    "../../.contentlayer/generated/**/*.json"
   ],
   "exclude": [
     "../../dist/apps/web/.next/types/**/*.ts",

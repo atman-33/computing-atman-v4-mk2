@@ -16,13 +16,10 @@ const ScrollTopAndComment = () => {
     return () => window.removeEventListener('scroll', handleWindowScroll);
   }, []);
 
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const handleScrollTop = () => {
     window.scrollTo({ top: 0 });
   };
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const handleScrollToComment = () => {
-    // eslint-disable-next-line unicorn/prefer-query-selector
     document.getElementById('comment')?.scrollIntoView();
   };
   return (
