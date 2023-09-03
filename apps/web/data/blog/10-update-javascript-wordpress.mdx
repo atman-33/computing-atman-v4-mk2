@@ -1,0 +1,48 @@
+---
+title: How to Apply Updated JavaScript Files in WordPress
+date: '2020-03-07'
+tags: ['wordpress']
+draft: false
+summary: When updating JavaScript files within WordPress (a web server), I encountered a situation where the changes were not reflected properly, leading to frustration. To prevent falling into the same situation, I'd like to share the solution I found.
+---
+
+When updating JavaScript files within WordPress (a web server), I encountered a situation where the changes were not reflected properly, leading to frustration. To prevent falling into the same situation, I'd like to share the solution I found.
+
+## Problem Encountered
+In cases like the following source code, where a separate file 'Player.js' is being loaded:
+
+```html
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="js/class/Player.js"></script>
+    ・
+    ・
+    ・
+</head>
+```
+
+If an issue is found in 'Player.js' and you make changes to it, simply re-uploading the JavaScript file won't reflect the changes on the web browser.
+
+## Solution
+To cut to the chase, you need to modify your code as follows:
+
+```html
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="js/class/Player.js?20200306"></script>
+    ・
+    ・
+    ・
+</head>
+```
+
+Here, I've added '?20200306' after 'Player.js'. You can use any number or identifier after the '?'—it doesn't matter. It could be the updated date or anything else.
+
+By doing this, the web browser recognizes it as a new JavaScript file, and the changes will be reflected.
+
+## Cause
+The data for CSS and JS files is stored in the web browser's cache. Therefore, changes made to files within WordPress might not be reflected. However, as shown in the solution in step 2, adding '?+number' makes the browser treat it as a new file, prompting it to load fresh data.
+
+That's it!"

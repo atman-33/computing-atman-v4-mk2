@@ -1,0 +1,97 @@
+---
+title: MQL | Sending JSON Data with the WebRequest Function
+date: '2020-03-08'
+tags: ['mql', 'webrequest', 'json']
+images: ['/static/blog/11/add_url.png']
+summary: This is an article about MQL, a language used for FX trading in MetaTrader 4 (MT4).In this article, we will introduce how to send JSON data using the WebRequest function to make requests to a web server.
+---
+
+This is an article about MQL, a language used for FX trading in MetaTrader 4 (MT4).
+
+In this article, we will introduce how to send JSON data using the WebRequest function to make requests to a web server.
+
+## WebRequest Function
+The WebRequest function is used to send HTTP requests to a specified web server. There are two variations of the WebRequest function with different sets of parameters. In this method, we will use the following type:
+
+```text
+int  WebRequest(
+   const string      method,           // HTTP method
+   const string      url,              // URL
+   const string      headers,          // Headers
+   int               timeout,          // Timeout
+   const char        &data[],          // Array containing the HTTP message body
+   char              &result[],        // Array containing the server's response data
+   string            &result_headers   // Server response headers
+   );
+```
+
+If you want to understand it better, you can also refer to the following website:
+
+[Reference Site](https://yukifx.web.fc2.com/sub/reference/05_common_func/cone/commonfunc_webrequest.html)
+
+## Sending JSON Data via POST
+Let's explain the steps to send JSON data via POST using the WebRequest function.
+
+### ① Configure WebRequest-Allow URL
+In MT4, you need to specify the URLs that are allowed for sending web requests.
+
+First, launch MT4 and go to the menu bar, then select "Tools" -> "Options" -> "Expert Advisors."
+
+In this window, you will find "Allow WebRequest URLs." Check the box and add the URL to which you want to send requests.
+
+![image](/static/blog/11/add_url.png)
+
+___
+### ② POST JSON Data to the Web Server
+We will illustrate sending text to a posting-enabled web server.
+
+Suppose you have the following text:
+
+Hello.
+Goodbye.
+
+To store this text in an MQL String variable, it will look like this:
+
+```text
+// Text prepared in MQL
+string text;
+text = "Hello." + "\n" + "Goodbye."
+```
+
+To send this text in JSON format, you need to convert it as follows:
+
+```json
+{"content":"Hello.\nGoodbye."}
+```
+
+Please note that the "content" part is just an example. It can vary depending on the target web server.
+
+You need to convert the text into JSON format like the example above and then load it into the WebRequest function to send the request.
+
+Here's an example in MQL:
+
+```text
+// Text prepared in MQL
+string text;
+text = "Hello." + "\n" + "Goodbye."
+string headers;
+
+// Convert text to JSON format and send the web request
+string data;
+char post[], result[];
+
+// Create the header part
+headers = "Content-Type: application/json\r\n";
+
+// Create the body part
+StringReplace(text, "\n", "\\n");
+data = "{\"content\":\"" + text + "\"}";
+ArrayResize(post, StringToCharArray(data, post, 0, WHOLE_ARRAY, CP_UTF8) - 1);
+
+// Send the request
+int rest = WebRequest("POST", *Web server URL*, headers, 5000, post, result, headers);
+```
+
+In the example above, special characters such as line breaks need to be converted into strings that can be recognized by JSON, so be cautious.
+
+That's it!

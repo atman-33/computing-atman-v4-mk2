@@ -1,0 +1,280 @@
+---
+title: JavaScript | Sample of a Shooting Game Using CreateJS and Classes
+date: '2020-03-06'
+tags: ['javascript', 'game']
+draft: false
+images: ['/static/blog/9/thumbnail.png']
+summary: I tried creating a 'shooting game' using CreateJS and classes (object-oriented).
+---
+
+I tried creating a 'shooting game' using CreateJS and classes (object-oriented).
+
+2020/03/06 Update:
+I found an issue where declaring fields outside the JavaScript constructor doesn't work on mobile browsers, so I made corrections.
+
+## Overview
+This game allows you to move your character using the mouse or touch screen and shoot bullets to defeat enemy aircraft.
+
+[Play the sample game](https://atman-33.github.io/shooting-game-js/)
+
+[Here is the source code](https://github.com/atman-33/shooting-game-js)
+
+![image](/static/blog/9/thumbnail.png)
+
+## Package Structure
+The structure is as follows:
+
+This time, I prepared three classes, Player (your character), Enemy (opponents), and Bullet (projectiles), inside the 'js/class' folder.
+
+```text
+js-shooting-game
+├ index.html
+├ css
+│  └base.css
+└ js
+   └class
+　    ├Player.js
+　    ├Enemy.js
+　    └Bullet.js
+```
+
+## Source Code Explanation
+Each JavaScript class is contained in a separate file, following the Java style. You can include these class files in your main program HTML file (in this case, index.html) to use them.
+
+### ① Beginning of the Main Program
+index.html serves as the page where the shooting game runs. Here, various CSS and JavaScript files are loaded to make the program work.
+
+```html
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/base.css" />
+
+    <script src="//code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="js/class/Player.js"></script>
+    <script src="js/class/Bullet.js"></script>
+    <script src="js/class/Enemy.js"></script>
+
+    <script type="text/javascript">
+
+    // The main program continues below
+    // ...
+    // ...
+    // ...
+
+```
+
+The CreateJS library is loaded initially, allowing you to use CreateJS objects, including the classes you've created.
+
+**Note:** The "//code.createjs.com/1.0.0/createjs.min.js" URL format supports both "http://" and "https://" protocols.
+
+### ② Player Class
+The Player class has the following functionalities:
+
+- Movement to the mouse position
+- Experience points gained when defeating enemies
+
+**Note:** While one of the expected functionalities for the player is shooting bullets, you've kept that functionality in the main program (index.html) for the sake of simplicity.
+
+Here's the Player.js code:
+
+```js
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// Brief: Player Class
+// Note: ...
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+class Player extends createjs.Shape {
+    // getters
+    getX() { return this.x; }   // Return X position.
+    getY() { return this.y; }   // Return Y position.
+    getLevel() { return this.level }
+    getExp() { return this.exp }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Constructor
+    // Note: ...
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    constructor() {
+        super();    // Call the parent class constructor
+
+        this.x = 0;
+        this.y = 0;
+        this.exp = 0;
+        this.level = 1;
+
+        // Define the shape of the player
+        this.graphics.beginFill("white").moveTo(0, -10).lineTo(-5, 0).lineTo(5, 0).closePath();
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Move the player.
+    // Note: ...
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    move(stage) {
+        // Move the player to the mouse coordinates (with deceleration)
+        this.x += (stage.mouseX - this.x) * 0.1;
+        this.y += (stage.mouseY - this.y) * 0.1;
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Gain experience points.
+    // Note: ...
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    addExp(exp) {
+        this.exp = this.exp + exp;
+        this.level = Math.ceil(this.exp / 500)
+    }
+}
+```
+
+The Player class extends createjs.Shape, making createjs.Shape the superclass in this context. This approach allows you to reuse the fields and methods of createjs.Shape.
+
+### ③ Enemy Class
+The Enemy class is almost identical to the Player class, with one key difference. It includes functionality for collision detection with bullets. This functionality is used in the main program to implement the destruction of enemies when hit by player bullets.
+
+Here's the Enemy.js code:
+
+```js
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// Brief: Enemy Class
+// Note: ...
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+class Enemy extends createjs.Shape {
+    // getters
+    getX() { return this.x; }   // Return X position.
+    getY() { return this.y; }   // Return Y position.
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Constructor
+    // Note: ...
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    constructor(stageW, stageH) {
+        super();    // Call the parent class constructor
+
+        this.x = 0;
+        this.y = 0;
+
+        // Define the shape of the enemy
+        this.graphics.beginFill("red").moveTo(10, -5).lineTo(10, 5).lineTo(5, 5).lineTo(5, 10)
+            .lineTo(-5, 10).lineTo(-5, 5).lineTo(-10, 5).lineTo(-10, -5).closePath();
+
+        // Generate the enemy randomly from the top of the screen
+        this.x = stageW * Math.random();
+        this.y = stageH;
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Move the enemy.
+    // Note: ...
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    move() {
+        // Move the enemy
+        this.y += 1;
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Collision detection with player bullets.
+    // Note: ...
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    collideWith(bullet) {
+        // Get the local coordinates of the bullet relative to the enemy
+        var pt = bullet.localToLocal(0, 0, this);
+
+        // Perform collision detection
+        return this.hitTest(pt.x, pt.y);
+    }
+}
+```
+
+In this code, the localToLocal and hitTest
+
+ methods are used for collision detection. These details are simplified for explanation, but essentially, it recalculates the position of bullets relative to the enemy and checks whether their shapes overlap.
+
+### ④ Bullet Class
+The Bullet class is also similar to the Player and Enemy classes.
+
+Here's the Bullet.js code:
+
+```js
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// Brief: Bullet Class
+// Note: ...
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+class Bullet extends createjs.Shape {
+    // getters
+    getX() { return this.x; }   // Return X position.
+    getY() { return this.y; }   // Return Y position.
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Constructor
+    // Note: ...
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    constructor(x, y, level) {
+        super();    // Call the parent class constructor
+
+        this.x = x;
+        this.y = y;
+        this.level = level;
+
+        // Define the shape of the bullet
+        this.graphics.beginFill("white").drawCircle(0, 0, 3);
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Move the bullet.
+    // Note: ...
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    move() {
+        // Move the bullet
+        this.y -= 10 + this.level;
+    }
+}
+```
+
+### ⑤ Main Program
+Finally, you have the main program that instantiates and utilizes instances of the Player, Enemy, and Bullet classes.
+
+Here's the continuation of your index.html code:
+
+```html
+    // The main program continues here
+    // ...
+    // ...
+    // ...
+
+    // Game Over
+    function showGameOver() {
+        alert("Game Over! Your score was " + scoreNum + ".");
+
+        // Remove all event listeners
+        createjs.Ticker.removeAllEventListeners();
+        stage.removeAllEventListeners();
+    }
+
+    // Game Clear
+    function showGameClear() {
+        alert("Achievement: " + scoreNum + " points! Game Clear!");
+
+        // Remove all event listeners
+        createjs.Ticker.removeAllEventListeners();
+        stage.removeAllEventListeners();
+    }
+}
+
+    </script>
+
+</head>
+<body>
+    <canvas id="myCanvas" width="540" height="960"></canvas>
+</body>
+</html>
+```
+
+In this main program, the initialization and game loop are handled.
+
+- Initialization: The `init` function is executed when the page loads.
+- Game Loop: The `handleTick` function is called continuously to update the game state, including player movement, enemy generation, bullet movement, collision detection, and updating scores and levels.
+
+This structure and approach are fundamental for developing games and various applications. It's especially useful when creating larger-scale games or applications, as it allows you to organize your code efficiently.
+
+If you have any specific questions or need further clarification on any part of the code, feel free to ask!

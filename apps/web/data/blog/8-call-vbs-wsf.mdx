@@ -1,0 +1,143 @@
+---
+title: WSF | Executing Processing by Combining and Loading Multiple VBS Scripts (Batch, WSF, VBS Integration)
+date: '2020-03-03'
+tags: ['wsf', 'vbs']
+draft: false
+images: ['/static/blog/8/package.png']
+summary: I will explain how to use it as a package to call multiple VBS files together using WSF.
+---
+
+WSF is an XML file that allows you to consolidate multiple scripts. This enables the reusability of VBS scripts created for various functions, making it extremely convenient. (Additionally, it allows coexistence of JScript and VBS.)
+
+This time, I will explain how to use it as a package to call multiple VBS files together.
+
+[**Source Code is here**](https://github.com/atman-33/template-vbs/tree/master/ExportCsvOracleWsf)
+
+## Package Structure
+
+Similar to the functionality previously covered in the article [**【VBS】Saving SELECT Results from Oracle DB to CSV**](/blog/5-oracle-db-to-csv-vbs) but using a combination of batch, WSF, and VBS, we will achieve the same functionality.
+
+First, let's look at the package structure.
+
+![image](package.png)
+
+▼ `wsf_oracledb_to_csv` Folder
+
+```text
+Main.bat               Main execution file
+OraclToCsv.wsf         File for loading various VBS
+Config.ini             File containing various configuration information
+sql                    SQL statements to extract data from the DB
+csv                    Folder to store CSV files extracted from the DB
+vbs                    Folder to store VBS classes and modules
+└ common               Folder for common classes and modules
+   ├ DatabaseOracle.vbs Oracle DB operation-related class
+   ├ fso.vbs            Functions to manipulate files and folders
+   └ ini.vbs            Functions to manipulate ini files
+```
+
+The WSF file is where VBS scripts are loaded together, allowing you to work with individual functions and classes.
+
+## Source Code Explanation
+
+Now, let's explain the code for the WSF and BAT files (we'll skip the VBS files as they have already been explained in a separate article).
+
+### WSF File
+
+WSF files are written in XML format.
+
+In this example, we've referenced classes and functions from various VBS files required for DB connection and CSV output.
+
+▼ `oracledb_to_csv.wsf`
+
+```wsf
+<job>
+<script language="vbscript" src=".\vbs\common\ini.vbs"/>
+<script language="vbscript" src=".\vbs\common\fso.vbs"/>
+<script language="vbscript" src=".\vbs\common\DatabaseOracle.vbs"/>
+<script language="vbscript">
+
+    ' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    ' brief: Save the results extracted from Oracle DB using a SELECT statement to a CSV
+    ' note:
+    ' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+    ' Const INI_FILE = "Config.ini"     ' Ini file name (can be specified in the BAT file)
+
+    Dim SQL_FOLDER_PATH, CSV_FOLDER_PATH
+    Dim SDB_PROVIDER, SDB_DATA_SOURCE, SDB_USER, SDB_PASS
+
+    Dim ini
+    ' ini = GetCurrentDirectory() & "\" & INI_FILE
+    ini = GetCurrentDirectory() & "\" & Wscript.Arguments(0)
+
+    ' #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
+    ' 0. Read the INI file ※ Save it in the same folder as the executing VBS file
+    SDB_PROVIDER = GetIniData(ini, "source_db", "provider")
+    SDB_DATA_SOURCE = GetIniData(ini, "source_db", "data_source")
+    SDB_USER = GetIniData(ini, "source_db", "user_id")
+    SDB_PASS = GetIniData(ini, "source_db", "password")
+
+    SQL_FOLDER_PATH = GetCurrentDirectory() & "\" & GetIniData(ini, "path", "sql_folder")
+    CSV_FOLDER_PATH = GetCurrentDirectory() & "\" & GetIniData(ini, "path", "csv_folder")
+    ' #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
+
+    Dim objDBOracle     ' Oracle connection class
+    Dim strSQLFiles     ' Group of SQL files to execute
+    Dim strSQLFile      ' SQL file to execute
+    Dim strSQL          ' SQL to execute
+    Dim objAdoRS        ' ADO Recordset
+    Dim csvText         ' CSV text content obtained from SELECT using SQL
+
+    WScript.Echo "Processing started."
+
+    ' 1. DB connection
+    Set objDBOracle = New DatabaseOracle
+    objDBOracle.OpenDBOracle SDB_PROVIDER, SDB_DATA_SOURCE, SDB_USER, SDB_PASS
+
+    ' 2. Read SQL files
+    strSQLFiles = GetFileNames(SQL_FOLDER_PATH)
+
+    ' 3. Generate CSV
+    For Each strSQLFile In strSQLFiles
+        WScript.Echo strSQLFile
+        strSQL = GetFileText(strSQLFile)
+        objDBOracle.excuteSQLgetRS strSQL
+        csvText = objDBOracle.getCSVTextFromRS()
+
+        writeFile CSV_FOLDER_PATH & "\" & GetBaseName(strSQLFile), csvText, "csv"
+    Next
+
+    ' 4. Disconnect from DB
+    objDBOracle.closeDB
+    Set objDBOracle = Nothing
+
+    WScript.Echo "Processing completed."
+
+</script>
+</job>
+```
+
+As shown above, you can load multiple VBS files within a WSF file, and you can also directly include VBS scripts in the WSF file itself.
+
+### BAT File
+
+▼ `main.bat`
+
+```batch
+@echo off
+
+rem To use variables within if and for loops, you can use ! instead of %
+@setlocal enabledelayedexpansion
+
+rem ---- Configuration ----
+set script=OracleToCsv.wsf
+set ini=Config.ini
+
+cd %~dp0
+Cscript %script% %ini%
+
+pause
+```
+
+With this setup, the message boxes won't appear when launching the WSF file, and the processing will proceed as intended."
