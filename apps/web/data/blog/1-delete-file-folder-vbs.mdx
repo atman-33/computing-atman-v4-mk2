@@ -1,0 +1,58 @@
+---
+title: VBS | Delete specified file or folder.
+date: '2023-02-23'
+tags: ['vbs']
+draft: false
+summary: Sample source code of a function to delete files and folders using VBS
+---
+
+Here is a sample source code of a function to delete files and folders using VBS.
+
+## Sample Code
+
+```vb
+Option Explicit
+
+DeleteFolder "C:\sample"
+DeleteFile "C:\test\test.txt"
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' @brief : Delete the specified file.
+' @note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Sub DeleteFile (ByVal strFile)
+
+ Dim objFso
+ Set objFso = CreateObject("Scripting.FileSystemObject")
+
+ ' delete file
+ objFso.DeleteFile strFile,True
+
+ Set objFso = Nothing
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' @brief : Delete the specified folder.
+' @note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Sub DeleteFolder (ByVal strFolder)
+
+ Dim objFso
+ Set objFso = CreateObject("Scripting.FileSystemObject")
+
+ ' delete folder
+ objFso.DeleteFolder strFolder,True 
+
+ Set objFso = Nothing
+
+End Sub
+```
+
+## Additional information.
+
+FileSystemObject.DeleteFolder Function:
+- Parameter 1: Folder to be deleted.
+- Parameter 2:
+  - True: Delete read-only files as well.
+  - False (default): Do not delete read-only files.

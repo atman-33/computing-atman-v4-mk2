@@ -1,1 +1,13 @@
 node_modules
+
+/dist
+/tmp
+
+/docs
+
+/.contentlayer
+/apps/web/public/tag-data.json
+/apps/web/public/search.json
+
+*.md
+*.mdx

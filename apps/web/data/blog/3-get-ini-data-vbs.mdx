@@ -1,0 +1,132 @@
+---
+title: VBS | Retrieving Data from an ini File
+date: '2023-02-23'
+tags: ['vbs']
+draft: false
+summary: This guide explains how to retrieve data stored in a Config.ini file.
+---
+
+This guide explains how to retrieve data stored in a Config.ini file.
+
+## Folder Structure
+Retrieve data contained within the Config.ini as shown in the structure below:
+
+``` textfile
+Any Folder
+ ├ Config.ini
+ └ GetIniData.vbs
+```
+
+## Sample Source
+
+Config.ini:
+
+``` ini
+[test1]
+data1=00000
+data2=11111
+[test2]
+data3=abcde
+data4=fghij
+```
+
+GetIniData.vbs:
+
+``` vb
+Option Explicit
+
+Msgbox GetIniData(GetCurrentDirectory() & "\Config.ini", "test1", "data1")
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief: Get the current directory.
+' note: 
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Function GetCurrentDirectory()
+
+    Dim objWshShell     ' WshShell object
+
+    Set objWshShell = WScript.CreateObject("WScript.Shell")
+    If Err.Number <> 0 Then
+        WScript.Echo "Error: " & Err.Description
+        wscript.quit(1)
+    End If
+    GetCurrentDirectory = objWshShell.CurrentDirectory
+
+End Function
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief: Retrieve data from an INI file using section name and parameter name.
+' note :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Function GetIniData(strIniFileName, strSection, strKey)
+
+    Dim objFSO, objIniFile, objSectionDic, strReadLine, objKeyDic, arrReadLine
+    Dim strTempSection, objTempdic
+
+    ' File I/O constants
+    Const conForReading = 1, conForWriting = 2, conForAppending = 8
+    Set objFSO = CreateObject("Scripting.FileSystemObject")
+
+    ' Open the file
+    Set objIniFile = objFSO.OpenTextFile(strIniFileName, conForReading, False)
+    If Err.Number <> 0 Then
+        ' Output an error message
+        wscript.echo "INI File Name: " & strIniFileName
+        wscript.quit(1)
+    End If
+
+    ' Create a storage Dictionary object
+    Set objSectionDic = CreateObject("Scripting.Dictionary")
+
+    ' Read from the file
+    strReadLine = objIniFile.ReadLine
+    Do While objIniFile.AtEndofStream = False
+        ' Search for the start of a statement
+        If (strReadLine <> " ") And (StrComp("[]", (Left(strReadLine, 1) & Right(strReadLine, 1))) = 0) Then
+            ' Retrieve the section name
+            strTempSection = Mid(strReadLine, 2, (Len(strReadLine) - 2))
+            ' Create a Dictionary object for keys
+            Set objKeyDic = CreateObject("Scripting.Dictionary")
+            ' Loop until the end of the file
+            Do While objIniFile.AtEndofStream = False
+                strReadLine = objIniFile.ReadLine
+                If (strReadLine <> "") And (StrComp(";", Left(strReadLine, 1)) <> 0) Then
+                    ' Exit loop when the next statement starts
+                    If StrComp("[]", (Left(strReadLine, 1) & Right(strReadLine, 1))) = 0 Then
+                        Exit Do
+                    End If
+                    ' Store definitions within a section in the Dictionary object
+                    arrReadLine = Split(strReadLine, "=", 2, vbTextCompare)
+                    objKeyDic.Add UCase(arrReadLine(0)), arrReadLine(1)
+                End If
+            Loop
+            ' Store in the object
+            objSectionDic.Add UCase(strTempSection), objKeyDic
+        Else
+            strReadLine = objIniFile.ReadLine
+        End If
+    Loop
+    ' Close the file
+    objIniFile.Close
+
+    ' Retrieve data corresponding to the specified section and parameter from the INI array
+    strSection = UCase(strSection)  ' Convert to uppercase
+    strKey = UCase(strKey)          ' Convert to uppercase
+
+    If objSectionDic.Exists(strSection) Then
+        Set objTempdic = objSectionDic.Item(strSection)
+        If objTempdic.Exists(strKey) Then
+            GetIniData = objSectionDic(strSection)(strKey)
+            Exit Function
+        End If
+    End If
+    GetIniData = ""
+
+End Function
+```
+
+## Explanation
+
+When extracting data from an INI file, each data from the `Settings.ini` is stored in a dictionary object. Then, you retrieve the data based on the section (e.g., `[test1]`) and parameter name (e.g., `data1`).
+
+In the provided sample, the code is set to read an INI file from the current directory. If you want to reference a different folder, you can modify the code to specify the path of the INI file.

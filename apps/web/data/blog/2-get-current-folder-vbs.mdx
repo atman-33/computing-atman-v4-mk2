@@ -1,0 +1,40 @@
+---
+title: VBS | Getting the current folder.
+date: '2023-02-23'
+tags: ['vbs']
+draft: false
+summary: Sample source code of a function in VBS to retrieve the path of the current folder
+---
+
+Here is a sample source code of a function in VBS to retrieve the path of the current folder.
+
+## サンプルソース
+
+```vb
+Option Explicit
+
+Msgbox GetCurrentDirectory()
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' breif : Getting the current folder
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Function GetCurrentDirectory()
+
+    Dim objWshShell     ' WshShell object
+
+    Set objWshShell = WScript.CreateObject("WScript.Shell")
+    If Err.Number <> 0 Then
+        WScript.Echo "error: " & Err.Description
+        wscript.quit(1)
+    End If
+    GetCurrentDirectory = objWshShell.CurrentDirectory
+
+End Function
+```
+
+## Explanation
+
+This script retrieves the current folder (also known as the current directory) in which the VBS file (executable file) is located.
+
+*Note: The terms "current folder" and "current directory" are used interchangeably.*
