@@ -1,0 +1,709 @@
+---
+title: Javascript | Sample Typing Game
+date: '2020-03-09'
+tags: ['javascript', 'game']
+images: ['/static/blog/12/typing.png']
+summary: I created a "Typing Game" using JavaScript.
+---
+
+I created a "Typing Game" using JavaScript.
+
+## Overview
+This game requires players to type in displayed English words from the keyboard within a time limit.
+
+[Play Sample Game](https://atman-33.github.io/typing-game-js/)
+
+[**Source Code Here**](https://github.com/atman-33/typing-game-js)
+
+![image](/static/blog/12/typing.png)
+
+## Project Structure
+The project structure is as follows:
+
+```text
+js_typing_game
+├ index.html
+├ css
+│  └ base.css
+└ js
+   ├ Common.js
+   └ class
+　    ├ FlashingText.js
+　    └ Typing.js
+```
+
+## Source Code Explanation
+The main file responsible for running the game is `index.html`.
+
+Here is an overview of the functionality of each file, so you can get a grasp of the major components:
+
+```text
+index.html       - Main game logic
+base.css         - Styling for the game screen and keyboard
+Common.js        - Text loading for questions
+FlashingText.js  - Text blinking effect
+Typing.js        - Typing character validation and keyboard lighting
+```
+
+I will primarily explain the key code segments.
+
+___
+### ①index.html
+In this case, I defined the game state (`gameState`) to transition from "Preparing" to "Typing Game" to "Game Over" based on player actions.
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" charset="utf-8">
+        <link rel="stylesheet" href="css/base.css" />
+        <script src="//code.createjs.com/1.0.0/createjs.min.js"></script>
+        <script src="js/Common.js"></script>
+        <script src="js/class/Typing.js"></script>
+        <script src="js/class/FlashingText.js"></script>
+        <script>
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// JavaScript start
+
+// Typing game state codes
+const READY = 0;    // Preparing
+const PLAYING = 1;  // Typing Game
+const END = 2;      // Game Over
+
+var score = 0;      // Score
+var timer = 30;     // Timer (seconds)
+
+var countdown = 3;              // Countdown before starting
+var wordsFile = "words.txt";    // Text file containing questions
+
+var gameState = READY;      // Typing game state
+var typing = new Typing();  // Typing class
+
+var flashingText = new FlashingText("input", "Press Spacebar!!", 1000, 500, 0);
+
+var scoreText;
+var timerText;
+
+var subject;        // Upper text display space: Title
+var input;          // Lower text display space: Input display content
+
+var statementList;  // List of questions
+var statement;      // Question text
+var numOfStatement; // Number indicating which character of the question text
+
+window.addEventListener("keydown", handleKeydown);
+window.addEventListener("keyup", handleKeyup);
+
+// Execute when the page loads
+window.onload = function(){
+
+    statementList = readTextFileToArray(wordsFile);
+    typing.insertKeyboard("board");
+
+    // 0: Preparing
+    if(gameState == READY) {
+
+        flashingText.flash();   // Display blinking text before starting
+    }
+}
+
+// ---- ---- ---- ---- ----
+// Key Processing start
+
+// Keydown Processing
+function handleKeydown(event) {
+
+    // Process input characters
+    var chara = typing.checkWord(event);
+
+    // 0: Preparing
+    if(gameState == READY) {
+        if(event.keyCode == 32){    // Press spacebar to start
+            startReady();           // Proceed to preparation before starting
+        }
+    }
+
+    // 1: Typing Game
+    if(gameState == PLAYING) {
+        judgeTyping(chara);         // Check correctness of typed character
+    }
+}
+
+// Keyup Processing
+function handleKeyup(event) {
+
+    // Check Caps Lock
+    var capslock;
+
+    if(typing.checkCapsLock(event) == 1) {
+        capslock = document.getElementById('capslock');
+        capslock.innerHTML = "CapsLock ON";
+    } else {
+        capslock = document.getElementById('capslock');
+        capslock.innerHTML = "CapsLock OFF";
+    }
+}
+
+// Key Processing end
+// ---- ---- ---- ---- ----
+
+// Preparation before starting the game
+function startReady() {
+
+    flashingText.setMsg("Starting soon...");
+    flashingText.setIsFlashing(0);  // Stop blinking
+
+    // Display countdown on the subject ID tag
+    subject = document.getElementById('subject');
+    subject.innerHTML = countdown;
+
+    // Countdown every 1 second
+    var id = setInterval(function(){
+        countdown--;
+        console.log(countdown);
+
+        subject.innerHTML = countdown;
+
+        if(countdown <= 0){
+            clearInterval(id);
+            console.log("Finish!");
+            gameState = PLAYING;
+
+            startTimer();   // Start countdown for remaining time
+            loadSubject();  // Load the question text
+        }
+    }, 1000);
+}
+
+// Load question text
+function loadSubject() {
+
+    // statementList = ["Test", "Apple", "Banana"];
+
+    // Randomly select a question from the list of questions
+    statement = statementList[Math.floor(Math.random() * statementList.length)];
+
+    // Display the question text
+    subject = document.getElementById('subject');
+    subject.innerHTML = statement;
+
+    // Display the input content
+    subject = document.getElementById('input');
+    subject.innerHTML = "";
+
+    numOfStatement = 0;
+
+    // Keyboard highlights correct characters
+    typing.active(statement, numOfStatement);
+}
+
+// Start countdown for remaining time
+function startTimer() {
+
+    // Display countdown on the timer ID tag
+    timerText = document.getElementById('timer');
+    timerText.innerHTML = "Remaining Time: " + timer;
+
+
+    // Countdown every 1 second
+    var id = setInterval(function(){
+        timer--;
+        console.log(timer);
+
+        timerText.innerHTML = "Remaining Time: " + timer;
+
+        if(timer <= 0){
+            if(gameState == PLAYING) {
+                // Game Over processing
+                subject = document.getElementById('subject');
+                subject.innerHTML = "---- Game Over ----";
+                gameState = END;
+                clearInterval(id);
+            }
+        }
+    }, 1000);
+}
+
+// Check correctness of typed character
+function judgeTyping(chara) {
+    var seikai = statement.substr(numOfStatement, 1);
+
+    if(chara == seikai) {
+        // Correct
+        score = score + 10;
+
+        // Add correct character to input (input ID tag)
+        var input = document.getElementById('input');
+        input.innerHTML = input.innerHTML + chara;
+
+        // Move to the next character
+        numOfStatement = numOfStatement + 1;
+
+        if(statement.length != numOfStatement) {
+            // If the question text continues
+            typing.active(statement, numOfStatement);
+
+        } else {
+            score = score + 50;
+            // Move to the next question
+            loadSubject();
+        }
+
+    } else {
+        // Incorrect, do nothing
+    }
+
+    // Update the score
+    scoreText = document.getElementById('score');
+    scoreText.innerHTML = "Score: " +
+
+ score;
+}
+
+// JavaScript end
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+        </script>
+    </head>
+    <body>
+        <!-- Panel Display -->
+        <div id="panel">
+            <div id="score">Score: 0</div>
+            <div id="timer">Remaining Time: --</div>
+            <div id="capslock">CapsLock --</div>
+            <div id="subject">Typing Game</div>
+            <div id="input">Input</div>
+        </div>
+        <!-- Keyboard Display -->
+        <div id="board">
+        </div>
+    </body>
+    <foot>
+
+    </foot>
+</html>
+```
+
+You might notice that there are relatively few HTML elements in the actual display part of the HTML file. This is because the content for the keyboard display (HTML) is called from `Typing.js`. This decision was made to control keyboard color changes from `Typing.js` for better management.
+
+___
+### ②Common.js
+This file contains a function that reads a specified text file and returns an array. The delimiter used for splitting is the newline character.
+
+```js
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// brief: Read a specified file and return an array.
+// note: Split using newline character.
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+function readTextFileToArray(file) {
+
+    var array;
+
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                array = allText.split(/[\r\n]+/);
+            }
+        }
+    }
+    rawFile.send(null);
+
+    return array;
+}
+```
+
+___
+### ③FlashingText.js
+This is a class for making text blink in an HTML page.
+
+```js
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// brief: Blinking Text Class
+// note:
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+class FlashingText {
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // brief: Constructor
+    // note: Arguments id -> ID tag in HTML
+    //                  msg -> Message to be displayed in the ID tag
+    //                  onTime -> Lighting time [ms]
+    //                  offTime -> Extinction time [ms]
+    //                  flag -> 0: Display, 1: Hide
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    constructor(id, msg, onTime, offTime, flag) {
+
+        this.id = id;
+        this.msg = msg;
+        this.onTime = onTime;
+        this.offTime = offTime;
+        this.flag = flag;
+
+        this.isFlashing = 1;    // 1: Blink, 0: Do not blink
+    }
+
+    // setter
+    setMsg(msg) { this.msg = msg; }
+    setIsFlashing(isFlashing) {
+        this.isFlashing = isFlashing;
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // brief: Make text blink
+    // note:
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    flash() {
+
+        // Get the text with the specified ID
+        var element = document.getElementById(this.id);
+        var interval;
+
+    	if(this.flag == 0){
+
+    		// Display the text
+    		element.innerHTML = this.msg;
+    		this.flag = 1;
+    		interval = this.onTime;
+    	}
+    	else{
+
+    		// Hide the text
+    		element.innerHTML = "";
+    		this.flag = 0;
+    		interval = this.offTime;
+    	}
+
+        if(this.isFlashing == 1 || (this.isFlashing == 0 && this.flag == 0)) {
+            var self = this;
+        	setTimeout(function() {self.flash();}, interval);
+        }
+    }
+}
+```
+
+
+
+
+
+___
+### ④ Typing.js
+
+The key points in this script are that it defines strings for keyboard keys in a dictionary-like format. Furthermore, it handles the lowercase/uppercase states separately for CapsLock since CapsLock can change the case of characters. 
+
+Additionally, this class contains a function for highlighting the corresponding keyboard keys (setactive method).
+
+By passing a string as an argument, this class determines the corresponding keyboard keys based on the class attribute in the HTML tags. Therefore, this class needs to be integrated with the HTML (the part that displays the keyboard), but managing it in a separate file would not be ideal for maintenance, so it was designed to display the keyboard keys from within this class.
+
+```js
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// brief: Typing Class
+// note:
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+var codelist = {8:["BackSpase","BackSpace"], 9:["Tab","Tab"], 13:["Enter","Enter"], 16:["Shift",""], 17:["Ctrl",""]
+                , 20:["","caps"], 32:[" "," "], 45:["-","="], 48:["0",""], 49:["1","!"], 50:["2",'"'], 51:["3","#"]
+                , 52:["4","$"], 53:["5","%"], 54:["6","&"], 55:["7","'"], 56:["8","("], 57:["9",")"], 58:[":","*"]
+                , 59:[";","+"], 61:[";","+"], 64:["@","`"], 65:["a","A"], 66:["b","B"], 67:["c","C"], 68:["d","D"]
+                , 69:["e","E"], 70:["f","F"], 71:["g","G"], 72:["h","H"], 73:["i","I"], 74:["j","J"], 75:["k","K"]
+                , 76:["l","L"], 77:["m","M"], 78:["n","N"], 79:["o","O"], 80:["p","P"], 81:["q","Q"], 82:["r","R"]
+                , 83:["s","S"], 84:["t","T"], 85:["u","U"], 86:["v","V"], 87:["w","W"], 88:["x","X"], 89:["y","Y"]
+                , 90:["z","Z"], 92:["\\","_"], 96:["0",""], 97:["1",""], 98:["2",""], 99:["3",""], 100:["4",""], 101:["5",""]
+                , 102:["6",""], 103:["7",""], 104:["8",""], 105:["9",""], 107:[";","+"], 109:["-","="], 160:["^","~"]
+                , 173:["-","="], 186:[":","*"], 187:[";","+"], 188:[",","＜"], 189:["-","="], 190:[".","＞"], 191:["/","?"]
+                , 192:["@","`"], 219:["[","{"], 220:["\\","_"], 221:["]","}"], 222:["^","~"], 226:["\\","_"], 222:["^","~"]
+                , 240:["英数",""], 244:["半/全",""]};
+
+var capslist = {8:["BackSpase","BackSpace"], 9:["Tab","Tab"], 13:["Enter","Enter"], 16:["Shift",""], 17:["Ctrl",""]
+                , 20:["","caps"], 32:[" "," "], 45:["-","="], 48:["0",""], 49:["1","!"], 50:["2",'"'], 51:["3","#"]
+                , 52:["4","$"], 53:["5","%"], 54:["6","&"], 55:["7","'"], 56:["8","("], 57:["9",")"], 58:[":","*"]
+                , 59:[";","+"], 61:[";","+"], 64:["@","`"], 65:["A","a"], 66:["B","b"], 67:["C","c"], 68:["D","d"]
+                , 69:["E","e"], 70:["F","f"], 71:["G","g"], 72:["H","h"], 73:["I","i"], 74:["J","j"], 75:["K","k"]
+                , 76:["L","l"], 77:["M","m"], 78:["N","n"], 79:["O","o"], 80:["P","p"], 81:["Q","q"], 82:["R","r"]
+                , 83:["S","s"], 84:["T","t"], 85:["U","u"], 86:["V","v"], 87:["W","w"], 88:["X","x"], 89:["Y","y"]
+                , 90:["Z","z"], 92:["\\","_"], 96:["0",""], 97:["1",""], 98:["2",""], 99:["3",""], 100:["4",""], 101:["5",""]
+                , 102:["6",""], 103:["7",""], 104:["8",""], 105:["9",""], 107:[";","+"], 109:["-","="], 160:["^","~"]
+                , 173:["-","="], 186:[":","*"], 187:[";","+"], 188:[",","＜"], 189:["-","="], 190:[".","＞"], 191:["/","?"]
+                , 192:["@","`"], 219:["[","{"], 220:["\\","_"], 221:["]","}"], 222:["^","~"], 226:["\\","_"], 222:["^","~"]
+                , 240:["英数",""], 244:["半/全",""]};
+
+var leftcode = {"!":"", '"':"", "#":"", "$":"", "%":"", "&":"", "Q":"", "W":"", "E":"", "R":"", "T":"", "A":"", "S":""
+                , "D":"", "F":"", "G":"", "Z":"", "X":"", "C":"", "V":"", "B":""};
+
+var leftcaps = {"!":"", '"':"", "#":"", "$":"", "%":"", "&":"", "q":"", "w":"", "e":"", "r":"", "t":"", "a":"", "s":""
+                , "d":"", "f":"", "g":"", "z":"", "x":"", "c":"", "v":"", "b":""};
+
+var eachactive = {"\\":"220", "|":"220", "_":"226", ";":"187", "+":"187", ":":"186", "*":"186"};
+
+var keyboardHTML = ''
+            + '<table id="keyboard">'
+            + '<tr class="tr
+
+_k">'
+            + '  <td class="key top1" id="left_20"><span id="caps_20" class="off">caps</span></td>'
+            + '  <td class="key top1" id="key_49">1</td>'
+            + '  <td class="key top1" id="key_50">2</td>'
+            + '  <td class="key top1" id="key_51">3</td>'
+            + '  <td class="key top1" id="key_52">4</td>'
+            + '  <td class="key top1" id="key_53">5</td>'
+            + '  <td class="key top1" id="key_54">6</td>'
+            + '  <td class="key top1" id="key_55">7</td>'
+            + '  <td class="key top1" id="key_56">8</td>'
+            + '  <td class="key top1" id="key_57">9</td>'
+            + '  <td class="key top1" id="key_48">0</td>'
+            + '  <td class="key top1" id="key_189">-</td>'
+            + '  <td class="key top1" id="key_187">=</td>'
+            + '  <td class="key top1" id="right_8"><span id="backspase_8">BackSpase</span></td>'
+            + '</tr>'
+            + '<tr class="tr_k">'
+            + '  <td class="key top2" id="tab_9"><span id="tab_9" class="off">Tab</span></td>'
+            + '  <td class="key top2" id="key_81">Q</td>'
+            + '  <td class="key top2" id="key_87">W</td>'
+            + '  <td class="key top2" id="key_69">E</td>'
+            + '  <td class="key top2" id="key_82">R</td>'
+            + '  <td class="key top2" id="key_84">T</td>'
+            + '  <td class="key top2" id="key_89">Y</td>'
+            + '  <td class="key top2" id="key_85">U</td>'
+            + '  <td class="key top2" id="key_73">I</td>'
+            + '  <td class="key top2" id="key_79">O</td>'
+            + '  <td class="key top2" id="key_80">P</td>'
+            + '  <td class="key top2" id="key_219">[</td>'
+            + '  <td class="key top2" id="key_221">]</td>'
+            + '  <td class="key top2" id="key_220"><span id="yen_220">\\</span></td>'
+            + '</tr>'
+            + '<tr class="tr_k">'
+            + '  <td class="key top3" id="left_16"><span id="shift_16" class="off">Shift</span></td>'
+            + '  <td class="key top3" id="key_65">A</td>'
+            + '  <td class="key top3" id="key_83">S</td>'
+            + '  <td class="key top3" id="key_68">D</td>'
+            + '  <td class="key top3" id="key_70">F</td>'
+            + '  <td class="key top3" id="key_71">G</td>'
+            + '  <td class="key top3" id="key_72">H</td>'
+            + '  <td class="key top3" id="key_74">J</td>'
+            + '  <td class="key top3" id="key_75">K</td>'
+            + '  <td class="key top3" id="key_76">L</td>'
+            + '  <td class="key top3" id="key_186">;</td>'
+            + '  <td class="key top3" id="key_222">\'</td>'
+            + '  <td class="key top3" id="key_13"><span id="enter_13" class="off">Enter</span></td>'
+            + '</tr>'
+            + '<tr class="tr_k">'
+            + '  <td class="key top4" id="left_240"><span id="moji_240" class="off">英数</span></td>'
+            + '  <td class="key top4" id="left_17"><span id="ctrl_17" class="off">Ctrl</span></td>'
+            + '  <td class="key top4" id="left_91"><span id="win_91" class="off">Win</span></td>'
+            + '  <td class="key top4" id="left_244"><span id="kana_244" class="off">半/全</span></td>'
+            + '  <td class="key top4" id="key_32"><span id="space_32" class="off">Space</span></td>'
+            + '  <td class="key top4" id="right_91"><span id="menu_91" class="off">Menu</span></td>'
+            + '  <td class="key top4" id="right_240"><span id="moji_240" class="off">英数</span></td>'
+            + '  <td class="key top4" id="right_18"><span id="alt_18" class="off">Alt</span></td>'
+            + '  <td class="key top4" id="left_32"><span id="space_32" class="off">Space</span></td>'
+            + '  <td class="key top4" id="right_18"><span id="alt_18" class="off">Alt</span></td>'
+            + '</tr>'
+            + '</table>';
+
+class Typing {
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Constructor
+    // Note:
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    constructor() {
+
+        this.capslock = ""
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Insert the HTML of the keyboard
+    // Note:
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    insertKeyboard(id) {
+        document.getElementById(id).innerHTML = keyboardHTML;
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Get the inputted character
+    // Note:
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    checkWord(event) {
+
+        var keycode, shiftcode, chara
+
+		keycode = event.keyCode;
+        shiftcode = event.shiftKey;
+
+        if(this.capslock==1){
+            chara = this.getCapsChar(keycode, shiftcode);  
+        }else{
+            chara = this.getChar(keycode, shiftcode);
+        }
+
+        return chara;
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Check CapsLock and retrieve its state
+    // Note:
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    checkCapsLock(onKeyUpEvent) {
+
+        if(onKeyUpEvent.getModifierState("CapsLock") == false) {
+            console.log("CapsLock OFF");
+            this.capslock = 0;
+        }
+        else {
+            console.log("CapsLock ON");
+            this.capslock = 1;
+        }
+
+        return this.capslock;
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Retrieve a character from the key code and shift state
+    // Note: CapsLock OFF
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    getChar(keycode, shiftcode){
+        var chara;
+
+        if(keycode in codeList){
+            if(shiftcode){
+                   chara = codeList[keycode][1];
+            }else{
+                   chara = codeList[keycode][0];
+            }
+        }else{
+            chara = "";
+        }
+        return chara;
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Retrieve a character from the key code and shift state
+    // Note: CapsLock ON
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    getCapsChar(keycode, shiftcode){
+        var chara;
+
+        if(keycode in capsList){
+            if(shiftcode){
+                   chara = capsList[keycode][1];
+            }else{
+                   chara = capsList[keycode][0];
+            }
+        }else{
+            chara = "";
+        }
+        return chara;
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Update the color state of the keyboard
+    // Note:
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    active(statement, numOfStatement){
+
+        var ichi = numOfStatement;          // Position of the statement (which one)
+        var mondai = statement;             // The statement
+        var mondaiLen = statement.length;   // Length of the statement
+
+        var left, list;
+
+        this.resetActive();
+        if(this.capslock==1){
+            // CapsLock: ON
+            left=leftCaps;
+            list=capsList;
+        }else{
+            // CapsLock: OFF
+            left=leftCode;
+            list=codeList;
+        }
+        if(ichi!=mondaiLen){
+            for(var i in list){
+                if(list[i][0]==mondai.charAt(ichi)){
+                    if(mondai.charAt(ichi) in eachActive){
+                            this.setActive("code"+('00'+eachActive[mondai.charAt(ichi)]).slice(-3),0);
+                    }else{
+                            this.setActive("code"+('00'+i).slice(-3),0);
+                    }
+                }else if(list[i][1]==mondai.charAt(ichi)){
+                    if(mondai.charAt(ichi) == "_"){
+                            this.setActive("code226",0);
+                    }else if(mondai.charAt(ichi) == "|"){
+                            this.setActive("code220",0);
+                    }else{
+                            this.setActive("code"+('00'+i).slice(-3),0);
+                    }
+                    if(list[i][1] in left){
+                            this.setActive("code016",1);
+                    }else{
+                            this.setActive("code016",0);
+                    }
+                }
+            }
+        }
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Apply color to the target key.
+    // Note: targetClass -> The class to which color will be applied
+    //       targetNo    -> If there are multiple targets to be colored, which one to color
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    setActive(targetClass,targetNo){
+        var allElements;
+        var elementName;
+
+        var foundElements = new Array();
+        if (document.all){
+            allElements = document.all;
+        }else {
+            allElements = document.getElementsByTagName("*");
+        }
+        var elementsLen;
+        var j=0;
+        for(var i=0,elementsLen=allElements.length;i<elementsLen;i++){
+            elementName = allElements[i].className;
+            if(elementName.indexOf(targetClass,0) > -1) {
+                foundElements[j] = allElements[i];
+                j++;
+            }
+        }
+        foundElements[targetNo].style.background="#00ffff";
+    }
+
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    // Brief: Remove the color from the key.
+    // Note:
+    // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+    resetActive(){
+        var allElements;
+        var elementName;
+
+        if (document.all){
+            allElements = document.all;
+        }else {
+            allElements = document.getElementsByTagName("*");
+        }
+        var elementsLen;
+        for(var i=0,elementsLen=allElements.length;i<elementsLen;i++){
+            elementName = allElements[i].className;
+            if(elementName.indexOf("table",0) > -1) {
+                allElements[i].style.background="#ffffff";
+            }
+        }
+    }
+}
+```
+
+The script appears to define a JavaScript class called `Typing` that handles keyboard input. It defines dictionaries for keyboard key codes and their corresponding characters in both lowercase and uppercase states. It also defines some other properties and methods related to handling keyboard input.
+
+The script also seems to define HTML markup for a virtual keyboard, including various keys and their IDs.
+
+The `Cursor` class seems to handle the cursor animation and positioning. It sets the cursor's style, position, and visibility. It provides methods for starting and stopping cursor movement and handling text input.
+
+Finally, the script adds a button to the document that toggles the virtual keyboard's visibility when clicked.
+
+To use this script, you would need to integrate it into an HTML document and ensure that the necessary HTML elements and styles are present for the virtual keyboard to work correctly. Additionally, event listeners and handlers may need to be set up to capture keyboard input and update the virtual keyboard accordingly.

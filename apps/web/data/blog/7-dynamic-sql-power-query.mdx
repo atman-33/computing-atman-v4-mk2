@@ -1,0 +1,94 @@
+---
+title: Power Query | How to Load Dynamic SQL Results (Power BI)
+date: '2020-03-02'
+tags: ['power bi', 'power query']
+draft: false
+summary: I'll explain how to dynamically execute SQL by linking SQL query conditions (e.g., within the WHERE clause) with Power Query parameters.
+---
+
+In Power Query, it's common to connect to a database and import SQL results into tables. But what if you want to easily change the SQL query's filtering conditions?
+
+This time, I'll explain how to dynamically execute SQL by linking SQL query conditions (e.g., within the WHERE clause) with Power Query parameters.
+
+## Query for Executing Dynamic SQL
+
+Here's an example query for executing dynamic SQL:
+
+```txst
+let
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// SQL starts here
+sql1 =
+"
+SELECT
+  *
+FROM
+  test_table
+WHERE
+  start_date >= '__start_date__' AND start_date <= '__end_date__'
+",
+// SQL ends here
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+    // Replace SQL variables (e.g., __start_date__ and __end_date__)
+    sql2 = Text.Replace(sql1, "__start_date__", START_DATE),
+    sql3 = Text.Replace(sql2, "__end_date__", END_DATE),
+
+    sql = sql3, // Reassign it as 'sql' to prevent errors
+
+    Source = Oracle.Database(DB_NAME, [HierarchicalNavigation=true, Query=sql])
+in
+    Source
+```
+
+In this example, the flow of operations is as follows:
+
+### ① sql1
+
+```txst
+// SQL starts here
+sql1 =
+"
+SELECT
+  *
+FROM
+  test_table
+WHERE
+  start_date &gt;= '__start_date__' AND start_date &lt;= '__end_date__'
+",
+// SQL ends here
+```
+
+This section contains the base SQL (enclosed within // ---). The parts you want to change dynamically are marked as variables (e.g., `__start_date__` and `__end_date__`).
+
+### ② sql2
+
+```
+sql2 = Text.Replace(sql1, "__start_date__", START_DATE)
+```
+
+`sql2` replaces `__start_date__` in `sql1` with `START_DATE` (a parameter). In this example, `START_DATE` holds a string in the format YYYYMMDD.
+
+### ③ sql3
+
+```text
+sql3 = Text.Replace(sql2, "__end_date__", END_DATE)
+```
+
+`sql3` replaces `__end_date__` in `sql2` with `END_DATE` (a parameter). In this example, `END_DATE` holds a string in the format YYYYMMDD.
+
+### ④ sql and Source
+
+```text
+    sql = sql3, // Reassign it as 'sql' to prevent errors
+
+    Source = Oracle.Database(DB_NAME, [HierarchicalNavigation=true, Query=sql])
+```
+
+`sql3` is stored in `sql`, and then it's applied as an argument to the `Oracle.Database` function. In this example, `DB_NAME` holds the database name (schema).
+
+___
+
+When you try this, make sure to prepare the necessary parameters and paste the code from an empty query into the Advanced Editor.
+
+By changing parameter settings, you can dynamically modify the SQL extraction results. That's it!
