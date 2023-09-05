@@ -65,7 +65,7 @@ https://vercel.com/
 * Git Branch Name => develop
 * Domains => okkino-dev-web.vercel.app
 * Redirect to => No Redirect
-# Debloy hook
+# Deploy hook
 
 ## setup deploy hooks
 

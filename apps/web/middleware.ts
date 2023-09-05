@@ -28,6 +28,8 @@ export function middleware(request: NextRequest) {
   // If you have one
   if (
     [
+      '/sitemap.xml',
+      '/robots.txt',
       '/manifest.json',
       '/search.json'
       // '/favicon.ico',
