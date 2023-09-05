@@ -1,7 +1,7 @@
 'use client';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Button } from '../components/button';
+import Image from '../components/image';
 import { Locale, i18n } from '../i18n/i18n-config';
 
 export default function NotFound() {
