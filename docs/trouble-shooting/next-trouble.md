@@ -42,15 +42,3 @@ Step:
 
 1. delete `.next` folder
 2. build the project
-
-## Deploy error => Images are broken (Internal Server Error)
-
-install sharp
-
-```bash
-npm i install
-```
-
-reference url:  
-
-* https://github.com/vercel/next.js/issues/49896

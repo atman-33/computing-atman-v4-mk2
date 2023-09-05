@@ -14,7 +14,10 @@ function getLocale(request: NextRequest): string | undefined {
   }
 
   // Use negotiator and intl-localematcher to get best locale
-  const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
+  let languages = new Negotiator({ headers: negotiatorHeaders }).languages();
+  if (languages.length === 1 && languages[0] === '*') {
+    languages = [i18n.defaultLocale];
+  }
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore locales are readonly
   const locales: string[] = i18n.locales;
