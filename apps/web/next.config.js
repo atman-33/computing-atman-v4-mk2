@@ -21,8 +21,8 @@ const nextConfig = {
         hostname: String(process.env.ATMAN_WEB_STORAGE_HOSTNAME)
       }
     ]
-  },
-  swcMinify: true
+  }
+  // swcMinify: true
 };
 
 const plugins = [
