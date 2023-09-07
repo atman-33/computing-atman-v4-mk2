@@ -85,3 +85,7 @@ https://github.com/vercel/next.js/discussions/54545
 ```bash
 npm i next@13.4.12 --save-exact
 ```
+
+## After delopy success, but display blank page
+
+Set PORT in Environment Variables.
