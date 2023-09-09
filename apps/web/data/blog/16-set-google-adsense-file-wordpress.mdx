@@ -1,0 +1,49 @@
+---
+title: WordPress | Google AdSenseのads.txt設置方法
+date: '2020-03-14'
+images: ['/static/blog/16/google-adsense-alert.png']
+tags: ['word press', 'google adsense']
+summary: WordPress における ads.txt の設置方法
+---
+
+Google AdSense を使っていると、自分のログインページに下記のようなアラートが表示されることがあります
+
+![image](/static/blog/16/google-adsense-alert.png)
+
+Google のヘルプによると、ads.txtは広告枠が偽物でないと判別できるようになると記載されており推奨されています。
+
+>ads.txt は、使用することを強くおすすめします。ads.txt を使用すれば、購入者が偽の広告枠を判別できるため、サイト運営者様としても偽の広告枠に収益が流れるのを阻止し、その分収益を増やすことができるというメリットがあります。
+>
+> https://support.google.com/adsense/answer/7532444?hl=ja
+
+そのためには、Google AdSense で入手した ads.txt をWebサーバーのルートディレクトリに保存しなくてはなりません。  
+AWSによりWordPressを構築した際、ads.txtの設置場所に少しハマりましたので記事に残しておきます。
+
+
+## 手順
+
+___
+### ①ファイルをアップロードできるWordPressプラグインをインストール
+まずルートディレクトリがどこなのか？ということなのですが、結論からいうとWebサイトのTopページが格納されているフォルダです。
+
+WordPressにファイルを追加する方法はいくつかあるのですが、ここでは **Advanced File Manager** という便利なプラグインを利用することとします。
+
+下記のように、プラグイン追加で Advanced Fie Manager を検索してインストールします。
+
+![image](/static/blog/16/advanced-file-manager.png)
+
+___
+### ②ルートディレクトリにads.txtを保存
+プラグインを追加して有効化すると、WordPressのダッシュボードに『File Manager』が追加されます。
+
+その File Manager をクリックして **左タブの『html』をクリックして表示されている部分がルートディレクトリ** です。
+
+後は ads.txt をルートディレクトリに保存すれば完了です。
+
+![image](/static/blog/16/wordpress-file-manager.png)
+
+ルートディレクトリは Top Page 、つまり WordPress でいえば、index.php が保存されているフォルダとなります。
+
+参考になれば幸いです。
+
+以上です。

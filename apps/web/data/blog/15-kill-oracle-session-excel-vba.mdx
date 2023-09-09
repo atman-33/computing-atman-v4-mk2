@@ -1,0 +1,201 @@
+---
+title: VBA | ExcelからSQL Plusを実行してセッション切断
+date: '2020-03-12'
+tags: ['excel', 'vba', 'sql plus']
+images: ['/static/blog/15/oracle-lock.png']
+summary: Oracle のセッションを強制解除する方法
+---
+
+Oracleデータベースを使ったアプリケーションでは、誰かがアプリを操作したままとなり、
+データベースがロックされた状態になることがあります。
+
+今回、そのロック状態を解除するため、
+ExcelからSQL Plus を実行してセッションを強制切断（ロック解除）する方法を説明します。
+
+[サンプルのExcelをダウンロード](https://github.com/atman-33/template-excel-vba/tree/main/SQLPlus%E5%AE%9F%E8%A1%8C_Oracle%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%87%E6%96%AD)
+
+## 概要
+まず、Oracleがロック状態になっていることを確認してみます。
+
+下記のSQLを、SQL Developer やSQL Plusu から実行することで、  
+ロック状態を引き起こしているのが **どこから（どのPCから）の接続なのか** 確認できます。
+
+```sql
+select
+   s.sid, s.serial#, s.username, s.osuser, s.machine, s.terminal, s.program, o.object_name
+ from
+   v$session s, v$locked_object l, dba_objects o
+ where
+   s.sid = l.session_id and l.object_id = o.object_id
+```
+
+ロック状態の場合は下記のようにレコードが抽出されます。
+
+![image](/static/blog/15/oracle-lock.png)
+
+ロック状態を解除するには、抽出したレコードの中にあるSIDとSERIAL#が必要となります。
+（上の例では、 SID=277, SERIAL#=18621）
+
+## パッケージ構成
+Excelマクロ内の構成は下記となります。
+
+```text
+標準モジュール
+|- Main
+|- ModuleSqlPlus
+```
+
+main から modSqlPlus の関数を呼び出すシンプルな構造です。
+
+## ソースコード解説
+ExcelのVBA、いわゆるマクロ処理のソースコードとなります。
+
+___
+### ①ModuleSqlPlus
+SQL Plus からSQLを実行するために必要な関数を格納しています。
+
+```vb
+Option Explicit
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : SQL文からSQLPlusを実行
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub Sqlplus(user As String, password As String, serviceName As String, sql As String)
+
+    Dim sqlFile As String
+
+    ' 実行するSQLファイル
+    sqlFile = "temp.sql"
+
+    ' SQLファイルを作成
+    CreateSqlFile sqlFile, sql
+    Debug.Print "【実行するSQL文】"
+    Debug.Print "---- ---- ----"
+    Debug.Print sql
+    Debug.Print "---- ---- ----"
+
+    ' SQLPLUSからSQLファイルを実行
+    SqlplusFromFile user, password, serviceName, sqlFile
+
+    ' SQLファイルを削除
+    KillSqlFile sqlFile
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : SQLファイルからSQLPlusを実行
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub SqlplusFromFile(user As String, password As String, serviceName As String, sqlFile As String)
+
+    Dim cmd As String     'シェルコマンド
+    Dim objWSH As Object  'WSH
+
+    cmd = "sqlplus " & user & "/" & password & "@" & serviceName & " as sysdba " & "@" & ActiveWorkbook.Path & "\" & sqlFile
+    Debug.Print "ORACLE; sqlplusを実行"
+    Debug.Print cmd
+
+    '非同期で実行される
+    'Call Shell(cmd, vbHide)
+
+On Error GoTo Exception
+    '同期で実行する
+    Set objWSH = CreateObject("WScript.Shell")
+    objWSH.Run cmd, 1, True
+
+    GoTo Finally
+
+Exception:
+
+    Call MsgBox(Err.Description, vbOKOnly, "異常終了")
+    GoTo Finally
+
+Finally:
+
+    Set objWSH = Nothing              ' オブジェクトを解放
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : セッションを切るSQLコマンドを実施
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub KillSession(user As String, password As String, serviceName As String, sid As String, serial As String)
+
+    Dim sql As String
+
+    ' 実行するSQL
+    sql = "alter system kill session '" & sid & "," & serial & "';" & vbCrLf & "exit;"
+
+    Sqlplus user, password, serviceName, sql
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : SQLファイルを作成
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub CreateSqlFile(fileName As String, sql As String)
+    Dim strFilePath As String
+    strFilePath = ActiveWorkbook.Path & "\" & fileName 'ファイルパス
+
+    Debug.Print "ファイル作成：" & strFilePath
+    Open strFilePath For Output As #1
+    Print #1, sql
+    Close #1
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : SQLファイルを削除
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub KillSqlFile(fileName As String)
+    Dim strFilePath As String
+    strFilePath = ActiveWorkbook.Path & "\" & fileName 'ファイルパス
+
+    Debug.Print "ファイル削除開始：" & strFilePath
+    Kill strFilePath
+
+End Sub
+```
+
+SQL Plus Windows Shell、つまりコマンドプロンプトから実行する必要があります。
+
+そのため、一度SQL文が格納されたファイルを作成し、そのファイルをSQL Plus で実行するようにしています。
+
+___
+### ②Main
+Oracle接続している（ロックしている）セッションを切断します。
+
+```vb
+Option Explicit
+
+' メイン処理
+Public Sub Main()
+
+    Dim user As String
+    Dim password As String
+    Dim serviceName As String
+    Dim sid As String
+    Dim serial As String
+
+    user = "sys"
+    password = "1234"
+    serviceName = "TESTDB"
+
+    sid = "277"
+    serial = "16127"
+
+    ' Oracle接続セッションを切断
+    KillSession user, password, serviceName, sid, serial
+
+    Debug.Print "処理終了"
+
+End Sub
+```
+
+上記の例では、modSqlPlusモジュールのkillSession を呼び出して、その引数に必要なSIDとSERIAL#を渡しています。
+
+以上です。
