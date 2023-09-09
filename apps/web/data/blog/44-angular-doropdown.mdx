@@ -1,0 +1,73 @@
+---
+title: Angularでドロップダウンを利用する方法
+date: '2023-06-03'
+tags: ['angular']
+images: ['/static/blog/44/1.png']
+summary: Angular でドロップダウンを利用する場合は、ngbDropdownを利用します。ngbDropdownはAngular Bootstrapのドロップダウンコンポーネントです。ngbDropdownを使う方法の基本的な手順を説明します。
+---
+
+Angular でドロップダウンを利用する場合は、ngbDropdownを利用します。  
+ngbDropdownはAngular Bootstrapのドロップダウンコンポーネントです。  
+以下にngbDropdownを使う方法の基本的な手順を説明します。  
+
+## 1. Angular Bootstrapをインストールします。
+Angular Bootstrapは、BootstrapのJavaScriptコンポーネントをAngularで使用するためのライブラリです。  
+次のコマンドを使用してインストールします。  
+
+```bash
+npm install @ng-bootstrap/ng-bootstrap
+```
+
+## 2. AppModuleで必要なモジュールをインポートします。
+src/app/app.module.tsファイルを開き、次のコードを追加します。  
+
+```typescript
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+@NgModule({
+  imports: [NgbModule],
+  // ...
+})
+export class AppModule { }
+```
+
+## 3. ドロップダウンを使用するコンポーネントを作成します。
+例えば、app.component.htmlファイルを開き、次のコードを追加します。  
+
+```html
+<div ngbDropdown>
+  <button class="btn btn-primary" ngbDropdownToggle>Toggle Dropdown</button>
+  <div ngbDropdownMenu>
+    <button class="dropdown-item">Action 1</button>
+    <button class="dropdown-item">Action 2</button>
+    <button class="dropdown-item">Action 3</button>
+  </div>
+</div>
+```
+
+## 4. 必要に応じて、ドロップダウンの動作をカスタマイズします。
+例えば、ドロップダウンが開いたときに特定のアクションを実行する場合は、次のようにします。  
+
+```html
+<div ngbDropdown (open)="onDropdownOpen()" (close)="onDropdownClose()">
+  <!-- ... -->
+</div>
+```
+
+```typescript
+export class AppComponent {
+  onDropdownOpen() {
+    console.log('Dropdown opened');
+    // 開いたときのアクションを追加
+  }
+
+  onDropdownClose() {
+    console.log('Dropdown closed');
+    // 閉じたときのアクションを追加
+  }
+}
+```
+
+以上がngbDropdownの基本的な使い方です。  
+この例では、ボタンをクリックするとドロップダウンが表示され、選択したアイテムに応じたアクションを実行できます。  
+さらに詳細なカスタマイズは、Angular Bootstrapのドキュメントを参照してください。  

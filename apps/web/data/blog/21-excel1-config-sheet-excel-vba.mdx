@@ -1,0 +1,165 @@
+---
+title: VBA | DB操作 – 第1回：Configシートの設定値をVBA上で取り扱う
+date: '2020-04-14'
+tags: ['vba', 'excel', 'config']
+images: ['/static/blog/21/01.png']
+summary: Excelマクロ 第1回：[Configシートの設定値をVBA上で取り扱う]
+---
+
+DB操作を行うExcelマクロを作成しました。
+
+今回のマクロは記載する内容が多いため、計4回に分けて説明します。
+
+第1回：[Configシートの設定値をVBA上で取り扱う](/blog/21-excel1-config-sheet-excel-vba/)  
+第2回：[SELECT文により取得したデータをExcelに格納](/blog/22-excel2-sql-select-excel-vba/)  
+第3回：[Excel から INSERT, UPDATE, DELETE を実行](/blog/23-excel3-sql-insert-update-delete-excel-vba/)  
+第4回：[Excel から MERGE を実行](/blog/24-excel4-sql-merge-excel-vba/)    
+
+[【Excelダウンロードはこちら】](https://github.com/atman-33/template-excel-vba/tree/main/Template_OracleDB%E6%93%8D%E4%BD%9C)
+
+※2021/2/5改修版  
+　・ODBC接続からOraOLEDB.Oracle接続に変更  
+　・INSER,UPDATE,MERGE文の生成方法を修正  
+
+___
+## 概要
+第1回目は、DB操作で使用する各設定値をVBA（マクロ開発）で扱う方法について説明します。
+
+![image](/static/blog/21/01.png)
+
+Oracle接続に必要な「サービス名」・「ユーザー名」・「パスワード」の３つをConfigシートで設定しています。
+
+今回説明する Configurator クラスを使えば、設定値情報を簡単に追加できます。  
+（いわゆる ini ファイルをExcelに取り込んだイメージ）
+
+___
+### パッケージ構成
+Excelマクロ内の構成は下記となります 。
+（使用するモジュールのみ下記に記載）
+
+```text
+Template_ver1.x.x.xlsm
+├標準モジュール
+|   ├modCmnGlbConst
+|
+|
+クラスモジュール
+    ├Configurator
+```
+
+___
+## ソースコード解説
+
+___
+### ①modCmnGlbConst
+Excelシートから設定値を抽出するために、Config 情報が記載されている Excel の「シート・行・列」を定義しています。
+
+```vb
+Option Explicit
+
+' Config 設定シート情報
+Public Const GLB_CONFIG_SHEET = "Config"
+Public Const GLB_CONFIG_KEY_COL = 1
+Public Const GLB_CONFIG_ITEM_COL = 2
+Public Const GLB_CONFIG_START_ROW = 2
+```
+
+例えば、Config シートではない別シート名を使いたい場合は、上記定数 GLB_CONFIG_SHEET を変更します。
+
+___
+### ②Configurator
+Config 情報を抽出する機能を持ったクラスです。
+解説はコメントとして記載しています。
+
+```vb
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' Configurator クラス
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+Option Explicit
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' 【使用手順】
+' ① インスタンス生成
+' ② setData    ：設定値を格納
+' ③ getItem    ：設定値を取得
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+' メンバ変数（Me.で参照可能とするためpublic）
+Public dic As Object
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : コンストラクタ
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Private Sub Class_Initialize()
+
+    Set Me.dic = CreateObject("Scripting.Dictionary")
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : Config 情報である設定項目と設定値を格納
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub setData(sheet As Worksheet, keyCol As Long, itemCol As Long, startRow As Long)
+
+    Dim i As Long
+    Dim row As Long
+
+    Dim key As String, item As String
+
+    i = 0
+    row = startRow
+
+    Do While sheet.Cells(row, keyCol) <> ""
+
+        key = sheet.Cells(row, keyCol)
+        item = sheet.Cells(row, itemCol)
+
+        Me.dic.add key, item
+
+        row = row + 1
+    Loop
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : setData 関数で取得した Config 情報の設定値を取得
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Function getItem(key As String) As String
+
+    getItem = dic.item(key)
+
+End Function
+```
+
+___
+### ③Configurator の使用例
+Configurator クラスを用いた使用例です。
+
+下記を実行すると、メッセージボックスに Config シートで設定した SERVICE_NAME の値が表示されます。
+
+```vb
+Option Explicit
+
+    Dim config As Configurator
+
+Public Sub main()
+
+    Dim servicename As String, username As String, password As String, accessPath As String
+
+    ' Config 設定の読み込み
+    Set config = New Configurator
+    config.setData ThisWorkbook.Worksheets(GLB_CONFIG_SHEET), GLB_CONFIG_KEY_COL, GLB_CONFIG_ITEM_COL, GLB_CONFIG_START_ROW
+
+    servicename = config.getItem("SERVICE_NAME")
+    Msgbox servicename
+
+End Sub
+```
+
+今回は以上となります。
+
+次回は、Config シートで設定した項目値を扱い DB のデータを取得する方法を説明します。

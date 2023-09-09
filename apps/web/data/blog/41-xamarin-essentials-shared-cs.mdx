@@ -1,0 +1,128 @@
+---
+title: C# | Xamarin Android端末のXamarin.Essentials実装方法（config.xmlの代替）
+date: '2023-03-29'
+tags: ['c sharp', 'xamarin', 'android']
+summary: Xamarin.Essentialsを使用したAndroid端末の設定データ読み書きの実装例 
+---
+
+Xamarinでは、設定データを保存するConfigファイルを取り扱えません。  
+代わりにXamarin.Essentialsを利用すれば、従来のconfig.xmlファイル同様に設定データを残す事ができます。  
+
+以下は、Xamarin.Essentialsを使用したAndroid端末の設定データ読み書きの実装例です。
+
+## 実装手順
+
+### 1. NuGetパッケージをインストール
+
+まず、Xamarin.Essentialsをプロジェクトに追加する必要があります。  
+NuGetパッケージマネージャーを使用して、パッケージをインストールします。  
+
+- Xamarin.Essentials
+
+### 2. AndroidのMainActivity.csにコード追加
+
+次にAndroidのMainActivity.csにコードを追加します。
+
+▼MainActivity.cs 
+```cs
+[Activity(Theme = "@style/MainTheme",
+            ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+{
+    protected override void OnCreate(Bundle savedInstanceState)
+    {
+        base.OnCreate(savedInstanceState);
+
+        //// Xamarin.Essentials用に追加 ここから
+        Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+        //// Xamarin.Essentials用に追加 ここまで
+
+        global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+        LoadApplication(new App(new AndroidInitializer()));
+    }
+
+    public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+    {
+        //// Xamarin.Essentials用に追加 ここから
+        Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        //// Xamarin.Essentials用に追加 ここまで
+
+        base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+}
+
+public class AndroidInitializer : IPlatformInitializer
+{
+    public void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+        // Register any platform specific implementations
+    }
+}
+```
+
+### 3. 設定データ保存用のクラスを実装
+
+設定データは1つのクラスにまとめた方が取り扱い易いため、専用のクラスを作成します。
+
+例えば、Oracleデータベースに接続するための情報を読み書きしたい場合の例です。  
+シングルトンにしたいため、static でクラスとプロパティを定義しています。  
+
+▼Shared.cs
+```cs
+using Xamarin.Essentials;
+
+namespace Template.Domain
+{
+    public static class Shared
+    {
+        public static string OracleUser
+        {
+            get => Preferences.Get(nameof(OracleUser), "atman");
+            set => Preferences.Set(nameof(OracleUser), value);
+        }
+
+        public static string OraclePassword
+        {
+            get => Preferences.Get(nameof(OraclePassword), "atman");
+            set => Preferences.Set(nameof(OraclePassword), value);
+        }
+
+        public static string OracleHost
+        {
+            get => Preferences.Get(nameof(OracleHost), "192.168.3.16");
+            set => Preferences.Set(nameof(OracleHost), value);
+        }
+
+        public static string OracleServiceName
+        {
+            get => Preferences.Get(nameof(OracleServiceName), "XEPDB1");
+            set => Preferences.Set(nameof(OracleServiceName), value);
+        }
+
+        public static string OracleDataSource
+        {
+            get => $"(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = {OracleHost})(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = {OracleServiceName})))";
+        }
+    }
+}
+
+```
+
+デフォルト値は、Preferences.Get に設定された値になります。  
+例のOracleUserプロパティであれば、atman です。  
+`get => Preferences.Get(nameof(OracleUser), "atman");`
+
+最後に、サンプルのShared.csのプロパティを読み書きする場合は、以下のように記載します。  
+
+```cs
+//// 設定データを書き込み
+Shared.OracleUser = 新規の値;
+Shared.OraclePassword = 新規の値;
+
+//// 設定データを読み込み
+var host = Shared.OracleHost;
+var serviceName = Shared.OracleServiceName;
+```
+
+これらの手順で、Android端末の設定データを読み書きする事ができます。

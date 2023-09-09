@@ -1,0 +1,518 @@
+---
+title: VBA | DB操作 – 第3回：Excel から INSERT, UPDATE, DELETE を実行
+date: '2020-04-16'
+tags: ['vba', 'excel', 'oracle']
+images: ['/static/blog/23/00.png']
+summary: Excelマクロ 第3回：[Excel から INSERT, UPDATE, DELETE を実行]
+---
+
+DB操作を行うExcelマクロについて説明します。
+
+今回の記事は『第3回』となります。
+
+第1回：[Configシートの設定値をVBA上で取り扱う](/blog/21-excel1-config-sheet-excel-vba/)  
+第2回：[SELECT文により取得したデータをExcelに格納](/blog/22-excel2-sql-select-excel-vba/)  
+第3回：[Excel から INSERT, UPDATE, DELETE を実行](/blog/23-excel3-sql-insert-update-delete-excel-vba/)  
+第4回：[Excel から MERGE を実行](/blog/24-excel4-sql-merge-excel-vba/)  
+
+[【Excelダウンロードはこちら】](https://github.com/atman-33/template-excel-vba/tree/main/Template_OracleDB%E6%93%8D%E4%BD%9C)
+
+※2021/2/5改修版  
+　・ODBC接続からOraOLEDB.Oracle接続に変更  
+　・INSER,UPDATE,MERGE文の生成方法を修正  
+
+___
+## 概要
+第3回目は、Excelシートに格納したデータ（セルの値）を、指定したDB（データベース）のテーブルに挿入・更新・削除する方法を説明します。
+
+![image](/static/blog/23/00.png)
+
+Excelの「Configシート」にDB接続内容を設定し、「INSERT・UPDATE・DELETE」の各シートからデータベースを操作します。
+
+|タイプ|機能|
+|:--|:--|
+INSERT|DBのテーブルにデータを挿入 （レコード挿入）
+UPDATE|DBのテーブルに格納されているデータを更新 （レコード更新）
+DELETE|DBのテーブルに格納されているデータを削除（レコード削除）
+
+下記に操作手順を示します。
+
+___
+### ①DB接続設定
+ConfigシートにDB接続の設定を記載します。（DBはOracleのみ対象）
+
+![image](/static/blog/23/01.png)
+
+SERVICE_NAME（サービス名）はOracleのクライアントもしくはサーバーをインストールして作成・設定した tnsnames.ora に記載されています。
+
+例. 下記 tnsnames.ora の例では、TESTDB.GRAWORがサービス名です。
+
+```text
+TESTDB =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = ***)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = TESTDB.GRAWOR)
+    )
+  )
+```
+
+___
+### ②生成するINSERT文の確認
+ここでは、DBにデータをINSERTする場合の手順を示します。
+
+まず、INSERTシートに格納したいデータを記載して、生成されるINSERT文を確認します。
+
+INSERTするデータの設定方法は下記の通りです。
+
+1. 対象テーブルを指定する。（例．TEST_TABLE）
+2. 対象テーブルへ格納するカラムをタイプ・DBカラム名に指定する。  
+　（例．INSERT・ID、INSERT・LINE ・・・INSERT・START_DATE）
+3. 指定したカラムに対して挿入するデータを記載する。  
+　（例．1000,A001,1,20200401,・・・）
+
+![image](/static/blog/23/02.png)
+
+問題なければ、INSERT文の実行に進みます。
+
+___
+### ③INSERT文の実行
+INSERT実行のボタンを押下すると、INSERTシートに記載したデータを対象のDBテーブルに挿入する処理が開始されます。
+
+![image](/static/blog/23/03.png)
+
+上記の例では、INSERTを実行することで、DBの「TEST_TABLE」にデータが格納されました。
+
+___
+### ④UPDATE文、DELETE文の場合
+今までINSERT文の実行について説明してきましたが、他にも　UPDATE文・DELETE文　の実行に対応しています。
+
+UPDATE文・DELETE文を実行する手順は、INSERT文と概ね同じです。下記の画像を参考に試してみてください。
+
+![image](/static/blog/23/04.png)
+![image](/static/blog/23/05.png)
+
+
+___
+## パッケージ構成
+Excelマクロ内の構成は下記となります 。（使用するモジュールのみ記載）
+
+```text
+Template_ver1.x.x.xlsm
+├標準モジュール
+|   ├modCmnGlbConst
+|   ├modSql   
+|
+クラスモジュール
+    ├Configurator
+    ├DBManager
+```
+
+___
+## ソースコード解説
+今回は、modCmnGlbConst と Configurator の説明は省略します。
+
+※上記はDB操作 – 第1回にて記載
+
+___
+### ①標準モジュール：modSql
+INSERTシートを例にすると、INSERT実行ボタンを押下すると、関数「executeInsertSqlsOracle()」が実行されます（下記）。
+
+この関数内で、DBManagerクラスをインスタンス化し、インスタンス化したDBManagerからINSERT文を生成して実行する関数を呼び出しています。
+
+```vb
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : A.各INSERT文を連続実行
+' note  : Oracle対応
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub executeInsertSqlsOracle()
+
+    Dim servicename As String, username As String, password As String
+
+    Dim sheet As Worksheet          ' SQLを生成する情報が格納されているシート
+    Dim tableName As String         ' 操作する対象のテーブル
+
+    ' Config 設定の読み込み
+    Set config = New Configurator
+    config.setData ThisWorkbook.Worksheets(GLB_CONFIG_SHEET), GLB_CONFIG_KEY_COL, GLB_CONFIG_ITEM_COL, GLB_CONFIG_START_ROW
+
+    servicename = config.getItem("SERVICE_NAME")
+    username = config.getItem("USERNAME")
+    password = config.getItem("PASSWORD")
+
+    ' DB接続
+    Set dbManagerOracle = New DBManager
+    dbManagerOracle.openOracle servicename, username, password
+
+    Set sheet = ThisWorkbook.Worksheets(INSERT_SHEET_NAME)
+    tableName = sheet.Cells(TABLE_NAME_ROW, TABLE_NAME_COL)
+
+    ' トランザクション開始
+    dbManagerOracle.begintrans
+
+    On Error GoTo err
+
+    ' SQL実行
+    dbManagerOracle.createAndExcuteOracleSqls tableName, sheet, TYPE_DIFINED_ROW, DB_COL_NAME_DIFINED_ROW, DATA_START_ROW, DATA_START_COL
+
+    ' コミット
+    dbManagerOracle.committrans
+
+    ' DB切断
+    dbManagerOracle.closeConnection
+
+    Application.StatusBar = Now & "SQL INSERT実行完了"
+
+    Exit Sub
+
+err:
+    ' エラー発生時はロールバック
+    Debug.Print "エラー番号:" & err.Number & Chr(13) & "エラー内容:" & err.Description
+    MsgBox "エラー番号:" & err.Number & Chr(13) & "エラー内容:" & err.Description
+
+    MsgBox "ロールバックを実行し、プログラムを終了します。"
+    dbManagerOracle.rollbacktrans
+
+    End
+
+End Sub
+```
+
+UPDATE・DELETE文の生成・実行のプログラム実行手順も、上記INSERTの手順と同じですので説明は省略します。詳細はExcelマクロのプログラムをご確認ください。
+
+___
+### ②クラスモジュール：DBManager
+DBManagerはOracle DBへの接続に関する機能も備えています。
+
+そちらは、DB操作 – 第2回　に記載していますので説明は省略します。
+
+今回は、（１）標準モジュール：modSql　内の関数からDBManagerを操作することで、INSERT文を生成して実行するソース部分に関して説明します。
+
+SQL文を生成して実行するまでに、下記関数を経由します。
+
+createAndExcuteOracleSqls（全レコード実行）  
+　↓  
+createAndExcuteOracleSql（1レコード実行）  
+　↓  
+createOracleSql（SQL文の生成）  
+　checkSqlType（INSERT・UPDATE・DELETE文の選定）  
+　├ ->createInsertOracleSql（INSERT文の生成）  
+　├ ->createUpdateOracleSql（UPDATE文の生成）  
+　└ ->createDeleteOracleSql（DELETE文の生成）  
+
+```vb
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : INSERT or UPDATE or DELETE SQL文を作成して実行（1行）
+' note  : 引数
+'         テーブル名、ワークシート、SQLタイプ指定行、データベースカラム名指定行
+'         データ格納開始行、データ格納開始列
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub createAndExcuteOracleSql(table_name As String, sheet As Worksheet, sql_type_defined_row As Long, db_col_name_defined_row As Long _
+    , db_data_start_row As Long, db_data_start_col As Long)
+
+    Dim sql As String
+
+    ' SQL作成
+    sql = createOracleSql(table_name, sheet, sql_type_defined_row, db_col_name_defined_row, db_data_start_row, db_data_start_col)
+
+    ' SQL実行
+    excuteSql sql
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : INSERT or UPDATE or DELETE SQL文を作成して実行（複数行）
+' note  : 引数
+'         テーブル名、ワークシート、SQLタイプ指定行、データベースカラム名指定行
+'         データ格納開始行、データ格納開始列
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub createAndExcuteOracleSqls(table_name As String, sheet As Worksheet, sql_type_defined_row As Long, db_col_name_defined_row As Long _
+    , db_data_start_row As Long, db_data_start_col As Long)
+
+    Dim i As Long
+    Dim sql As String
+    Dim val
+    Dim db_data_end_row As Long
+
+    ' データの最終行を検索
+    i = 1
+    Do While sheet.Cells(db_data_start_row + i, db_data_start_col) <> ""
+        i = i + 1
+    Loop
+
+    db_data_end_row = db_data_start_row + i - 1
+
+    For i = db_data_start_row To db_data_end_row
+
+        createAndExcuteOracleSql table_name, sheet, sql_type_defined_row, db_col_name_defined_row, i, db_data_start_col
+
+    Next
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : INSERT or UPDATE or DELETE SQL文を作成
+' note  : 引数
+'         テーブル名、ワークシート、SQLタイプ指定行、データベースカラム名指定行
+'         データ格納開始行、データ格納開始列
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Function createOracleSql(table_name As String, sheet As Worksheet, sql_type_defined_row As Long, db_col_name_defined_row As Long _
+    , db_data_start_row As Long, db_data_start_col As Long) As String
+
+    Dim sql As String
+    sql = ""
+
+    Select Case checkSqlType(sheet, sql_type_defined_row, db_data_start_col)
+
+        Case "INSERT"
+            sql = createInsertOracleSql(table_name, sheet, sql_type_defined_row, db_col_name_defined_row, db_data_start_row, db_data_start_col)
+            createOracleSql = sql
+            Exit Function
+
+        Case "UPDATE"
+            sql = createUpdateOracleSql(table_name, sheet, sql_type_defined_row, db_col_name_defined_row, db_data_start_row, db_data_start_col)
+            createOracleSql = sql
+            Exit Function
+
+        Case "DELETE"
+            sql = createDeleteOracleSql(table_name, sheet, sql_type_defined_row, db_col_name_defined_row, db_data_start_row, db_data_start_col)
+            createOracleSql = sql
+            Exit Function
+
+    End Select
+
+    createOracleSql = sql
+
+End Function
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : Excelから作成するSQLタイプがINSERT,UPDATE,DELTEのどれかなのか確認
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Private Function checkSqlType(sheet As Worksheet, type_start_row As Long, type_start_col As Long) As String
+
+    Dim start_col As Long, end_col As Long
+
+    Dim i As Long
+
+    checkSqlType = ""
+
+    start_col = type_start_col
+    end_col = getMaxColRight(sheet, type_start_row, type_start_col)
+
+    For i = start_col To end_col
+        Select Case sheet.Cells(type_start_row, i)
+
+            Case "INSERT"
+                checkSqlType = "INSERT"
+                Exit Function
+
+            Case "UPDATE"
+                checkSqlType = "UPDATE"
+                Exit Function
+
+            Case "DELETE"
+                checkSqlType = "DELETE"
+                Exit Function
+
+        End Select
+    Next
+
+    MsgBox "DBManager.checkSqlType:SQLタイプの設定が間違っています。INSERT,UPDATE,DELETEが含まれていません。"
+    End
+
+End Function
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : INSERT SQL文を作成
+' note  : 引数
+'         テーブル名、ワークシート、SQLタイプ指定行、データベースカラム名指定行
+'         データ格納開始行、データ格納開始列
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Private Function createInsertOracleSql(table_name As String, sheet As Worksheet, sql_type_defined_row As Long, db_col_name_defined_row As Long _
+    , db_data_start_row As Long, db_data_start_col As Long) As String
+
+    Dim i As Long, j As Long
+    Dim start_row As Long, start_col As Long, end_col As Long
+
+    Dim sqltype As String
+    Dim sql As String, sql_1 As String, sql_2 As String
+
+    start_row = db_data_start_row
+    start_col = db_data_start_col
+    end_col = getMaxColRight(sheet, start_row, start_col)
+
+    sqltype = sheet.Cells(sql_type_defined_row, start_col).Value
+
+    i = start_row
+
+    ' INSERT文の生成
+    sql = ""
+    sql_1 = "INSERT INTO " & table_name & " ("
+    sql_2 = "VALUES ("
+
+    For j = start_col To end_col
+
+        ' DBカラム名を追加
+        sql_1 = sql_1 & sheet.Cells(db_col_name_defined_row, j).Value
+        If j <> end_col Then
+            sql_1 = sql_1 & ", "
+        Else
+            sql_1 = sql_1 & ") "
+        End If
+
+        ' DBカラム名に対する値を追加
+        sql_2 = sql_2 & "'" & sheet.Cells(i, j).Value & "'"
+        If j <> end_col Then
+            sql_2 = sql_2 & ", "
+        Else
+            sql_2 = sql_2 & ") "
+        End If
+
+    Next
+
+    sql = sql_1 + sql_2
+
+    sql = Replace(sql_1 + sql_2, ", WHERE", " WHERE")
+    If Right(sql, 1) = "," Then sql = Mid(sql, 1, Len(sql) - 1)
+    If Right(sql, 5) = " AND " Then sql = Mid(sql, 1, Len(sql) - 5)
+
+    createInsertOracleSql = sql
+
+End Function
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : UPDATE SQL文を作成
+' note  : 引数
+'         テーブル名、ワークシート、SQLタイプ指定行、データベースカラム名指定行
+'         データ格納開始行、データ格納開始列
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Private Function createUpdateOracleSql(table_name As String, sheet As Worksheet, sql_type_defined_row As Long, db_col_name_defined_row As Long _
+    , db_data_start_row As Long, db_data_start_col As Long) As String
+
+    Dim i As Long, j As Long
+    Dim start_row As Long, start_col As Long, end_col As Long
+
+    Dim sqltype As String
+    Dim sql As String, sql_1 As String, sql_2 As String
+
+    start_row = db_data_start_row
+    start_col = db_data_start_col
+    end_col = getMaxColRight(sheet, start_row, start_col)
+
+    sqltype = sheet.Cells(sql_type_defined_row, start_col).Value
+
+    i = start_row
+
+    ' UPDATE文の生成
+    sql = ""
+    sql_1 = "UPDATE " & table_name & " SET "
+    sql_2 = "WHERE "
+
+    For j = start_col To end_col
+
+        If sheet.Cells(sql_type_defined_row, j).Value = "UPDATE" Then
+
+            ' UPDATEするDBカラム名と値を追加
+            sql_1 = sql_1 & sheet.Cells(db_col_name_defined_row, j).Value & " = '" _
+                 & sheet.Cells(i, j).Value & "'"
+            If j <> end_col Then
+                sql_1 = sql_1 & ", "
+            Else
+                sql_1 = sql_1 & " "
+            End If
+
+        ElseIf sheet.Cells(sql_type_defined_row, j).Value = "WHERE" Then
+
+            ' WHEREに対するDBカラム名と値を追加
+            sql_2 = sql_2 & sheet.Cells(db_col_name_defined_row, j).Value & " = '" _
+                 & sheet.Cells(i, j).Value & "'"
+            If j <> end_col Then
+                sql_2 = sql_2 & " AND "
+            Else
+                sql_2 = sql_2 & " "
+            End If
+
+        Else
+            Debug.Print ("UPDATE文に対して、SQLタイプ設定が正しくありません。設定を見直して下さい。")
+            Exit Function
+        End If
+    Next
+
+    sql = sql_1 + sql_2
+
+    sql = Replace(sql_1 + sql_2, ", WHERE", " WHERE")
+    If Right(sql, 1) = "," Then sql = Mid(sql, 1, Len(sql) - 1)
+    If Right(sql, 5) = " AND " Then sql = Mid(sql, 1, Len(sql) - 5)
+
+    createUpdateOracleSql = sql
+
+End Function
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : DELETE SQL文を作成
+' note  : 引数
+'         テーブル名、ワークシート、SQLタイプ指定行、データベースカラム名指定行
+'         データ格納開始行、データ格納開始列
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Private Function createDeleteOracleSql(table_name As String, sheet As Worksheet, sql_type_defined_row As Long, db_col_name_defined_row As Long _
+    , db_data_start_row As Long, db_data_start_col As Long) As String
+
+    Dim i As Long, j As Long
+    Dim start_row As Long, start_col As Long, end_col As Long
+
+    Dim sqltype As String
+    Dim sql As String, sql_1 As String, sql_2 As String
+
+    start_row = db_data_start_row
+    start_col = db_data_start_col
+    end_col = getMaxColRight(sheet, start_row, start_col)
+
+    sqltype = sheet.Cells(sql_type_defined_row, start_col).Value
+
+    i = start_row
+
+    ' DELETE文の生成
+    sql = ""
+    sql_1 = "DELETE FROM " & table_name & " "
+    sql_2 = "WHERE "
+
+    For j = start_col To end_col
+
+        If sheet.Cells(sql_type_defined_row, j).Value = "DELETE" Then
+
+            ' WHEREに対するDBカラム名と値を追加
+            sql_2 = sql_2 & sheet.Cells(db_col_name_defined_row, j).Value & " = '" _
+                 & sheet.Cells(i, j).Value & "'"
+            If j <> end_col Then
+                sql_2 = sql_2 & " AND "
+            Else
+                sql_2 = sql_2 & " "
+            End If
+
+        Else
+            Debug.Print ("DELETE文に対して、SQLタイプ設定が正しくありません。設定を見直して下さい。")
+            Exit Function
+        End If
+    Next
+
+    sql = sql_1 + sql_2
+
+    sql = Replace(sql_1 + sql_2, ", WHERE", " WHERE")
+    If Right(sql, 1) = "," Then sql = Mid(sql, 1, Len(sql) - 1)
+    If Right(sql, 5) = " AND " Then sql = Mid(sql, 1, Len(sql) - 5)
+
+    createDeleteOracleSql = sql
+
+End Function
+```
+
+今回は以上となります。
+
+今回説明した機能を活用すれば、例えば、業務で扱う帳票等をExcelで入力し、入力されたデータをデータベースに格納することが可能となります。
+
+次回は、データベースに格納されているデータに応じて　INSERT or UPDATE　を選択するMERGE文を実行する機能を追加してみたいと思います。
+
+
+次回のMERGE文生成機能まで準備しておけば、Oracleデータベースを操作するExcelプラットフォームとして扱えるのではないでしょうか。

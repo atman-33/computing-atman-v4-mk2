@@ -1,0 +1,74 @@
+---
+title: C# | WPF Prism ダイアログ画面内にRegion（ContentControl）を配置する方法
+date: '2023-03-19'
+tags: ['c sharp', 'wpf', 'prism template pack']
+summary: WPF Prismでは、Dialog画面内のContentControlに別のViewを表示させる方法
+---
+
+WPF Prismでは、Dialog画面内のContentControlに別のViewを表示させる方法として、以下の手順を実行します。
+
+### ダイアログ用のViewを作成
+
+1. ダイアログ用のViewを作成します。例えば、"MyDialogView"という名前のViewを作成します。
+2. ダイアログ用のViewModelを作成します。例えば、"MyDialogViewModel"という名前のViewModelを作成します。
+3. ダイアログ用のViewに、ContentControlを追加します。
+
+例えば、以下のようなXAMLコードを使用して、ContentControlを追加します。
+
+```xml
+<UserControl x:Class="MyNamespace.MyDialogView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://www.codeplex.com/prism"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Width="300"
+    Height="300">    
+    <ContentControl 
+        prism:RegionManager.RegionManager="{Binding MainRegionManager}" 
+        prism:RegionManager.RegionName="{Binding ContentRegionName}"/>
+</UserControl>
+```
+
+### ダイアログの一部に表示させるViewを作成
+
+4. ダイアログ用のViewに、表示させたいViewを定義します。例えば、以下のようなXAMLコードを使用して、表示させたいViewを定義します。
+
+```xml
+<UserControl x:Class="MyNamespace.MyContentView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <!-- 表示させたいコンテンツの定義 -->
+    </Grid>
+</UserControl>
+```
+
+### ダイアログ用のViewModelに処理を追加
+
+5. ダイアログ用のViewModelのコンストラクタで、表示させたいViewを表示するための処理を追加します。
+
+```cs
+public MyDialogView(IRegionManager regionManager)
+{
+    MainRegionManager = regionManager;  
+    MainRegionManager.RegisterViewWithRegion(_contentRegionName, nameof(MyContentView));
+}
+
+private IRegionManager _mainRegionManager;
+public IRegionManager MainRegionManager
+{
+    get { return _mainRegionManager; }
+    set { SetProperty(ref _mainRegionManager, value); }
+}
+
+private readonly string _contentRegionName = "dialogRegionName";
+public string ContentRegionName
+{
+    get { return _contentRegionName; }
+}
+```
+
+**Dialogの場合、DialogのRegionManagerに、注入されたRegionManagerを設定**する必要あるので要注意です。
+
+これらの手順を実行することで、ダイアログ画面内のContentControlに別のViewを表示させることができます。  
+ただし、Viewの表示方法やViewModelの作成方法は、アプリケーションによって異なる場合があるため、適宜変更してください。

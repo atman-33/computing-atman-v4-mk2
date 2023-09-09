@@ -1,0 +1,108 @@
+---
+title: C# | WPF Prism 画面遷移（ダイアログ）
+date: '2023-02-27'
+tags: ['c sharp', 'wpf', 'prism template pack']
+summary: C# WPF Prism ダイアログ画面の遷移方法
+---
+
+C#の **WPF Prism** でダイアログ画面（別ウィンドウ）を表示する方法について説明します。
+
+
+## 対象ファイル（例）
+
+コーディングが必要なファイルは下記の **A～D** です。
+
+```text
+Views/
+ |-MainWindowView.xaml（画面遷移元）　･･･A
+ |-SampleTableEditView.xaml(画面遷移先)
+
+ViewModels/
+ |-MainWindowViewModel.cs（画面遷移元）　･･･B
+ |-SampleTableEditViewModel.cs(画面遷移先)　･･･C　
+
+App.xaml.cs　･･･D
+```
+
+## MainWindowView.xaml（画面遷移元）　･･･A
+
+### ①ボタンにCommandを追加
+
+画面遷移元のViewのボタンに対して、CommandにBindingでデリゲートコマンド名称を記載します。
+
+```xaml
+<Button Content="SampleTable編集"
+        FontSize="14"
+        Margin="10"
+        Padding="5"
+        Command="{Binding SampleTableEditViewButton}"/>
+```
+
+## MainWindowViewModel.cs（画面遷移元）　･･･B
+
+### ②ViewModelにIDialogServiceの変数を追加
+
+画面遷移元のViewModelに、IDialogServiceのプライベート変数を追加し、コンストラクタでセットします。
+
+### ③ボタン押下時の実行メソッドを追加
+
+ボタン押下イベントを受け取るデリゲートコマンドのプロパティを追加し、ボタン押下時のExcuteメソッドを実装します。
+
+上記②～③のコード例は下記となります。
+
+```cs
+//// コンストラクタ
+public MainWindowViewModel(IDialogService dialogService)
+{
+    //// 画面遷移用（ダイアログ）
+    _dialogService = dialogService;
+
+    SampleTableEditViewButton = new DelegateCommand(SampleTableEditViewButtonExecute);
+}
+
+public DelegateCommand SampleTableEditViewButton { get; }
+
+private void SampleTableEditViewButtonExecute()
+{
+    //// 画面遷移処理（ダイアログ）
+    _dialogService.ShowDialog(nameof(SampleTableEditView), null, null);
+}
+```
+
+## SampleTableEditViewModel.cs(画面遷移先)　･･･C　
+
+### ④IDialogAwareインターフェースを実装
+画面遷移先のViewModelに、**IDialogAwareインターフェース** を実装します。
+
+### ⑤CanCloseDialogメソッドを変更
+IDialogAwareを実装した事で追加される CanCloseDialog() メソッドに、 retun true を記載します。
+trueを返す事で、ダイアログを閉じる事が可能となります。
+
+▼上記④～⑤のサンプルコード
+```cs
+public class SampleTableEditViewModel : BindableBase, IDialogAware
+{
+
+  //// 各種処理
+
+  public bool CanCloseDialog()
+  {
+      return true;    //// true:画面を閉じる事が可能
+  }
+}
+```
+
+## App.xaml.cs　･･･D
+
+### ⑥RegisterTypes内でViewを登録
+
+```cs
+protected override void RegisterTypes(IContainerRegistry containerRegistry)
+{
+    //// ダイアログ画面（別画面に表示） ※ViewModelにIDialogAware実装が必要
+    containerRegistry.RegisterDialog<SampleTableEditView, SampleTableEditViewModel>();
+
+}
+```
+
+containerRegistry.RegisterDialogに設定したViewがダイアログ表示可能となります。

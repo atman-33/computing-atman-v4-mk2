@@ -1,0 +1,98 @@
+---
+title: C# | WPF Prism 部分ViewからMainWindowのメソッドを呼び出す方法
+date: '2023-03-19'
+tags: ['c sharp', 'wpf', 'prism template pack']
+summary: WPF Prismでは、部分ViewからMain Windowのメソッドを呼び出すことができます。PrismのイベントAggregatorを使用することで、ViewModel間の直接的な参照を回避し、アプリケーション内で発生するイベントを簡単に処理することができます。
+---
+
+WPF Prismでは、部分ViewからMain Windowのメソッドを呼び出すことができます。
+
+PrismのイベントAggregatorを使用することで、ViewModel間の直接的な参照を回避し、アプリケーション内で発生するイベントを簡単に処理することができます。  
+
+以下は、Aggregatorを使用して、部分ViewからMain WindowのViewModelのメソッドを呼び出す方法の例です。
+
+### 1. Main WindowのViewModelに、呼び出したいメソッドを作成します。
+
+```cs
+public class MainWindowViewModel : BindableBase
+{
+    private readonly IEventAggregator _eventAggregator;
+
+    public MainWindowViewModel(IEventAggregator eventAggregator)
+    {
+        _eventAggregator = eventAggregator;
+    }
+
+    public void SomeMethod()
+    {
+        // Do something
+    }
+}
+```
+
+### 2. 部分Viewに、イベントAggregatorを注入します。
+
+```cs
+public class PartialView : UserControl
+{
+    private readonly IEventAggregator _eventAggregator;
+
+    public PartialView(IEventAggregator eventAggregator)
+    {
+        _eventAggregator = eventAggregator;
+    }
+}
+```
+
+### 3. 部分View内で、イベントAggregatorを使用してイベントを発行します。
+
+たとえば、以下のように、"SomeEvent"というイベントを発行することができます。
+
+```cs
+_eventAggregator.GetEvent<SomeEvent>().Publish();
+```
+
+そのままだと、SomeEventクラスが無いためエラーとなります。
+そのため、新しいクラスを作成して PubSubEvent を継承したSomeEventクラスを作成します。
+```cs
+public class SomeEvent : PubSubEvent
+{
+}
+```
+
+補足ですが、パラメータありのイベント用意する場合は、PubSubEventのジェネリック型に定義します。
+```cs
+public class SomeEvent : PubSubEvent<string>
+{
+}
+```
+
+### 4. Main WindowのViewModelに、"SomeEvent"を購読するメソッドを作成します。
+
+これにより、イベントが発行されたときに、該当のメソッドが呼び出されます。
+
+```cs
+public class MainWindowViewModel : BindableBase
+{
+    private readonly IEventAggregator _eventAggregator;
+
+    public MainWindowViewModel(IEventAggregator eventAggregator)
+    {
+        _eventAggregator = eventAggregator;
+        _eventAggregator.GetEvent<SomeEvent>().Subscribe(OnSomeEvent);
+    }
+
+    public void OnSomeEvent()
+    {
+        SomeMethod();
+    }
+
+    public void SomeMethod()
+    {
+        // Do something
+    }
+}
+```
+
+これで、部分ViewからMain WindowのViewModelのメソッドを呼び出すことができます。  
+部分View内でイベントを発行することで、Main WindowのViewModelにイベントを受信するメソッドを作成し、必要な処理を実行することができます。
