@@ -1,66 +1,51 @@
 # Next.js Ver
 
-## Google Search Console
+___________________________________________________________________________________________________
+
+## Google Analytics を設定
 
 ### Reference URL
 
-## Google Search Console 登録
+[【Next.js 13】環境ファイル別で Google Analytics を設定する](https://zenn.dev/kazuki23/articles/4cc0cf35a20ac0)
+
+Others:  
+[Next.js アプリに Google Analytics を設定する (next/script)](https://maku.blog/p/zycmw6f/)
+
+### Step
+
+1. Google Analytics > データストリームにウェブサイトを追加し、測定IDを取得
+2. `apps/web/lib/gtag.ts` を作成
+3. gtag の型を定義
+
+```bash
+ npm add -D @types/gtag.js`
+ ```
+
+apps/web/types/gtag.d.ts:  
+
+```ts
+declare module 'gtag.js'; 
+```
+
+4. `apps/web/components/google-analytics.tsx` を作成
+5. `apps/web/app/layout.tsx` に GoogleAnalytics コンポーネントを追加
+
+___________________________________________________________________________________________________
+
+## Google Search Console を設定
+
+### Google Search Console 登録
 
 * サイトを Google Search Console に登録
-* サイトのトップページ index.html に、所有権を示すhtmlタグを挿入
 
-## sitemap を登録
+### sitemap ファイルを作成して登録
 
-### 1. sitemap.xml を作成
+1. `apps/web/app/sitemap.ts` を作成
+2. `apps/web/app/robots.ts` を作成
+3. デプロイ
+4. Google Search Console にサイトマップを登録
 
-* post ページのサイトマップ一覧を作成
-
-```
-node tools/generate-sitemap-xml.js
-```
-
-* トップページ等の検索対象が必要なページを sitemap.xml に追加
-
-### 2. robots.txt を作成
-
-* robots.txt  
-
-```
-User-Agent: *
-Disallow:
-```
-
-* robots.txt を apps/client/src/ に保存  
-* client(Angular)の project.json assets に robots.txt を追加  
-
-### 3. sitemap.xml を登録
-
-* sitemap.xml を apps/client/src/ に保存  
-
-* client(Angular)の project.json assets に sitemap.xml を追加  
-
-```json
-  "targets": {
-    "build": {
-      "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/apps/client",
-        "index": "apps/client/src/index.html",
-        "main": "apps/client/src/main.ts",
-        "polyfills": ["zone.js"],
-        "tsConfig": "apps/client/tsconfig.app.json",
-        "assets": [
-          "apps/client/src/favicon.ico", 
-          "apps/client/src/assets",
-          "apps/client/src/sitemap.xml",
-          ...
-        ],
-```
-
-* deploy
-
-* google search console にサイトマップを登録
+___________________________________________________________________________________________________
 
 ## Google Analytics
 
