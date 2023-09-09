@@ -1,0 +1,89 @@
+---
+title: AWS | MySQL Workbench から AWS DBにSSH接続
+date: '2020-04-01'
+tags: ['aws', 'ssh']
+images: ['/static/blog/18/aws_system.png']
+summary: AWSクラウドサービスに対して、SSH接続を利用してローカルPCから踏み台サーバー経由でDBサーバーに接続し、MySQL Workbench を用いてDBを操作する方法
+---
+
+AWSなどクラウドにDBを構築している場合、DB開発をローカルPCから行うためにMySQL Workbenchで接続させたい場合があります。
+
+今回、SSH接続を利用してローカルPCから踏み台サーバー経由でDBサーバーに接続し、MySQL Workbench を用いてDBを操作可能にします。
+
+## システム構成
+下記のような、踏み台サーバーであるWebサーバーを経由してDBに接続するシステム構成とします。
+
+![image](/static/blog/18/aws_system.png)
+
+この構成に対して、ローカルPCから『DBサーバーのMySQL』へMySQL Workbenchを用いて接続します。
+
+## 手順
+ローカルPCから踏み台サーバーを経由してDBに接続するには、**ターミナル（コマンドプロンプト）からSSHで穴（ポートフォワード）を構築** し、その後にMySQL Workbenchから接続します。
+
+___
+### (1).sshフォルダに①秘密鍵と②configファイルを保存
+ポートフォワードによりDBサーバーへ接続するため以下の手順を実施します。
+
+#### .sshフォルダの中身
+![image](/static/blog/18/ssh_folder.png)
+
+configファイルはtxtファイルを作成して、拡張子を削除すれば準備できます。
+
+___
+### (2)configファイルの中身を記載
+configファイルに下記を記載します。
+
+```text
+Host host_wp
+  hostname AA.AAA.AA.AAA
+  port 22
+  user ec2-user
+  IdentityFile ~/.ssh/（AWS秘密鍵の名前）.pem
+
+Host host_wp_db
+  hostname bb.bbb.bb.bbb
+  port 22
+  user ec2-user
+  IdentityFile ~/.ssh/（AWS秘密鍵の名前）.pem
+  ProxyCommand C:\Windows\System32\OpenSSH\ssh.exe -l %r -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null host_wp  -W %h:%p
+  GatewayPorts   yes
+  LocalForward   9999   localhost:3306
+```
+
+Webサーバーへの接続　→　host_wp  
+DBサーバーへの接続　→　host_wp_db　が対応しています。  
+
+
+DBサーバーへの接続は、ProxyCommand で host_wp 接続を経由するように指定しております。
+
+今回の例では、DBサーバーへの接続（host_wp_db）に、ローカルPCのポート『9999』を利用しています。  
+ポート9999は任意の番号で構いませんが、別アプリケーションで使用されていないことが条件となります。  
+
+**【確認方法】**
+コマンドプロンプトで使用されていないポート番号を確認  
+
+`netstat -nao|find "9999"`
+
+上記の実行後、何もコメントが返ってこなければ利用していない。  
+
+___
+### (3)コマンドプロンプトからSSH接続
+コマンドプロンプトでDBサーバーに接続
+
+`ssh host_wp_db`
+
+これで、ローカルPCからWebサーバー（踏み台経由）で接続できます。
+
+コマンドプロンプトを閉じてしまうとSSH接続が切れてしまうので、  
+**コマンドプロンプトを立ち上げたまま** にしておいてください。  
+
+___
+### (4)MySQL Workbench によるDB接続
+MySQL Workbench の Manage Server Connection で下記の設定を追加します。  
+
+#### AWS MySQL DBへの接続設定  
+![image](/static/blog/18/mysql_workbench_connect.png)
+
+これでAWSのMySQL DBへ接続可能となります。
+
+以上です。

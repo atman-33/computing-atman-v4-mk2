@@ -1,0 +1,66 @@
+---
+title: Git | ソースコードをGitへpushする方法
+date: '2020-04-02'
+tags: ['git']
+summary: ソースコードをGitへpushする手順
+---
+
+ソースコードをGitへpushする手順を残しておきます。
+
+___
+#### ①プロジェクトのフォルダへ移動（folder_pathは書き換えてください）
+
+```bash
+cd folder_path
+```
+___
+#### ②ローカルリポジトリ作成　★初回のみでOK
+
+```bash
+git init
+```
+___
+#### ③プロジェクトフォルダの全ファイルをインデックスに保存
+
+```bash
+git add -A
+```
+
+add した内容の確認
+
+```bash
+git status
+```
+___
+#### ④add したファイルをコミット
+
+```bash
+git commit -m "first commit"
+```
+
+___
+#### ⑤リモートリポジトリ名 origin に登録　★初回のみでOK
+
+github でリポジトリを作成（説明は省略）
+
+```bash
+git remote add origin https://github.com/対象リポジトリのURL
+```
+  
+
+登録したリモートリポジトリの情報確認
+
+```bash
+git remote
+git remote -v
+```
+___
+#### ⑥Github にプッシュ（originリモートリポジトリ ← masterブランチ）
+
+```bash
+git push origin master
+```
+
+※masterブランチにpushする例です。
+
+以上です。

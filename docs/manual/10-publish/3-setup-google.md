@@ -2,7 +2,7 @@
 
 ___________________________________________________________________________________________________
 
-## Google Analytics を設定
+## Google Analytics
 
 ### Reference URL
 
@@ -32,7 +32,7 @@ declare module 'gtag.js';
 
 ___________________________________________________________________________________________________
 
-## Google Search Console を設定
+## Google Search Console
 
 ### Google Search Console 登録
 
@@ -47,6 +47,11 @@ ________________________________________________________________________________
 
 ___________________________________________________________________________________________________
 
-## Google Analytics
-
 ## Google Adsense
+
+1. ルートディレクトリに `ads.txt`を 追加
+
+* `apps/web/public/ads.txt`
+* `apps/web/middleware.ts` の ignore 対象に ads.txt を追加
+
+2. Google Analytics Webページから審査を依頼
