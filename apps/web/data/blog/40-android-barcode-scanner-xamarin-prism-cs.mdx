@@ -1,0 +1,311 @@
+---
+title: C# | Xamarin Prism Android端末でバーコード読み取り
+date: '2023-03-29'
+tags: ['c sharp', 'xamarin', 'prism template pack', 'android']
+summary: Xamarin Prism により、Android端末でバーコード（QRコード）読み込みを実装する方法
+---
+
+Xamarin Prism により、Android端末でバーコード（QRコード）読み込みを実装する方法を説明します。    
+バーコード読み取り用の画面で読み取りが完了した後、読み取りしたバーコードの値を前の画面に返すようにします。
+
+Xamarin Prismでバーコード読み込みを実装するには、ZXingライブラリを使用することができます。  
+以下は、ZXingを使用したバーコード読み込みの実装例です。  
+
+## 実装手順
+
+### 1. NuGetパッケージをインストール
+
+まず、ZXingをプロジェクトに追加する必要があります。  
+NuGetパッケージマネージャーを使用して、以下のパッケージをインストールします。  
+
+- ZXing.Net.Mobile
+- ZXing.Net.Mobile.Forms
+
+### 2. AndroidのMainActivity.csにコード追加
+
+次にAndroidのMainActivity.csにコードを追加します。
+
+▼MainActivity.cs 
+```cs
+[Activity(Theme = "@style/MainTheme",
+            ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+{
+    protected override void OnCreate(Bundle savedInstanceState)
+    {
+        base.OnCreate(savedInstanceState);
+
+        //// QRコード読み込み用に追加 ここから
+        ZXing.Net.Mobile.Forms.Android.Platform.Init();
+        //// QRコード読み込み用に追加 ここまで
+
+        global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+        LoadApplication(new App(new AndroidInitializer()));
+    }
+
+    public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+    {
+        //// QRコード読み込み用に追加 ここから
+        global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        //// QRコード読み込み用に追加 ここまで
+
+        base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+}
+
+public class AndroidInitializer : IPlatformInitializer
+{
+    public void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+        // Register any platform specific implementations
+    }
+}
+```
+
+### 3. AndroidのAndroidManifest.xmlにコード追加
+
+次にAndroidのAndroidManifest.xmlにコードを追加します。  
+AndroidManifest.xmlは、Visual Studio であれば、Propertiesの直下に存在します。  
+
+▼AndroidManifest.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.appname">
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="29" />
+
+	<!-- バーコード読み込みに必要 ここから -->
+	<uses-permission android:name = "android.permission.CAMERA" />
+	<uses-permission android:name = "android.permission.FLASHLIGHT" />
+	<!-- バーコード読み込みに必要 ここまで -->
+
+	<application android:label="@string/app_name" android:icon="@mipmap/icon">
+	</application>
+</manifest>
+```
+
+### 4. バーコード読み取り画面を実装
+
+今回のサンプルでは、2つのページを作成します。
+
+■MainPage  
+- ボタンを押すとバーコード読み取りするページ（ScannerView）に移動
+- ScannerViewページで読み取ったバーコードの値を画面に表示
+
+■ScannerView  
+- バーコード読み取り後、読み取ったバーコードの値をMainPageに返す
+
+まずはMainPageの実装です。
+
+▼MainPage.xml
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Template.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <Grid>
+        <StackLayout>
+            <Button Command="{Binding ScannerViewButton}" Text="バーコード読み込み開始" />
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="バーコード読み込み結果: " />
+                <Label Text="{Binding ScannedResultLabel}" />
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>
+```
+
+▼MainPageViewModel.cs
+```cs
+using Prism.Commands;
+using Prism.Navigation;
+using Prism.Services;
+using Template.Views;
+
+namespace Template.ViewModels
+{
+    /// <summary>
+    /// QRコードを読み込み
+    /// </summary>
+    public class MainPageViewModel : ViewModelBase
+	{
+        public Page003ViewModel(
+            INavigationService navigationService)
+            : base(navigationService)
+        {
+            ScannerViewButton = new DelegateCommand(ScannerViewButtonExecute);
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            //// ScannerView（バーコード読み取り画面）で取得したバーコードの値を取得
+            var scannedResult = parameters[nameof(ScannerViewModel.ScannedResult)] as string;
+            if (scannedResult == null)
+            {
+                ScannedResultLabel = string.Empty;
+            }
+
+            //// バーコードの値を画面のラベルに反映
+            ScannedResultLabel = scannedResult;
+        }
+
+        private string _scannedResultLabel = string.Empty;
+        public string ScannedResultLabel
+        {
+            get { return _scannedResultLabel; }
+            set { SetProperty(ref _scannedResultLabel, value); }
+        }
+
+        public DelegateCommand ScannerViewButton { get; }
+
+        private void ScannerViewButtonExecute()
+        {
+            //// ScannerView（バーコード読み取り画面）に遷移
+            base.NavigationService.NavigateAsync(nameof(ScannerView));
+        }
+    }
+}
+```
+
+次に、ScannerViewの実装です。
+
+▼ScannerView.xaml
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<zxing:ZXingScannerPage
+    x:Class="Template.Views.ScannerView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+    xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms">
+
+    <zxing:ZXingScannerPage.Behaviors>
+        <behaviors:EventToCommandBehavior
+            Command="{Binding ScanResultCommand}"
+            EventArgsParameterPath="Result"
+            EventName="ScanFinished" />
+    </zxing:ZXingScannerPage.Behaviors>
+</zxing:ZXingScannerPage>
+```
+
+▼ScannerView.xaml.cs
+```cs
+using System;
+using Template.ExtendedEventArgs;
+using ZXing.Net.Mobile.Forms;
+
+namespace Template.Views
+{
+    public partial class ScannerView : ZXingScannerPage
+    {
+        public ScannerView()
+        {
+            InitializeComponent();
+
+            DefaultOverlayTopText = "バーコードを読み取ります";
+            DefaultOverlayBottomText = "";
+
+            this.OnScanResult += (result) =>
+            {
+                this.ScanFinished?.Invoke(this, new ScanFinishedEventArgs(result));
+                this.IsScanning = false;
+            };
+        }
+
+        //// ScanFinishedEventArgs は別クラスで実装が必要
+        public event EventHandler<ScanFinishedEventArgs> ScanFinished;
+    }
+}
+```
+
+ScanFinishedEventArgs は、View（xaml）に実装しているEventToCommandBehaviorで、  
+バーコード読み取り終了イベントをViewModelへバインドするために必要なクラスです。
+
+ScanFinishedEventArgs を実装します。
+
+▼ScanFinishedEventArgs .cs
+```cs
+using System;
+
+namespace Template.ExtendedEventArgs
+{
+    public class ScanFinishedEventArgs :EventArgs
+    {
+        public ScanFinishedEventArgs(ZXing.Result result)
+        {
+            Result = result;
+        }
+
+        public ZXing.Result Result { get; private set; }
+    }
+}
+```
+
+最後に、ViewModelを実装します。
+
+▼ScannerViewModel.cs
+```cs
+using Prism.Commands;
+using Prism.Navigation;
+using Prism.Services;
+
+namespace Template.ViewModels
+{
+    public class ScannerViewModel : ViewModelBase
+    {
+        public ScannerViewModel(
+            INavigationService navigationService,
+            IPageDialogService pageDialogService,
+            IDeviceService deviceService)
+            : base(navigationService)
+        {
+            PageDialogService = pageDialogService;
+            DeviceService = deviceService;
+
+            ScanResultCommand = new DelegateCommand<ZXing.Result>(ScanResultCommandExecute);
+        }
+
+        public IPageDialogService PageDialogService { get; private set; }
+        public IDeviceService DeviceService { get; private set; }
+
+        /// <summary>
+        /// バーコードスキャン結果
+        /// </summary>
+        public string ScannedResult { get; private set; }
+
+        public DelegateCommand<ZXing.Result> ScanResultCommand { get; }
+
+        private void ScanResultCommandExecute(ZXing.Result result)
+        {
+            DeviceService.BeginInvokeOnMainThread(() =>
+            {
+                ScannedResult = result.Text;
+
+                var param = new NavigationParameters
+                {
+                    {nameof(ScannedResult), ScannedResult }
+                };
+
+                NavigationService.GoBackAsync(param);
+                PageDialogService.DisplayAlertAsync("スキャン完了", ScannedResult, "OK");
+            });
+        }
+    }
+}
+```
+
+これらの手順で、バーコード読み取りした値を前のページに戻して表示する事ができます。  
+ScannerViewはコードビハインドに記述する必要がありますが、他はMVVMパターンになっていると思います。  
+
+## 参考リンク
+
+【Xamarin.Forms】QRコードの読み取りをする方法  
+[https://takataka430.hatenablog.com/entry/2019/03/21/184259](https://takataka430.hatenablog.com/entry/2019/03/21/184259)
+
+【Xamarin 002】QRコードライブラリ Zxing.Net.Mobile.Forms を Prism っぽく使ってみた  
+[https://johnny06r.hatenablog.com/entry/2018/08/29/012710](https://johnny06r.hatenablog.com/entry/2018/08/29/012710)

@@ -1,0 +1,420 @@
+---
+title: VBA | DB操作 – 第2回：SELECT文により取得したデータをExcelに格納
+date: '2020-04-15'
+tags: ['vba', 'excel', 'oracle']
+images: ['/static/blog/22/00.png']
+summary: Excelマクロ 第2回：[SELECT文により取得したデータをExcelに格納]
+---
+
+DB操作を行うExcelマクロについて説明します。
+
+今回の記事は『第2回』となります。
+
+第1回：[Configシートの設定値をVBA上で取り扱う](/blog/21-excel1-config-sheet-excel-vba/)  
+第2回：[SELECT文により取得したデータをExcelに格納](/blog/22-excel2-sql-select-excel-vba/)  
+第3回：[Excel から INSERT, UPDATE, DELETE を実行](/blog/23-excel3-sql-insert-update-delete-excel-vba/)  
+第4回：[Excel から MERGE を実行](/blog/24-excel4-sql-merge-excel-vba/)  
+
+[【Excelダウンロードはこちら】](https://github.com/atman-33/template-excel-vba/tree/main/Template_OracleDB%E6%93%8D%E4%BD%9C)
+
+※2021/2/5改修版  
+　・ODBC接続からOraOLEDB.Oracle接続に変更  
+　・INSER,UPDATE,MERGE文の生成方法を修正  
+
+___
+## 概要
+第2回目は、SELECT文により取得したデータをExcelに格納する方法について説明します。
+
+![image](/static/blog/22/00.png)
+
+Excelの「Configシート」にDB接続を設定し、「SQLシート」にデータ抽出するSQL文を記載してマクロを実行します。
+
+そうすると、各シート（SQLシートのシート名に記載した名称）にSELECTした結果が貼り付けられます。
+
+下記に操作手順を示します。
+
+___
+### ①DB接続設定
+ConfigシートにDB接続の設定を記載します。（DBはOracleのみ対象）
+
+![image](/static/blog/22/01.png)
+
+SERVICE_NAME（サービス名）はOracleのクライアントもしくはサーバーをインストールして作成・設定した tnsnames.ora に記載されています。
+
+例. 下記 tnsnames.ora の例では、TESTDB.GRAWORがサービス名です。
+
+```text
+TESTDB =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = ***)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = TESTDB.GRAWOR)
+    )
+  )
+```
+___
+### ②Oracle接続テスト
+Oracle DBに接続し、 Configシートの接続設定が正しいか確認します。
+
+![image](/static/blog/22/02.png)
+
+「オラクルへの接続テスト完了」とメッセージが表示されれば、問題なくOracle DBに接続できています。
+
+___
+### ③SQL文を実行
+SQL実行ボタンを押すと、SQL文を実行し、各シートに抽出データを貼り付けます。
+
+![image](/static/blog/22/03.png)
+
+![image](/static/blog/22/04.png)
+
+SQLシートの「シート名」項目に記載した名称のシートが作成され、SQLの抽出結果が貼り付けられます。
+
+___
+## パッケージ構成
+Excelマクロ内の構成は下記となります 。（使用するモジュールのみ記載）
+
+```text
+Template_ver1.x.x.xlsm
+├標準モジュール
+|   ├modCmnGlbConst
+|   ├modSql   
+|
+クラスモジュール
+    ├Configurator
+    ├DBManager
+```
+
+___
+## ソースコード解説
+今回は、modCmnGlbConst と Configurator の説明は省略します。
+
+※上記はDB操作 – 第1回にて記載
+
+___
+### ①DBManager
+DB操作を行うクラスです。Oracle DBへの接続やSQLを実行する機能を備えます。
+
+必要な変数・関数を抜粋し、 解説はコメントとして記載しています。
+
+```vb
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' DBManager クラス
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+Option Explicit
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' 【使用手順 - SELECTによるデータ取得】
+' ①インスタンス生成
+' ②openOracle：オラクルへの接続 or openAccess：アクセスへの接続
+' ③excuteSql：SQLの実行
+' ④pasteRecordset：実行したSQLにより取得したデータを貼り付け
+' ⑤closeRecordset：レコードセットのクローズ
+' ⑥closeConnection：DB切断
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' 【使用手順 - INSERT or UPDATE or DELETEの実行】
+' ①インスタンス生成
+' ②openOracle：オラクルへの接続 or openAccess：アクセスへの接続
+' ③begintrans：トランザクション開始
+' ④createAndExcuteOracleSql(s)：SQLを生成して実行
+' ⑤committrans：コミット　※エラー発生時 rollbacktrans
+' ⑥closeConnection：DB切断
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+' メンバ変数（Me.で参照可能とするためpublic）
+Public con As Object    ' Connection
+Public rs As Object     ' Recordset
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : コンストラクタ
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Private Sub Class_Initialize()
+
+    Set Me.con = CreateObject("Adodb.Connection")
+    Set Me.rs = CreateObject("Adodb.Recordset")
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : オラクルへの接続処理
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub openOracle(servicename As String, username As String, password As String)
+
+    Dim constr As String
+
+    constr = "DSN=" & servicename
+    constr = constr & ";UID=" & username
+    constr = constr & ";PWD=" & password
+
+    Debug.Print (constr)
+    Me.con.ConnectionString = constr
+    Me.con.Open
+    Debug.Print "オラクルへの接続完了"
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : アクセスへの接続処理
+' note  : 引数 access_name はフルパス（フォルダ名＋ファイル名）
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub openAccess(access_name As String)
+
+    Me.con.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & access_name & ";" 'Accessファイルに接続
+    Debug.Print "アクセスへの接続完了"
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : トランザクション開始処理
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub begintrans()
+
+    Me.con.begintrans
+    Debug.Print "トランザクション開始"
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : コミット処理
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub committrans()
+
+    Me.con.committrans
+    Debug.Print "コミット処理実施"
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : ロールバック処理
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub rollbacktrans()
+
+    Me.con.rollbacktrans
+    Debug.Print "ロールバック処理実施"
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : DB切断処理
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub closeConnection()
+
+    On Error Resume Next
+
+    Me.con.Close
+    Me.rs.Close
+
+    Set Me.con = Nothing
+    Set Me.rs = Nothing
+
+    On Error GoTo 0     ' エラー処理の命令取り消し
+    Debug.Print "DBへの切断完了"
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : レコードセットのクローズ
+' note  : SQL実行でレコードセットにデータが格納された後はクローズ必要
+'         （連続でSQLを実行してレコードセットをOpenすることはできない）
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub closeRecordset()
+    Me.rs.Close
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : SQLの実行
+' note  : SELECT文の実行後は、レコードセットにデータが格納される。
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub excuteSql(str_sql As String)
+
+    Debug.Print str_sql & " を実行します。"
+    rs.Open str_sql, con
+
+End Sub
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : 実行したSQLで取得したレコードセットをExcelに貼り付け
+' note  : need_filed_ -> Trueでフィールド名も書き込み
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub pasteRecordset(worksheet_ As Worksheet, data_start_row_ As Long, data_start_col_ As Long, need_filed_ As Boolean)
+
+    Dim i As Long
+
+    If need_filed_ = True Then
+
+        'フィールド名の書き出し
+        For i = 0 To rs.Fields.count - 1
+            worksheet_.Cells(data_start_row_, data_start_col_ + i).Value = rs.Fields(i).Name
+        Next i
+
+        data_start_row_ = data_start_row_ + 1
+
+    End If
+
+    'CopyFromRecordsetメソッドで基準セルを指定してデータの書き出し
+    worksheet_.Cells(data_start_row_, data_start_col_).CopyFromRecordset rs
+
+End Sub
+（２）modSql
+DBManagerクラスを利用してSQLを実行し、Excelシートにデータを貼り付けるモジュールです。
+
+必要な変数・関数を抜粋し、 解説はコメントとして記載しています。
+
+Option Explicit
+
+    ' ---- SELECT文を実行する機能の設定項目
+    Const SQL_SHEET_NAME = "SQL"
+    Const DATA_SHEET_NAME_COL = 1
+    Const SQL_COL = 2
+    Const CONNECT_TYPE_COL = 3
+    Const SQL_START_ROW = 2
+
+    Dim config As Configurator
+    Dim dbManagerOracle As dbManager
+    Dim dbManagerAccess As dbManager
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' brief : シートに登録されている各SELECT文を実行
+' note  :
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Sub executeSelects()
+
+    Dim i As Long
+    Dim row As Long
+
+    Dim wsActive As Worksheet
+
+    Dim servicename As String, username As String, password As String, accessPath As String
+
+    Dim sqlSheet As Worksheet       ' データ取得するSQLが格納されているシート
+
+    Dim dataSheetName As String     ' SQLのSELECTデータを貼り付けるシート名
+    Dim sql As String               ' SQL（SELECT文）
+    Dim connectType As String       ' 接続タイプ（Oracle or Access）
+
+    Set dbManagerOracle = Nothing
+    Set dbManagerAccess = Nothing
+
+    focus True
+
+    ' 実行時のシートを保存
+    Set wsActive = ActiveSheet
+
+    ' Config 設定の読み込み
+    Set config = New Configurator
+    config.setData ThisWorkbook.Worksheets(GLB_CONFIG_SHEET), GLB_CONFIG_KEY_COL, GLB_CONFIG_ITEM_COL, GLB_CONFIG_START_ROW
+
+    servicename = config.getItem("SERVICE_NAME")
+    username = config.getItem("USERNAME")
+    password = config.getItem("PASSWORD")
+    accessPath = config.getItem("ACCESS_PATH")
+
+    i = 0
+
+    dataSheetName = ThisWorkbook.Worksheets(SQL_SHEET_NAME).Cells(SQL_START_ROW + i, DATA_SHEET_NAME_COL)
+    sql = ThisWorkbook.Worksheets(SQL_SHEET_NAME).Cells(SQL_START_ROW + i, SQL_COL)
+    connectType = ThisWorkbook.Worksheets(SQL_SHEET_NAME).Cells(SQL_START_ROW + i, CONNECT_TYPE_COL)
+
+    ' シートに登録されている各SELECT文を実行（シート名が無くなるまで繰り返し）
+    Do While dataSheetName <> ""
+
+        ' データ貼り付け先のシートを削除
+        If sheetExists(ThisWorkbook, dataSheetName) Then
+            Application.DisplayAlerts = False ' メッセージを非表示
+            ThisWorkbook.Worksheets(dataSheetName).Delete
+            Application.DisplayAlerts = True  ' メッセージを表示
+        End If
+
+        ' データ貼り付け先のシートを作成
+        If sql <> "" Then
+            ' SQL 有り　→　シート作成
+            createSheet ThisWorkbook, dataSheetName
+
+        End If
+
+        ' - Oracle 接続
+        If connectType = "Oracle" Then
+
+            ' DB接続
+            If (sql <> "") And (dbManagerOracle Is Nothing) Then
+                Set dbManagerOracle = New dbManager
+                dbManagerOracle.openOracle servicename, username, password
+            End If
+
+            ' SQLを実行
+            dbManagerOracle.excuteSql sql
+
+            ' シートにSQLで取得したデータを貼り付け
+            dbManagerOracle.pasteRecordset ThisWorkbook.Worksheets(dataSheetName), 1, 1, True
+
+            ' レコードセットをクローズ
+            dbManagerOracle.closeRecordset
+
+        ' - Access 接続
+        ElseIf connectType = "Access" Then
+
+            ' DB接続
+            If (sql <> "") And (dbManagerAccess Is Nothing) Then
+                Set dbManagerAccess = New dbManager
+                dbManagerAccess.openAccess accessPath
+            End If
+
+            ' SQLを実行
+            dbManagerAccess.excuteSql sql
+
+            ' シートにSQLで取得したデータを貼り付け
+            dbManagerAccess.pasteRecordset ThisWorkbook.Worksheets(dataSheetName), 1, 1, True
+
+            ' レコードセットをクローズ
+            dbManagerAccess.closeRecordset
+
+        Else
+            ' SQLが記載かつ接続タイプが設定されていない場合は終了
+            If sql <> "" Then
+                MsgBox SQL_SHEET_NAME & " シートの接続タイプが正しく設定されていません。終了します。"
+                ThisWorkbook.Worksheets(SQL_SHEET_NAME).Activate
+                End
+            End If
+        End If
+
+        i = i + 1
+        dataSheetName = ThisWorkbook.Worksheets(SQL_SHEET_NAME).Cells(SQL_START_ROW + i, DATA_SHEET_NAME_COL)
+        sql = ThisWorkbook.Worksheets(SQL_SHEET_NAME).Cells(SQL_START_ROW + i, SQL_COL)
+        connectType = ThisWorkbook.Worksheets(SQL_SHEET_NAME).Cells(SQL_START_ROW + i, CONNECT_TYPE_COL)
+
+    Loop
+
+    ' - Oracle切断
+    If Not dbManagerOracle Is Nothing Then
+        dbManagerOracle.closeConnection
+    End If
+
+    ' - Access切断
+    If Not dbManagerAccess Is Nothing Then
+        dbManagerAccess.closeConnection
+    End If
+
+    wsActive.Activate
+    focus False
+
+    Application.StatusBar = Now & "SQL SELECT実行完了"
+
+End Sub
+```
+
+今回は以上となります。
+
+この機能を活用すれば、ボタン一つで DBから最新のデータを抽出可能となります。  
+例えば、データ集計業務の効率化などに役立てることができます。  
+
+次回は、Excelシートに入力したデータを基に、Oracle DBにINSERT・UPDATE・DELETEする方法を説明します。

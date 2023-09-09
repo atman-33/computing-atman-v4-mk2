@@ -1,0 +1,217 @@
+---
+title: Angular prismjs example
+date: '2023-07-17'
+tags: ['angular', 'css', 'prism js']
+images: ['/static/blog/47/1.png']
+summary: Here is how to apply prismjs to your code in Angular.By following this method, you will be able to apply prismjs to HTML stored in a database and display it on an Angular page.  
+---
+
+Here is how to apply prismjs to your code in Angular.  
+By following this method, you will be able to apply prismjs to HTML stored in a database and display it on an Angular page.  
+
+# angular-prismjs-example
+
+[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/stackblitz-starters-rnpfug)
+
+![image](/static/blog/47/1.png)  
+
+The steps are as follows:  
+
+## 1. Install module
+
+```bash
+npm install prismjs
+```
+
+## 2. Add services
+
+src/services/
+
+- prism.service.ts
+- html-utils.ts
+- safe-html.pipe.ts
+- shared.module.ts
+
+### prism.service.ts
+
+```ts
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+
+// importing prismjs order is important!
+import 'prismjs';
+
+import 'prismjs/plugins/toolbar/prism-toolbar';
+
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard';
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
+import 'prismjs/plugins/show-language/prism-show-language';
+
+import 'prismjs/components/prism-csharp';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-sass';
+import 'prismjs/components/prism-scss';
+import 'prismjs/components/prism-sql';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-visual-basic';
+import 'prismjs/components/prism-xml-doc';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const Prism: any;
+
+@Injectable({
+  providedIn: 'root', // can inject anywahere
+})
+export class PrismService {
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+
+  highlightAll() {
+    if (isPlatformBrowser(this.platformId)) {
+      Prism.highlightAll();
+    }
+  }
+
+  highlightHtml(html: string): string {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    const codeElements = div.querySelectorAll('code');
+    codeElements.forEach((el) => {
+      const lang =
+        el.getAttribute('class')?.replace('language-', '') || 'javascript';
+      el.innerHTML = Prism.highlight(
+        el.textContent || '',
+        Prism.languages[lang],
+        lang
+      );
+    });
+    return div.innerHTML;
+  }
+}
+```
+
+### html-utils.ts
+
+```ts
+export function addClassToHtml(
+  html: string,
+  className: string,
+  tagName: string
+): string {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const elements = doc.querySelectorAll(tagName);
+  elements.forEach((el) => {
+    el.classList.add(className);
+  });
+  return doc.documentElement.innerHTML;
+}
+```
+
+### safe-html.pipe.ts
+
+```ts
+import { Pipe, PipeTransform } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+/** usage
+ * [innerHTML]="value | safeHtml"
+ */
+@Pipe({ name: 'safeHtml' })
+export class SafeHtmlPipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) {}
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform(html: any): SafeHtml {
+    const result = this.sanitizer.bypassSecurityTrustHtml(html);
+    return result;
+  }
+}
+```
+
+### shared.module.ts
+
+```ts
+import { NgModule } from '@angular/core';
+import { SafeHtmlPipe } from './safe-html.pipe';
+
+@NgModule({
+  declarations: [SafeHtmlPipe],
+  exports: [SafeHtmlPipe],
+})
+export class SharedModule {}
+```
+
+## 3. Add prismjs style to global style sheet
+
+### global_styles.css
+
+```css
+/* Add application styles & imports to this file! */
+
+/* Prismjs theme */
+@import "prismjs/themes/prism-okaidia.css";
+@import "prismjs/plugins/toolbar/prism-toolbar.css";
+@import "prismjs/plugins/line-numbers/prism-line-numbers.css";
+/* Available themes */
+/*
+@import "prismjs/themes/prism.css";
+@import "prismjs/themes/prism-coy.css";
+@import "prismjs/themes/prism-dark.css";
+@import "prismjs/themes/prism-funky.css";
+@import "prismjs/themes/prism-solarizedlight.css";
+@import "prismjs/themes/prism-tomorrow.css";
+@import "prismjs/themes/prism-twilight.css";
+*/
+```
+
+## 4. Apply prismjs to html
+
+### main.ts
+
+```ts
+@Component({
+  selector: 'my-app',
+  standalone: true,
+  imports: [CommonModule, SharedModule],
+  templateUrl: './main.html',
+  styleUrls: ['./main.scss']
+})
+export class App implements OnInit,AfterViewChecked {
+  name = 'Angular';
+
+  highlighted = false;
+
+  code = `
+  <p>Here's how you can customize the appearance of an Angular Material toggle button. Although the method is unique, I'll explain it in this article.</p>\n<h2>1. How to use Angular Material button-toggle</h2>\n<h3>Install Angular Material</h3>\n<pre><code class=\"language-bash\">ng add @angular/material\n</code></pre>\n<h3>Import Angular Material button-toggle to Module file</h3>\n<pre><code class=\"language-ts\">import {MatButtonToggleModule} from '@angular/material/button-toggle'\n</code></pre>\n<h3>Html</h3>\n<pre><code class=\"language-html\">&lt;mat-button-toggle [aria-label]=&quot;alertsEnabled ? 'Disable alerts' : 'Enable alerts'&quot;&gt;\n  &lt;mat-icon&gt;notifications&lt;/mat-icon&gt;\n&lt;/mat-button-toggle&gt;\n</code></pre>\n<p>For more details, refer to the official documentation:<br>\n<a href=\"https://material.angular.io/components/button-toggle\">Angular Material Official Documentation</a></p>
+`;
+
+  constructor(private readonly prismService: PrismService) {}
+
+  ngOnInit(){
+      this.code = HtmlUtils.addClassToHtml(this.code, 'line-numbers', 'pre');
+  }
+
+  ngAfterViewChecked() {
+    if (!this.highlighted && this.code) {
+      this.prismService.highlightAll();
+      this.highlighted = true;
+    }
+  }
+}
+```
+
+### main.html
+
+```html
+<h1>Hello from {{name}}!</h1>
+<a target="_blank" href="https://angular.io/start">
+  Learn more about Angular sample
+</a>
+
+<div [innerHtml]="code | safeHtml"></div>
+```

@@ -1,0 +1,91 @@
+---
+title: C# | Xamarin Android端末から直接OracleDBに接続する方法
+date: '2023-03-29'
+tags: ['c sharp', 'xamarin', 'android']
+summary: XamarinでAndroid端末からOracleデータベースに接続する実装例
+---
+
+C# Xamarinでは、Oracle.ManagedDataAccess.Coreを利用すれば、Android端末からOracleデータベースのデータを取得することができます。
+
+本来、Oracle等のデータベースにAndroid端末から接続する場合は、WebAPI経由が推奨されることが多いです。  
+しかし、社内等のローカルネットワーク内で小規模であれば、直接DBに接続する方法も一つの手段となります。  
+
+以下は、XamarinでAndroid端末からOracleデータベースに接続する実装例です。  
+（iOSも同様かもしれませんが、未確認です。）
+
+
+## 実装手順
+
+### 1. NuGetパッケージをインストール
+
+まず、NuGetパッケージマネージャーでOracle.ManagedDataAccess.Coreパッケージをインストールします。  
+このパッケージは、Oracle Databaseに高速にアクセスできるADO.NETドライバーです。  
+Oracle Clientのインストールは不要です。  
+
+- Oracle.ManagedDataAccess.Core
+
+### 2. Oracleデータベースへの接続例
+
+以下のコードは、Oracle Databaseに接続して、EMPテーブルから従業員の名前と給与を取得するものです。  
+簡単に試す場合は、XamarinではViewのコードビハインド（Prismを利用する場合は、ViewModel）に記載すればよいです。  
+
+```cs
+using System;
+using System.Diagnostics;
+using Oracle.ManagedDataAccess.Client;
+
+namespace Template.Views
+{
+    public partial class MainPage
+    {
+        public MainPage()
+        {
+            InitializeComponent();
+
+            // 接続文字列を設定します。
+            string user = "atman";
+            string password = "atman";
+            string dataSource = "(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.3.16)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = XEPDB1)))";
+            string connectionString = "User Id=" + user + ";Password=" + password + ";Data Source=" + dataSource;
+
+            // OracleConnectionオブジェクトを作成します。
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                // データベースに接続します。
+                connection.Open();
+
+                // SQL文を設定します。
+                string sql = "SELECT ename, sal FROM emp";
+
+                // OracleCommandオブジェクトを作成します。
+                using (OracleCommand command = new OracleCommand(sql, connection))
+                {
+                    // OracleDataReaderオブジェクトを取得します。
+                    using (OracleDataReader reader = command.ExecuteReader())
+                    {
+                        // データを読み込みます。
+                        while (reader.Read())
+                        {
+                            // 名前と給与を取得します。
+                            string name = reader.GetString(0);
+                            decimal salary = reader.GetDecimal(1);
+
+                            // 結果を表示します。
+                            Debug.WriteLine($"{name} : {salary}");
+                        }
+                    }
+                }
+
+                // データベースとの接続を切断します。
+                connection.Close();
+            }
+        }
+    }
+}
+```
+
+Oracleの接続文字列は、接続対象のOracleサーバー（Android端末がWifi接続しているローカルネットワーク内に存在するDBサーバー）に合わせて変更して下さい。
+
+> Oracle接続の設定が正しいのにも関わらず接続不可の場合、Oracleサーバー（PC）のファイアウォール設定で、**受信の規則からポート1521を解放**していない可能性も考えられます。確認してみて下さい。
+
+これらの手順で、Android端末からOracleデータベースに直接接続する事ができます。

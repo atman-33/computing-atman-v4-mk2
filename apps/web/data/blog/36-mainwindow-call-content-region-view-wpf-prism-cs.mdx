@@ -1,0 +1,36 @@
+---
+title: C# | WPF Prism MainWindow から ContentRegion の View メソッドを呼び出す方法
+date: '2023-03-19'
+tags: ['c sharp', 'wpf', 'prism template pack']
+summary: WPF Prismでは、主要なウィンドウ(Main Window)とその中に含まれる一連のリージョン(Region)で構成される場合があります。これらのリージョンには、ビュー(View)やビューモデル(ViewModel)が配置され、相互に通信することができます。Main WindowからContent Regionにあるビューやビューモデルのメソッドを呼び出す方法を説明します。
+---
+
+WPF Prismでは、主要なウィンドウ(Main Window)とその中に含まれる一連のリージョン(Region)で構成される場合があります。  
+これらのリージョンには、ビュー(View)やビューモデル(ViewModel)が配置され、相互に通信することができます。
+
+Main WindowからContent Regionにあるビューやビューモデルのメソッドを呼び出す方法として、以下の手順の方法があります。
+
+### 1. Main WindowからContent Regionにあるビューを取得する
+
+```cs
+var contentRegion = regionManager.Regions["ContentRegion"];
+var contentView = contentRegion.Views.FirstOrDefault() as YourContentView;
+```
+
+### 2. 取得したビューからViewModelを取得する
+
+```cs
+var contentViewModel = (YourContentViewModel)contentView.DataContext;
+```
+
+### 3. ViewModelのメソッドを呼び出す
+
+```cs
+contentViewModel.YourMethod();
+```
+
+ただし、この方法はContent Regionに現在表示されているビューに対してのみ機能します。  
+Content Regionに複数のビューがある場合は、どのビューのメソッドを呼び出すかを明示的に指定する必要があります。
+
+また、この方法は、リージョンの名前が"ContentRegion"であることを前提としています。  
+もし異なる名前を使用している場合は、適宜変更してください。
