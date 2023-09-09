@@ -33,6 +33,7 @@ export function middleware(request: NextRequest) {
     [
       '/sitemap.xml',
       '/robots.txt',
+      '/ads.txt',
       '/manifest.json',
       '/search.json'
       // '/favicon.ico',
