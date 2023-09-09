@@ -11,13 +11,12 @@
 * [x] SEO 対策 sitemap
 * [x] SEO 対策 robots.text
 
-* [] Google Search Console 対応
-* [] Google Analytics 対応
-* [] Google Adsense 対応
+* [x] Google Search Console 対応
+* [x] Google Analytics 対応
+* [x] Google Adsense 対応
+
+* [x] シューティングゲーム、タイピングゲームをゲーム一覧に追加
 
 * [] 既存の記事を移行
-
-* [] シューティングゲーム、タイピングゲームをゲーム一覧に追加
-* [] 既存の記事を追加
 
 * [] railway に NestJS をデプロイ
