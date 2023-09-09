@@ -6,7 +6,7 @@ const siteMetadata = {
   description: 'A blog about system development and programming related to IT',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://computing-atman.onrender.com/',
+  siteUrl: 'https://computing-atman.com/',
   siteRepo: 'https://github.com/atman-33/computing-atman-v4-mk2',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',
