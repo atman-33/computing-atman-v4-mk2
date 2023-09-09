@@ -5,15 +5,19 @@
 * [x] ダークテーマでスマホのメニューが白いのを修正
 * [x] スマホデザインのブログ記事がはみ出すのを修正
 
-* [] 既存の記事を移行
+* [x] NextJS のブログ機能を実装してデプロイ
 
-* [] NextJS のブログ機能を実装してデプロイ
+* [x] SEO 対策 head 情報表示
+* [x] SEO 対策 sitemap
+* [x] SEO 対策 robots.text
+
+* [] Google Search Console 対応
+* [] Google Analytics 対応
+* [] Google Adsense 対応
+
+* [] 既存の記事を移行
 
 * [] シューティングゲーム、タイピングゲームをゲーム一覧に追加
 * [] 既存の記事を追加
 
-* [] SEO 対策 head 情報表示
-* [] SEO 対策 sitemap
-* [] SEO 対策 robots.text
-
-* [] railway と render.com にデプロイ
+* [] railway に NestJS をデプロイ

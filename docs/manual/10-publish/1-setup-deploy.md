@@ -31,4 +31,6 @@ Start Command:
 * set variables of .env.local
 * set PORT (any PORT is OK)
 
+`PORT: 10000` (PORT 10000 is default port of render.com)
+
 > If not set PORT, display blank page!!
