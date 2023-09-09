@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <>
       <Hero
-        title="Happy coding!!"
+        title="Happy Coding!!"
         description={`This website is an information site on system development and programming related to IT.`}
         heroImage={heroImage}
       />
