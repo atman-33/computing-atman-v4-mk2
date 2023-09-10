@@ -1,7 +1,7 @@
 import { allBlogs } from 'contentlayer/generated';
 import { slug } from 'github-slugger';
 import { Metadata } from 'next';
-import { allCoreContent } from 'pliny/utils/contentlayer';
+import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
 import siteMetadata from '../../../../../data/site-metadata';
 import { Locale } from '../../../../../i18n/i18n-config';
 import ListLayout from '../../../../../layouts/list-layout-with-tags';
@@ -35,8 +35,9 @@ export default function TagPage({ params }: { params: { tag: string; lang: Local
   const tag = decodeURI(params.tag);
   // Capitalize first letter and convert space to dash
   const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1);
+  const sortedPosts = sortPosts(allBlogs);
   const filteredPosts = allCoreContent(
-    allBlogs.filter((post) => post.tags && post.tags.map((t) => slug(t)).includes(tag))
+    sortedPosts.filter((post) => post.tags && post.tags.map((t) => slug(t)).includes(tag))
   );
   return <ListLayout posts={filteredPosts} title={title} locale={params.lang} />;
 }

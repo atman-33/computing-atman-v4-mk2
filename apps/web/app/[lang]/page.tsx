@@ -1,6 +1,6 @@
 import { Blog, allBlogs } from 'contentlayer/generated';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
-import heroImage from '../../public/static/images/hero.png';
+import heroImage from '../../public/static/images/hero2.png';
 import Hero from './_components/hero';
 import Main from './_components/main';
 
@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <>
       <Hero
-        title="Happy coding!!"
+        title="Happy Coding!!"
         description={`This website is an information site on system development and programming related to IT.`}
         heroImage={heroImage}
       />
