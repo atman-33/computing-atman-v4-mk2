@@ -21,6 +21,8 @@
 
 * [x] nextjs apollo graphql を構築
 
+* [] ローディング待ちを追加
+
 * [] okkino Backend を構築
 
 * [] railway に NestJS をデプロイ
