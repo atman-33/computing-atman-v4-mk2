@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@libs/api/data-access-db": ["libs/api/data-access-db/src/index.ts"],
+      "@libs/api/feature-image": ["libs/api/feature-image/src/index.ts"],
       "@libs/api/feature-sample": ["libs/api/feature-sample/src/index.ts"],
       "@libs/api/generated-db-types": ["libs/api/generated-db-types/src/index.ts"],
       "contentlayer/generated": ["./.contentlayer/generated"]
