@@ -1,4 +1,13 @@
 {
+  "description": "システム開発とプログラミングに関する情報サイトです。",
+  "header_nav_links": [
+    { "href": "/", "title": "ホーム" },
+    { "href": "/blog", "title": "ブログ" },
+    { "href": "/blog/tags", "title": "タグ" },
+    { "href": "/sites", "title": "サイト" },
+    { "href": "/games", "title": "ゲーム" },
+    { "href": "/about", "title": "About" }
+  ],
   "navigation": {
     "menu": "メニュー",
     "cart": "カート",

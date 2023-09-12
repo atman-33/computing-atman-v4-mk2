@@ -21,7 +21,10 @@
 
 * [x] nextjs apollo graphql を構築
 
-* [] ローディング待ちを追加
+* [x] ローディング待ちを追加
+* [x] トップ画面を日本語対応
+
+* [] daisy ui 導入
 
 * [] okkino Backend を構築
 
