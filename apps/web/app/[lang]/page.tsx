@@ -1,19 +1,23 @@
 import { Blog, allBlogs } from 'contentlayer/generated';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
-import heroImage from '../../public/static/images/hero3.png';
+import { getDictionary } from '../../i18n/get-dictionary';
+import { Locale, i18n } from '../../i18n/i18n-config';
+import heroImage from '../../public/static/images/hero.png';
 import Hero from './_components/hero';
 import Main from './_components/main';
 
-export default function Page() {
+interface IPageParams {
+  params: { lang: Locale };
+}
+
+export default async function Page({ params }: IPageParams) {
+  const t = await getDictionary(params.lang ?? i18n.defaultLocale);
+
   const sortedPosts = sortPosts(allBlogs);
   const posts = allCoreContent(sortedPosts);
   return (
     <>
-      <Hero
-        title="Computing Atman"
-        description={`This website is an information site on system development and programming related to IT.`}
-        heroImage={heroImage}
-      />
+      <Hero title="Computing Atman" description={t.description} heroImage={heroImage} />
       <Main posts={posts as unknown as Blog[]} />
     </>
   );

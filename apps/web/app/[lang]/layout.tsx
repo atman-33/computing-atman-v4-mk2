@@ -91,7 +91,7 @@ export default async function RootLayout({
           <SectionContainer>
             <div className="flex flex-col justify-between font-sans">
               <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-                <Header />
+                <Header locale={params.lang} />
                 {children}
               </SearchProvider>
               <Footer />

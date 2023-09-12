@@ -1,5 +1,6 @@
-import headerNavLinks from '../data/header-nav-links';
 import siteMetadata from '../data/site-metadata';
+import { getDictionary } from '../i18n/get-dictionary';
+import { Locale, i18n } from '../i18n/i18n-config';
 import logoImage from '../public/static/logo.svg';
 import Image from './image';
 import Link from './link';
@@ -7,7 +8,11 @@ import MobileNav from './mobile-nav';
 import SearchButton from './search-button';
 import ThemeSwitch from './theme-switch';
 
-const Header = () => {
+const Header = async (props: { locale?: Locale }) => {
+  const { locale } = props;
+  const t = await getDictionary(locale ?? i18n.defaultLocale);
+  const headerNavLinks = t.header_nav_links;
+
   return (
     // <header className="sticky top-0 z-10 flex items-center justify-between bg-white py-10 dark:bg-gray-900">
     <header className="sticky top-0 z-10 flex items-center justify-between py-10">
@@ -41,7 +46,7 @@ const Header = () => {
           ))}
         <SearchButton />
         <ThemeSwitch />
-        <MobileNav />
+        <MobileNav headerNavLinks={headerNavLinks} />
       </div>
     </header>
   );

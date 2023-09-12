@@ -1,4 +1,13 @@
 {
+  "description": "This website is an information site on system development and programming related to IT.",
+  "header_nav_links": [
+    { "href": "/", "title": "Home" },
+    { "href": "/blog", "title": "Blog" },
+    { "href": "/blog/tags", "title": "Tags" },
+    { "href": "/sites", "title": "Sites" },
+    { "href": "/games", "title": "Games" },
+    { "href": "/about", "title": "About" }
+  ],
   "navigation": {
     "menu": "Menu",
     "cart": "Cart",

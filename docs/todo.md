@@ -16,10 +16,20 @@
 * [x] Google Adsense 対応
 
 * [x] シューティングゲーム、タイピングゲームをゲーム一覧に追加
-
 * [x] 既存の記事を移行
-
 * [x] トップページ画像を変更
 
-* [] nextjs apollo graphql を構築
+* [x] nextjs apollo graphql を構築
+
+* [x] ローディング待ちを追加
+* [x] トップ画面を日本語対応
+
+* [] daisy ui 導入
+
+* [] okkino Backend を構築
+
 * [] railway に NestJS をデプロイ
+
+* [] booker を構築
+* [] スライドショーアプリを作成
+* [] 購入依頼アプリを作成

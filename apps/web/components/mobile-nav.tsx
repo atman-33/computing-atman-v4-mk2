@@ -1,10 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import headerNavLinks from '../data/header-nav-links';
 import Link from './link';
 
-const MobileNav = () => {
+interface IMobailnavProps {
+  headerNavLinks: {
+    href: string;
+    title: string;
+  }[];
+}
+
+const MobileNav = (props: IMobailnavProps) => {
+  const { headerNavLinks } = props;
+
   const [navShow, setNavShow] = useState(false);
 
   const onToggleNav = () => {
