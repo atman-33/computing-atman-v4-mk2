@@ -1,7 +1,8 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import Link from '@/components/link';
+import Tag from '@/components/tag';
 import { slug } from 'github-slugger';
-import Link from '../../../../components/link';
-import Tag from '../../../../components/tag';
-import tagData from '../../../../public/tag-data.json';
+import tagData from '../../../public/tag-data.json';
 import { genPageMetadata } from '../../_components/seo';
 
 export const metadata = genPageMetadata({ title: 'Tags', description: 'Things I blog about' });

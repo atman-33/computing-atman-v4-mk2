@@ -1,10 +1,11 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Blog } from '.contentlayer/generated/types';
+import Link from '@/components/link';
+import Tag from '@/components/tag';
+import Thumbnail from '@/components/thumbnail';
+import siteMetadata from '@/data/site-metadata';
 import { formatDate } from 'pliny/utils/formatDate';
-import Link from '../../../components/link';
-import Tag from '../../../components/tag';
-import Thumbnail from '../../../components/thumbnail';
-import siteMetadata from '../../../data/site-metadata';
 // import NewsletterForm from 'pliny/ui/NewsletterForm';
 
 const MAX_DISPLAY = 5;

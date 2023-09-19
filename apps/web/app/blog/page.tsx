@@ -1,18 +1,14 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import ListLayoutWithTags from '@/layouts/list-layout-with-tags';
 import { allBlogs } from 'contentlayer/generated';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
-import { Locale } from '../../../i18n/i18n-config';
-import ListLayoutWithTags from '../../../layouts/list-layout-with-tags';
 import { genPageMetadata } from '../_components/seo';
 
 const POSTS_PER_PAGE = 5;
 
 export const metadata = genPageMetadata({ title: 'Blog' });
 
-interface IPageParams {
-  params: { lang: Locale };
-}
-
-export default function BlogPage({ params }: IPageParams) {
+export default function BlogPage() {
   const posts = allCoreContent(sortPosts(allBlogs));
   const pageNumber = 1;
   const initialDisplayPosts = posts.slice(
@@ -30,7 +26,6 @@ export default function BlogPage({ params }: IPageParams) {
       initialDisplayPosts={initialDisplayPosts}
       pagination={pagination}
       title="All Posts"
-      locale={params.lang}
     />
   );
 }

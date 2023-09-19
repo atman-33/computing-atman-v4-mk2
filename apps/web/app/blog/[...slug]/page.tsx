@@ -1,17 +1,18 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import '@/styles/prism.css';
 import 'katex/dist/katex.css';
-import '../../../../styles/prism.css';
 
+import { components } from '@/components/mdx-components';
+import PageTitle from '@/components/page-title';
+import siteMetadata from '@/data/site-metadata';
+import PostBanner from '@/layouts/post-banner';
+import PostLayout from '@/layouts/post-layout';
+import PostSimple from '@/layouts/post-simple';
 import type { Authors, Blog } from 'contentlayer/generated';
 import { allAuthors, allBlogs } from 'contentlayer/generated';
 import { Metadata } from 'next';
 import { MDXLayoutRenderer } from 'pliny/mdx-components';
 import { allCoreContent, coreContent, sortPosts } from 'pliny/utils/contentlayer';
-import { components } from '../../../../components/mdx-components';
-import PageTitle from '../../../../components/page-title';
-import siteMetadata from '../../../../data/site-metadata';
-import PostBanner from '../../../../layouts/post-banner';
-import PostLayout from '../../../../layouts/post-layout';
-import PostSimple from '../../../../layouts/post-simple';
 
 const defaultLayout = 'PostLayout';
 

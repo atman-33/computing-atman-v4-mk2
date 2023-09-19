@@ -16,7 +16,10 @@
         "name": "next"
       }
     ],
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "**/*.ts",
@@ -27,7 +30,8 @@
     "../../dist/apps/web/.next/types/**/*.ts",
     "next-env.d.ts",
     "../../.contentlayer/generated",
-    "../../.contentlayer/generated/**/*.json"
+    "../../.contentlayer/generated/**/*.json",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "../../dist/apps/web/.next/types/**/*.ts",

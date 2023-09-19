@@ -15,6 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@/components/*": ["apps/web/components/*"],
+      "@/data/*": ["apps/web/data/*"],
+      "@/layouts/*": ["apps/web/layouts/*"],
+      "@/styles/*": ["apps/web/styles/*"],
       "@libs/api/data-access-db": ["libs/api/data-access-db/src/index.ts"],
       "@libs/api/feature-image": ["libs/api/feature-image/src/index.ts"],
       "@libs/api/feature-sample": ["libs/api/feature-sample/src/index.ts"],

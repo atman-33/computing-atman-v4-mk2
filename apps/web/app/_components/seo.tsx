@@ -1,5 +1,6 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import siteMetadata from '@/data/site-metadata';
 import { Metadata } from 'next';
-import siteMetadata from '../../../data/site-metadata';
 
 interface PageSEOProps {
   title: string;

@@ -1,7 +1,7 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import ListLayout from '@/layouts/list-layout-with-tags';
 import { allBlogs } from 'contentlayer/generated';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
-import { Locale } from '../../../../../i18n/i18n-config';
-import ListLayout from '../../../../../layouts/list-layout-with-tags';
 
 const POSTS_PER_PAGE = 5;
 
@@ -14,7 +14,6 @@ export const generateStaticParams = async () => {
 
 interface IPageParams {
   params: {
-    lang: Locale;
     page: string;
   };
 }
@@ -37,7 +36,6 @@ export default function Page({ params }: IPageParams) {
       initialDisplayPosts={initialDisplayPosts}
       pagination={pagination}
       title="All Posts"
-      locale={params.lang}
     />
   );
 }
