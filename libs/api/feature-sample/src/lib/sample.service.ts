@@ -22,11 +22,11 @@ export class SampleService {
   }
 
   findOne(findUniqueSampleArgs: FindUniqueSampleArgs) {
-    return this.prisma.user.findUnique(findUniqueSampleArgs);
+    return this.prisma.sample.findUnique(findUniqueSampleArgs);
   }
 
   update(updateOneSampleArgs: UpdateOneSampleArgs) {
-    return this.prisma.user.update(updateOneSampleArgs);
+    return this.prisma.sample.update(updateOneSampleArgs);
   }
 
   remove(deleteOneSampleArgs: DeleteOneSampleArgs) {

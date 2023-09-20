@@ -3,7 +3,8 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
+    // provider = "postgresql"
+    provider = "mongodb"
     url      = env("ATMAN_DB_URL")
 }
 
@@ -29,132 +30,132 @@ generator nestgraphql {
 
 // ---- Sample -------------------------------------------- 
 model Sample {
-    id   String  @id @default(uuid())
+    id   String  @id @default(auto()) @map("_id") @db.ObjectId
     /// @Validator.IsString()
     text String?
 }
 
 // ---- OKKINO -------------------------------------------- 
 
-model User {
-    id       String  @id @default(uuid())
-    /// @Validator.IsEmail()
-    email    String  @unique
-    /// @Validator.IsString()
-    /// @Validator.MaxLength(100)
-    /// @Validator.MinLength(3)
-    name     String?
-    /// @Validator.IsString()
-    /// @Validator.MaxLength(100)
-    /// @Validator.MinLength(8)
-    /// @HideField()
-    password String
-}
+// model User {
+//     id       String  @id @default(uuid())
+//     /// @Validator.IsEmail()
+//     email    String  @unique
+//     /// @Validator.IsString()
+//     /// @Validator.MaxLength(100)
+//     /// @Validator.MinLength(3)
+//     name     String?
+//     /// @Validator.IsString()
+//     /// @Validator.MaxLength(100)
+//     /// @Validator.MinLength(8)
+//     /// @HideField()
+//     password String
+// }
 
-model HomeBlock {
-    id             String @id @default(uuid())
-    /// @Validator.IsString()
-    /// @Validator.MaxLength(100)
-    /// @Validator.MinLength(3)
-    navigationPath String
-    image          Image  @relation(fields: [imageId], references: [id])
-    imageId        String @unique
-}
+// model HomeBlock {
+//     id             String @id @default(uuid())
+//     /// @Validator.IsString()
+//     /// @Validator.MaxLength(100)
+//     /// @Validator.MinLength(3)
+//     navigationPath String
+//     image          Image  @relation(fields: [imageId], references: [id])
+//     imageId        String @unique
+// }
 
-model Product {
-    id            String  @id @default(uuid())
-    /// @Validator.IsString()
-    /// @Validator.MaxLength(100)
-    /// @Validator.MinLength(3)
-    name          String  @unique
-    /// @Validator.IsString()
-    /// @Validator.MaxLength(1000)
-    /// @Validator.MinLength(0)
-    description   String?
-    /// @Validator.@IsInt()
-    /// @Validator.@Min(1)
-    /// @Validator.@Max(100_000)
-    price         Int
-    /// @Validator.@IsInt()
-    /// @Validator.@Min(1)
-    /// @Validator.@Max(100_000)
-    discountPrice Int?
+// model Product {
+//     id            String  @id @default(uuid())
+//     /// @Validator.IsString()
+//     /// @Validator.MaxLength(100)
+//     /// @Validator.MinLength(3)
+//     name          String  @unique
+//     /// @Validator.IsString()
+//     /// @Validator.MaxLength(1000)
+//     /// @Validator.MinLength(0)
+//     description   String?
+//     /// @Validator.@IsInt()
+//     /// @Validator.@Min(1)
+//     /// @Validator.@Max(100_000)
+//     price         Int
+//     /// @Validator.@IsInt()
+//     /// @Validator.@Min(1)
+//     /// @Validator.@Max(100_000)
+//     discountPrice Int?
 
-    images            Image[]
-    availableColors   RgbColor[]
-    productCategories ProductCategory[]
-    productSizes      ProductSize[]
-    productLengths    ProductLength[]
-}
+//     images            Image[]
+//     availableColors   RgbColor[]
+//     productCategories ProductCategory[]
+//     productSizes      ProductSize[]
+//     productLengths    ProductLength[]
+// }
 
-model Image {
-    id              String     @id @default(uuid())
-    /// @Validator.IsString()
-    /// @Validator.MaxLength(100)
-    /// @Validator.MinLength(3)
-    title           String?
-    /// @Validator.IsString()
-    /// @Validator.MaxLength(100)
-    /// @Validator.MinLength(3)
-    imagePath       String
-    rgbBackground   RgbColor   @relation(fields: [rgbBackgroundId], references: [id])
-    rgbBackgroundId String
-    //----Relations----//
-    /// @HideField()
-    homeBlock       HomeBlock?
-    /// @HideField()
-    product         Product?   @relation(fields: [productId], references: [id])
-    /// @HideField()
-    productId       String?
-}
+// model Image {
+//     id              String     @id @default(uuid())
+//     /// @Validator.IsString()
+//     /// @Validator.MaxLength(100)
+//     /// @Validator.MinLength(3)
+//     title           String?
+//     /// @Validator.IsString()
+//     /// @Validator.MaxLength(100)
+//     /// @Validator.MinLength(3)
+//     imagePath       String
+//     rgbBackground   RgbColor   @relation(fields: [rgbBackgroundId], references: [id])
+//     rgbBackgroundId String
+//     //----Relations----//
+//     /// @HideField()
+//     homeBlock       HomeBlock?
+//     /// @HideField()
+//     product         Product?   @relation(fields: [productId], references: [id])
+//     /// @HideField()
+//     productId       String?
+// }
 
-model RgbColor {
-    id       String    @id @default(uuid())
-    /// @Validator.IsString()
-    /// @Validator.MaxLength(100)
-    /// @Validator.MinLength(3)
-    name     String?   @unique
-    /// @Validator.IsInt()
-    /// @Validator.Min(0)
-    /// @Validator.Max(255)
-    r        Int
-    /// @Validator.IsInt()
-    /// @Validator.Min(0)
-    /// @Validator.Max(255)
-    g        Int
-    /// @Validator.IsInt()
-    /// @Validator.Min(0)
-    /// @Validator.Max(255)
-    b        Int
-    /// @HideField()
-    a        Float?
-    //----Relations----//
-    /// @HideField()
-    products Product[]
-    /// @HideField()
-    Image    Image[]
-}
+// model RgbColor {
+//     id       String    @id @default(uuid())
+//     /// @Validator.IsString()
+//     /// @Validator.MaxLength(100)
+//     /// @Validator.MinLength(3)
+//     name     String?   @unique
+//     /// @Validator.IsInt()
+//     /// @Validator.Min(0)
+//     /// @Validator.Max(255)
+//     r        Int
+//     /// @Validator.IsInt()
+//     /// @Validator.Min(0)
+//     /// @Validator.Max(255)
+//     g        Int
+//     /// @Validator.IsInt()
+//     /// @Validator.Min(0)
+//     /// @Validator.Max(255)
+//     b        Int
+//     /// @HideField()
+//     a        Float?
+//     //----Relations----//
+//     /// @HideField()
+//     products Product[]
+//     /// @HideField()
+//     Image    Image[]
+// }
 
-model ProductCategory {
-    id String @id @default(uuid())
+// model ProductCategory {
+//     id String @id @default(uuid())
 
-    name     String    @unique
-    /// @HideField()
-    products Product[]
-}
+//     name     String    @unique
+//     /// @HideField()
+//     products Product[]
+// }
 
-model ProductSize {
-    id String @id @default(uuid())
+// model ProductSize {
+//     id String @id @default(uuid())
 
-    name     String    @unique
-    /// @HideField()
-    products Product[]
-}
+//     name     String    @unique
+//     /// @HideField()
+//     products Product[]
+// }
 
-model ProductLength {
-    id String @id @default(uuid())
+// model ProductLength {
+//     id String @id @default(uuid())
 
-    name     String    @unique
-    /// @HideField()
-    products Product[]
-}
+//     name     String    @unique
+//     /// @HideField()
+//     products Product[]
+// }
