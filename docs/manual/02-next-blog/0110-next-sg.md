@@ -32,3 +32,5 @@ npm i @nestjs/serve-static
       exclude: ['/api/*', '/api/graphql']
     }),
 ```
+
+After serve api(backend server), we can access Nextjs app. 
