@@ -1,3 +1,5 @@
+## Backup
+
 * [x] site-metadata を修正
 * [x] メール送信機能を除外
 * [x] giscuss 機能を実装
@@ -29,7 +31,11 @@
 
 * [x] railway に NestJS をデプロイ　→　保留。Render.com で nextjs x nestjs を実装可能な見込み
 
-* [] nestjs mongodb graphql を mongoose で実装
+## 2023/09/23
+
+* [x] nestjs mongodb graphql を mongoose で実装
+* [ ] nestjs 用 codegen を実装
+* [ ] user を作成（cookie 対応）
 
 * [] okkino を構築
 * [] booker を構築

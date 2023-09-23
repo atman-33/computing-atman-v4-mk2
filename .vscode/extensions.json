@@ -5,6 +5,7 @@
     "firsttris.vscode-jest-runner",
     "dbaeumer.vscode-eslint",
     "hediet.vscode-drawio",
-    "prisma.prisma"
+    "prisma.prisma",
+    "yzhang.markdown-all-in-one"
   ]
 }
