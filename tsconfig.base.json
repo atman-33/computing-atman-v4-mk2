@@ -20,8 +20,11 @@
       "@/layouts/*": ["apps/web/layouts/*"],
       "@/styles/*": ["apps/web/styles/*"],
       "@libs/api/feature-image": ["libs/api/feature-image/src/index.ts"],
+      "@libs/api/feature-test-mongoose": ["libs/api/feature-test-mongoose/src/index.ts"],
+      "@libs/api/mongoose/shared": ["libs/api/mongoose/shared/src/index.ts"],
       "@libs/api/prisma/data-access-db": ["libs/api/prisma/data-access-db/src/index.ts"],
       "@libs/api/prisma/generated-db-types": ["libs/api/prisma/generated-db-types/src/index.ts"],
+      "@libs/shared/config": ["libs/shared/config/src/index.ts"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
