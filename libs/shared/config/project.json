@@ -1,0 +1,26 @@
+{
+  "name": "shared-config",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/config/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/config",
+        "main": "libs/shared/config/src/index.ts",
+        "tsConfig": "libs/shared/config/tsconfig.lib.json",
+        "assets": ["libs/shared/config/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/config/**/*.ts", "libs/shared/config/package.json"]
+      }
+    }
+  },
+  "tags": ["scope:shared"]
+}

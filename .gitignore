@@ -46,3 +46,6 @@ Thumbs.db
 
 # contentlayer
 .contentlayer
+
+# mondodb data
+tools/docker-atman/mongodb/data

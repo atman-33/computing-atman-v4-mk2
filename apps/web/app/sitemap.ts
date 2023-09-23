@@ -1,6 +1,7 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import siteMetadata from '@/data/site-metadata';
 import { allBlogs } from 'contentlayer/generated';
 import { MetadataRoute } from 'next';
-import siteMetadata from '../data/site-metadata';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = siteMetadata.siteUrl;

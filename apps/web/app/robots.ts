@@ -1,5 +1,6 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import siteMetadata from '@/data/site-metadata';
 import { MetadataRoute } from 'next';
-import siteMetadata from '../data/site-metadata';
 
 export default function robots(): MetadataRoute.Robots {
   return {

@@ -1,16 +1,16 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 'use client';
 
+import Link from '@/components/link';
+import Tag from '@/components/tag';
+import Thumbnail from '@/components/thumbnail';
+import siteMetadata from '@/data/site-metadata';
 import type { Blog } from 'contentlayer/generated';
 import { slug } from 'github-slugger';
 import { usePathname } from 'next/navigation';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
-import Link from '../components/link';
-import Tag from '../components/tag';
-import Thumbnail from '../components/thumbnail';
-import siteMetadata from '../data/site-metadata';
-import { Locale } from '../i18n/i18n-config';
 import tagData from '../public/tag-data.json';
 
 interface PaginationProps {
@@ -22,7 +22,6 @@ interface ListLayoutProps {
   title: string;
   initialDisplayPosts?: CoreContent<Blog>[];
   pagination?: PaginationProps;
-  locale: Locale;
 }
 
 function Pagination({ totalPages, currentPage }: PaginationProps) {
@@ -71,8 +70,7 @@ export default function ListLayoutWithTags({
   posts,
   title,
   initialDisplayPosts = [],
-  pagination,
-  locale
+  pagination
 }: ListLayoutProps) {
   const pathname = usePathname();
   const tagCounts = tagData as Record<string, number>;
@@ -95,7 +93,7 @@ export default function ListLayoutWithTags({
         <div className="flex sm:space-x-24">
           <div className="hidden min-w-[280px] max-w-[280px] flex-wrap rounded bg-gray-50 pt-5 shadow-md dark:bg-gray-900/70 dark:shadow-gray-800/40 sm:flex">
             <div className="py-4 px-6">
-              {pathname.startsWith(`/${locale}/blog`) ? (
+              {pathname.startsWith(`/blog`) ? (
                 <h3 className="text-primary-500 font-bold uppercase">All Posts</h3>
               ) : (
                 <Link

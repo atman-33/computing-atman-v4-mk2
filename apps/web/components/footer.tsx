@@ -1,4 +1,5 @@
-import siteMetadata from '../data/site-metadata';
+/* eslint-disable @nx/enforce-module-boundaries */
+import siteMetadata from '@/data/site-metadata';
 import Link from './link';
 import SocialIcon from './social-icons';
 

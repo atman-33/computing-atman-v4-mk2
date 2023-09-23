@@ -1,15 +1,15 @@
-version: '3.9'
+version: "3.1"
+
 services:
-  db:
-    image: postgres
-    container_name: postgres
+  mongo:
+    image: mongo
+    container_name: mongodb
     restart: always
     ports:
-      - '5555:5432'
+      - "27017:27017"
     volumes:
-      - db-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: mysecretpassword
-      PGDATA: /var/lib/postgresql/data/pgdata
+      - ./mongodb/initdb.d:/docker-entrypoint-initdb.d
+      - db-data:/var/lib/mongodb/data
+
 volumes:
   db-data:
