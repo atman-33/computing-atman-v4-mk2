@@ -1,1 +1,1 @@
-export * from './lib/api-feature-test-mongoose';
+export * from './lib/test-mongoose.module';

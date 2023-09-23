@@ -45,6 +45,15 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     return this.model.find(filterQuery, {}, { lean: true });
   }
 
+  async deleteOne(filterQuery: FilterQuery<TDocument>): Promise<void> {
+    const result = await this.model.deleteOne(filterQuery);
+
+    if (result.deletedCount === 0) {
+      this.logger.warn('No document found for deletion with filterQuery', filterQuery);
+      // throw new NotFoundException('No document found for deletion.');
+    }
+  }
+
   async deleteMany(filterQuery: FilterQuery<TDocument>): Promise<void> {
     const result = await this.model.deleteMany(filterQuery);
 

@@ -1,4 +1,6 @@
 import { ImageModule } from '@libs/api/feature-image';
+import { TestMongooseModule } from '@libs/api/feature-test-mongoose';
+import { DatabaseModule } from '@libs/api/mongoose/shared';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -18,7 +20,13 @@ import { AppService } from './app.service';
       path: '/api/graphql',
       autoSchemaFile: true
     }),
-    ImageModule
+    // ---- RestAPI ---- //
+    ImageModule,
+
+    // ---- Graphql ---- //
+    // When using Mongoose, the DatabaseModule is required.
+    DatabaseModule,
+    TestMongooseModule
   ],
   controllers: [AppController],
   providers: [AppService]
