@@ -1,5 +1,4 @@
 import { ImageModule } from '@libs/api/feature-image';
-import { SampleModule } from '@libs/api/feature-sample';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -19,8 +18,7 @@ import { AppService } from './app.service';
       path: '/api/graphql',
       autoSchemaFile: true
     }),
-    ImageModule,
-    SampleModule
+    ImageModule
   ],
   controllers: [AppController],
   providers: [AppService]

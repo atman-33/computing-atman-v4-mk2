@@ -129,6 +129,6 @@
     "typescript": "~5.1.3"
   },
   "prisma": {
-    "schema": "libs/api/data-access-db/src/lib/schema.prisma"
+    "schema": "libs/api/prisma/data-access-db/src/lib/schema.prisma"
   }
 }

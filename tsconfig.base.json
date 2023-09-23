@@ -19,10 +19,9 @@
       "@/data/*": ["apps/web/data/*"],
       "@/layouts/*": ["apps/web/layouts/*"],
       "@/styles/*": ["apps/web/styles/*"],
-      "@libs/api/data-access-db": ["libs/api/data-access-db/src/index.ts"],
       "@libs/api/feature-image": ["libs/api/feature-image/src/index.ts"],
-      "@libs/api/feature-sample": ["libs/api/feature-sample/src/index.ts"],
-      "@libs/api/generated-db-types": ["libs/api/generated-db-types/src/index.ts"],
+      "@libs/api/prisma/data-access-db": ["libs/api/prisma/data-access-db/src/index.ts"],
+      "@libs/api/prisma/generated-db-types": ["libs/api/prisma/generated-db-types/src/index.ts"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },

@@ -1,7 +1,7 @@
 ## generate libs data-access-db
 
 ```bash
-npx nx generate @nx/js:library api-data-access-db --directory=libs/api/data-access-db --importPath=@libs/api/data-access-db --tags=scope:api --bundler=swc
+npx nx generate @nx/js:library api-data-access-db --directory=libs/api/prisma/data-access-db --importPath=@libs/api/prisma/data-access-db --tags=scope:api --bundler=swc
 
 ✔ Which unit test runner would you like to use? · none
 ```
@@ -44,7 +44,7 @@ export * from './lib/prisma.service';
   ...
   },
   "prisma": {
-    "schema": "libs/api/data-access-db/src/lib/schema.prisma"
+    "schema": "libs/api/prisma/data-access-db/src/lib/schema.prisma"
   }
 }
 ```

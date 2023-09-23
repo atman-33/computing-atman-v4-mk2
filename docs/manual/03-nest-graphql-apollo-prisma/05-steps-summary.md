@@ -2,7 +2,7 @@
 
 1. Add new model to shema.prisma
 
- `libs/api/data-access-db/src/lib/schema.prisma`
+ `libs/api/prisma/data-access-db/src/lib/schema.prisma`
 
 2. Run prisma migrate
 
@@ -12,7 +12,7 @@ package.json
 "db:migrate:dev": "npx env-cmd -f .env.local npx prisma migrate dev"
 ```
 
-After that, auto updated `libs/api/generated-db-types/src/index.ts`
+After that, auto updated `libs/api/prisma/generated-db-types/src/index.ts`
 
 3. Generate new feature
 
