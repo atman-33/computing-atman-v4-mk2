@@ -1,6 +1,7 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import siteMetadata from '@/data/site-metadata';
 import { AlgoliaButton } from 'pliny/search/AlgoliaButton';
 import { KBarButton } from 'pliny/search/KBarButton';
-import siteMetadata from '../data/site-metadata';
 
 const SearchButton = () => {
   if (

@@ -56,7 +56,7 @@ add db url to .env.local
  `/.env.local`
 
 ```text
-ATMAN_DB_URL=postgresql://postgres:mysecretpassword@localhost:5555/atman-db?schema=public
+DB_URL=postgresql://postgres:mysecretpassword@localhost:5555/atman-db?schema=public
 ```
 
 > .env.local to .gitignore

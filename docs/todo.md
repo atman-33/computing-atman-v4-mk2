@@ -24,12 +24,20 @@
 * [x] ローディング待ちを追加
 * [x] トップ画面を日本語対応
 
-* [] daisy ui 導入
+* [x] nextjs を SG に変更
+* [x] nestjs から nextjs SG を呼び出すように実装
 
-* [] okkino Backend を構築
+* [x] railway に NestJS をデプロイ　→　保留。Render.com で nextjs x nestjs を実装可能な見込み
 
-* [] railway に NestJS をデプロイ
+* [x] nestjs mongodb graphql を mongoose で実装
+* [x] nestjs 用 codegen を実装
+* [x] API PORT を実装
+* [x] web data-access-graphql の graphql-client.ts は、url を引数にするように変更（合わせてgraphgl client を web に実装）
 
+* [ ] user を作成（cookie 対応）
+
+* [] okkino を構築
 * [] booker を構築
 * [] スライドショーアプリを作成
 * [] 購入依頼アプリを作成
+* [] daisy ui 導入

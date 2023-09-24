@@ -1,7 +1,8 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
+import siteMetadata from '@/data/site-metadata';
 import { useEffect, useState } from 'react';
-import siteMetadata from '../data/site-metadata';
 
 const ScrollTopAndComment = () => {
   const [show, setShow] = useState(false);

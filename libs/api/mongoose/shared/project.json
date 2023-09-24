@@ -1,0 +1,29 @@
+{
+  "name": "api-mongoose-shared",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/mongoose/shared/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/api/mongoose/shared",
+        "main": "libs/api/mongoose/shared/src/index.ts",
+        "tsConfig": "libs/api/mongoose/shared/tsconfig.lib.json",
+        "assets": ["libs/api/mongoose/shared/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/api/mongoose/shared/**/*.ts",
+          "libs/api/mongoose/shared/package.json"
+        ]
+      }
+    }
+  },
+  "tags": ["scope:api"]
+}

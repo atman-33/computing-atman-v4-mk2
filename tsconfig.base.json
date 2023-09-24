@@ -15,10 +15,18 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@libs/api/data-access-db": ["libs/api/data-access-db/src/index.ts"],
+      "@/components/*": ["apps/web/components/*"],
+      "@/data/*": ["apps/web/data/*"],
+      "@/data-access/*": ["apps/web/data-access/*"],
+      "@/layouts/*": ["apps/web/layouts/*"],
+      "@/styles/*": ["apps/web/styles/*"],
+      "@libs/web/data-access-graphql": ["libs/web/data-access-graphql/src/index.ts"],
       "@libs/api/feature-image": ["libs/api/feature-image/src/index.ts"],
-      "@libs/api/feature-sample": ["libs/api/feature-sample/src/index.ts"],
-      "@libs/api/generated-db-types": ["libs/api/generated-db-types/src/index.ts"],
+      "@libs/api/feature-test-mongoose": ["libs/api/feature-test-mongoose/src/index.ts"],
+      "@libs/api/mongoose/shared": ["libs/api/mongoose/shared/src/index.ts"],
+      "@libs/api/prisma/data-access-db": ["libs/api/prisma/data-access-db/src/index.ts"],
+      "@libs/api/prisma/generated-db-types": ["libs/api/prisma/generated-db-types/src/index.ts"],
+      "@libs/shared/config": ["libs/shared/config/src/index.ts"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
