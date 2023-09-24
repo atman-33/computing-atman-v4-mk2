@@ -42,3 +42,35 @@ Step:
 
 1. delete `.next` folder
 2. build the project
+
+## env variables is undefined.
+
+**NEXT_PUBLIC_ is needed.**
+
+Non-NEXT_PUBLIC_ environment variables are only available in the Node.js environment, meaning they aren't accessible to the browser (the client runs in a different environment).
+
+> Reference URL: https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#exposing-environment-variables-to-the-browser
+
+## CORS error
+
+Add cors option to **NestJS**.
+
+ `apps/api/src/main.ts`
+
+```ts
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  const globalPrefix = 'api';
+  app.setGlobalPrefix(globalPrefix);
+
+  app.use(cookieParser());
+  app.useGlobalPipes(new ValidationPipe());
+
+  console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+  if (process.env.NODE_ENV === 'development') {
+    app.enableCors({
+      origin: '*',
+      allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
+    });
+  }
+```

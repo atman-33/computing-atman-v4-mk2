@@ -11,7 +11,7 @@ export const apiEnv: IApiEnv = {
     port: Number(process.env.ATMAN_API_PORT)
   },
   db: {
-    url: process.env.ATMAN_DB_URL
+    url: process.env.DB_URL
   }
 };
 

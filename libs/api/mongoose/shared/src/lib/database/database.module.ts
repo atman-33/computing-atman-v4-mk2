@@ -6,7 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     MongooseModule.forRootAsync({
       useFactory: () => ({
-        uri: env.ATMAN_DB_URL
+        uri: env.DB_URL
       })
     })
   ]

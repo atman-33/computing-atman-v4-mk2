@@ -23,8 +23,12 @@
     "----TOOLS SECTION----": "-------------------------",
     "verify": "nx affected:lint --fix --all && nx format:write && nx format:check && nx affected --target=lint --fix --parallel=3 && npx nx affected --target=test --parallel=3 && nx affected --target=build --parallel=3 --exclude=web",
     "----DEPLOY SECTION----": "-----------------------",
-    "cd:web": "npx nx build web --prod",
-    "cd:web-start": "cd dist/apps/web && npm run start"
+    "cd:build-api": "npx nx build api --prod",
+    "cd:build-web": "npx nx build web --prod",
+    "cd:build": "npm run cd:build-api && npm run cd:build-web",
+    "cd:web-start:server": "cd dist/apps/web && npm run start",
+    "cd:web-start:static": "npx serve dist/apps/web/.next",
+    "cd:api-start": "node dist/apps/api/main.js"
   },
   "private": true,
   "dependencies": {
