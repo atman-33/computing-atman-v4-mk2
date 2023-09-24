@@ -1,0 +1,164 @@
+---
+title: How to Serve Next.js SSG (Static Site Generation) from Nx NestJS
+date: '2023-09-24'
+lastmod: '2023-09-24'
+tags: ['nx', 'nest js', 'next js', 'ssg']
+images: ['/static/blog/48/1.jpg']
+summary: This article explains how to use the monorepo tool Nx to serve a statically generated site created with Next.js SSG (Static Site Generation) from a Next.js application. With this approach, you can have both the frontend and backend in a single project.
+---
+
+![nx-next](/static/blog/48/1.jpg)
+
+## Introduction
+
+In this article, we will explain how to use the monorepo tool Nx to serve a statically generated site created with Next.js SSG (Static Site Generation) from a Next.js application. This approach allows you to have both the frontend and backend in a single project.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## 1. Create Frontend and Backend Projects
+
+### Create Nx Workspace and Nestjs Project
+
+Navigate to the desired directory and run the following command:
+
+```bash
+npx create-nx-workspace@latest
+
+✔ Where would you like to create your workspace? · sample-workspace
+✔ Which stack do you want to use? · node
+✔ What framework should be used? · nest
+✔ Integrated monorepo, or standalone project? · integrated
+✔ Application name · api
+✔ Would you like to generate a Dockerfile? [https://docs.docker.com/] · No
+✔ Enable distributed caching to make your CI faster · No
+```
+
+This will create the Nestjs `api` project.
+
+### Create a Nextjs Project
+
+```bash
+nx g @nx/next:app web
+
+✔ Which stylesheet format would you like to use? · css
+✔ Which E2E test runner would you like to use? · cypress
+✔ Would you like to use the App Router (recommended)? (Y/n) · true
+```
+
+The directory structure created by the above commands will look like this:
+
+```text
+sample-workspace/
+  |- apps/
+  |    |- api/
+  |    |- web/
+```
+
+## 2. Enable Nextjs (Frontend) for SSG (Static Site Generation)
+
+To enable support for static files, make the following changes:
+
+* Add `unoptimized: true` in `images` (SSG doesn't support `next/image`).
+* Add `output: 'export'`.
+* Add `trailingSlash: true`.
+
+```js:apps/web/next.config.js
+const nextConfig = {
+  nx: {
+    // Set this to true if you would like to use SVGR
+    // See: https://github.com/gregberge/svgr
+    svgr: false
+  }, 
+  images: {
+    unoptimized: true,
+  }, 
+  output: 'export', 
+  trailingSlash: true
+}; 
+```
+
+> If you don't set `trailingSlash: true`, when accessing Nextjs via Nestjs, reloading the browser on pages other than the homepage will redirect you to the homepage.
+>
+> [NEXT.JS trailingSlash](https://nextjs.org/docs/app/api-reference/next-config-js/trailingSlash)
+
+## 3. Add ServeStaticModule to Nestjs (Backend)
+
+### Import the `serve-static` Package
+
+```bash
+npm i @nestjs/serve-static
+```
+
+### Implement the ServeStaticModule
+
+```ts:apps/api/src/app/app.module.ts
+import { ServeStaticModule } from '@nestjs/serve-static'; 
+import path, { join } from 'path'; 
+// Other standard imports are omitted
+
+@Module({
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'web/.next'),
+      exclude: ['/api/*']
+    }),
+  ], 
+  controllers: [AppController], 
+  providers: [AppService]
+})
+export class AppModule {}
+```
+
+With the above code, if the endpoint does not start with `/api`, it will redirect to the `.next` directory, which is the static site of Nextjs.
+
+> At this point, the `.next` folder has not been generated yet. It will be generated later when you run Nextjs Build, as explained below.
+
+## 4. Add Build and Start Commands to `package.json`
+
+Add the build and start commands to your `package.json` file.
+
+```json:package.json
+"scripts": {
+    "cd:build-api": "npx nx build api --prod",
+    "cd:build-web": "npx nx build web --prod",
+    "cd:build": "npm run cd:build-api && npm run cd:build-web",
+    "cd:web-start:server": "cd dist/apps/web && npm run start",
+    "cd:web-start:static": "npx serve dist/apps/web/.next",
+    "cd:api-start": "node dist/apps/api/main.js"
+}
+```
+
+Next, execute the build command:
+
+```bash
+npm run cd:build
+```
+
+This will generate build files for both the frontend (web) and backend (api).
+
+Finally, execute the start command:
+
+```bash
+npm run cd:api-start
+```
+
+This will start the backend server on localhost, and you can access the Next.js pages in your browser.
+
+By deploying these, you can serve both the frontend and backend integrated on a single server.
+
+For reference, here is the directory structure after the build:
+
+```text
+sample-workspace/
+  |- apps/
+  |    |- api/
+  |    |- web/
+  |
+  |-dist/  <= generated after the build
+  |   |- apps/
+  |        |- api/   
+  |        |- web/
+  |             |- .next/
+  |
+  |- package.json
+```

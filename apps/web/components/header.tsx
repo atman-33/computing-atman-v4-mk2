@@ -10,18 +10,18 @@ import ThemeSwitch from './theme-switch';
 
 const Header = async () => {
   return (
-    // <header className="sticky top-0 z-10 flex items-center justify-between bg-white py-10 dark:bg-gray-900">
-    <header className="sticky top-0 z-10 flex items-center justify-between py-10">
+    <header
+      className="sticky top-0 z-10 flex items-center justify-between bg-white py-6 px-10 shadow-xl dark:bg-gray-900"
+      style={{ margin: '0 calc(50% - 50vw)', width: '100vw' }}
+    >
       <div>
         <Link href="/" aria-label={siteMetadata.headerTitle}>
-          <div className="flex items-center justify-between">
-            <div className="mr-3 mt-3">
+          <div className="flex items-center justify-center">
+            <div className="mr-3">
               <Image src={logoImage} width={24} height={24} alt={'Logo'} />
             </div>
             {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className="hidden h-6 text-2xl font-semibold sm:block">
-                {siteMetadata.headerTitle}
-              </div>
+              <div className="h-6 text-base font-semibold sm:block">{siteMetadata.headerTitle}</div>
             ) : (
               siteMetadata.headerTitle
             )}
