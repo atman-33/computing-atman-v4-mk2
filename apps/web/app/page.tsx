@@ -2,7 +2,7 @@ import { env } from '@libs/shared/config';
 import { Blog, allBlogs } from 'contentlayer/generated';
 import Link from 'next/link';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
-import heroImage from '../public/static/images/hero.png';
+import heroImage from '../public/static/images/keyboard.jpg';
 import Hero from './_components/hero';
 import Main from './_components/main';
 
