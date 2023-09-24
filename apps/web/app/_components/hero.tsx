@@ -29,7 +29,7 @@ const Hero = (props: HeroProps) => {
               src={props.heroImage}
               width="300"
               height="300"
-              className={'object-cover'}
+              className={'rounded-lg object-cover shadow-xl'}
               alt="Hero Illustration"
               loading="eager"
               placeholder="blur"
