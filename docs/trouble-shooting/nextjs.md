@@ -76,3 +76,20 @@ async function bootstrap() {
 ```
 
 > Reference URL: https://qiita.com/daikiojm/items/4c2143a213332abf1170
+
+## When update next page exept top page (after deply), return top page.
+
+Add trailingSlash: true to next.config.js
+
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    ...
+    trailingSlash: true,
+    ...
+};
+
+module.exports = nextConfig;
+```
+
+> Reference URL: https://zenn.dev/kisukeyas/articles/6f679a67db3883

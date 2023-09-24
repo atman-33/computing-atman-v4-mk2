@@ -8,9 +8,13 @@ const nextConfig = {
     images: {
         unoptimized: true,
     },
-    output: 'export'
+    output: 'export',
+    trailingSlash: true
 };
 ```
+
+> With trailingSlash option set, urls like /about will redirect to /about/.
+> Reference URL: https://nextjs.org/docs/app/api-reference/next-config-js/trailingSlash
 
 ## Add ServeStaticModule to Nestjs project
 
