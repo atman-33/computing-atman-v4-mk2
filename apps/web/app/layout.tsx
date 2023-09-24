@@ -67,7 +67,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       </head>
 
-      <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
+      <body className="overflow-x-hidden bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
