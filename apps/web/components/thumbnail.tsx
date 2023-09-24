@@ -5,6 +5,8 @@ const defaultImage = '/static/images/default-thumbnail.png';
 export default function Thumbnail({ images }: { images: string[] | undefined }) {
   let image = images ? images[0] : defaultImage;
   image = image ?? defaultImage;
+  image = image !== '' ? image : defaultImage;
+
   return (
     <Image
       src={image}
