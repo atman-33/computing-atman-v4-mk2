@@ -1,0 +1,37 @@
+.loop_wrap {
+  display: flex;
+  width: 100vw;
+  height: 300px;
+  overflow: hidden;
+}
+
+.loop_wrap img {
+  width: auto;
+  height: 100%;
+}
+
+@keyframes loop {
+  0% {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes loop2 {
+  0% {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-200%);
+  }
+}
+
+.loop_wrap img:first-child {
+  animation: loop 100s -50s linear infinite;
+}
+
+.loop_wrap img:last-child {
+  animation: loop2 100s linear infinite;
+}
