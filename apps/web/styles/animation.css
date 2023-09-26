@@ -9,7 +9,6 @@
   width: auto;
   height: 100%;
 }
-
 @keyframes loop {
   0% {
     transform: translateX(100%);

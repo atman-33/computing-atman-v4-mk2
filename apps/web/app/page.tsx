@@ -4,6 +4,7 @@ import { Blog, allBlogs } from 'contentlayer/generated';
 import Link from 'next/link';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
 import backgroundImage from '../public/static/images/antoine-barres.jpg';
+import cloudsImage from '../public/static/images/clouds.png';
 import fogImage from '../public/static/images/fog-low.png';
 import HeroWithBackground from './_components/hero-with-background';
 import Main from './_components/main';
@@ -28,6 +29,7 @@ export default async function Page() {
       <HeroWithBackground
         backgroundImage1={backgroundImage}
         backgroundImage2={fogImage}
+        animationImage={cloudsImage}
         title="Computing Atman"
         description="This website is an information site on system development and programming related to IT."
       />
