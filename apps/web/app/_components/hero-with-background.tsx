@@ -27,7 +27,7 @@ export default function HeroWithBackground(props: HeroWithBackgroundProps) {
       >
         <div
           className="loop_wrap absolute"
-          style={{ margin: '0 calc(50% - 50vw)', width: '2000px', height: '30vw', bottom: '0px' }}
+          style={{ margin: '0 calc(50% - 50vw)', width: '100vw', height: '30vw', bottom: '0px' }}
         >
           <Image src={props.animationImage.src} alt="clouds" width={0} height={0}></Image>
           <Image src={props.animationImage.src} alt="clouds" width={0} height={0}></Image>
