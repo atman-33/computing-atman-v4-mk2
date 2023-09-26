@@ -49,3 +49,6 @@ Thumbs.db
 
 # mondodb data
 tools/docker-atman/mongodb/data
+
+# google service account json
+/tools/google-indexing-api/service_account.json
