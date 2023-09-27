@@ -38,6 +38,10 @@
 * [x] API PORT を実装
 * [x] web data-access-graphql の graphql-client.ts は、url を引数にするように変更（合わせてgraphgl client を web に実装）
 
+## 2023/09/27
+
+* [x] favicon を更新
+
 ## Later
 
 * [ ] user を作成（cookie 対応）
