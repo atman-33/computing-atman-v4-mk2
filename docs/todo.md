@@ -44,6 +44,8 @@
 
 ## Later
 
+* [x] google 検索用サムネイルを追加
+* [ ] テーブル編集画面を追加
 * [ ] user を作成（cookie 対応）
 
 * [] booker を構築

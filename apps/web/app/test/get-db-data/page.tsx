@@ -3,7 +3,7 @@
 import { gql } from '@/data-access/graphql-client';
 import { GetTestMongoosesDocument } from '@libs/web/data-access-graphql';
 
-export default async function page() {
+export default async function Page() {
   const data = (
     await gql.query({
       query: GetTestMongoosesDocument
