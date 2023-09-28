@@ -4,7 +4,7 @@ import '@/styles/animation.css';
 import Image from '@/components/image';
 import cloudsImage from '../../../public/static/images/clouds.png';
 
-export default function page() {
+export default function Page() {
   return (
     <div className="relative">
       <div
