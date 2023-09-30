@@ -1,0 +1,48 @@
+{
+  "Create Bindable Propery": {
+    "scope": "csharp",
+    "prefix": "propp",
+    "body": [
+      "private ${1:Type} _${3:${2/(.*)/${1:/camelcase}/}};",
+      "public ${1:Type} ${2:Name}",
+      "{",
+      "   get { return _$3; }",
+      "   set { SetProperty(ref _$3, value); }",
+      ,
+      "}"
+    ],
+    "description": "Creat a propety, with a backing field, that depends on BindableBase."
+  },
+  "Create DelegatCommand Property and Method": {
+    "scope": "csharp",
+    "prefix": "cmdm",
+    "body": [
+      "public DelegateCommand ${1:Name} { get; }",
+      "",
+      "private void ${1:Name}Execute()",
+      "{",
+      "   // TODO: Add following code to constructor.",
+      "   // ${1:Name} = new DelegateCommand(${1:Name}Execute);",
+      "",
+      "}"
+    ],
+    "description": "Creat a DelegateCommand Property and Method."
+  },
+  "Create DelegateCommand Property": {
+    "scope": "csharp",
+    "prefix": "cmd",
+    "body": ["public DelegateCommand ${1:Command} => new DelegateCommand(() =>", "{", "", "});"],
+    "description": "Creat a DelegateCommand Property with private setter."
+  },
+  "Create Generic DelegateCommand Property": {
+    "scope": "csharp",
+    "prefix": "cmdg",
+    "body": [
+      "public DelegateCommand<${2:Param}> ${1:Command} => new DelegateCommand<${2:Param}>((p) =>",
+      "{",
+      "",
+      "});"
+    ],
+    "description": "Creat a DelegateCommand Property with private setter."
+  }
+}
