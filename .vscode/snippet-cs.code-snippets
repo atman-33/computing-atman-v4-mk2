@@ -26,7 +26,7 @@
       "",
       "}"
     ],
-    "description": "Creat a DelegateCommand Property and Method."
+    "description": "Creat a DelegateCommand property and Method."
   },
   "Create DelegateCommand Property": {
     "scope": "csharp",
@@ -43,6 +43,6 @@
       "",
       "});"
     ],
-    "description": "Creat a DelegateCommand Property with private setter."
+    "description": "Creat a generic DelegateCommand property."
   }
 }
