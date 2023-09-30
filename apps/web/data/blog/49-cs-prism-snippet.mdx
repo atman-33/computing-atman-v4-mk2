@@ -1,0 +1,81 @@
+---
+title: C# Prism Template Pack Code Snippets (Visual Studio Code)
+date: '2023-09-30'
+lastmod: '2023-09-30'
+tags: ['vs code', 'c sharp']
+images: ['']
+summary: Visual Studio Code snippets for C# Prism Template Pack.
+---
+
+## Registering Custom Code Snippets in Visual Studio Code
+
+You can create code snippet files using the following steps:
+
+1. Select **File > Preferences > User Snippets** from the code editor's top menu.
+
+2. Snippets are written in JSON format.
+
+## Code Snippets
+
+### propp
+
+Defines a property that requires update notifications.
+
+```json
+  "Create Bindable Property": {
+    "scope": "csharp",
+    "prefix": "propp",
+    "body": [
+      "private ${1:Type} _${3:${2/(.*)/${1:/camelcase}/}};",
+      "public ${1:Type} ${2:Name}",
+      "{",
+      "   get { return _$3; }",
+      "   set { SetProperty(ref _$3, value); }",
+      ,
+      "}"
+    ],
+    "description": "Create a property, with a backing field, that depends on BindableBase."
+  }
+```
+
+#### About `${3:...}`
+
+* `${2/(.*)/${1:/camelcase}/}`: This part is a combination of regular expression and replacement pattern. It generates the name of the backing field based on the value of `${2:Name}`.
+* `(.*)`: This is a regular expression capture group. It captures the property name (Name) entered by the user.
+* `${1:/camelcase}`: This is a replacement pattern for converting the captured string to camel case. `${1:...}` references the captured value, and `:camelcase` instructs camel case conversion.
+
+### cmd
+
+Delegate command.
+
+```json
+  "Create DelegateCommand Property": {
+    "scope": "csharp",
+    "prefix": "cmd",
+    "body": [
+      "public DelegateCommand ${1:Command} => new DelegateCommand(() =>", 
+      "{", 
+      "", 
+      "});"
+    ],
+    "description": "Create a DelegateCommand property with a private setter."
+  }
+```
+
+### cmdg
+
+Parameterized delegate command.
+
+```json
+  "Create Generic DelegateCommand Property": {
+    "scope": "csharp",
+    "prefix": "cmdg",
+    "body": [
+      "public DelegateCommand<${2:Param}> ${1:Command} => new DelegateCommand<${2:Param}>((p) =>",
+      "{",
+      "",
+      "});"
+    ],
+    "description": "Create a generic DelegateCommand property."
+  }
+```
