@@ -24,7 +24,7 @@ export default async function Page() {
             <Link href={`/test/loop-animation`}>test/loop-animation</Link>
           </div>
           <div>
-            <Link href={`/test/tailwind-table`}>test/tailwind-table</Link>
+            <Link href={`/test/shadcn`}>test/shadcn</Link>
           </div>
         </div>
       )}

@@ -1,0 +1,16 @@
+{
+  "name": "web-ui-shadcn",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/web/ui-shadcn/src",
+  "projectType": "library",
+  "tags": ["scope:web"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/web/ui-shadcn/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}
