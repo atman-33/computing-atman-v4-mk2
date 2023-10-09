@@ -24,7 +24,7 @@ export class TestMongooseResolver {
     return this.testMongooseService.updateTestMongoose(updateTestMongooseData);
   }
 
-  @Mutation(() => TestMongoose)
+  @Mutation(() => TestMongoose, { nullable: true })
   async deleteTestMongoose(
     @Args('deleteTestMongooseArgs') deleteTestMongooseData: DeleteTestMongooseInput
   ) {

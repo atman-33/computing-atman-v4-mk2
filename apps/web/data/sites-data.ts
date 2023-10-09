@@ -13,19 +13,13 @@ const sitesData = [
     The source code is available on GitHub.`,
     imgSrc: '/static/images/hexo-material.png',
     href: 'https://atman-33.github.io/hexo-material-blog-template/'
-  },
-  {
-    title: 'OK KINO',
-    description: `This is a example web store application.`,
-    imgSrc: '/static/logo-okkino.svg',
-    href: '/sites/okkino'
-  },
-  {
-    title: 'Booker',
-    description: `This is a web application for bookmarking URL links.`,
-    imgSrc: '',
-    href: '/sites/booker'
   }
+  // {
+  //   title: 'Booker',
+  //   description: `This is a web application for bookmarking URL links.`,
+  //   imgSrc: '',
+  //   href: '/sites/booker'
+  // }
 ];
 
 export default sitesData;

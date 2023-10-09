@@ -13,19 +13,25 @@ export default async function Page() {
   const sortedPosts = sortPosts(allBlogs);
   const posts = allCoreContent(sortedPosts);
 
+  const testPages = [
+    '/test/database-edit-data',
+    '/test/database-get-data',
+    '/test/loop-animation',
+    '/test/shadcn-ui',
+    '/test/tailwindcss-sample'
+  ];
+
   return (
     <>
       {env.NEXT_PUBLIC_IS_DEV === '1' && (
         <div className="m-2 rounded-lg bg-purple-500 p-2">
-          <div>
-            <Link href={`/test/get-db-data`}>test/get-db-data</Link>
-          </div>
-          <div>
-            <Link href={`/test/loop-animation`}>test/loop-animation</Link>
-          </div>
-          <div>
-            <Link href={`/test/shadcn`}>test/shadcn</Link>
-          </div>
+          {testPages.map((page) => {
+            return (
+              <div key={page}>
+                <Link href={page}>{page}</Link>
+              </div>
+            );
+          })}
         </div>
       )}
 

@@ -27,7 +27,7 @@ export type DeleteTestMongooseInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTestMongoose: TestMongoose;
-  deleteTestMongoose: TestMongoose;
+  deleteTestMongoose: Maybe<TestMongoose>;
   updateTestMongoose: TestMongoose;
 };
 
@@ -73,7 +73,31 @@ export type UpdateTestMongooseInput = {
 export type GetTestMongoosesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTestMongoosesQuery = { __typename?: 'Query', testMongooses: Array<{ __typename?: 'TestMongoose', _id: string, text: string }> };
+export type GetTestMongoosesQuery = { __typename?: 'Query', testMongooses: Array<{ __typename?: 'TestMongoose', _id: string, text: string, value: number }> };
+
+export type CreateTestMongooseMutationVariables = Exact<{
+  createTestMongooseData: CreateTestMongooseInput;
+}>;
 
 
-export const GetTestMongoosesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTestMongooses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"testMongooses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}}]}}]}}]} as unknown as DocumentNode<GetTestMongoosesQuery, GetTestMongoosesQueryVariables>;
+export type CreateTestMongooseMutation = { __typename?: 'Mutation', createTestMongoose: { __typename?: 'TestMongoose', _id: string, text: string, value: number } };
+
+export type UpdateTestMongooseMutationVariables = Exact<{
+  updateTestMongooseData: UpdateTestMongooseInput;
+}>;
+
+
+export type UpdateTestMongooseMutation = { __typename?: 'Mutation', updateTestMongoose: { __typename?: 'TestMongoose', _id: string, text: string, value: number } };
+
+export type DeleteTestMongooseMutationVariables = Exact<{
+  deleteTestMongooseArgs: DeleteTestMongooseInput;
+}>;
+
+
+export type DeleteTestMongooseMutation = { __typename?: 'Mutation', deleteTestMongoose: { __typename?: 'TestMongoose', _id: string } | null };
+
+
+export const GetTestMongoosesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getTestMongooses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"testMongooses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<GetTestMongoosesQuery, GetTestMongoosesQueryVariables>;
+export const CreateTestMongooseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createTestMongoose"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createTestMongooseData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateTestMongooseInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTestMongoose"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createTestMongooseData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createTestMongooseData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<CreateTestMongooseMutation, CreateTestMongooseMutationVariables>;
+export const UpdateTestMongooseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateTestMongoose"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateTestMongooseData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateTestMongooseInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateTestMongoose"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateTestMongooseData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateTestMongooseData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<UpdateTestMongooseMutation, UpdateTestMongooseMutationVariables>;
+export const DeleteTestMongooseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteTestMongoose"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deleteTestMongooseArgs"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DeleteTestMongooseInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteTestMongoose"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"deleteTestMongooseArgs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deleteTestMongooseArgs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}}]}}]}}]} as unknown as DocumentNode<DeleteTestMongooseMutation, DeleteTestMongooseMutationVariables>;
