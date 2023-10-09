@@ -13,6 +13,12 @@ const sitesData = [
     The source code is available on GitHub.`,
     imgSrc: '/static/images/hexo-material.png',
     href: 'https://atman-33.github.io/hexo-material-blog-template/'
+  },
+  {
+    title: 'Shadcn Samples',
+    description: `This is a samples of shadcn.`,
+    imgSrc: '/static/images/shadcn.jpg',
+    href: '/sites/shadcn-sample'
   }
   // {
   //   title: 'Booker',
