@@ -16,7 +16,8 @@ export default function Page() {
     '/sites/shadcn-sample/014-radio',
     '/sites/shadcn-sample/015-single-checkbox',
     '/sites/shadcn-sample/016-multi-checkbox',
-    '/sites/shadcn-sample/017-select'
+    '/sites/shadcn-sample/017-select',
+    '/sites/shadcn-sample/018-reminder'
   ];
 
   return (
