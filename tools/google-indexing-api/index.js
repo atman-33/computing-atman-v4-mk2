@@ -1,7 +1,7 @@
 const fs = require('fs');
 var request = require('request');
 var { google } = require('googleapis');
-var key = require('./tools/google-indexing-api/service_account.json');
+var key = require('./service_account.json');
 
 const jwtClient = new google.auth.JWT(
   key.client_email,
@@ -11,7 +11,7 @@ const jwtClient = new google.auth.JWT(
   null
 );
 
-const batch = fs.readFileSync('urls.txt').toString().split('\n');
+const batch = fs.readFileSync('./tools/google-indexing-api/urls.txt').toString().split('\n');
 
 jwtClient.authorize(function (err, tokens) {
   if (err) {

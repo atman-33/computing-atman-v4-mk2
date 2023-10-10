@@ -1,3 +1,5 @@
+## Initial Task
+
 * [x] site-metadata を修正
 * [x] メール送信機能を除外
 * [x] giscuss 機能を実装
@@ -42,9 +44,14 @@
 
 * [x] favicon を更新
 
-## Later
+## 2023/10/03
 
 * [x] google 検索用サムネイルを追加
+* [x] shadcn を導入
+  
+
+## Remains
+
 * [ ] テーブル編集画面を追加
 * [ ] user を作成（cookie 対応）
 
@@ -52,4 +59,3 @@
 * [] okkino を構築
 * [] スライドショーアプリを作成
 * [] 購入依頼アプリを作成
-* [] daisy ui 導入（必要に応じて）

@@ -10,7 +10,5 @@ export default async function Page() {
     })
   ).data;
 
-  console.log(data);
-
   return <div>{data.testMongooses.map((x) => x.text)}</div>;
 }

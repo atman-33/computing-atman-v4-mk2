@@ -1,8 +1,31 @@
 # Sample graphql query for codegen
 
-query GetTestMongooses {
+query getTestMongooses {
   testMongooses {
     _id
     text
+    value
+  }
+}
+
+mutation createTestMongoose($createTestMongooseData: CreateTestMongooseInput!) {
+  createTestMongoose(createTestMongooseData: $createTestMongooseData) {
+    _id
+    text
+    value
+  }
+}
+
+mutation updateTestMongoose($updateTestMongooseData: UpdateTestMongooseInput!) {
+  updateTestMongoose(updateTestMongooseData: $updateTestMongooseData) {
+    _id
+    text
+    value
+  }
+}
+
+mutation deleteTestMongoose($deleteTestMongooseArgs: DeleteTestMongooseInput!) {
+  deleteTestMongoose(deleteTestMongooseArgs: $deleteTestMongooseArgs) {
+    _id
   }
 }

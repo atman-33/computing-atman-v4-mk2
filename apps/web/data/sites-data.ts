@@ -15,17 +15,17 @@ const sitesData = [
     href: 'https://atman-33.github.io/hexo-material-blog-template/'
   },
   {
-    title: 'OK KINO',
-    description: `This is a example web store application.`,
-    imgSrc: '/static/logo-okkino.svg',
-    href: '/sites/okkino'
-  },
-  {
-    title: 'Booker',
-    description: `This is a web application for bookmarking URL links.`,
-    imgSrc: '',
-    href: '/sites/booker'
+    title: 'Shadcn Samples',
+    description: `This is a samples of shadcn.`,
+    imgSrc: '/static/images/shadcn.jpg',
+    href: '/sites/shadcn-sample'
   }
+  // {
+  //   title: 'Booker',
+  //   description: `This is a web application for bookmarking URL links.`,
+  //   imgSrc: '',
+  //   href: '/sites/booker'
+  // }
 ];
 
 export default sitesData;
