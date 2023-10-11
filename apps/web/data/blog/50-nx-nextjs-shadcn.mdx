@@ -1,0 +1,352 @@
+---
+title: How to Use shadcn with Nx Next.js
+date: '2023-10-11'
+lastmod: '2023-10-11'
+tags: ['nx', 'next.js', 'shadcn']
+images: ['/static/blog/50/shadcn.jpg']
+summary: Explaining how to use shadcn in Nx monorepo with Next.js.
+---
+
+## Introduction
+
+In this guide, we will explain how to use shadcn in Nx monorepo with Next.js.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## 1. Initialize Nx and Create a Next.js Project
+
+```bash
+npx create-nx-workspace@latest
+```
+
+```bash
+npm i -D @nx/next
+```
+
+```bash
+nx g @nx/next:app web --tags "scope:web"
+
+✔ Which stylesheet format would you like to use? · css
+✔ Which E2E test runner would you like to use? · cypress
+✔ Would you like to use the App Router (recommended)? (Y/n) · true
+```
+
+## 2. Add Tailwind
+
+```bash
+nx g @nx/react:setup-tailwind --project=web
+```
+
+## 3. Add Library for shadcn
+
+```bash
+npx nx generate @nx/next:library ui-shadcn --directory=web --importPath=@libs/web/ui-shadcn --tags=scope:web --bundler=swc
+
+✔ Which stylesheet format would you like to use? · css
+```
+
+After creating the library, perform the following steps:
+
+- Delete `server.ts`.
+- Create a `components` folder at the root of the `src` folder.
+
+At this point, your directory structure should look like this:
+
+```txt
+(your workspace)
+  |- apps/
+  |    |- web/
+  |
+  |- libs/
+  |    |- web/
+  |        |- ui-shadcn/
+  |             |- src/
+  |                 |- components/
+  |                 |- index.ts
+  |- package.json
+```
+
+## 4. Add shadcn/ui
+
+```bash
+npm install tailwindcss-animate class-variance-authority clsx tailwind-merge
+```
+
+```bash
+npm install @radix-ui/react-icons
+```
+
+Edit `tailwind.config.js`:
+
+```js:apps/web/tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+const { fontFamily } = require('tailwindcss/defaultTheme');
+const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
+const { join } = require('path');
+
+module.exports = {
+  darkMode: ['class'],
+  content: [
+    join(
+      __dirname,
+      '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
+    ),
+    ...createGlobPatternsForDependencies(__dirname),
+  ],
+  theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
+    extend: {
+      colors: {
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+      },
+      borderRadius: {
+        lg: `var(--radius)`,
+        md: `calc(var(--radius) - 2px)`,
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      fontFamily: {
+        sans: ['var(--font-sans)', ...fontFamily.sans],
+      },
+      keyframes: {
+        'accordion-down': {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+    },
+  },
+  plugins: [require('tailwindcss-animate')],
+};
+```
+
+Add `global.css`:
+
+```css:apps/web/styles/global.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 216 34% 17%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+```
+
+## 5. Add util.ts for shadcn
+
+**utils.ts**
+
+```ts:libs/web/ui-shadcn/src/lib/utils.ts
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+## 6. Add component.json in the root directory
+
+**components.json**
+
+```json:components.json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tailwind": {
+    "config": "apps/web/tailwind.config.js",
+    "css": "apps/web/app/styles/global.css",
+    "baseColor": "stone",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@libs/web/ui-shadcn/components",
+    "utils": "@libs/web/ui-shadcn/lib/utils"
+  }
+}
+```
+
+## 7. Add tsconfig.json in the root directory
+
+The `tsconfig.json` is necessary for shacn/ui CLI commands.
+
+**tsconfig.json**
+
+```json:tsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@libs/web/ui-shadcn": ["libs/web/ui-shadcn/src/index.ts"],
+      "@libs/web/ui-shadcn/*": ["libs/web/ui-shadcn/src/*"]
+    }
+  }
+} 
+```
+
+With these steps, your setup is complete.
+
+## 8. Implement shadcn/ui Components
+
+Use the shadcn/ui CLI to install components:
+
+```bash
+npx shadcn-ui@latest add button
+```
+
+Edit the component's tsx file:
+
+- Add `'use client'`.
+- Resolve the `@nx/enforce-module-boundaries` warning.
+
+```tsx:libs/web/ui-shadcn/src/components/ui/button.tsx
+'use client';
+...
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { cn } from '@libs/web/ui-shadcn/lib/utils';
+...
+```
+
+Add exports for the components in `index.ts`:
+
+```ts:libs/web/ui-shadcn/src/index.ts
+export * from './components/ui/button';
+```
+
+Implement the component in `page.tsx`:
+
+```tsx:page.tsx
+import { Button } from '@libs/web/ui-shadcn';
+
+const Page = () => {
+  return <Button>Button</Button>
+}
+
+export default Page;
+```
+
+## References
+
+- [shadcn/ui Documentation](https://ui.shadcn.com/docs/installation/manual)
+- [GitHub Issue: component.json needs to load tsconfig.json](https://github.com/shadcn-ui/ui/issues/718)
+

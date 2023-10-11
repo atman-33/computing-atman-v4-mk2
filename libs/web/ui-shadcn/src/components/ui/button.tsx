@@ -1,10 +1,10 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { cn } from '@libs/web/ui-shadcn/lib/utils';
 
 const buttonVariants = cva(
