@@ -51,3 +51,4 @@ https://computing-atman.com/blog/6-custom-calendar-power-query/
 https://computing-atman.com/blog/7-dynamic-sql-power-query/
 https://computing-atman.com/blog/8-call-vbs-wsf/
 https://computing-atman.com/blog/9-shooting-game-js/
+https://computing-atman.com/blog/49-cs-prism-snippet/
