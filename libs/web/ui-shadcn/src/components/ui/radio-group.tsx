@@ -1,10 +1,10 @@
 'use client';
 
-/* eslint-disable @nx/enforce-module-boundaries */
 import { CheckIcon } from '@radix-ui/react-icons';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import * as React from 'react';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { cn } from '@libs/web/ui-shadcn/lib/utils';
 
 const RadioGroup = React.forwardRef<

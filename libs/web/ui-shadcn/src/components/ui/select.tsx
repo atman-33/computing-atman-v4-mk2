@@ -1,10 +1,10 @@
 'use client';
 
-/* eslint-disable @nx/enforce-module-boundaries */
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import * as React from 'react';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { cn } from '@libs/web/ui-shadcn/lib/utils';
 
 const Select = SelectPrimitive.Root;
