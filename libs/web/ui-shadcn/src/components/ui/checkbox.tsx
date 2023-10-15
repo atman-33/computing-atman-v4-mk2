@@ -1,10 +1,10 @@
 'use client';
 
-/* eslint-disable @nx/enforce-module-boundaries */
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { CheckIcon } from '@radix-ui/react-icons';
 import * as React from 'react';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { cn } from '@libs/web/ui-shadcn/lib/utils';
 
 const Checkbox = React.forwardRef<

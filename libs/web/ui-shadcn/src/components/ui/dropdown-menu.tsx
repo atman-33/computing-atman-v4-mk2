@@ -1,10 +1,10 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { CheckIcon, ChevronRightIcon, DotFilledIcon } from '@radix-ui/react-icons';
 import * as React from 'react';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { cn } from '@libs/web/ui-shadcn/lib/utils';
 
 const DropdownMenu = DropdownMenuPrimitive.Root;

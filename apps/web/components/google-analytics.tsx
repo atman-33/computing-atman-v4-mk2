@@ -4,7 +4,16 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 import { useEffect } from 'react';
 
-import { existsGaId, GA_MEASUREMENT_ID, pageview } from '../lib/gtag';
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || '';
+const existsGaId = GA_MEASUREMENT_ID !== '';
+
+const pageview = (path: string) => {
+  if (window.gtag !== undefined) {
+    window.gtag('config', GA_MEASUREMENT_ID, {
+      page_path: path
+    });
+  }
+};
 
 const GoogleAnalytics = () => {
   const pathname = usePathname();

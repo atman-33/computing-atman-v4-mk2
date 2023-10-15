@@ -21,12 +21,24 @@ const Page = () => {
 
   return (
     <>
-      <h3>Name: {person.name}</h3>
-      <h3>Age: {person.age}</h3>
-      <Input type="text" onChange={(e) => changeName(e)} value={person.name}></Input>
-      <Input type="number" onChange={(e) => changeAge(e)} value={person.age}></Input>
-      <div>
-        <Button onClick={reset}>Reset</Button>
+      <div className="mt-8">
+        <h3>Name: {person.name}</h3>
+        <h3>Age: {person.age}</h3>
+        <Input
+          className="my-1"
+          type="text"
+          onChange={(e) => changeName(e)}
+          value={person.name}
+        ></Input>
+        <Input
+          className="my-1"
+          type="number"
+          onChange={(e) => changeAge(e)}
+          value={person.age}
+        ></Input>
+        <div>
+          <Button onClick={reset}>Reset</Button>
+        </div>
       </div>
     </>
   );

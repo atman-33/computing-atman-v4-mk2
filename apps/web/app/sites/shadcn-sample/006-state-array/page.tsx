@@ -21,8 +21,10 @@ const Page = () => {
 
   return (
     <>
-      <h1>{nums}</h1>
-      <Button onClick={shuffle}>shuffle</Button>
+      <div className="mt-8">
+        <h1>{nums}</h1>
+        <Button onClick={shuffle}>shuffle</Button>
+      </div>
     </>
   );
 };

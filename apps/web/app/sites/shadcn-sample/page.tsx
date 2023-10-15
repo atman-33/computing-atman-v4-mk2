@@ -17,16 +17,23 @@ export default function Page() {
     '/sites/shadcn-sample/015-single-checkbox',
     '/sites/shadcn-sample/016-multi-checkbox',
     '/sites/shadcn-sample/017-select',
-    '/sites/shadcn-sample/018-reminder'
+    '/sites/shadcn-sample/018-reminder',
+    '/sites/shadcn-sample/021-dialog',
+    '/sites/shadcn-sample/022-use-ref',
+    '/sites/shadcn-sample/023-forward-ref',
+    '/sites/shadcn-sample/031-use-state-to-use-reducer',
+    '/sites/shadcn-sample/032-use-context',
+    '/sites/shadcn-sample/033-use-context-with-state',
+    '/sites/shadcn-sample/034-context-file'
   ];
 
   return (
     <>
-      <div className="m-8">
+      <div className="m-8 grid grid-cols-3 gap-4">
         {samplePages.map((page) => {
           return (
             <div key={page} className="m-4">
-              <Button asChild>
+              <Button asChild className="h-auto">
                 <Link href={page}>{page}</Link>
               </Button>
             </div>

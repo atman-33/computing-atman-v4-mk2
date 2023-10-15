@@ -14,12 +14,14 @@ const Example = () => {
 
   return (
     <>
-      <Button onClick={toggleComponent}>Toggle</Button>
-      {toggle ? (
-        <Count key="A" title="A" count={countA} setCount={setCountA} />
-      ) : (
-        <Count key="B" title="B" count={countB} setCount={setCountB} />
-      )}
+      <div className="mt-8">
+        <Button onClick={toggleComponent}>Toggle</Button>
+        {toggle ? (
+          <Count key="A" title="A" count={countA} setCount={setCountA} />
+        ) : (
+          <Count key="B" title="B" count={countB} setCount={setCountB} />
+        )}
+      </div>
     </>
   );
 };

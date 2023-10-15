@@ -1,8 +1,8 @@
 'use client';
 
-/* eslint-disable @nx/enforce-module-boundaries */
 import * as React from 'react';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { cn } from '@libs/web/ui-shadcn/lib/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

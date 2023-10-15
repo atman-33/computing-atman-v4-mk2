@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable @nx/enforce-module-boundaries */
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
@@ -13,6 +12,7 @@ import {
   useFormContext
 } from 'react-hook-form';
 
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { cn } from '@libs/web/ui-shadcn/lib/utils';
 import { Label } from './label';
 

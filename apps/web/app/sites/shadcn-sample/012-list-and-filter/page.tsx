@@ -10,22 +10,24 @@ const Page = () => {
 
   return (
     <>
-      <h3>Filter array</h3>
-      <br />
-      <Input type="text" onChange={(e) => setFilterVal(e.target.value)} value={filterVal} />
-      <ul>
-        {animals
-          .filter((animal) => (animal ?? '').includes(filterVal))
-          .map((animal) => {
-            return (
-              <li key={animal}>
-                {animal ?? '(null or undefined)'}
-                {animal === 'dog' && '🐶'}
-              </li>
-            );
-            // return <li key={animal}>{animal + (animal === 'dog' ? '🐶' : '')}</li>;
-          })}
-      </ul>
+      <div className="mt-8">
+        <h3>Filter array</h3>
+        <br />
+        <Input type="text" onChange={(e) => setFilterVal(e.target.value)} value={filterVal} />
+        <ul>
+          {animals
+            .filter((animal) => (animal ?? '').includes(filterVal))
+            .map((animal) => {
+              return (
+                <li key={animal}>
+                  {animal ?? '(null or undefined)'}
+                  {animal === 'dog' && '🐶'}
+                </li>
+              );
+              // return <li key={animal}>{animal + (animal === 'dog' ? '🐶' : '')}</li>;
+            })}
+        </ul>
+      </div>
     </>
   );
 };
