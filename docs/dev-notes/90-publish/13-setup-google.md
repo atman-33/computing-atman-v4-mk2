@@ -30,6 +30,7 @@ declare module 'gtag.js';
 4. `apps/web/components/google-analytics.tsx` を作成
 5. `apps/web/app/layout.tsx` に GoogleAnalytics コンポーネントを追加
 
+> gtag.d.ts は不要。また、gtag.js を google-analytics.tsx に含める事で一つのファイルにする事が可能。
 ___________________________________________________________________________________________________
 
 ## Google Search Console
