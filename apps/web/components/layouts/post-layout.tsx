@@ -1,14 +1,14 @@
 import type { Authors, Blog } from 'contentlayer/generated';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { ReactNode } from 'react';
-import Comments from '../components/comments';
-import Image from '../components/image';
-import Link from '../components/link';
-import PageTitle from '../components/page-title';
-import ScrollTopAndComment from '../components/scroll-top-and-comment';
-import SectionContainer from '../components/section-container';
-import Tag from '../components/tag';
-import siteMetadata from '../data/site-metadata';
+import siteMetadata from '../../data/site-metadata';
+import Comments from '../comments';
+import Image from '../image';
+import Link from '../link';
+import PageTitle from '../page-title';
+import ScrollTopAndComment from '../scroll-top-and-comment';
+import SectionContainer from '../section-container';
+import Tag from '../tag';
 
 const editUrl = (path: string) => `${siteMetadata.siteRepo}/blob/main/data/${path}`;
 const discussUrl = (path: string) =>

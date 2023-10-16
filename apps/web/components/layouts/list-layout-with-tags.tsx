@@ -11,7 +11,7 @@ import { slug } from 'github-slugger';
 import { usePathname } from 'next/navigation';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
-import tagData from '../public/tag-data.json';
+import tagData from '../../public/tag-data.json';
 
 interface PaginationProps {
   totalPages: number;

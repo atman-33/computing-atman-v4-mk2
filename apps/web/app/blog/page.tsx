@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import ListLayoutWithTags from '@/layouts/list-layout-with-tags';
+import ListLayoutWithTags from '@/components/layouts/list-layout-with-tags';
 import { allBlogs } from 'contentlayer/generated';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
 import { genPageMetadata } from '../_components/seo';
