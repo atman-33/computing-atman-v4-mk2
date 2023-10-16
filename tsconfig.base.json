@@ -18,7 +18,6 @@
       "@/components/*": ["apps/web/components/*"],
       "@/data-access/*": ["apps/web/data-access/*"],
       "@/data/*": ["apps/web/data/*"],
-      "@/layouts/*": ["apps/web/layouts/*"],
       "@/styles/*": ["apps/web/styles/*"],
       "@libs/api/feature-image": ["libs/api/feature-image/src/index.ts"],
       "@libs/api/feature-test-mongoose": ["libs/api/feature-test-mongoose/src/index.ts"],

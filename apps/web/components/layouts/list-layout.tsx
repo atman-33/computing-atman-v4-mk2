@@ -5,9 +5,9 @@ import { usePathname } from 'next/navigation';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
 import { useState } from 'react';
-import Link from '../components/link';
-import Tag from '../components/tag';
-import siteMetadata from '../data/site-metadata';
+import siteMetadata from '../../data/site-metadata';
+import Link from '../link';
+import Tag from '../tag';
 
 interface PaginationProps {
   totalPages: number;
