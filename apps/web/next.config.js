@@ -21,7 +21,8 @@ const nextConfig = {
     ]
   },
   output: 'export',
-  trailingSlash: true
+  trailingSlash: true,
+  reactStrictMode: false
 };
 
 const plugins = [

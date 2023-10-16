@@ -24,7 +24,12 @@ export default function Page() {
     '/sites/shadcn-sample/031-use-state-to-use-reducer',
     '/sites/shadcn-sample/032-use-context',
     '/sites/shadcn-sample/033-use-context-with-state',
-    '/sites/shadcn-sample/034-context-file'
+    '/sites/shadcn-sample/034-context-file',
+    '/sites/shadcn-sample/035-context-file-render',
+    '/sites/shadcn-sample/036-use-context-with-reducer',
+    '/sites/shadcn-sample/041-use-effect-init',
+    '/sites/shadcn-sample/042-use-effect-update',
+    '/sites/shadcn-sample/043-use-effect-cleanup'
   ];
 
   return (

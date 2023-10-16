@@ -1,8 +1,9 @@
 import { Label, RadioGroup, RadioGroupItem } from '@libs/web/ui-shadcn';
-import { useTheme } from '../_context/theme-context';
+import { useTheme, useUpdateTheme } from '../_context/theme-context';
 
 const Header = () => {
-  const [theme, setTheme] = useTheme();
+  const theme = useTheme();
+  const setTheme = useUpdateTheme();
 
   const THEMES = ['yellow', 'gray', 'red'];
 
@@ -13,6 +14,7 @@ const Header = () => {
     console.log(e.target.value);
   };
 
+  console.log('header');
   return (
     <>
       {/* display: 'none' div is hidden because it's dummy to load style */}
