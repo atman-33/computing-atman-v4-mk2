@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { MyContext } from '../page';
+import { MyContext } from './example';
 
 const GrandChild = () => {
   const [value] = useContext(MyContext);

@@ -1,23 +1,18 @@
 'use client';
 
-import { createContext } from 'react';
-import Child from './_components/child';
-
-const MyContext = createContext('hello');
+import Example from './_components/example';
 
 const Page = () => {
   return (
     <>
-      <div className="mt-8">
-        <Child></Child>
-      </div>
+      <Example />
       <div className="mt-8">
         <h4>Note</h4>
         <li>useContext can be used to share data between components.</li>
+        <li>In Next.js, you cannot use createContext within a page.tsx file.</li>
       </div>
     </>
   );
 };
 
-export { MyContext };
 export default Page;
