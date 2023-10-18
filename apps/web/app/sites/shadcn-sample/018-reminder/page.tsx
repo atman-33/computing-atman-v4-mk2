@@ -1,4 +1,4 @@
-import Todo from './_components/todo';
+import Todo from './_components/Todo';
 
 const Page = () => {
   return (

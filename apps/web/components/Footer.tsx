@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import siteMetadata from '@/data/site-metadata';
-import Link from './link';
+import Link from './Link';
 import SocialIcon from './social-icons';
 
 export default function Footer() {

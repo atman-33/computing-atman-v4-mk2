@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import InputForm from './input-form';
-import List from './list';
+import InputForm from './InputForm';
+import List from './List';
 
 const Todo = () => {
   const todoList = [

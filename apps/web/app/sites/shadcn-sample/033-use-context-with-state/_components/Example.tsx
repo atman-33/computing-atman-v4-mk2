@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
-import Child from './child';
-import OtherChild from './other-child';
+import Child from './Child';
+import OtherChild from './OtherChild';
 
 const MyContext = createContext(
   [] as unknown as [number | undefined, Dispatch<SetStateAction<number>>]

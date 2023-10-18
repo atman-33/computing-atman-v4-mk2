@@ -1,7 +1,7 @@
 'use client';
 
-import Counter from './_components/counter';
-import { CounterProvider } from './_context/counter-context';
+import Counter from './_components/Counter';
+import { CounterProvider } from './_context/CounterContext';
 
 const Page = () => {
   return (

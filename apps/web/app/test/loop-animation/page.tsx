@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import '@/styles/animation.css';
 
-import Image from '@/components/image';
+import Image from '@/components/Image';
 import cloudsImage from '../../../public/static/images/clouds.png';
 
 export default function Page() {

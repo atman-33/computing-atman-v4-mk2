@@ -1,8 +1,8 @@
 'use client';
 
-import Header from './_components/header';
-import Main from './_components/main';
-import { ThemeProvider } from './_context/theme-context';
+import Header from './_components/Header';
+import Main from './_components/Main';
+import { ThemeProvider } from './_context/ThemeContext';
 
 const Page = () => {
   return (

@@ -6,8 +6,8 @@ import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
 import backgroundImage from '../public/static/images/antoine-barres.jpg';
 import cloudsImage from '../public/static/images/clouds.png';
 import fogImage from '../public/static/images/fog-low.png';
-import HeroWithBackground from './_components/hero-with-background';
-import Main from './_components/main';
+import HeroWithBackground from './_components/HeroWithBackground';
+import Main from './_components/Home';
 
 export default async function Page() {
   const sortedPosts = sortPosts(allBlogs);

@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 'use client';
 
-import Link from '@/components/link';
-import Tag from '@/components/tag';
-import Thumbnail from '@/components/thumbnail';
+import Link from '@/components/Link';
+import Tag from '@/components/Tag';
+import Thumbnail from '@/components/Thumbnail';
 import siteMetadata from '@/data/site-metadata';
 import type { Blog } from 'contentlayer/generated';
 import { slug } from 'github-slugger';

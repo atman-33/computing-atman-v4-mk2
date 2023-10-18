@@ -1,5 +1,5 @@
 import { Button } from '@libs/web/ui-shadcn';
-import { useCounterDispatch } from '../_context/counter-context';
+import { useCounterDispatch } from '../_context/CounterContext';
 
 const CounterButton = ({ calcType, step }: { calcType: '+' | '-'; step: number }) => {
   const dispatch = useCounterDispatch();

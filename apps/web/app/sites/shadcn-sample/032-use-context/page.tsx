@@ -1,6 +1,6 @@
 'use client';
 
-import Example from './_components/example';
+import Example from './_components/Example';
 
 const Page = () => {
   return (

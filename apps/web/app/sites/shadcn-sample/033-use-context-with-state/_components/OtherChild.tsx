@@ -1,6 +1,6 @@
 import { Button } from '@libs/web/ui-shadcn';
 import { useContext } from 'react';
-import { MyContext } from './example';
+import { MyContext } from './Example';
 
 const Child = () => {
   const [state, setState] = useContext(MyContext);

@@ -1,4 +1,4 @@
-import { useUpdateTheme } from '../_context/theme-context';
+import { useUpdateTheme } from '../_context/ThemeContext';
 
 const Footer = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

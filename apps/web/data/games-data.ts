@@ -1,4 +1,4 @@
-const gamessData = [
+const gamesData = [
   {
     title: 'Shooting Game',
     description: `This game allows you to move your character using the mouse or touch screen and shoot bullets to defeat enemy aircraft.`,
@@ -19,4 +19,4 @@ const gamessData = [
   }
 ];
 
-export default gamessData;
+export default gamesData;

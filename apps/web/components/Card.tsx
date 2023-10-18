@@ -1,5 +1,5 @@
-import Image from './image';
-import Link from './link';
+import Image from './Image';
+import Link from './Link';
 
 const Card = ({
   title,

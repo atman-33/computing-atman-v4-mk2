@@ -1,4 +1,4 @@
-import Image from './image';
+import Image from './Image';
 
 const defaultImage = '/static/images/default-thumbnail.png';
 

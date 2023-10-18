@@ -2,7 +2,7 @@
 
 import { Button, Input } from '@libs/web/ui-shadcn';
 import { useRef, useState } from 'react';
-import DynamicVideo from './_components/dynamic-video';
+import DynamicVideo from './_components/DynamicVideo';
 
 const Case1 = () => {
   const [value, setValue] = useState('');

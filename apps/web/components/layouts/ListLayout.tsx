@@ -6,8 +6,8 @@ import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
 import { useState } from 'react';
 import siteMetadata from '../../data/site-metadata';
-import Link from '../link';
-import Tag from '../tag';
+import Link from '../Link';
+import Tag from '../Tag';
 
 interface PaginationProps {
   totalPages: number;

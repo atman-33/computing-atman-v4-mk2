@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from './link';
+import Link from './Link';
 
 interface IMobailnavProps {
   headerNavLinks: {

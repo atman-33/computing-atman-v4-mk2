@@ -1,5 +1,5 @@
-import CounterButton from './counter-button';
-import CounterResult from './counter-result';
+import CounterButton from './CounterButton';
+import CounterResult from './CounterResult';
 
 const Counter = () => {
   return (

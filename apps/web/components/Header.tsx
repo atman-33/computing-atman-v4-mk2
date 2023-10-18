@@ -2,11 +2,11 @@
 import headerNavLinks from '@/data/header-nav-links';
 import siteMetadata from '../data/site-metadata';
 import logoImage from '../public/static/logo.svg';
-import Image from './image';
-import Link from './link';
-import MobileNav from './mobile-nav';
-import SearchButton from './search-button';
-import ThemeSwitch from './theme-switch';
+import Image from './Image';
+import Link from './Link';
+import MobileNav from './MobileNav';
+import SearchButton from './SearchButton';
+import ThemeSwitch from './ThemeSwitch';
 
 const Header = async () => {
   return (

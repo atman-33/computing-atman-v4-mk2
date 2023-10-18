@@ -1,5 +1,5 @@
 import { Label, RadioGroup, RadioGroupItem } from '@libs/web/ui-shadcn';
-import { useTheme, useUpdateTheme } from '../_context/theme-context';
+import { useTheme, useUpdateTheme } from '../_context/ThemeContext';
 
 const Header = () => {
   const theme = useTheme();

@@ -1,4 +1,4 @@
-import GrandChild from './grand-child';
+import GrandChild from './GrandChild';
 
 const Child = () => {
   return (

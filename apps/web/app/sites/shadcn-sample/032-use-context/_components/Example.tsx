@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import Child from './child';
+import Child from './Child';
 
 const MyContext = createContext('hello');
 

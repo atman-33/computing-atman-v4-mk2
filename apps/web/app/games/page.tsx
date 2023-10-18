@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import Card from '@/components/card';
-import gamessData from '@/data/games-data';
-import { genPageMetadata } from '../_components/seo';
+import Card from '@/components/Card';
+import gamesData from '@/data/games-data';
+import { genPageMetadata } from '../seo';
 
 export const metadata = genPageMetadata({ title: 'Games' });
 
@@ -17,7 +17,7 @@ export default function Games() {
         </div>
         <div className="container py-12">
           <div className="-m-4 flex flex-wrap">
-            {gamessData.map((d) => (
+            {gamesData.map((d) => (
               <Card
                 key={d.title}
                 title={d.title}

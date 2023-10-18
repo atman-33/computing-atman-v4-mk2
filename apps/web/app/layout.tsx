@@ -2,16 +2,16 @@
 import '@/styles/global.css';
 import 'pliny/search/algolia.css';
 
-import Footer from '@/components/footer';
-import GoogleAnalytics from '@/components/google-analytics';
-import Header from '@/components/header';
-import SectionContainer from '@/components/section-container';
+import Footer from '@/components/Footer';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
+import Header from '@/components/Header';
+import SectionContainer from '@/components/SectionContainer';
 import siteMetadata from '@/data/site-metadata';
 import { Metadata } from 'next';
 import { Analytics, AnalyticsConfig } from 'pliny/analytics';
 import { SearchConfig, SearchProvider } from 'pliny/search';
 import { ReactNode } from 'react';
-import { ThemeProviders } from './_components/theme-providers';
+import { ThemeProviders } from './_components/ThemeProviders';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),

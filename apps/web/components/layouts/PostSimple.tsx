@@ -3,11 +3,11 @@ import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
 import { ReactNode } from 'react';
 import siteMetadata from '../../data/site-metadata';
-import Comments from '../comments';
-import Link from '../link';
-import PageTitle from '../page-title';
-import ScrollTopAndComment from '../scroll-top-and-comment';
-import SectionContainer from '../section-container';
+import Comments from '../Comments';
+import Link from '../Link';
+import PageTitle from '../PageTitle';
+import ScrollTopAndComment from '../ScrollTopAndComment';
+import SectionContainer from '../SectionContainer';
 
 interface LayoutProps {
   content: CoreContent<Blog>;

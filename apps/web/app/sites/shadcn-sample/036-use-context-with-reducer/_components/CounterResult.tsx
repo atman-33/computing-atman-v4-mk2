@@ -1,4 +1,4 @@
-import { useCounter } from '../_context/counter-context';
+import { useCounter } from '../_context/CounterContext';
 
 const CounterResult = () => {
   const state = useCounter();
