@@ -29,7 +29,10 @@ export default function Page() {
     '/sites/shadcn-sample/036-use-context-with-reducer',
     '/sites/shadcn-sample/041-use-effect-init',
     '/sites/shadcn-sample/042-use-effect-update',
-    '/sites/shadcn-sample/043-use-effect-cleanup'
+    '/sites/shadcn-sample/043-use-effect-cleanup',
+    '/sites/shadcn-sample/044-use-layout-effect',
+    '/sites/shadcn-sample/045-use-effect-click',
+    '/sites/shadcn-sample/046-custom-hook'
   ];
 
   return (
