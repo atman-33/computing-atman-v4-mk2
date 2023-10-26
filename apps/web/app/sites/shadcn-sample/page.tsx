@@ -32,12 +32,16 @@ export default function Page() {
     '/sites/shadcn-sample/043-use-effect-cleanup',
     '/sites/shadcn-sample/044-use-layout-effect',
     '/sites/shadcn-sample/045-use-effect-click',
-    '/sites/shadcn-sample/046-custom-hook'
+    '/sites/shadcn-sample/046-custom-hook',
+    '/sites/shadcn-sample/051-redux-no-rtk',
+    '/sites/shadcn-sample/052-multiple-reducers',
+    '/sites/shadcn-sample/053-action-creator',
+    '/sites/shadcn-sample/054-redux-toolkit'
   ];
 
   return (
     <>
-      <div className="m-8 grid grid-cols-3 gap-4">
+      <div className="m-8 grid grid-cols-2 gap-4">
         {samplePages.map((page) => {
           return (
             <div key={page} className="m-4">
