@@ -5,7 +5,7 @@
 import Link from '@/components/Link';
 import Tag from '@/components/Tag';
 import Thumbnail from '@/components/Thumbnail';
-import siteMetadata from '@/data/site-metadata';
+import siteMetadata from 'apps/web/constants/site-metadata';
 import type { Blog } from 'contentlayer/generated';
 import { slug } from 'github-slugger';
 import { usePathname } from 'next/navigation';

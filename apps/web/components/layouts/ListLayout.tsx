@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
 import { useState } from 'react';
-import siteMetadata from '../../data/site-metadata';
+import siteMetadata from '../../constants/site-metadata';
 import Link from '../Link';
 import Tag from '../Tag';
 

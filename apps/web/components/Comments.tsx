@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
-import siteMetadata from '@/data/site-metadata';
+import siteMetadata from 'apps/web/constants/site-metadata';
 import { Comments as CommentsComponent } from 'pliny/comments';
 import { useState } from 'react';
 

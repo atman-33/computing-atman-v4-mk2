@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import siteMetadata from '@/data/site-metadata';
+import siteMetadata from 'apps/web/constants/site-metadata';
 import Link from './Link';
 import SocialIcon from './social-icons';
 

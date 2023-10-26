@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import siteMetadata from '@/data/site-metadata';
+import siteMetadata from 'apps/web/constants/site-metadata';
 import { AlgoliaButton } from 'pliny/search/AlgoliaButton';
 import { KBarButton } from 'pliny/search/KBarButton';
 

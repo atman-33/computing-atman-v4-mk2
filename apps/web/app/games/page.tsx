@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import Card from '@/components/Card';
-import gamesData from '@/data/games-data';
+import gamesData from 'apps/web/constants/games/games-data';
 import { genPageMetadata } from '../seo';
 
 export const metadata = genPageMetadata({ title: 'Games' });

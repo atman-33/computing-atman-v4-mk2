@@ -1,7 +1,7 @@
 import type { Authors, Blog } from 'contentlayer/generated';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { ReactNode } from 'react';
-import siteMetadata from '../../data/site-metadata';
+import siteMetadata from '../../constants/site-metadata';
 import Comments from '../Comments';
 import Image from '../Image';
 import Link from '../Link';

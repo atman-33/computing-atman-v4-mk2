@@ -7,7 +7,7 @@ import PostLayout from '@/components/layouts/PostLayout';
 import PostSimple from '@/components/layouts/PostSimple';
 import { components } from '@/components/MDXComponents';
 import PageTitle from '@/components/PageTitle';
-import siteMetadata from '@/data/site-metadata';
+import siteMetadata from 'apps/web/constants/site-metadata';
 import type { Authors, Blog } from 'contentlayer/generated';
 import { allAuthors, allBlogs } from 'contentlayer/generated';
 import { Metadata } from 'next';

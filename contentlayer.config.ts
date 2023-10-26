@@ -20,7 +20,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypePresetMinify from 'rehype-preset-minify';
 import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeSlug from 'rehype-slug';
-import siteMetadata from './apps/web/data/site-metadata';
+import siteMetadata from './apps/web/constants/site-metadata';
 
 const root = process.cwd();
 
@@ -129,7 +129,7 @@ export const Authors = defineDocumentType(() => ({
 }));
 
 export default makeSource({
-  contentDirPath: 'apps/web/data',
+  contentDirPath: 'apps/web/constants',
   documentTypes: [Blog, Authors],
   mdx: {
     cwd: process.cwd(),

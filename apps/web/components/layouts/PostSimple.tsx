@@ -2,7 +2,7 @@ import type { Blog } from 'contentlayer/generated';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
 import { ReactNode } from 'react';
-import siteMetadata from '../../data/site-metadata';
+import siteMetadata from '../../constants/site-metadata';
 import Comments from '../Comments';
 import Link from '../Link';
 import PageTitle from '../PageTitle';
