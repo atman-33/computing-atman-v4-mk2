@@ -17,6 +17,7 @@
     "paths": {
       "@/components/*": ["apps/web/components/*"],
       "@/constants/*": ["apps/web/constants/*"],
+      "@/config/*": ["apps/web/config/*"],
       "@/lib/*": ["apps/web/lib/*"],
       "@/styles/*": ["apps/web/styles/*"],
       "@libs/api/feature-image": ["libs/api/feature-image/src/index.ts"],

@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { env } from '@libs/shared/config';
+import { NEXT_PUBLIC_IS_DEV } from '@/config/index';
 import { Blog, allBlogs } from 'contentlayer/generated';
 import Link from 'next/link';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
@@ -23,7 +23,7 @@ export default async function Page() {
 
   return (
     <>
-      {env.NEXT_PUBLIC_IS_DEV === '1' && (
+      {NEXT_PUBLIC_IS_DEV === '1' && (
         <div className="m-2 rounded-lg bg-purple-500 p-2">
           {testPages.map((page) => {
             return (
