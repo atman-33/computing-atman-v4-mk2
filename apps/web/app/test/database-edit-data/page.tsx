@@ -1,8 +1,8 @@
 'use client';
 
+import { gql } from '@/lib/graphql-client';
 import { GetTestMongoosesDocument } from '@libs/web/data-access-graphql';
 import { Button } from '@libs/web/ui-shadcn';
-import { gql } from 'apps/web/lib/graphql-client';
 import { useRef } from 'react';
 
 export default async function Page() {

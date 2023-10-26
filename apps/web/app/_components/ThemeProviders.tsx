@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
-import siteMetadata from 'apps/web/constants/site-metadata';
+import siteMetadata from '@/constants/site-metadata';
 import { ThemeProvider } from 'next-themes';
 
 export function ThemeProviders({ children }: { children: React.ReactNode }) {

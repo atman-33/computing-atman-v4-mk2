@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import Header from '@/components/Header';
 import SectionContainer from '@/components/SectionContainer';
-import siteMetadata from 'apps/web/constants/site-metadata';
+import siteMetadata from '@/constants/site-metadata';
 import { Metadata } from 'next';
 import { Analytics, AnalyticsConfig } from 'pliny/analytics';
 import { SearchConfig, SearchProvider } from 'pliny/search';

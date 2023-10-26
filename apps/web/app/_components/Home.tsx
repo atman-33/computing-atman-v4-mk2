@@ -4,7 +4,7 @@ import { Blog } from '.contentlayer/generated/types';
 import Link from '@/components/Link';
 import Tag from '@/components/Tag';
 import Thumbnail from '@/components/Thumbnail';
-import siteMetadata from 'apps/web/constants/site-metadata';
+import siteMetadata from '@/constants/site-metadata';
 import { formatDate } from 'pliny/utils/formatDate';
 // import NewsletterForm from 'pliny/ui/NewsletterForm';
 

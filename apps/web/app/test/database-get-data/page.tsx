@@ -1,7 +1,7 @@
 'use client';
 
+import { gql } from '@/lib/graphql-client';
 import { GetTestMongoosesDocument } from '@libs/web/data-access-graphql';
-import { gql } from 'apps/web/lib/graphql-client';
 
 export default async function Page() {
   const data = (
