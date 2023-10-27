@@ -1,17 +1,35 @@
-import { createStore } from 'redux';
-
-type ActionType = { type: '+' | '-'; step: number };
+import { combineReducers, createStore } from 'redux';
 
 const initialState = 0;
-const reducer = (state: number = initialState, action: ActionType) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const reducer = (state: number = initialState, action: any) => {
+  console.log(action.type);
   switch (action.type) {
-    case '+':
+    case 'counter/+':
       return state + action.step;
-    case '-':
+    case 'counter/-':
       return state - action.step;
     default:
       return state;
   }
 };
 
-export default createStore(reducer);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const reducer2 = (state: number = initialState, action: any) => {
+  console.log(action.type);
+  switch (action.type) {
+    case 'counter2/+':
+      return state + action.step;
+    case 'counter2/-':
+      return state - action.step;
+    default:
+      return state;
+  }
+};
+
+const reducers = combineReducers({
+  counter: reducer,
+  counter2: reducer2
+});
+
+export default createStore(reducers);

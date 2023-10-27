@@ -36,7 +36,9 @@ export default function Page() {
     '/sites/shadcn-sample/051-redux-no-rtk',
     '/sites/shadcn-sample/052-multiple-reducers',
     '/sites/shadcn-sample/053-action-creator',
-    '/sites/shadcn-sample/054-redux-toolkit'
+    '/sites/shadcn-sample/054-redux-toolkit',
+    '/sites/shadcn-sample/055-redux-toolkit-immer',
+    '/sites/shadcn-sample/056-redux-thunk'
   ];
 
   return (

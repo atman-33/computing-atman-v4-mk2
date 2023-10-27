@@ -14,7 +14,7 @@ const Page = () => {
       </div>
       <div className="mt-8">
         <h4>Note</h4>
-        <li>The way of using redux toolkit is better than this way. </li>
+        <li>In createSlice of redux-toolkit, state is immutable. And return is not needed. </li>
       </div>
     </>
   );

@@ -1,13 +1,20 @@
 import { Button } from '@libs/web/ui-shadcn';
 import { useDispatch } from 'react-redux';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CounterButton = ({ calcType, step }: { calcType: any; step: number }) => {
+type Props = {
+  calcType: '+' | '-' | 'async(+)';
+  step: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actionCreator: any;
+};
+
+const CounterButton = ({ calcType, step, actionCreator }: Props) => {
   // const dispatch = useCounterDispatch();
   const dispatch = useDispatch();
 
   const clickHandler = () => {
-    dispatch({ type: 'counter2/' + calcType, step });
+    // const action = calcType === '+' ? add(step) : minus(step);
+    dispatch(actionCreator(step));
   };
 
   return (

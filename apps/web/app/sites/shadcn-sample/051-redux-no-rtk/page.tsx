@@ -14,7 +14,7 @@ const Page = () => {
       </div>
       <div className="mt-8">
         <h4>Note</h4>
-        <li>Summaraize useContext and useReducer is better than useContext only. </li>
+        <li></li>
       </div>
     </>
   );
