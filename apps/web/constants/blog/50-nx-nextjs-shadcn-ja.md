@@ -3,7 +3,7 @@ title: Nx Next.js で shadcn を利用する方法
 date: '2023-10-11'
 lastmod: '2023-10-11'
 tags: ['nx', 'next js', 'shadcn']
-images: ['/static/blog/50/shadcn.jpg']
+images: ['/static/images/shadcn.jpg']
 summary: Nx モノレポの Next.js で shadcn を利用する方法を説明します。
 ---
 
