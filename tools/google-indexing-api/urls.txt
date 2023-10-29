@@ -1,1 +1,2 @@
-https://computing-atman.com/blog/50-nx-nextjs-shadcn/
+https://computing-atman.com/blog/52-excel-vba-template-mk2/
+https://computing-atman.com/blog/51-electron-react-boilerplate/

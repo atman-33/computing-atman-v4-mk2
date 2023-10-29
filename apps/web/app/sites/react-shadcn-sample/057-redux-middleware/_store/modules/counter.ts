@@ -8,9 +8,15 @@ const counterSlice = createSlice({
     add(state, { type, payload }) {
       // In redux-toolkit, state is immutable. And return is not needed.
       state.count = state.count + payload;
+      // const newState = { ...state };
+      // newState.count = state.count + payload;
+      // return newState;
     },
     minus(state, { type, payload }) {
       state.count = state.count - payload;
+      // const newState = { ...state };
+      // newState.count = state.count - payload;
+      // return newState;
     }
   },
   // ---- AsyncThunk ---- //

@@ -16,6 +16,8 @@ run the below script
 }
 ```
 
+> If any errors happend, try again after minutes later.
+
 ## Reference
 
 https://yumeno.me/google-index-api

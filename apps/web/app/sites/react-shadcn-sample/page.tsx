@@ -38,12 +38,14 @@ export default function Page() {
     '/sites/react-shadcn-sample/053-action-creator',
     '/sites/react-shadcn-sample/054-redux-toolkit',
     '/sites/react-shadcn-sample/055-redux-toolkit-immer',
-    '/sites/react-shadcn-sample/056-redux-thunk'
+    '/sites/react-shadcn-sample/056-redux-thunk',
+    '/sites/react-shadcn-sample/057-redux-middleware',
+    '/sites/react-shadcn-sample/061-objectis'
   ];
 
   return (
     <>
-      <div className="m-8 grid grid-cols-2 gap-4">
+      <div className="m-8 grid grid-cols-3 gap-4">
         {samplePages.map((page) => {
           return (
             <div key={page} className="m-4">
