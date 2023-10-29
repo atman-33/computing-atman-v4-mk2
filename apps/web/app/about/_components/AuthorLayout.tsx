@@ -1,7 +1,8 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import Image from '@/components/Image';
+import SocialIcon from '@/components/social-icons';
 import type { Authors } from 'contentlayer/generated';
 import { ReactNode } from 'react';
-import Image from '../Image';
-import SocialIcon from '../social-icons';
 
 interface Props {
   children: ReactNode;

@@ -1,14 +1,15 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import Comments from '@/components/Comments';
+import Image from '@/components/Image';
+import Link from '@/components/Link';
+import PageTitle from '@/components/PageTitle';
+import ScrollTopAndComment from '@/components/ScrollTopAndComment';
+import SectionContainer from '@/components/SectionContainer';
+import Tag from '@/components/Tag';
+import siteMetadata from '@/constants/site-metadata';
 import type { Authors, Blog } from 'contentlayer/generated';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { ReactNode } from 'react';
-import siteMetadata from '../../constants/site-metadata';
-import Comments from '../Comments';
-import Image from '../Image';
-import Link from '../Link';
-import PageTitle from '../PageTitle';
-import ScrollTopAndComment from '../ScrollTopAndComment';
-import SectionContainer from '../SectionContainer';
-import Tag from '../Tag';
 
 const editUrl = (path: string) => `${siteMetadata.siteRepo}/blob/main/data/${path}`;
 const discussUrl = (path: string) =>

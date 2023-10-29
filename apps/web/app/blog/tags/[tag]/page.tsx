@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import ListLayout from '@/components/layouts/ListLayoutWithTags';
+import ListLayout from 'apps/web/app/blog/_components/ListLayoutWithTags';
 import siteMetadata from 'apps/web/constants/site-metadata';
 import { allBlogs } from 'contentlayer/generated';
 import { slug } from 'github-slugger';

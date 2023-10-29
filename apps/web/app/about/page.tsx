@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import AuthorLayout from '@/components/layouts/AuthorLayout';
+import AuthorLayout from 'apps/web/app/about/_components/AuthorLayout';
 import { Authors, allAuthors } from 'contentlayer/generated';
 import { MDXLayoutRenderer } from 'pliny/mdx-components';
 import { coreContent } from 'pliny/utils/contentlayer';

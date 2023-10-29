@@ -1,13 +1,14 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
+import Link from '@/components/Link';
+import Tag from '@/components/Tag';
+import siteMetadata from '@/constants/site-metadata';
 import type { Blog } from 'contentlayer/generated';
 import { usePathname } from 'next/navigation';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
 import { useState } from 'react';
-import siteMetadata from '../../constants/site-metadata';
-import Link from '../Link';
-import Tag from '../Tag';
 
 interface PaginationProps {
   totalPages: number;

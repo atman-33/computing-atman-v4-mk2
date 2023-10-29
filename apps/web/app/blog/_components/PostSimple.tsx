@@ -1,13 +1,14 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import Comments from '@/components/Comments';
+import Link from '@/components/Link';
+import PageTitle from '@/components/PageTitle';
+import ScrollTopAndComment from '@/components/ScrollTopAndComment';
+import SectionContainer from '@/components/SectionContainer';
+import siteMetadata from '@/constants/site-metadata';
 import type { Blog } from 'contentlayer/generated';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
 import { ReactNode } from 'react';
-import siteMetadata from '../../constants/site-metadata';
-import Comments from '../Comments';
-import Link from '../Link';
-import PageTitle from '../PageTitle';
-import ScrollTopAndComment from '../ScrollTopAndComment';
-import SectionContainer from '../SectionContainer';
 
 interface LayoutProps {
   content: CoreContent<Blog>;

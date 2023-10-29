@@ -11,7 +11,7 @@ import { slug } from 'github-slugger';
 import { usePathname } from 'next/navigation';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
-import tagData from '../../public/tag-data.json';
+import tagData from '../../../public/tag-data.json';
 
 interface PaginationProps {
   totalPages: number;
@@ -58,9 +58,6 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
           <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
             Next
           </Link>
-          // <Link href={`/blog/page/2`} rel="next">
-          //   Next
-          // </Link>
         )}
       </nav>
     </div>
