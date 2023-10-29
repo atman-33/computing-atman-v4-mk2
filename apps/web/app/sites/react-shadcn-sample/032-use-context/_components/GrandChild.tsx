@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { MyContext } from './example';
+import { MyContext } from './Example';
 
 // The commentout is not using useContext.
 // const GrandChild = ({ value }: { value: string }) => {
