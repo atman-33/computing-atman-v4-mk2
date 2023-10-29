@@ -1,0 +1,153 @@
+---
+title: Excel VBA テンプレートファイル（改良版 mk2）
+date: '2023-10-29'
+lastmod: '2023-10-29'
+tags: ['excel', 'vba']
+images: ['/static/images/common/excel-vba.jpg']
+summary: Excel VBA テンプレートファイルを作成しました。クラスモジュールを中心に、Excelテーブルと連携したDB（Oracle）のCRUD操作等の機能を実装しています。
+---
+
+![sample](/static/blog/52/1-sample.png)
+
+## 概要
+
+Excel VBA テンプレートファイルを作成しました。クラスモジュールを中心に、Excelテーブルと連携したDB（Oracle）のCRUD操作等の機能を実装しています。
+
+Excelファイル及びドキュメントは下記リポジトリに保存しています。
+
+[https://github.com/atman-33/template-excel-vba-mk2](https://github.com/atman-33/template-excel-vba-mk2)
+
+<TOCInline toc={props.toc} exclude="概要" />
+
+## 1. 主な実装機能
+- ConfigシートのデータをVBAで利用
+- Oracleデータベースに接続し、Excelテーブルにデータ格納/削除する機能
+- Excelテーブル操作機能（ソート、フィルター）
+
+## 2. モジュール構成
+
+```text
+|- 標準モジュール/
+|   |- Constants        : 共通の定数を記載
+|   |- ModuleCommon     : Staticな共通処理を記載
+|   |- Tests            : ユニットテスト用コード置き場
+|   |- Utils            : 汎用メソッド置き場
+|
+|- クラスモジュール/
+|   |- Config           : Excelシートに指定したConfigを扱うクラス
+|   |- DaoAccess        : Access に接続し、CRUD処理を行うDAOクラス
+|   |- DaoOracleOra     : Oracle に接続し、CRUD処理を行うDAOクラス
+|   |- ExListObject     : テーブル（ListObject）の機能拡張クラス
+|   |- IDao             : DAOクラスのインターフェース
+|   |- Repository       : DAOクラスを利用するリポジトリクラス
+|   |- TableXxx         : Excelテーブルを操作するクラス
+|   |- SheetXxx         : Excelシートを操作するクラス
+|
+
+```
+
+## 3. シート説明
+
+### Sample1 シート
+
+Sample1シートでは、OracleDBのデータを取得・変更できます。  
+また、DBから取得したExcelテーブルに貼り付けし、ソートやフィルターする機能を実装しています。
+
+![sample](/static/blog/52/1-sample.png)
+
+Excelテーブルの「保存」・「削除」アイコンをダブルクリックすると、クリックしたレコードをDBに保存もしくは削除できます。
+
+DB接続設定やデータ取得するSQLは、後述のConfigシート・SQLシートで指定しています。
+
+### Config シート
+
+DB接続情報等、VBAで利用するための設定を行うシートです。
+このシートに格納したKeyとItemは、VBA側で呼び出す事ができます。
+
+![config](/static/blog/52/2-config.png)
+
+```vb:Config.cls
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' クラス：Config
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+' ---- 定数設定 ---- '
+Const CONFIG_SHEET = "Config"
+Const CONFIG_TABLE = "ConfigTable"
+Const CONFIG_COL_KEY = "Key"
+Const CONFIG_COL_ITEM = "Item"
+' ------------------ '
+
+Private dictionary_ As Object
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' Summary : コンストラクタ
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Private Sub Class_Initialize()
+    
+    Set dictionary_ = CreateObject("Scripting.Dictionary")
+    
+    ' Configテーブルを格納
+    Dim table As ListObject
+    Set table = ThisWorkbook.Worksheets(CONFIG_SHEET).ListObjects(CONFIG_TABLE)
+    
+    ' ConfigテーブルのKeyとItemを辞書に格納
+    Dim key As String, Item As String
+    
+    Dim i As Long
+    For i = 1 To table.ListRows.Count
+        key = table.ListColumns(CONFIG_COL_KEY).DataBodyRange(i).Value
+        Item = table.ListColumns(CONFIG_COL_ITEM).DataBodyRange(i).Value
+    
+        Call dictionary_.Add(key, Item)
+    Next i
+    
+    ' ---- Debug ---- '
+    Dim varItem As Variant
+    Dim str As String
+    For Each varItem In dictionary_
+        str = str & varItem & ":" & dictionary_.Item(varItem) & vbCrLf
+    Next
+    
+    Debug.Print str
+'    Debug.Print dictionary_.Item("ORA_DATA_SOURCE")
+    
+    ' --------------- '
+    
+End Sub
+
+
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+' Summary : 指定したKeyのアイテムを取得
+' ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+Public Property Get Item(key As String) As Variant
+    Item = dictionary_.Item(key)
+End Property
+```
+
+Configのデータを取得する際は、下記のように使用します。
+
+ex:  
+```vb
+Dim conf As New Config
+Dim source As string
+
+source = conf.Item("ORA_DATA_SOURCE")
+```
+
+### SQL シート
+
+DBから取得するSQLと、データ貼り付け先（シート、テーブル）を指定します。
+
+![sql](/static/blog/52/3-sql.png)
+
+SQLテーブルについて補足：
+
+| 列名  | 内容                                                                  |
+| :---- | :-------------------------------------------------------------------- |
+| Name  | SQLの名称（SQLを分かり易くするために準備している。VBAで利用しない。） |
+| Sheet | SQLの結果を出力するテーブルが存在するシート名称                       |
+| Table | SQLの結果を出力するテーブル名称                                       |
+| SQL   | 実行するSQL文                                                         |
+| 説明  | SQLの内容など補足する場合のコメント                                   |
+

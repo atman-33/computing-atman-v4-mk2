@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import siteMetadata from '@/data/site-metadata';
+import siteMetadata from '@/constants/site-metadata';
 import { allBlogs } from 'contentlayer/generated';
 import { MetadataRoute } from 'next';
 

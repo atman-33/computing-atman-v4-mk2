@@ -6,6 +6,7 @@
     "dbaeumer.vscode-eslint",
     "hediet.vscode-drawio",
     "prisma.prisma",
-    "yzhang.markdown-all-in-one"
+    "yzhang.markdown-all-in-one",
+    "dsznajder.es7-react-js-snippets"
   ]
 }

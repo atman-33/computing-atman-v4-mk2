@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import Card from '@/components/card';
-import sitesData from '@/data/sites-data';
-import { genPageMetadata } from '../_components/seo';
+import Card from '@/components/Card';
+import sitesData from 'apps/web/constants/sites/sites-data';
+import { genPageMetadata } from '../seo';
 
 export const metadata = genPageMetadata({ title: 'Games' });
 

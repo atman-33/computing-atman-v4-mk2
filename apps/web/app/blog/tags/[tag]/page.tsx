@@ -1,12 +1,12 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import ListLayout from '@/components/layouts/list-layout-with-tags';
-import siteMetadata from '@/data/site-metadata';
+import ListLayout from 'apps/web/app/blog/_components/ListLayoutWithTags';
+import siteMetadata from 'apps/web/constants/site-metadata';
 import { allBlogs } from 'contentlayer/generated';
 import { slug } from 'github-slugger';
 import { Metadata } from 'next';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
 import tagData from '../../../../public/tag-data.json';
-import { genPageMetadata } from '../../../_components/seo';
+import { genPageMetadata } from '../../../seo';
 
 export async function generateMetadata({ params }: { params: { tag: string } }): Promise<Metadata> {
   const tag = decodeURI(params.tag);

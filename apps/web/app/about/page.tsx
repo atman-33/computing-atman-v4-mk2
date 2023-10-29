@@ -1,9 +1,9 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import AuthorLayout from '@/components/layouts/author-layout';
+import AuthorLayout from 'apps/web/app/about/_components/AuthorLayout';
 import { Authors, allAuthors } from 'contentlayer/generated';
 import { MDXLayoutRenderer } from 'pliny/mdx-components';
 import { coreContent } from 'pliny/utils/contentlayer';
-import { genPageMetadata } from '../_components/seo';
+import { genPageMetadata } from '../seo';
 
 export const metadata = genPageMetadata({ title: 'About' });
 

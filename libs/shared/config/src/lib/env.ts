@@ -4,9 +4,13 @@ dotenv.config({ path: '.env.local' });
 
 export const env = {
   PORT: process.env['PORT'],
-  NEXT_PUBLIC_IS_DEV: process.env['NEXT_PUBLIC_IS_DEV'],
   API_PORT: process.env['API_PORT'],
+  NEXT_PUBLIC_IS_DEV: process.env['NEXT_PUBLIC_IS_DEV'],
   NEXT_PUBLIC_WEB_GQL_URL: process.env['NEXT_PUBLIC_WEB_GQL_URL'],
+  NEXT_PUBLIC_GISCUS_REPO: process.env['NEXT_PUBLIC_GISCUS_REPO'],
+  NEXT_PUBLIC_GISCUS_REPOSITORY_ID: process.env['NEXT_PUBLIC_GISCUS_REPOSITORY_ID'],
+  NEXT_PUBLIC_GISCUS_CATEGORY: process.env['NEXT_PUBLIC_GISCUS_CATEGORY'],
+  NEXT_PUBLIC_GISCUS_CATEGORY_ID: process.env['NEXT_PUBLIC_GISCUS_CATEGORY_ID'],
   DB_URL: process.env['DB_URL'],
   JWT_EXPIRATION: process.env['JWT_EXPIRATION'],
   JWT_SECRET: process.env['JWT_SECRET']

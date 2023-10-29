@@ -1,0 +1,37 @@
+# Sample graphql query for codegen
+
+query getSampleMongooseTables {
+  sampleMongooseTables {
+    _id
+    text
+    value
+  }
+}
+
+mutation createSampleMongooseTable(
+  $createSampleMongooseTableData: CreateSampleMongooseTableInput!
+) {
+  createSampleMongooseTable(createSampleMongooseTableData: $createSampleMongooseTableData) {
+    _id
+    text
+    value
+  }
+}
+
+mutation updateSampleMongooseTable(
+  $updateSampleMongooseTableData: UpdateSampleMongooseTableInput!
+) {
+  updateSampleMongooseTable(updateSampleMongooseTableData: $updateSampleMongooseTableData) {
+    _id
+    text
+    value
+  }
+}
+
+mutation deleteSampleMongooseTable(
+  $deleteSampleMongooseTableArgs: DeleteSampleMongooseTableInput!
+) {
+  deleteSampleMongooseTable(deleteSampleMongooseTableArgs: $deleteSampleMongooseTableArgs) {
+    _id
+  }
+}

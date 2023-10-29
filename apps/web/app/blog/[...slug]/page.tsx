@@ -2,12 +2,12 @@
 import '@/styles/prism.css';
 import 'katex/dist/katex.css';
 
-import PostBanner from '@/components/layouts/post-banner';
-import PostLayout from '@/components/layouts/post-layout';
-import PostSimple from '@/components/layouts/post-simple';
-import { components } from '@/components/mdx-components';
-import PageTitle from '@/components/page-title';
-import siteMetadata from '@/data/site-metadata';
+import { components } from '@/components/MDXComponents';
+import PageTitle from '@/components/PageTitle';
+import siteMetadata from '@/constants/site-metadata';
+import PostBanner from 'apps/web/app/blog/_components/PostBanner';
+import PostLayout from 'apps/web/app/blog/_components/PostLayout';
+import PostSimple from 'apps/web/app/blog/_components/PostSimple';
 import type { Authors, Blog } from 'contentlayer/generated';
 import { allAuthors, allBlogs } from 'contentlayer/generated';
 import { Metadata } from 'next';

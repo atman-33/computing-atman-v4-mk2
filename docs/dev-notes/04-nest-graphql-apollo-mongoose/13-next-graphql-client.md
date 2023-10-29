@@ -12,17 +12,17 @@ ex.
 
 ```tsx
 import { gql } from '@/data-access/graphql-client';
-import { GetTestMongoosesDocument } from '@libs/web/data-access-graphql';
+import { GetSampleMongooseTablesDocument } from '@libs/web/data-access-graphql';
 
 export default async function page() {
   const data = (
     await gql.query({
-      query: GetTestMongoosesDocument
+      query: GetSampleMongooseTablesDocument
     })
   ).data;
 
   console.log(data);
 
-  return <div>{data.testMongooses.map((x) => x.text)}</div>;
+  return <div>{data.SampleMongooseTables.map((x) => x.text)}</div>;
 }
 ```

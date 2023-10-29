@@ -1,0 +1,49 @@
+---
+title: electron-react-boilerplate 環境構築（Proxy, 環境変数）
+date: '2023-10-29'
+lastmod: '2023-10-29'
+tags: ['electron']
+images: ['/static/images/common/react-electron.png']
+summary: Electron + React を利用するための環境構築の方法です。
+---
+
+Electronは、HTML、CSS、JavaScriptを使ったデスクトップアプリを作ることができるフレームワークです。
+
+Windows環境で、Electron + React を利用するための環境セットアップ方法を残しておきます。
+
+## 1. 前提
+
+- Node.js をインストール済み
+
+## 2. npm にアクセスするためのProxy設定
+
+```powershell
+npm config set strict-ssl false
+npm config registry "http://registry.npmjs.org"
+npm config set proxy "利用しているProxyのURL"
+npm config set https-proxy "利用しているProxyのURL"
+```
+
+## 3. Electron をインストールするための環境変数設定
+
+```powershell
+$env:ELECTRON_GET_USE_PROXY = 1
+$env:GLOBAL_AGENT_HTTPS_PROXY = "利用しているProxyのURL"
+```
+
+## 4. Electron をインストール
+
+GitHub の electron-react-boilerplate をクローンします。
+
+```powershell
+git clone --depth 1 --branch main https://github.com/electron-react-boilerplate/electron-react-boilerplate your-project-name
+cd your-project-name
+npm install 
+```
+
+> `your-project-name` は、適切な名前に変更してください。
+
+## 参考URL
+
+[Electron + Reactでデスクトップアプリを作ろう！](https://qiita.com/udayaan/items/2a7c8fd0771d4d995b69)  
+[Proxy環境でElectronインストールしようとしたら隠れた罠があったんです](https://qiita.com/LuckyRetriever/items/2f377b1ce34f7d12903c)
