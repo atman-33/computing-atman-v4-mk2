@@ -22,6 +22,7 @@ const Page = () => {
       <div className="mt-8">
         <h4>Note</h4>
         <li>If you use side effect in Redux, write it in middleware(redux-thunk). </li>
+        <li>The arguments of configureStore can not use combineReducers. </li>
       </div>
     </>
   );
