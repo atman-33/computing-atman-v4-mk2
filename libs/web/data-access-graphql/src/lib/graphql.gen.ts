@@ -15,89 +15,89 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type CreateTestMongooseInput = {
+export type CreateSampleMongooseTableInput = {
   text: Scalars['String']['input'];
   value: Scalars['Float']['input'];
 };
 
-export type DeleteTestMongooseInput = {
+export type DeleteSampleMongooseTableInput = {
   _id: Scalars['String']['input'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createTestMongoose: TestMongoose;
-  deleteTestMongoose: Maybe<TestMongoose>;
-  updateTestMongoose: TestMongoose;
+  createSampleMongooseTable: SampleMongooseTable;
+  deleteSampleMongooseTable: Maybe<SampleMongooseTable>;
+  updateSampleMongooseTable: SampleMongooseTable;
 };
 
 
-export type MutationCreateTestMongooseArgs = {
-  createTestMongooseData: CreateTestMongooseInput;
+export type MutationCreateSampleMongooseTableArgs = {
+  createSampleMongooseTableData: CreateSampleMongooseTableInput;
 };
 
 
-export type MutationDeleteTestMongooseArgs = {
-  deleteTestMongooseArgs: DeleteTestMongooseInput;
+export type MutationDeleteSampleMongooseTableArgs = {
+  deleteSampleMongooseTableArgs: DeleteSampleMongooseTableInput;
 };
 
 
-export type MutationUpdateTestMongooseArgs = {
-  updateTestMongooseData: UpdateTestMongooseInput;
+export type MutationUpdateSampleMongooseTableArgs = {
+  updateSampleMongooseTableData: UpdateSampleMongooseTableInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  testMongoose: TestMongoose;
-  testMongooses: Array<TestMongoose>;
+  sampleMongooseTable: SampleMongooseTable;
+  sampleMongooseTables: Array<SampleMongooseTable>;
 };
 
 
-export type QueryTestMongooseArgs = {
+export type QuerySampleMongooseTableArgs = {
   _id: Scalars['String']['input'];
 };
 
-export type TestMongoose = {
-  __typename?: 'TestMongoose';
+export type SampleMongooseTable = {
+  __typename?: 'SampleMongooseTable';
   _id: Scalars['String']['output'];
   text: Scalars['String']['output'];
   value: Scalars['Float']['output'];
 };
 
-export type UpdateTestMongooseInput = {
+export type UpdateSampleMongooseTableInput = {
   _id: Scalars['String']['input'];
   text: Scalars['String']['input'];
   value: Scalars['Float']['input'];
 };
 
-export type GetTestMongoosesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetSampleMongooseTablesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTestMongoosesQuery = { __typename?: 'Query', testMongooses: Array<{ __typename?: 'TestMongoose', _id: string, text: string, value: number }> };
+export type GetSampleMongooseTablesQuery = { __typename?: 'Query', sampleMongooseTables: Array<{ __typename?: 'SampleMongooseTable', _id: string, text: string, value: number }> };
 
-export type CreateTestMongooseMutationVariables = Exact<{
-  createTestMongooseData: CreateTestMongooseInput;
+export type CreateSampleMongooseTableMutationVariables = Exact<{
+  createSampleMongooseTableData: CreateSampleMongooseTableInput;
 }>;
 
 
-export type CreateTestMongooseMutation = { __typename?: 'Mutation', createTestMongoose: { __typename?: 'TestMongoose', _id: string, text: string, value: number } };
+export type CreateSampleMongooseTableMutation = { __typename?: 'Mutation', createSampleMongooseTable: { __typename?: 'SampleMongooseTable', _id: string, text: string, value: number } };
 
-export type UpdateTestMongooseMutationVariables = Exact<{
-  updateTestMongooseData: UpdateTestMongooseInput;
+export type UpdateSampleMongooseTableMutationVariables = Exact<{
+  updateSampleMongooseTableData: UpdateSampleMongooseTableInput;
 }>;
 
 
-export type UpdateTestMongooseMutation = { __typename?: 'Mutation', updateTestMongoose: { __typename?: 'TestMongoose', _id: string, text: string, value: number } };
+export type UpdateSampleMongooseTableMutation = { __typename?: 'Mutation', updateSampleMongooseTable: { __typename?: 'SampleMongooseTable', _id: string, text: string, value: number } };
 
-export type DeleteTestMongooseMutationVariables = Exact<{
-  deleteTestMongooseArgs: DeleteTestMongooseInput;
+export type DeleteSampleMongooseTableMutationVariables = Exact<{
+  deleteSampleMongooseTableArgs: DeleteSampleMongooseTableInput;
 }>;
 
 
-export type DeleteTestMongooseMutation = { __typename?: 'Mutation', deleteTestMongoose: { __typename?: 'TestMongoose', _id: string } | null };
+export type DeleteSampleMongooseTableMutation = { __typename?: 'Mutation', deleteSampleMongooseTable: { __typename?: 'SampleMongooseTable', _id: string } | null };
 
 
-export const GetTestMongoosesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getTestMongooses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"testMongooses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<GetTestMongoosesQuery, GetTestMongoosesQueryVariables>;
-export const CreateTestMongooseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createTestMongoose"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createTestMongooseData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateTestMongooseInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTestMongoose"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createTestMongooseData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createTestMongooseData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<CreateTestMongooseMutation, CreateTestMongooseMutationVariables>;
-export const UpdateTestMongooseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateTestMongoose"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateTestMongooseData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateTestMongooseInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateTestMongoose"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateTestMongooseData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateTestMongooseData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<UpdateTestMongooseMutation, UpdateTestMongooseMutationVariables>;
-export const DeleteTestMongooseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteTestMongoose"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deleteTestMongooseArgs"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DeleteTestMongooseInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteTestMongoose"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"deleteTestMongooseArgs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deleteTestMongooseArgs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}}]}}]}}]} as unknown as DocumentNode<DeleteTestMongooseMutation, DeleteTestMongooseMutationVariables>;
+export const GetSampleMongooseTablesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getSampleMongooseTables"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sampleMongooseTables"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<GetSampleMongooseTablesQuery, GetSampleMongooseTablesQueryVariables>;
+export const CreateSampleMongooseTableDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createSampleMongooseTable"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createSampleMongooseTableData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateSampleMongooseTableInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSampleMongooseTable"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createSampleMongooseTableData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createSampleMongooseTableData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<CreateSampleMongooseTableMutation, CreateSampleMongooseTableMutationVariables>;
+export const UpdateSampleMongooseTableDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateSampleMongooseTable"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateSampleMongooseTableData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateSampleMongooseTableInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateSampleMongooseTable"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateSampleMongooseTableData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateSampleMongooseTableData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<UpdateSampleMongooseTableMutation, UpdateSampleMongooseTableMutationVariables>;
+export const DeleteSampleMongooseTableDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteSampleMongooseTable"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deleteSampleMongooseTableArgs"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DeleteSampleMongooseTableInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteSampleMongooseTable"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"deleteSampleMongooseTableArgs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deleteSampleMongooseTableArgs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}}]}}]}}]} as unknown as DocumentNode<DeleteSampleMongooseTableMutation, DeleteSampleMongooseTableMutationVariables>;

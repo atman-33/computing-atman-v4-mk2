@@ -1,5 +1,5 @@
 {
-  "name": "@libs/api/feature-test-mongoose",
+  "name": "@libs/api/feature-sample-mongoose-table",
   "version": "0.0.1",
   "dependencies": {
     "@swc/helpers": "~0.5.0"

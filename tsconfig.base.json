@@ -10,27 +10,63 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["apps/web/components/*"],
-      "@/constants/*": ["apps/web/constants/*"],
-      "@/config/*": ["apps/web/config/*"],
-      "@/lib/*": ["apps/web/lib/*"],
-      "@/styles/*": ["apps/web/styles/*"],
-      "@libs/api/feature-image": ["libs/api/feature-image/src/index.ts"],
-      "@libs/api/feature-test-mongoose": ["libs/api/feature-test-mongoose/src/index.ts"],
-      "@libs/api/mongoose/shared": ["libs/api/mongoose/shared/src/index.ts"],
-      "@libs/api/prisma/data-access-db": ["libs/api/prisma/data-access-db/src/index.ts"],
-      "@libs/api/prisma/generated-db-types": ["libs/api/prisma/generated-db-types/src/index.ts"],
-      "@libs/shared/config": ["libs/shared/config/src/index.ts"],
-      "@libs/web/data-access-graphql": ["libs/web/data-access-graphql/src/index.ts"],
-      "@libs/web/ui-shadcn": ["libs/web/ui-shadcn/src/index.ts"],
-      "@libs/web/ui-shadcn/lib/utils": ["libs/web/ui-shadcn/src/lib/utils.ts"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "@/components/*": [
+        "apps/web/components/*"
+      ],
+      "@/constants/*": [
+        "apps/web/constants/*"
+      ],
+      "@/config/*": [
+        "apps/web/config/*"
+      ],
+      "@/lib/*": [
+        "apps/web/lib/*"
+      ],
+      "@/styles/*": [
+        "apps/web/styles/*"
+      ],
+      "@libs/api/feature-image": [
+        "libs/api/feature-image/src/index.ts"
+      ],
+      "@libs/api/feature-sample-mongoose-table": [
+        "libs/api/feature-sample-mongoose-table/src/index.ts"
+      ],
+      "@libs/api/mongoose/shared": [
+        "libs/api/mongoose/shared/src/index.ts"
+      ],
+      "@libs/api/prisma/data-access-db": [
+        "libs/api/prisma/data-access-db/src/index.ts"
+      ],
+      "@libs/api/prisma/generated-db-types": [
+        "libs/api/prisma/generated-db-types/src/index.ts"
+      ],
+      "@libs/shared/config": [
+        "libs/shared/config/src/index.ts"
+      ],
+      "@libs/web/data-access-graphql": [
+        "libs/web/data-access-graphql/src/index.ts"
+      ],
+      "@libs/web/ui-shadcn": [
+        "libs/web/ui-shadcn/src/index.ts"
+      ],
+      "@libs/web/ui-shadcn/lib/utils": [
+        "libs/web/ui-shadcn/src/lib/utils.ts"
+      ],
+      "contentlayer/generated": [
+        "./.contentlayer/generated"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

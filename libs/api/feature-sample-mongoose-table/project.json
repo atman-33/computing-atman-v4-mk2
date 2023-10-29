@@ -1,17 +1,17 @@
 {
-  "name": "api-feature-test-mongoose",
+  "name": "api-feature-sample-mongoose-table",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/api/feature-test-mongoose/src",
+  "sourceRoot": "libs/api/feature-sample-mongoose-table/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/api/feature-test-mongoose",
-        "main": "libs/api/feature-test-mongoose/src/index.ts",
-        "tsConfig": "libs/api/feature-test-mongoose/tsconfig.lib.json",
-        "assets": ["libs/api/feature-test-mongoose/*.md"]
+        "outputPath": "dist/libs/api/feature-sample-mongoose-table",
+        "main": "libs/api/feature-sample-mongoose-table/src/index.ts",
+        "tsConfig": "libs/api/feature-sample-mongoose-table/tsconfig.lib.json",
+        "assets": ["libs/api/feature-sample-mongoose-table/*.md"]
       }
     },
     "lint": {
@@ -19,8 +19,8 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/api/feature-test-mongoose/**/*.ts",
-          "libs/api/feature-test-mongoose/package.json"
+          "libs/api/feature-sample-mongoose-table/**/*.ts",
+          "libs/api/feature-sample-mongoose-table/package.json"
         ]
       }
     },
@@ -28,7 +28,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/api/feature-test-mongoose/jest.config.ts",
+        "jestConfig": "libs/api/feature-sample-mongoose-table/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

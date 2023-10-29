@@ -1,7 +1,7 @@
 'use client';
 
 import { gql } from '@/lib/graphql-client';
-import { GetTestMongoosesDocument } from '@libs/web/data-access-graphql';
+import { GetSampleMongooseTablesDocument } from '@libs/web/data-access-graphql';
 import { Button } from '@libs/web/ui-shadcn';
 import { useRef } from 'react';
 
@@ -18,7 +18,7 @@ export default async function Page() {
 
   const records = (
     await gql.query({
-      query: GetTestMongoosesDocument
+      query: GetSampleMongooseTablesDocument
     })
   ).data;
 
@@ -33,7 +33,7 @@ export default async function Page() {
           </tr>
         </thead>
         <tbody>
-          {records.testMongooses.map((record) => {
+          {records.sampleMongooseTables.map((record) => {
             return (
               <tr key={record._id}>
                 <td className="whitespace-nowrap px-6 py-4">{record._id}</td>

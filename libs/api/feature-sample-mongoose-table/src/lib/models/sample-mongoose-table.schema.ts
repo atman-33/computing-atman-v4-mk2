@@ -2,7 +2,7 @@ import { AbstractDocument } from '@libs/api/mongoose/shared';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ versionKey: false })
-export class TestMongooseDocument extends AbstractDocument {
+export class SampleMongooseTableDocument extends AbstractDocument {
   @Prop()
   text?: string;
 
@@ -10,4 +10,4 @@ export class TestMongooseDocument extends AbstractDocument {
   value?: number;
 }
 
-export const TestMongooseSchema = SchemaFactory.createForClass(TestMongooseDocument);
+export const SampleMongooseTableSchema = SchemaFactory.createForClass(SampleMongooseTableDocument);

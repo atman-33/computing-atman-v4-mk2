@@ -1,8 +1,8 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-@ArgsType()
-export class GetTestMongooseArgs {
+@InputType()
+export class DeleteSampleMongooseTableInput {
   @Field()
   @IsNotEmpty()
   @IsString()

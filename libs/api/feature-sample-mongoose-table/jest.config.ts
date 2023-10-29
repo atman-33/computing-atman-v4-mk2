@@ -17,12 +17,12 @@ if (swcJestConfig.swcrc === undefined) {
 // swcJestConfig.module.noInterop = false;
 
 export default {
-  displayName: 'api-feature-test-mongoose',
+  displayName: 'api-feature-sample-mongoose-table',
   preset: '../../../jest.preset.js',
   transform: {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig]
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   testEnvironment: 'node',
-  coverageDirectory: '../../../coverage/libs/api/feature-test-mongoose'
+  coverageDirectory: '../../../coverage/libs/api/feature-sample-mongoose-table'
 };
