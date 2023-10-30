@@ -1,12 +1,6 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import logger from './middleware/logger';
 import { counterSlice } from './modules/counter';
-
-const rootReducer = combineReducers({
-  counter: counterSlice.reducer
-  // If you need to add more reducers, you can add them here
-  // log: log.reducer
-});
 
 const store = configureStore({
   reducer: {
@@ -23,5 +17,5 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof store.getState>;
 export default store;

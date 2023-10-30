@@ -40,7 +40,8 @@ export default function Page() {
     '/sites/react-shadcn-sample/055-redux-toolkit-immer',
     '/sites/react-shadcn-sample/056-redux-thunk',
     '/sites/react-shadcn-sample/057-redux-middleware',
-    '/sites/react-shadcn-sample/061-objectis'
+    '/sites/react-shadcn-sample/061-objectis',
+    '/sites/react-shadcn-sample/081-recoil'
   ];
 
   return (
