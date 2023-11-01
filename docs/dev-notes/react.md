@@ -15,7 +15,14 @@
 
 - useLayoutEffect   : 描画が画面に反映される手前で何か処理を実行したい場合に利用
 
+- memo              : state に変更が無い場合に、コンポーネントのレンダリングを発生させなくする事が可能
+- useCallback       : 再レンダリングさせたくないコンポーネントに関数を渡す際に利用。関数のメモ化
+
+### Recoil
+
 ### Redux
+
+Redux は、Global state 管理となり state が増えるとメンテが難しくなるため、Recoil を利用する事とする。
 
 - createSlice       : reducerを作成するだけで自動的にaction typeや、action creatorを生成する。
 - createAsyncThunk  : 非同期処理の実行状況に応じたActionCreatorを生成する関数

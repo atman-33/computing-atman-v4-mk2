@@ -41,6 +41,9 @@ export default function Page() {
     '/sites/react-shadcn-sample/056-redux-thunk',
     '/sites/react-shadcn-sample/057-redux-middleware',
     '/sites/react-shadcn-sample/061-objectis',
+    '/sites/react-shadcn-sample/062-child-rerender',
+    '/sites/react-shadcn-sample/063-memo',
+    '/sites/react-shadcn-sample/064-use-callback',
     '/sites/react-shadcn-sample/081-recoil'
   ];
 
