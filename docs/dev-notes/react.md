@@ -15,8 +15,14 @@
 
 - useLayoutEffect   : 描画が画面に反映される手前で何か処理を実行したい場合に利用
 
-- memo              : state に変更が無い場合に、コンポーネントのレンダリングを発生させなくする事が可能
+- memo              : props に変更が無い場合に、コンポーネントのレンダリングを発生させない（コンポーネントのメモ化）
+- useMemo           : 値のメモ化
 - useCallback       : 再レンダリングさせたくないコンポーネントに関数を渡す際に利用。関数のメモ化
+
+- useTransition     : 特定の処理を遅延させる事が可能。
+- useDeferredValue  : 遅延させたい処理（更新関数）をuseTransitionで囲めない時に利用（ライブラリなど）
+
+    > useTransition, useDeferredValue は極力利用せずに、useMemoやuseCallbackでパフォーマンス改善できない時に利用する。
 
 ### Recoil
 

@@ -44,6 +44,10 @@ export default function Page() {
     '/sites/react-shadcn-sample/062-child-rerender',
     '/sites/react-shadcn-sample/063-memo',
     '/sites/react-shadcn-sample/064-use-callback',
+    '/sites/react-shadcn-sample/065-use-callback-deps',
+    '/sites/react-shadcn-sample/066-use-memo',
+    '/sites/react-shadcn-sample/067-use-transition',
+    '/sites/react-shadcn-sample/068-use-deferred-value',
     '/sites/react-shadcn-sample/081-recoil'
   ];
 
