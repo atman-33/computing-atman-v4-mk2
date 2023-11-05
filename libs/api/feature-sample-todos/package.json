@@ -1,5 +1,5 @@
 {
-  "name": "@libs/api/feature-sample-todo",
+  "name": "@libs/api/feature-sample-todos",
   "version": "0.0.1",
   "dependencies": {
     "@swc/helpers": "~0.5.0"

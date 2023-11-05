@@ -4,11 +4,11 @@ import { CreateSampleTodoInput } from './dto/input/create-sample-todo-input.dto'
 import { DeleteSampleTodoInput } from './dto/input/delete-sample-todo-input.dto';
 import { UpdateSampleTodoInput } from './dto/input/update-sample-todo-input.dto';
 import { SampleTodo } from './models/sample-todo.model';
-import { SampleTodoService } from './sample-mongoose-table.service';
+import { SampleTodosService } from './sample-todos.service';
 
 @Resolver()
-export class SampleTodoResolver {
-  constructor(private readonly SampleTodoService: SampleTodoService) {}
+export class SampleTodosResolver {
+  constructor(private readonly SampleTodoService: SampleTodosService) {}
 
   @Mutation(() => SampleTodo, { name: 'createSampleTodo' })
   async createSampleTodo(

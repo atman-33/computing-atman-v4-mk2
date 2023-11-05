@@ -1,6 +1,6 @@
 import { ImageModule } from '@libs/api/feature-image';
 import { SampleMongooseTableModule } from '@libs/api/feature-sample-mongoose-table';
-import { SampleTodoModule } from '@libs/api/feature-sample-todo';
+import { SampleTodosModule } from '@libs/api/feature-sample-todos';
 import { DatabaseModule } from '@libs/api/mongoose/shared';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
@@ -28,7 +28,7 @@ import { AppService } from './app.service';
     // When using Mongoose, the DatabaseModule is required.
     DatabaseModule,
     SampleMongooseTableModule,
-    SampleTodoModule
+    SampleTodosModule
   ],
   controllers: [AppController],
   providers: [AppService]

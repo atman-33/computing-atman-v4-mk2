@@ -4,11 +4,11 @@ import { CreateSampleTodoInput } from './dto/input/create-sample-todo-input.dto'
 import { DeleteSampleTodoInput } from './dto/input/delete-sample-todo-input.dto';
 import { UpdateSampleTodoInput } from './dto/input/update-sample-todo-input.dto';
 import { SampleTodoDocument } from './models/sample-todo.schema';
-import { SampleTodoRepository } from './sample-mongoose-table.repository';
+import { SampleTodosRepository } from './sample-todos.repository';
 
 @Injectable()
-export class SampleTodoService {
-  constructor(private readonly SampleTodoRepository: SampleTodoRepository) {}
+export class SampleTodosService {
+  constructor(private readonly SampleTodoRepository: SampleTodosRepository) {}
 
   async createSampleTodo(createSampleTodoData: CreateSampleTodoInput) {
     const SampleTodoDocument = await this.SampleTodoRepository.create({

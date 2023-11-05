@@ -6,8 +6,8 @@ import { SampleTodo } from './models/sample-todo.model';
 import { SampleTodoDocument } from './models/sample-todo.schema';
 
 @Injectable()
-export class SampleTodoRepository extends AbstractRepository<SampleTodoDocument> {
-  protected readonly logger = new Logger(SampleTodoRepository.name);
+export class SampleTodosRepository extends AbstractRepository<SampleTodoDocument> {
+  protected readonly logger = new Logger(SampleTodosRepository.name);
 
   constructor(
     @InjectModel(SampleTodo.name)
