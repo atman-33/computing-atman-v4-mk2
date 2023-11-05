@@ -1,2 +1,2 @@
-- model   : Using in source for programming
+- model   : Using for Graphql
 - schema  : Using for mapping Mongoose DB
