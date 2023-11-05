@@ -3,6 +3,7 @@
 ### React
 
 - useState          : 関数コンポーネントでstateを管理（ state の保持と更新）するためのReactフック
+- useRef            : コンポーネント内での参照を管理するために使用。コンポーネントの中身が変更されても再レンダリングすることなく値を保持する。
 - useReducer        : useStateと同じくstateを管理するReactフック。ただし、useReducerは、定義の時点で関数を決定する。
 - useContext        : useContextとは、Context機能をよりシンプルに使える機能。親からPropsで渡されていないのに、Contextに収容されているデータアクセスできる。
 - createContext     : useContextを扱うコンテキストオブジェクトを作成する。

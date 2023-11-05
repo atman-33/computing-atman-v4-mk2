@@ -1,0 +1,2 @@
+- model   : Using in source for programming
+- schema  : Using for mapping Mongoose DB
