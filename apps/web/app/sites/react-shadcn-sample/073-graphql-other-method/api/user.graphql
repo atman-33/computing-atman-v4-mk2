@@ -1,0 +1,9 @@
+query getSampleUsers {
+  sampleUsers {
+    _id
+    username
+    age
+    hobbies
+    premiumAccount
+  }
+}

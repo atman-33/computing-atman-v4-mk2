@@ -29,9 +29,9 @@ mutation updateSampleMongooseTable(
 }
 
 mutation deleteSampleMongooseTable(
-  $deleteSampleMongooseTableArgs: DeleteSampleMongooseTableInput!
+  $deleteSampleMongooseTableData: DeleteSampleMongooseTableInput!
 ) {
-  deleteSampleMongooseTable(deleteSampleMongooseTableArgs: $deleteSampleMongooseTableArgs) {
+  deleteSampleMongooseTable(deleteSampleMongooseTableData: $deleteSampleMongooseTableData) {
     _id
   }
 }

@@ -28,7 +28,7 @@ export class SampleTodosResolver {
 
   @Mutation(() => SampleTodo, { name: 'deleteSampleTodo', nullable: true })
   async deleteSampleTodo(
-    @Args('deleteSampleTodoArgs')
+    @Args('deleteSampleTodoData')
     deleteSampleTodoData: DeleteSampleTodoInput
   ) {
     return this.SampleTodoService.deleteSampleTodo(deleteSampleTodoData);

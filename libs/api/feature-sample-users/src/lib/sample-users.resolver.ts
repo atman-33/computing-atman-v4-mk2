@@ -28,7 +28,7 @@ export class SampleUsersResolver {
 
   @Mutation(() => SampleUser, { name: 'deleteSampleUser', nullable: true })
   async deleteSampleUser(
-    @Args('deleteSampleUserArgs')
+    @Args('deleteSampleUserData')
     deleteSampleUserData: DeleteSampleUserInput
   ) {
     return this.SampleUserService.deleteSampleUser(deleteSampleUserData);

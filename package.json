@@ -13,6 +13,7 @@
     "start:verify-env": "npm run validate:web-env && npm run validate:api-env",
     "start:api": "nx serve api",
     "start:web": "nx serve web",
+    "start:api-and-web": "nx serve api && nx serve web",
     "----DB SECTION----": "-------------------------",
     "db:dockers:dev": "docker-compose -f tools/database-atman/dev.docker-compose.yml up -d --no-recreate --remove-orphans",
     "db:migrate:dev": "npx env-cmd -f .env.local npx prisma migrate dev",
