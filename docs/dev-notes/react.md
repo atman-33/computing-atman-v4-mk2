@@ -27,6 +27,10 @@
 
 ### Recoil
 
+- useRecoilState    : useStateと同じような使い方。ステートが更新されれば、それを使用するコンポーネントは再レンダリングされる。
+- useRecoilValue    : RecoilValue型のデータを渡すことで、ステートを受け取る。セッター関数は受け取らない。ステートが更新されれば、それを使用するコンポーネントは再レンダリングされる。
+- useSetRecoilState : RecoilState型のデータを渡すことで、ステートのセッター関数を受け取る。ステート自身は受け取らない。ステートが更新されても、useSetRecoilStateを使っているコンポーネントは再レンダリングされない。
+
 ### Redux
 
 Redux は、Global state 管理となり state が増えるとメンテが難しくなるため、Recoil を利用する事とする。
