@@ -40,7 +40,18 @@ export default function Page() {
     '/sites/react-shadcn-sample/055-redux-toolkit-immer',
     '/sites/react-shadcn-sample/056-redux-thunk',
     '/sites/react-shadcn-sample/057-redux-middleware',
-    '/sites/react-shadcn-sample/061-objectis'
+    '/sites/react-shadcn-sample/061-objectis',
+    '/sites/react-shadcn-sample/062-child-rerender',
+    '/sites/react-shadcn-sample/063-memo',
+    '/sites/react-shadcn-sample/064-use-callback',
+    '/sites/react-shadcn-sample/065-use-callback-deps',
+    '/sites/react-shadcn-sample/066-use-memo',
+    '/sites/react-shadcn-sample/067-use-transition',
+    '/sites/react-shadcn-sample/068-use-deferred-value',
+    '/sites/react-shadcn-sample/071-api-nextjs',
+    '/sites/react-shadcn-sample/072-graphql-get-request',
+    '/sites/react-shadcn-sample/073-graphql-other-method',
+    '/sites/react-shadcn-sample/081-recoil'
   ];
 
   return (

@@ -1,0 +1,2 @@
+- model   : Using for Graphql
+- schema  : Using for mapping Mongoose DB

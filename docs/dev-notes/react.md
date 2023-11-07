@@ -3,6 +3,7 @@
 ### React
 
 - useState          : 関数コンポーネントでstateを管理（ state の保持と更新）するためのReactフック
+- useRef            : コンポーネント内での参照を管理するために使用。コンポーネントの中身が変更されても再レンダリングすることなく値を保持する。
 - useReducer        : useStateと同じくstateを管理するReactフック。ただし、useReducerは、定義の時点で関数を決定する。
 - useContext        : useContextとは、Context機能をよりシンプルに使える機能。親からPropsで渡されていないのに、Contextに収容されているデータアクセスできる。
 - createContext     : useContextを扱うコンテキストオブジェクトを作成する。
@@ -15,7 +16,24 @@
 
 - useLayoutEffect   : 描画が画面に反映される手前で何か処理を実行したい場合に利用
 
+- memo              : props に変更が無い場合に、コンポーネントのレンダリングを発生させない（コンポーネントのメモ化）
+- useMemo           : 値のメモ化
+- useCallback       : 再レンダリングさせたくないコンポーネントに関数を渡す際に利用。関数のメモ化
+
+- useTransition     : 特定の処理を遅延させる事が可能。
+- useDeferredValue  : 遅延させたい処理（更新関数）をuseTransitionで囲めない時に利用（ライブラリなど）
+
+    > useTransition, useDeferredValue は極力利用せずに、useMemoやuseCallbackでパフォーマンス改善できない時に利用する。
+
+### Recoil
+
+- useRecoilState    : useStateと同じような使い方。ステートが更新されれば、それを使用するコンポーネントは再レンダリングされる。
+- useRecoilValue    : RecoilValue型のデータを渡すことで、ステートを受け取る。セッター関数は受け取らない。ステートが更新されれば、それを使用するコンポーネントは再レンダリングされる。
+- useSetRecoilState : RecoilState型のデータを渡すことで、ステートのセッター関数を受け取る。ステート自身は受け取らない。ステートが更新されても、useSetRecoilStateを使っているコンポーネントは再レンダリングされない。
+
 ### Redux
+
+Redux は、Global state 管理となり state が増えるとメンテが難しくなるため、Recoil を利用する事とする。
 
 - createSlice       : reducerを作成するだけで自動的にaction typeや、action creatorを生成する。
 - createAsyncThunk  : 非同期処理の実行状況に応じたActionCreatorを生成する関数

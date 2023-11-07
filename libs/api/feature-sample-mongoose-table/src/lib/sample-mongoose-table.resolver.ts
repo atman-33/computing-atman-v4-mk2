@@ -30,7 +30,7 @@ export class SampleMongooseTableResolver {
 
   @Mutation(() => SampleMongooseTable, { name: 'deleteSampleMongooseTable', nullable: true })
   async deleteSampleMongooseTable(
-    @Args('deleteSampleMongooseTableArgs')
+    @Args('deleteSampleMongooseTableData')
     deleteSampleMongooseTableData: DeleteSampleMongooseTableInput
   ) {
     return this.SampleMongooseTableService.deleteSampleMongooseTable(deleteSampleMongooseTableData);

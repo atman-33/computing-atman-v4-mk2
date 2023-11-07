@@ -24,6 +24,22 @@ ex:
 - Button.tsx
 - ThemeContext.tsx
 
+### カスタムフック
+
+useを先頭に付けてCamelCaseを使用する。
+
+ex:  
+- useCounter.ts
+
+### Recoil
+
+Recoilに関するファイルは、CamelCaseを使用する。
+
+ex:  
+- recoilKeys.ts
+- todosState.ts (Atom定義)
+  todosSelector.ts (Selector定義)
+
 ### 副作用の扱い
 
 JSX/TSXの構築に直接関係のない処理は全て副作用として扱い、副作用は useEffect or イベントハンドラ内に記述する。
