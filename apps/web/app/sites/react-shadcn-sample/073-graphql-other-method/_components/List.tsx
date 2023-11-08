@@ -1,14 +1,12 @@
 'use client';
 
-import { DeleteSampleTodoInput } from '@libs/web/data-access-graphql';
 import { Button } from '@libs/web/ui-shadcn';
 import { useTodos } from '../_hooks/useTodos';
-import todoApi from '../api/todo';
 
 const List = () => {
-  const { todos } = useTodos();
+  const { todos, deleteTodo } = useTodos();
   const complete = (id: string) => {
-    return () => todoApi.deleteTodo(id as unknown as DeleteSampleTodoInput);
+    return () => deleteTodo({ _id: id });
   };
 
   return (
@@ -17,7 +15,7 @@ const List = () => {
         return (
           <div key={todo._id} className="m-2 flex items-center">
             <Button onClick={complete(todo._id)}>Done</Button>
-            <span className="ml-2">{todo.title}</span>
+            <span className="ml-2">{todo.content}</span>
           </div>
         );
       })}

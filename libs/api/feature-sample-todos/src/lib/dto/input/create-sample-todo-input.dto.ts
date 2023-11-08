@@ -5,7 +5,7 @@ import { IsBoolean, IsString } from 'class-validator';
 export class CreateSampleTodoInput {
   @Field()
   @IsString()
-  title!: string;
+  content!: string;
 
   @Field()
   @IsBoolean()

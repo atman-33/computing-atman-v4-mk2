@@ -10,7 +10,7 @@ export class UpdateSampleTodoInput {
 
   @Field()
   @IsString()
-  title!: string;
+  content!: string;
 
   @Field()
   @IsBoolean()

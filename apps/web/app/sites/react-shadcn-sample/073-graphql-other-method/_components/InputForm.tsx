@@ -14,29 +14,31 @@ import {
 } from '@libs/web/ui-shadcn';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import todoApi from '../api/todo';
+import { useTodos } from '../_hooks/useTodos';
 
 const formSchema = z.object({
-  title: z.string().min(1).max(50)
+  content: z.string().min(1).max(50)
 });
 
 const InputForm = () => {
+  const { createTodo } = useTodos();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: ''
+      content: ''
     }
   });
 
   const addTodo = () => {
     const newTodo = {
-      title: form.getValues('title'),
+      content: form.getValues('content'),
       editing: false,
       completed: false
     };
 
-    todoApi.createTodo(newTodo);
-    form.setValue('title', '');
+    createTodo(newTodo);
+    form.setValue('content', '');
   };
 
   return (
@@ -45,7 +47,7 @@ const InputForm = () => {
         <form onSubmit={form.handleSubmit(addTodo)} className="space-y-8">
           <FormField
             control={form.control}
-            name="title"
+            name="content"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Add new todo</FormLabel>
