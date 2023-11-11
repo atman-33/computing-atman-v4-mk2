@@ -50,7 +50,8 @@ export default function Page() {
     '/sites/react-shadcn-sample/068-use-deferred-value',
     '/sites/react-shadcn-sample/071-api-nextjs',
     '/sites/react-shadcn-sample/072-graphql-get-request',
-    '/sites/react-shadcn-sample/073-graphql-other-method',
+    '/sites/react-shadcn-sample/073-graphql-recoil',
+    '/sites/react-shadcn-sample/074-graphql-recoil-2',
     '/sites/react-shadcn-sample/081-recoil'
   ];
 

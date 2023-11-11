@@ -21,7 +21,7 @@ const formSchema = z.object({
 });
 
 const InputForm = () => {
-  const { createTodo } = useTodos();
+  const { addTodo } = useTodos();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -30,21 +30,22 @@ const InputForm = () => {
     }
   });
 
-  const addTodo = () => {
+  const addNewTodo = () => {
     const newTodo = {
       content: form.getValues('content'),
       editing: false,
       completed: false
     };
 
-    createTodo(newTodo);
+    addTodo(newTodo);
+    // console.log(todos);
     form.setValue('content', '');
   };
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(addTodo)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(addNewTodo)} className="space-y-8">
           <FormField
             control={form.control}
             name="content"

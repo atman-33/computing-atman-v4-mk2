@@ -1,21 +1,23 @@
 'use client';
 
-import { Button } from '@libs/web/ui-shadcn';
+import { useEffect } from 'react';
 import { useTodos } from '../_hooks/useTodos';
+import Item from './Item';
 
 const List = () => {
-  const { todos, deleteTodo } = useTodos();
-  const complete = (id: string) => {
-    return () => deleteTodo({ _id: id });
-  };
+  const { todos, initTodos } = useTodos();
+
+  useEffect(() => {
+    initTodos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
       {todos.map((todo) => {
         return (
           <div key={todo._id} className="m-2 flex items-center">
-            <Button onClick={complete(todo._id)}>Done</Button>
-            <span className="ml-2">{todo.content}</span>
+            <Item todo={todo} />
           </div>
         );
       })}

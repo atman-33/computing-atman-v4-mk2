@@ -1,0 +1,32 @@
+query getSampleTodos {
+  sampleTodos {
+    _id
+    content
+    editing
+    completed
+  }
+}
+
+mutation createSampleTodo($createSampleTodoData: CreateSampleTodoInput!) {
+  createSampleTodo(createSampleTodoData: $createSampleTodoData) {
+    _id
+    content
+    editing
+    completed
+  }
+}
+
+mutation deleteSampleTodo($deleteSampleTodoData: DeleteSampleTodoInput!) {
+  deleteSampleTodo(deleteSampleTodoData: $deleteSampleTodoData) {
+    _id
+  }
+}
+
+mutation updateSampleTodo($updateSampleTodoData: UpdateSampleTodoInput!) {
+  updateSampleTodo(updateSampleTodoData: $updateSampleTodoData) {
+    _id
+    content
+    editing
+    completed
+  }
+}
