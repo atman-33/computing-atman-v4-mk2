@@ -50,4 +50,11 @@ const deleteTodo = async (todo: DeleteSampleTodoInput) => {
   return result;
 };
 
-export { createTodo, deleteTodo, getTodos, updateTodo };
+const todoApi = {
+  getTodos,
+  createTodo,
+  deleteTodo,
+  updateTodo
+};
+
+export default todoApi;

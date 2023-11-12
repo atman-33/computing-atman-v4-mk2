@@ -4,7 +4,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 @Schema({ versionKey: false })
 export class SampleTodoDocument extends AbstractDocument {
   @Prop()
-  title!: string;
+  content!: string;
 
   @Prop()
   editing!: boolean;

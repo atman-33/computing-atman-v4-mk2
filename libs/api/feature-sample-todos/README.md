@@ -16,7 +16,7 @@ Run `nx test api-feature-sample-todo` to execute the unit tests via [Jest](https
 query getSampleTodos {
   sampleTodos{
     _id
-    title
+    content
     editing
     completed
   }
@@ -25,13 +25,13 @@ query getSampleTodos {
 mutation createSampleTodo1 {
   createSampleTodo(
     createSampleTodoData: {
-      title: "洗濯"
+      content: "洗濯"
       editing: false
       completed: true      
     }
   ){
 		_id
-    title
+    content
     editing
     completed
   }
@@ -40,13 +40,13 @@ mutation createSampleTodo1 {
 mutation createSampleTodo2 {
   createSampleTodo(
     createSampleTodoData: {
-      title: "掃除"
+      content: "掃除"
       editing: false
       completed: false      
     }
   ){
 		_id
-    title
+    content
     editing
     completed
   }
@@ -56,13 +56,13 @@ mutation updateSampleTodo{
   updateSampleTodo(
     updateSampleTodoData:{
       _id: "6547473eac326c3ca75ff696"
-      title: "洗濯2"
+      content: "洗濯2"
       editing: false
       completed: true
     }
   ){
     _id
-    title
+    content
     editing
     completed
   }

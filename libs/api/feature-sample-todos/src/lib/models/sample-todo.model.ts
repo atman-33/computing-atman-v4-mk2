@@ -4,7 +4,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class SampleTodo extends AbstractModel {
   @Field()
-  readonly title!: string;
+  readonly content!: string;
 
   @Field()
   readonly editing!: boolean;

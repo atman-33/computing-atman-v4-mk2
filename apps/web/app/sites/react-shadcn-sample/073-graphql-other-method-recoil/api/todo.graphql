@@ -1,7 +1,7 @@
 query getSampleTodos {
   sampleTodos {
     _id
-    title
+    content
     editing
     completed
   }
@@ -10,7 +10,7 @@ query getSampleTodos {
 mutation createSampleTodo($createSampleTodoData: CreateSampleTodoInput!) {
   createSampleTodo(createSampleTodoData: $createSampleTodoData) {
     _id
-    title
+    content
     editing
     completed
   }
@@ -25,7 +25,7 @@ mutation deleteSampleTodo($deleteSampleTodoData: DeleteSampleTodoInput!) {
 mutation updateSampleTodo($updateSampleTodoData: UpdateSampleTodoInput!) {
   updateSampleTodo(updateSampleTodoData: $updateSampleTodoData) {
     _id
-    title
+    content
     editing
     completed
   }
