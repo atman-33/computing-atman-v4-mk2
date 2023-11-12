@@ -49,11 +49,10 @@
 - [x] google 検索用サムネイルを追加
 - [x] shadcn を導入
   
-
 ## Remains
 
-- [ ] Nextjsのディレクトリ構成を修正
-- [ ] React学習内容をサイトに追加
+- [x] Nextjsのディレクトリ構成を修正
+- [x] React学習内容をサイトに追加
 
 - [ ] テーブル編集画面を追加
 - [ ] user を作成（cookie 対応）
