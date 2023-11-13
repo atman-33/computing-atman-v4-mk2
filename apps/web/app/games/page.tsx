@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import Card from '@/components/Card';
+import Card from '@/components/elements/Card';
 import gamesData from 'apps/web/constants/games/games-data';
 import { genPageMetadata } from '../seo';
 

@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import '@/styles/animation.css';
 
-import Image from '@/components/Image';
+import Image from '@/components/elements/Image';
 import { StaticImageData } from 'next/image';
 
 interface HeroWithBackgroundProps {

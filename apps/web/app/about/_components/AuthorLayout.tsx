@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import Image from '@/components/Image';
-import SocialIcon from '@/components/social-icons';
+import Image from '@/components/elements/Image';
+import Icon from '@/components/icons';
 import type { Authors } from 'contentlayer/generated';
 import { ReactNode } from 'react';
 
@@ -35,10 +35,10 @@ export default function AuthorLayout({ children, content }: Props) {
             <div className="text-gray-500 dark:text-gray-400">{occupation}</div>
             <div className="text-gray-500 dark:text-gray-400">{company}</div>
             <div className="flex space-x-3 pt-6">
-              <SocialIcon kind="mail" href={`mailto:${email}`} />
-              <SocialIcon kind="github" href={github} />
-              <SocialIcon kind="linkedin" href={linkedin} />
-              <SocialIcon kind="twitter" href={twitter} />
+              <Icon kind="mail" href={`mailto:${email}`} />
+              <Icon kind="github" href={github} />
+              <Icon kind="linkedin" href={linkedin} />
+              <Icon kind="twitter" href={twitter} />
             </div>
           </div>
           <div className="prose dark:prose-invert max-w-none pb-8 pt-8 xl:col-span-2">

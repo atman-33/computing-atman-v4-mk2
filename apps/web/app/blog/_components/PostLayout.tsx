@@ -1,12 +1,12 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import Comments from '@/components/Comments';
-import Image from '@/components/Image';
-import Link from '@/components/Link';
-import PageTitle from '@/components/PageTitle';
-import ScrollTopAndComment from '@/components/ScrollTopAndComment';
-import SectionContainer from '@/components/SectionContainer';
-import Tag from '@/components/Tag';
+import Image from '@/components/elements/Image';
+import Link from '@/components/elements/Link';
+import SectionContainer from '@/components/elements/SectionContainer';
+import Tag from '@/components/elements/Tag';
 import siteMetadata from '@/constants/site-metadata';
+import Comments from 'apps/web/app/blog/_components/Comments';
+import PageTitle from 'apps/web/app/blog/_components/PageTitle';
+import ScrollTopAndComment from 'apps/web/app/blog/_components/ScrollTopAndComment';
 import type { Authors, Blog } from 'contentlayer/generated';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { ReactNode } from 'react';

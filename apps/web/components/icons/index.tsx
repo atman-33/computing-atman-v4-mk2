@@ -1,4 +1,4 @@
-import { Facebook, Github, Linkedin, Mail, Mastodon, Twitter, Youtube } from './icons';
+import { Facebook, Github, Home, Linkedin, Mail, Mastodon, Twitter, Youtube } from './icons';
 
 const components = {
   mail: Mail,
@@ -7,16 +7,18 @@ const components = {
   youtube: Youtube,
   linkedin: Linkedin,
   twitter: Twitter,
-  mastodon: Mastodon
+  mastodon: Mastodon,
+  home: Home
 };
 
-type SocialIconProps = {
+type IconProps = {
   kind: keyof typeof components;
   href: string | undefined;
+  target?: string;
   size?: number;
 };
 
-const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
+const Icon = ({ kind, href, target = '_blank', size = 8 }: IconProps) => {
   if (!href || (kind === 'mail' && !/^mailto:\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/.test(href)))
     return null;
 
@@ -25,7 +27,7 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
   return (
     <a
       className="text-sm text-gray-500 transition hover:text-gray-600"
-      target="_blank"
+      target={target}
       rel="noopener noreferrer"
       href={href}
     >
@@ -37,4 +39,4 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
   );
 };
 
-export default SocialIcon;
+export default Icon;

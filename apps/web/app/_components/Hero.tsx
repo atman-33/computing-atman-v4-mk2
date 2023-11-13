@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import Image from '@/components/Image';
+import Image from '@/components/elements/Image';
 import { StaticImageData } from 'next/image';
 import Container from './Container';
 

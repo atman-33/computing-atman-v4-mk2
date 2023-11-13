@@ -1,9 +1,9 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Blog } from '.contentlayer/generated/types';
-import Link from '@/components/Link';
-import Tag from '@/components/Tag';
-import Thumbnail from '@/components/Thumbnail';
+import Link from '@/components/elements/Link';
+import Tag from '@/components/elements/Tag';
+import Thumbnail from '@/components/elements/Thumbnail';
 import siteMetadata from '@/constants/site-metadata';
 import { formatDate } from 'pliny/utils/formatDate';
 // import NewsletterForm from 'pliny/ui/NewsletterForm';

@@ -1,5 +1,7 @@
 'use client';
 
+import { Button as ShadcnButton } from '@libs/web/ui-shadcn';
+
 interface IProps {
   label: string;
   onClick: () => void;
@@ -10,7 +12,7 @@ export const Button = (props: IProps) => {
   const { label, onClick, flat = false } = props;
 
   return (
-    <button
+    <ShadcnButton
       onClick={() => onClick()}
       className={
         (flat
@@ -20,6 +22,6 @@ export const Button = (props: IProps) => {
       }
     >
       {label}
-    </button>
+    </ShadcnButton>
   );
 };

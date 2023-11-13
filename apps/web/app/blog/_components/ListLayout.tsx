@@ -1,8 +1,8 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
-import Link from '@/components/Link';
-import Tag from '@/components/Tag';
+import Link from '@/components/elements/Link';
+import Tag from '@/components/elements/Tag';
 import siteMetadata from '@/constants/site-metadata';
 import type { Blog } from 'contentlayer/generated';
 import { usePathname } from 'next/navigation';

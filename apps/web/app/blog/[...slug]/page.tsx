@@ -2,9 +2,9 @@
 import '@/styles/prism.css';
 import 'katex/dist/katex.css';
 
-import { components } from '@/components/MDXComponents';
-import PageTitle from '@/components/PageTitle';
 import siteMetadata from '@/constants/site-metadata';
+import { components } from 'apps/web/app/blog/_components/MDXComponents';
+import PageTitle from 'apps/web/app/blog/_components/PageTitle';
 import PostBanner from 'apps/web/app/blog/_components/PostBanner';
 import PostLayout from 'apps/web/app/blog/_components/PostLayout';
 import PostSimple from 'apps/web/app/blog/_components/PostSimple';
