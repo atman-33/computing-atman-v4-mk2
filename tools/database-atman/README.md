@@ -26,7 +26,7 @@ docker exec -it mongodb bash
 mongosh mongodb://localhost:27017
 ```
 
-1. delete cllection
+3. delete cllection
 
 ```bash
 db.collection-name.drop()
