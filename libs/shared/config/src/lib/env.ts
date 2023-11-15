@@ -12,6 +12,6 @@ export const env = {
   NEXT_PUBLIC_GISCUS_CATEGORY: process.env['NEXT_PUBLIC_GISCUS_CATEGORY'],
   NEXT_PUBLIC_GISCUS_CATEGORY_ID: process.env['NEXT_PUBLIC_GISCUS_CATEGORY_ID'],
   DB_URL: process.env['DB_URL'],
-  JWT_EXPIRATION: process.env['JWT_EXPIRATION'],
+  JWT_EXPIRATION: process.env['JWT_EXPIRATION'] as string,
   JWT_SECRET: process.env['JWT_SECRET']
 };

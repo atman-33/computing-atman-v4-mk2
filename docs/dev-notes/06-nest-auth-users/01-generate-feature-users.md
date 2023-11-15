@@ -45,3 +45,15 @@ npm i --save-dev @types/bcrypt
 ## Update resolver
 
 - update `users.resolver.ts`
+
+## Update module
+
+- update `users.module.ts`
+
+## Update index.ts
+
+```ts
+export { User } from './lib/models/user.model';
+export * from './lib/users.module';
+export { UsersService } from './lib/users.service';
+```
