@@ -1,10 +1,8 @@
-import { ArgsType, Field } from '@nestjs/graphql';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { AbstractModel } from '@libs/api/mongoose/shared';
+import { Field, ObjectType } from '@nestjs/graphql';
 
-@ArgsType()
-export class GetUserArgs {
+@ObjectType()
+export class User extends AbstractModel {
   @Field()
-  @IsString()
-  @IsNotEmpty()
-  _id!: string;
+  readonly email!: string;
 }

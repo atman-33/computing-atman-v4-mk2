@@ -21,3 +21,27 @@ And then delete `users` folder.
 
 - create `user.model.ts`
 - create `user.schema.ts`
+
+## Create dto
+
+- create `dto/args/get-user-args.dto.ts`
+- create `dto/input/create-use-input.dto.ts`
+
+## Create repository
+
+- create `users.repository.ts`
+
+## Update service
+
+install bcrypt
+
+```bash
+npm i bcrypt
+npm i --save-dev @types/bcrypt
+```
+
+- update `users.service.ts`
+
+## Update resolver
+
+- update `users.resolver.ts`
