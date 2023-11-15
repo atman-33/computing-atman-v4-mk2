@@ -25,6 +25,7 @@
       "@/styles/*": ["apps/web/styles/*"],
       "@/types/*": ["apps/web/types/*"],
       "@/utils/*": ["apps/web/utils/*"],
+      "@libs/api/feature-auth": ["libs/api/feature-auth/src/index.ts"],
       "@libs/api/feature-image": ["libs/api/feature-image/src/index.ts"],
       "@libs/api/feature-sample-mongoose-table": [
         "libs/api/feature-sample-mongoose-table/src/index.ts"
