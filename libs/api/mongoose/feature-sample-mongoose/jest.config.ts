@@ -18,11 +18,11 @@ if (swcJestConfig.swcrc === undefined) {
 
 export default {
   displayName: 'api-feature-sample-mongoose-table',
-  preset: '../../../jest.preset.js',
+  preset: '../../../../jest.preset.js',
   transform: {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig]
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   testEnvironment: 'node',
-  coverageDirectory: '../../../coverage/libs/api/feature-sample-mongoose-table'
+  coverageDirectory: '../../../../coverage/libs/api/mongoose/feature-sample-mongoose-table'
 };
