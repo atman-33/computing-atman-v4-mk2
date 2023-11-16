@@ -1,0 +1,43 @@
+{
+  "name": "api-feature-sample-mongoose",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/mongoose/feature-sample-mongoose/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/api/mongoose/feature-sample-mongoose",
+        "main": "libs/api/mongoose/feature-sample-mongoose/src/index.ts",
+        "tsConfig": "libs/api/mongoose/feature-sample-mongoose/tsconfig.lib.json",
+        "assets": ["libs/api/mongoose/feature-sample-mongoose/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/api/mongoose/feature-sample-mongoose/**/*.ts",
+          "libs/api/mongoose/feature-sample-mongoose/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/api/mongoose/feature-sample-mongoose/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": ["scope:api"]
+}

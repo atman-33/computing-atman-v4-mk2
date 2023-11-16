@@ -4,38 +4,38 @@ import {
   SampleTodo,
   UpdateSampleTodoInput
 } from '@libs/web/data-access-graphql';
-import { useRecoilState } from 'recoil';
+import { useRecoilCallback, useRecoilState } from 'recoil';
 import { todosState } from '../_stores/todosState';
 import todoApi from '../api/todo';
 
 export const useTodos = () => {
   const [todos, setTodos] = useRecoilState(todosState);
 
-  const initTodos = () => {
+  const initTodos = useRecoilCallback(({ set }) => () => {
     todoApi.getTodos().then((todos) => {
-      setTodos(todos.data.sampleTodos);
+      set(todosState, todos.data.sampleTodos);
     });
-  };
+  });
 
-  const addTodo = (newTodo: CreateSampleTodoInput) => {
+  const addTodo = useRecoilCallback(({ set }) => (newTodo: CreateSampleTodoInput) => {
     todoApi.createTodo(newTodo).then((newTodo) => {
-      setTodos((todos) => [...todos, newTodo.data?.createSampleTodo as SampleTodo]);
+      set(todosState, (todos) => [...todos, newTodo.data?.createSampleTodo as SampleTodo]);
     });
-  };
+  });
 
-  const deleteTodo = (todoToDelete: DeleteSampleTodoInput) => {
+  const deleteTodo = useRecoilCallback(({ set }) => (todoToDelete: DeleteSampleTodoInput) => {
     todoApi.deleteTodo(todoToDelete).then(() => {
-      setTodos((todos) => {
+      set(todosState, (todos) => {
         return todos.filter((todo) => {
           return todo._id !== todoToDelete._id;
         });
       });
     });
-  };
+  });
 
-  const updateTodo = (todoToUpdate: UpdateSampleTodoInput) => {
+  const updateTodo = useRecoilCallback(({ set }) => (todoToUpdate: UpdateSampleTodoInput) => {
     todoApi.updateTodo(todoToUpdate).then((todoToUpdate) => {
-      setTodos((todos) => {
+      set(todosState, (todos) => {
         return todos.map((todo) => {
           return todo._id === todoToUpdate.data?.updateSampleTodo._id
             ? { ...todo, ...todoToUpdate.data.updateSampleTodo }
@@ -43,7 +43,7 @@ export const useTodos = () => {
         });
       });
     });
-  };
+  });
 
   return {
     todos,

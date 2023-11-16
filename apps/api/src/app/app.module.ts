@@ -1,7 +1,6 @@
+import { AuthModule, UsersModule } from '@libs/api/feature-auth';
 import { ImageModule } from '@libs/api/feature-image';
-import { SampleMongooseTableModule } from '@libs/api/feature-sample-mongoose-table';
-import { SampleTodosModule } from '@libs/api/feature-sample-todos';
-import { SampleUsersModule } from '@libs/api/feature-sample-users';
+import { SampleTodosModule, SampleUsersModule } from '@libs/api/mongoose/feature-sample-mongoose';
 import { DatabaseModule } from '@libs/api/mongoose/shared';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
@@ -24,13 +23,14 @@ import { AppService } from './app.service';
     }),
     // ---- RestAPI ---- //
     ImageModule,
+    AuthModule,
 
     // ---- Graphql ---- //
     // When using Mongoose, the DatabaseModule is required.
     DatabaseModule,
-    SampleMongooseTableModule,
     SampleTodosModule,
-    SampleUsersModule
+    SampleUsersModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService]

@@ -1,4 +1,4 @@
-## Initial Task
+## Done
 
 - [x] site-metadata を修正
 - [x] メール送信機能を除外
@@ -26,38 +26,34 @@
 - [x] ローディング待ちを追加
 - [x] トップ画面を日本語対応
 
-## 2023/09/23
-
 - [x] nextjs を SG に変更
 - [x] nestjs から nextjs SG を呼び出すように実装
 
 - [x] railway に NestJS をデプロイ　→　保留。Render.com で nextjs x nestjs を実装可能な見込み
-
-## 2023/09/24
 
 - [x] nestjs mongodb graphql を mongoose で実装
 - [x] nestjs 用 codegen を実装
 - [x] API PORT を実装
 - [x] web data-access-graphql の graphql-client.ts は、url を引数にするように変更（合わせてgraphgl client を web に実装）
 
-## 2023/09/27
-
 - [x] favicon を更新
-
-## 2023/10/03
 
 - [x] google 検索用サムネイルを追加
 - [x] shadcn を導入
   
-## Remains
-
 - [x] Nextjsのディレクトリ構成を修正
 - [x] React学習内容をサイトに追加
 
-- [ ] テーブル編集画面を追加
-- [ ] user を作成（cookie 対応）
+- [x] フロントエンド: フォルダ構成を修正（特にComponents）
 
-- [] booker を構築
-- [] okkino を構築
-- [] スライドショーアプリを作成
-- [] 購入依頼アプリを作成
+
+## Remains
+
+- [x] バックエンド: Auth 機能追加
+
+- [ ] フロントエンド：ログイン、サインアップページ作成
+
+- [ ] ブックマークアプリ（booker）作成
+- [ ] スライドショーアプリを作成
+
+- [ ] 購入依頼アプリを作成
