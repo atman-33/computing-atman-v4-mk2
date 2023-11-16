@@ -22,9 +22,10 @@ export class UsersService {
   private async validateCreateUserData(createUserData: CreateUserInput) {
     try {
       await this.usersRepository.findOne({ email: createUserData.email });
-      throw new UnprocessableEntityException('Email already exists.');
-      // eslint-disable-next-line no-empty
-    } catch (err) {}
+    } catch (err) {
+      return;
+    }
+    throw new UnprocessableEntityException('Email already exists.');
   }
 
   async getUser(getUserArgs: GetUserArgs) {
