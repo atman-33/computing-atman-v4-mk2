@@ -1,9 +1,9 @@
-import { UsersService } from '@libs/api/feature-users';
 import { env } from '@libs/shared/config';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { UsersService } from '../../users/users.service';
 import { TokenPayload } from '../auth.service';
 
 @Injectable()

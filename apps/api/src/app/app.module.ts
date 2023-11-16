@@ -1,3 +1,4 @@
+import { AuthModule, UsersModule } from '@libs/api/feature-auth';
 import { ImageModule } from '@libs/api/feature-image';
 import { SampleMongooseTableModule } from '@libs/api/feature-sample-mongoose-table';
 import { SampleTodosModule } from '@libs/api/feature-sample-todos';
@@ -24,13 +25,15 @@ import { AppService } from './app.service';
     }),
     // ---- RestAPI ---- //
     ImageModule,
+    AuthModule,
 
     // ---- Graphql ---- //
     // When using Mongoose, the DatabaseModule is required.
     DatabaseModule,
     SampleMongooseTableModule,
     SampleTodosModule,
-    SampleUsersModule
+    SampleUsersModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService]
