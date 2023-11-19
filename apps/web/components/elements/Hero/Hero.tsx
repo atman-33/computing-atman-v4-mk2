@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import Image from '@/components/elements/Image';
 import { StaticImageData } from 'next/image';
-import Container from './Container';
+import Container from '../Container';
 
 interface HeroProps {
   title: string;

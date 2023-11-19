@@ -1,10 +1,10 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import '@/styles/animation.css';
+import './HeroWithAnimation.css';
 
 import Image from '@/components/elements/Image';
 import { StaticImageData } from 'next/image';
 
-interface HeroWithBackgroundProps {
+interface Props {
   title: string;
   description: string;
   backgroundImage1: StaticImageData;
@@ -12,7 +12,7 @@ interface HeroWithBackgroundProps {
   animationImage: StaticImageData;
 }
 
-export default function HeroWithBackground(props: HeroWithBackgroundProps) {
+export default function HeroWithAnimation(props: Props) {
   return (
     <>
       <div

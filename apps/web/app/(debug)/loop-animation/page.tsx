@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
+import '@/components/elements/HeroWithAnimation/HeroWithAnimation.css';
 import Image from '@/components/elements/Image';
-import '@/styles/animation.css';
 import cloudsImage from '../../../public/static/images/clouds.png';
 
 export default function Page() {

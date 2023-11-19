@@ -1,2 +1,3 @@
-https://computing-atman.com/blog/52-excel-vba-template-mk2/
-https://computing-atman.com/blog/51-electron-react-boilerplate/
+https://computing-atman.com/blog/54-nx-nestjs-mongodb-mongoose-part1/
+https://computing-atman.com/blog/55-nx-nestjs-mongodb-mongoose-part2/
+https://computing-atman.com/blog/56-nx-nestjs-mongodb-mongoose-part3/
