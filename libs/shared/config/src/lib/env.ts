@@ -6,6 +6,7 @@ export const env = {
   PORT: process.env['PORT'],
   API_PORT: process.env['API_PORT'],
   NEXT_PUBLIC_IS_DEV: process.env['NEXT_PUBLIC_IS_DEV'],
+  NEXT_PUBLIC_WEB_URL: process.env['NEXT_PUBLIC_WEB_URL'],
   NEXT_PUBLIC_WEB_GQL_URL: process.env['NEXT_PUBLIC_WEB_GQL_URL'],
   NEXT_PUBLIC_GISCUS_REPO: process.env['NEXT_PUBLIC_GISCUS_REPO'],
   NEXT_PUBLIC_GISCUS_REPOSITORY_ID: process.env['NEXT_PUBLIC_GISCUS_REPOSITORY_ID'],

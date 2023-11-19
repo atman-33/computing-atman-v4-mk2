@@ -6,6 +6,7 @@ import SectionContainer from '@/components/elements/SectionContainer';
 import GoogleAnalytics from '@/components/heads/GoogleAnalytics';
 import Footer from '@/components/layouts/Footer';
 import Header from '@/components/layouts/Header';
+import SessionProvider from '@/components/providers/SessionProvider';
 import { ThemeProviders } from '@/components/providers/ThemeProviders';
 import siteMetadata from '@/constants/site-metadata';
 import { Metadata } from 'next';
@@ -75,16 +76,18 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
       <body className="overflow-x-hidden bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
         <ThemeProviders defaultTheme={siteMetadata.theme}>
-          <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
-          <SectionContainer>
-            <div className="flex flex-col justify-between font-sans">
-              <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-                <Header />
-                {children}
-              </SearchProvider>
-              <Footer />
-            </div>
-          </SectionContainer>
+          <SessionProvider>
+            <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
+            <SectionContainer>
+              <div className="flex flex-col justify-between font-sans">
+                <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
+                  <Header />
+                  {children}
+                </SearchProvider>
+                <Footer />
+              </div>
+            </SectionContainer>
+          </SessionProvider>
         </ThemeProviders>
         <GoogleAnalytics />
       </body>
