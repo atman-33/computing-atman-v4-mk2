@@ -1,0 +1,383 @@
+---
+title: Setting Up Nx Nestjs Mongodb Mongoose Integration - Part 2
+date: '2023-11-18'
+lastmod: '2023-11-18'
+tags: ['nx', 'nest js', 'mongodb', 'mongoose']
+images: ['/static/images/common/mongodb.png']
+summary: In Part 2 of our Nx Nest.js MongoDB Mongoose Integration series, we delve into generating feature-sample-todos, creating modules, resolvers, and services, and establishing MongoDB document schemas. Learn to implement GraphQL models, repositories, and DTOs, and enhance your application's efficiency. Stay tuned for a comprehensive guide to configuration and integration.
+---
+
+## Introduction
+
+Welcome to the second part of our tutorial series on setting up Nx, Nest.js, MongoDB, and Mongoose integration. In this installment, we will guide you through the process of generating the feature-sample-todos library using Nx, creating modules, resolvers, and services, and establishing MongoDB document schemas. Additionally, we'll cover the implementation of GraphQL models, repositories, DTOs, and updates to the service and resolver for the sample-todos feature. Follow the step-by-step instructions to seamlessly integrate these technologies, enhancing the scalability and efficiency of your application. Stay tuned for a comprehensive configuration and integration journey.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## Generating Feature-Sample-Todos
+
+To begin, generate the feature-sample-todos library using Nx:
+
+```bash
+npx nx generate @nx/js:library api-feature-sample-todos --directory=libs/api/mongoose/feature-sample-mongoose --importPath=@libs/api/mongoose/feature-sample-mongoose --tags=scope:api --bundler=swc
+
+✔ Which unit test runner would you like to use? · jest
+```
+
+## Creating Module, Resolver, and Service
+
+Now, create the module, resolver, and service for the sample-todos feature:
+
+```bash
+nx generate @nx/nest:module sample-todos --project=api-feature-sample-todos
+nx generate @nx/nest:resolver sample-todos --project=api-feature-sample-todos
+nx generate @nx/nest:service sample-todos --project=api-feature-sample-todos
+```
+
+Once the files are created, move them to the lib folder.
+
+## Creating MongoDB Document (Schema)
+
+Create the document (schema) for MongoDB:
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/models/sample-todos.schema.ts`
+
+```typescript
+import { AbstractDocument } from '@libs/api/mongoose/shared';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
+@Schema({ versionKey: false })
+export class SampleTodoDocument extends AbstractDocument {
+  @Prop()
+  content!: string;
+
+  @Prop()
+  editing!: boolean;
+
+  @Prop()
+  completed!: boolean;
+}
+
+export const SampleTodoSchema = SchemaFactory.createForClass(SampleTodoDocument);
+```
+
+## Creating GraphQL Model
+
+Create the model for GraphQL:
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/models/sample-todos.model.ts`
+
+```typescript
+import { AbstractModel } from '@libs/api/mongoose/shared';
+import { Field, ObjectType } from '@nestjs/graphql';
+
+@ObjectType()
+export class SampleTodo extends AbstractModel {
+  @Field()
+  readonly content!: string;
+
+  @Field()
+  readonly editing!: boolean;
+
+  @Field()
+  readonly completed!: boolean;
+}
+```
+
+## Creating Repository
+
+Create the repository for sample-todos:
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/sample-todos.repository.ts`
+
+```typescript
+import { AbstractRepository } from '@libs/api/mongoose/shared';
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { SampleTodo } from './models/sample-todo.model';
+import { SampleTodoDocument } from './models/sample-todo.schema';
+
+@Injectable()
+export class SampleTodosRepository extends AbstractRepository<SampleTodoDocument> {
+  protected readonly logger = new Logger(SampleTodosRepository.name);
+
+  constructor(
+    @InjectModel(SampleTodo.name)
+    SampleTodoModel: Model<SampleTodoDocument>
+  ) {
+    super(SampleTodoModel);
+  }
+}
+```
+
+## Creating DTOs
+
+Create the DTOs for sample-todos:
+
+### Args
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/dto/args/get-sample-todos-args.dto.ts`
+
+```typescript
+import { ArgsType, Field } from '@nestjs/graphql';
+import { IsNotEmpty, IsString } from 'class-validator';
+
+@ArgsType()
+export class GetSampleTodoArgs {
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  _id!: string;
+}
+```
+
+### Inputs
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/dto/input/create-sample-todos-input.dto.ts`
+
+```typescript
+import { Field, InputType } from '@nestjs/graphql';
+import { IsBoolean, IsString } from 'class-validator';
+
+@InputType()
+export class CreateSampleTodoInput {
+  @Field()
+  @IsString()
+  content!: string;
+
+  @Field()
+  @IsBoolean()
+  editing!: boolean;
+
+  @Field()
+  @IsBoolean()
+  completed!: boolean;
+}
+```
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/dto/input/delete-sample-todos-input.dto.ts`
+
+```typescript
+import { Field, InputType } from '@nestjs/graphql';
+import { IsNotEmpty, IsString } from 'class-validator';
+
+@InputType()
+export class DeleteSampleTodoInput {
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  _id!: string;
+}
+```
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/dto/input/update-sample-todos-input.dto.ts`
+
+```typescript
+import { Field, InputType } from '@nestjs/graphql';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+
+@InputType()
+export class UpdateSampleTodoInput {
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  _id!: string;
+
+  @Field()
+  @IsString()
+  content!: string;
+
+  @Field()
+  @IsBoolean()
+  editing!: boolean;
+
+  @Field()
+  @IsBoolean()
+  completed!: boolean;
+}
+```
+
+## Updating Service
+
+Update the service for sample-todos:
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/sample-todos.service.ts`
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { GetSampleTodoArgs } from './dto/args/get-sample-todo-args.dto';
+import { CreateSampleTodoInput } from './dto/input/create-sample-todo-input.dto';
+import { DeleteSampleTodoInput } from './dto/input/delete-sample-todo-input.dto';
+import { UpdateSampleTodoInput } from './dto/input/update-sample-todo-input.dto';
+import { SampleTodoDocument } from './models/sample-todo.schema';
+import { SampleTodosRepository } from './sample-todos.repository';
+
+@Injectable()
+export class SampleTodosService {
+  constructor(private readonly SampleTodoRepository: SampleTodosRepository) {}
+
+  async createSampleTodo(createSampleTodoData: CreateSampleTodoInput) {
+    const SampleTodoDocument = await this.SampleTodoRepository.create({
+      ...createSampleTodoData
+    });
+
+    return this.toModel(SampleTodoDocument);
+  }
+
+  async updateSampleTodo(updateSampleTodoData: UpdateSampleTodoInput) {
+    const SampleTodoDocument = await this.SampleTodoRepository.findOneAndUpdate(
+      { _id: updateSampleTodoData._id },
+      updateSampleTodoData
+    );
+    return this.toModel(SampleTodoDocument);
+  }
+
+  async deleteSampleTodo(deleteSampleTodoData: DeleteSampleTodoInput) {
+    return await this.SampleTodoRepository.deleteOne({
+      _id: deleteSampleTodoData._id
+    });
+  }
+
+  async getSampleTodos() {
+    const SampleTodoDocument = await this.SampleTodoRepository.find({});
+    return SampleTodoDocument.map((todo) => this.toModel(todo));
+  }
+
+  async getSampleTodo(getSampleTodoArgs: GetSampleTodoArgs) {
+    const SampleTodoDocument = await this.SampleTodoRepository.findOne({
+      ...getSampleTodoArgs
+    });
+    return this.toModel(SampleTodoDocument);
+  }
+
+  private toModel(SampleTodoDocument: SampleTodoDocument) {
+    return {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      _id: SampleTodoDocument._id.toHexString(),
+      ...SampleTodoDocument
+    };
+  }
+}
+```
+
+## Updating Resolver
+
+Update the resolver for sample-todos:
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/sample-todos.resolver.ts`
+
+```typescript
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GetSampleTodoArgs } from './dto/args/get-sample-todo-args.dto';
+import { CreateSampleTodoInput } from './dto/input/create-sample-todo-input.dto';
+import { DeleteSampleTodoInput } from './dto/input/delete-sample-todo-input.dto';
+import { UpdateSampleTodoInput } from './dto/input/update-sample-todo-input.dto';
+import { SampleTodo } from './models/sample-todo.model';
+import { SampleTodosService } from './sample-todos.service';
+
+@Resolver()
+export class SampleTodosResolver {
+  constructor(private readonly SampleTodoService: SampleTodosService) {}
+
+  @Mutation(() => SampleTodo, { name: 'createSampleTodo' })
+  async createSampleTodo(
+    @Args('createSampleTodoData')
+    createSampleTodoData: CreateSampleTodoInput
+  ) {
+    return await this.SampleTodoService.createSampleTodo(createSampleTodoData);
+  }
+
+  @Mutation(() => SampleTodo, { name: 'updateSampleTodo' })
+  async updateSampleTodo(
+    @Args('updateSampleTodoData')
+    updateSampleTodoData: UpdateSampleTodoInput
+  ) {
+    return this.SampleTodoService.updateSampleTodo(updateSampleTodoData);
+  }
+
+  @Mutation(() => SampleTodo, { name: 'deleteSampleTodo', nullable: true })
+  async deleteSampleTodo(
+    @Args('deleteSampleTodoData')
+    deleteSampleTodoData: DeleteSampleTodoInput
+  ) {
+    return this.SampleTodoService.deleteSampleTodo(deleteSampleTodoData);
+  }
+
+  @Query(() => [SampleTodo], { name: 'sampleTodos' })
+  async getSampleTodos() {
+    return this.SampleTodoService.getSampleTodos();
+  }
+
+  @Query(() => SampleTodo, { name: 'sampleTodo' })
+  async getSampleTodo(@Args() getSampleTodoArgs: GetSampleTodoArgs) {
+    return this.SampleTodoService.getSampleTodo(getSampleTodoArgs);
+  }
+}
+```
+
+## Updating Module
+
+Update the module for sample-todos:
+
+`libs/api/feature-sample-todos/src/lib/sample-todos/sample-todos.module.ts`
+
+* Add MongooseModule.
+* Add SampleMongooseTableRepository to providers.
+
+```typescript
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { SampleTodo } from './models/sample-todo.model';
+import { SampleTodoSchema } from './models/sample-todo.schema';
+import { SampleTodosRepository } from './sample-todos.repository';
+import { SampleTodosResolver } from './sample-todos.resolver';
+import { SampleTodosService } from './sample-todos.service';
+
+@Module({
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: SampleTodo.name,
+        schema: SampleTodoSchema
+      }
+    ])
+  ],
+  providers: [SampleTodosResolver, SampleTodosService, SampleTodosRepository]
+})
+export class SampleTodosModule {}
+```
+
+## Updating app.module.ts
+
+Update the app.module.ts file in the apps/api/src/app/ directory:
+
+* Add DatabaseModule.
+* Add SampleTodosModule.
+
+```typescript
+@Module({
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'web/.next'),
+      exclude: ['/api/*', '/api/graphql']
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      path: '/api/graphql',
+      autoSchemaFile: true
+    }),
+    // ---- Graphql ---- //
+    // When using Mongoose, the DatabaseModule is required.
+    DatabaseModule,
+    SampleTodosModule
+  ],
+  controllers: [AppController],
+  providers: [AppService]
+})
+export class AppModule {}
+```
+
+Stay tuned for the next part as we continue configuring and integrating Nx, Nest.js, MongoDB, and Mongoose for a robust development experience.
+
+[Setting Up Nx Nestjs Mongodb Mongoose Integration - Part 3](/blog/56-nx-nestjs-mongodb-mongoose-part3/)

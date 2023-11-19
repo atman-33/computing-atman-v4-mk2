@@ -1,0 +1,284 @@
+---
+title: Setting Up Nx Nestjs Mongodb Mongoose Integration - Part 1
+date: '2023-11-17'
+lastmod: '2023-11-17'
+tags: ['nx', 'nest js', 'mongodb', 'mongoose']
+images: ['/static/images/common/mongodb.png']
+summary: This article guides you through setting up Nx, Nest.js, MongoDB, and Mongoose integration. It covers package installations, main and module file updates, project generation, and MongoDB connection setup. The focus is on enhancing application scalability and efficiency. Follow along to seamlessly integrate these technologies for robust development.
+---
+
+## Introduction
+In this article, we'll walk through the setup process for integrating Nx, Nest.js, MongoDB, and Mongoose. This integration is crucial for building scalable and efficient applications. We'll cover the installation of necessary packages, updating the main application file (`main.ts`), modifying the `app.module.ts` file, generating projects, creating configuration files, and setting up the MongoDB connection.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## Install Packages
+Let's start by installing the required packages for our project. Open your terminal and run the following commands:
+
+### GraphQL Packages
+```bash
+npm i @nestjs/graphql @nestjs/apollo graphql apollo-server-express
+```
+
+### Class Validator Packages
+```bash
+npm i class-validator class-transformer
+```
+
+### Bcrypt
+```bash
+npm i bcrypt
+```
+
+### Passport and JWT Packages
+```bash
+npm install --save @nestjs/passport passport passport-local
+npm install --save-dev @types/passport-local
+npm install --save @nestjs/jwt passport-jwt
+npm install --save-dev @types/passport-jwt
+```
+
+### Cookie Parser
+```bash
+npm install cookie-parser
+npm install --save-dev @types/cookie-parser
+```
+
+## Update main.ts
+Next, update the `main.ts` file located at `apps/api/src/main.ts`. Add the necessary configurations for cookies and validation pipes.
+
+> In this case, `apps/api` folder is a nextjs project.
+
+```typescript
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import cookieParser from 'cookie-parser';
+
+import { AppModule } from './app/app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  const globalPrefix = 'api';
+  app.setGlobalPrefix(globalPrefix);
+
+  app.use(cookieParser());
+  app.useGlobalPipes(new ValidationPipe());
+
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  Logger.log(`🚀 Application playground is running on: http://localhost:${port}/api/graphql`);
+}
+
+bootstrap();
+```
+
+## Update app.module.ts
+Now, let's update the `app.module.ts` file located at `apps/api/src/app/app.module.ts`. This modification includes the integration of Apollo and GraphQL.
+
+```typescript
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+@Module({
+  imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      path: '/api/graphql',
+      autoSchemaFile: true
+    }),
+  ],
+  controllers: [AppController],
+  providers: [AppService]
+})
+export class AppModule {}
+```
+
+> If any module that has a resolver does not exist, an error will occur!
+
+## Install @nestjs/config Package
+To handle configuration settings, install the `@nestjs/config` package:
+
+```bash
+npm i @nestjs/config
+```
+
+## Generate Project
+Now, generate the shared configuration project:
+
+```bash
+npx nx generate @nx/js:library shared-config --directory=libs/shared/config --importPath=@libs/shared/config --tags=scope:shared --bundler=swc
+
+✔ Which unit test runner would you like to use? · jest
+```
+
+## Create env.ts
+Create the `env.ts` file inside `libs/shared/config/src/lib/` with the following content:
+
+```typescript
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
+
+export const env = {
+  PORT: process.env['PORT'],
+  API_PORT: process.env['API_PORT'],
+  NEXT_PUBLIC_WEB_GQL_URL: process.env['NEXT_PUBLIC_WEB_GQL_URL'],
+  DB_URL: process.env['DB_URL'],
+};
+```
+
+Update the `index.ts` file.
+
+```ts:index.ts
+export * from './lib/env';
+```
+
+## Install @nestjs/mongoose Package
+To interact with MongoDB using Nest.js, install the `@nestjs/mongoose` and `mongoose` packages:
+
+```bash
+npm i @nestjs/mongoose mongoose
+```
+
+## Generate Mongoose Project
+Generate the project for Mongoose shared configuration:
+
+```bash
+npx nx generate @nx/js:library api-mongoose-shared --directory=libs/api/mongoose/shared --importPath=@libs/api/mongoose/shared --tags=scope:api --bundler=swc
+
+✔ Which unit test runner would you like to use? · none
+```
+
+## Create Mongoose Files
+Create the following files within `libs/api/mongoose/shared/src/lib/`:
+
+### model/abstract.model.ts
+```typescript
+import { Field, ObjectType } from '@nestjs/graphql';
+
+@ObjectType()
+export class AbstractModel {
+  @Field()
+  readonly _id!: string;
+}
+```
+
+### database/abstract.schema.ts
+```typescript
+import { Prop, Schema } from '@nestjs/mongoose';
+import { SchemaTypes, Types } from 'mongoose';
+
+@Schema()
+export class AbstractDocument {
+  @Prop({ type: SchemaTypes.ObjectId })
+  _id!: Types.ObjectId;
+}
+```
+
+### database/abstract.repository.ts
+```typescript
+import { Logger, NotFoundException } from '@nestjs/common';
+import { FilterQuery, Model, Types, UpdateQuery } from 'mongoose';
+import { AbstractDocument } from './abstract.schema';
+
+export abstract class AbstractRepository<TDocument extends AbstractDocument> {
+  protected abstract readonly logger: Logger;
+
+  constructor(protected readonly model: Model<TDocument>) {}
+
+  async create(document: Omit<TDocument, '_id'>): Promise<TDocument> {
+    const createdDocument = new this.model({
+      ...document,
+      _id: new Types.ObjectId()
+    });
+
+    return (await createdDocument.save()).toJSON() as unknown as TDocument;
+  }
+
+  async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> {
+    const document = await this.model.findOne(filterQuery, {}, { lean: true });
+
+    if (!document) {
+      this.logger.warn('Document not found with filterQuery', filterQuery);
+      throw new NotFoundException('Document not found.');
+    }
+
+    return document as TDocument;
+  }
+
+  async findOneAndUpdate(filterQuery: FilterQuery<TDocument>, update: UpdateQuery<TDocument>) {
+    const document = await this.model.findOneAndUpdate(filterQuery, update, {
+      lean: true,
+      new: true
+    });
+
+    if (!document) {
+      this.logger.warn(`Document not found with filterQuery:`, filterQuery);
+      throw new NotFoundException('Document not found.');
+    }
+
+    return document;
+  }
+
+  async find(filterQuery: FilterQuery<TDocument>) {
+    return this.model.find(filterQuery, {}, { lean: true });
+  }
+
+  async deleteOne(filterQuery: FilterQuery<TDocument>): Promise<void> {
+    const result = await this.model.deleteOne(filterQuery);
+
+    if (result.deletedCount === 0) {
+      this.logger.warn('No document found for deletion with filterQuery', filterQuery);
+      // throw new NotFoundException('No document found for deletion.');
+    }
+  }
+
+  async deleteMany(filterQuery: FilterQuery<TDocument>): Promise<void> {
+    const result = await this.model.deleteMany(filterQuery);
+
+    if (result.deletedCount === 0) {
+      this.logger.warn('No documents found for deletion with filterQuery', filterQuery);
+      // throw new NotFoundException('No documents found for deletion.');
+    }
+  }
+
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
+ async aggregate(pipeline: any[]): Promise<any[]> {
+    return this.model.aggregate(pipeline);
+  }
+}
+```
+
+### database/database.module.ts
+```typescript
+import { env } from '@libs/shared/config';
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+
+@Module({
+  imports: [
+    MongooseModule.forRootAsync({
+      useFactory: () => ({
+        uri: env.DB_URL
+      })
+    })
+  ]
+})
+export class DatabaseModule {}
+```
+
+Update the `index.ts` file.
+
+```ts:index.ts
+export { AbstractRepository } from './lib/database/abstract.repository';
+export { AbstractDocument } from './lib/database/abstract.schema';
+export { DatabaseModule } from './lib/database/database.module';
+export { AbstractModel } from './lib/model/abstract.model';
+```
+
+This completes the setup for the first part of Nx, Nest.js, MongoDB, and Mongoose integration. Stay tuned for the next part where we will continue with the configuration and integration process.
+
+[Setting Up Nx Nestjs Mongodb Mongoose Integration - Part 2](/blog/55-nx-nestjs-mongodb-mongoose-part2/)
