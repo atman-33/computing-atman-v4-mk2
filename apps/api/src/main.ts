@@ -18,7 +18,10 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-  app.enableCors();
+  app.enableCors({
+    origin: 'http://localhost:4200',
+    credentials: true
+  });
 
   const port = env.API_PORT || 3000;
   await app.listen(port);

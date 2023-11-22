@@ -78,7 +78,6 @@
     "graphql-type-json": "^0.3.2",
     "mongoose": "^7.5.2",
     "next": "^13.5.1",
-    "next-auth": "^4.24.5",
     "next-contentlayer": "^0.3.4",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
