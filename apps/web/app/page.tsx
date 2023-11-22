@@ -13,7 +13,13 @@ export default async function Page() {
   const sortedPosts = sortPosts(allBlogs);
   const posts = allCoreContent(sortedPosts);
 
-  const debugPages = ['/loop-animation', '/shadcn-ui', '/tailwindcss-sample'];
+  const debugPages = [
+    '/auth-test-1',
+    '/auth-test-2',
+    '/loop-animation',
+    '/shadcn-ui',
+    '/tailwindcss-sample'
+  ];
 
   return (
     <>

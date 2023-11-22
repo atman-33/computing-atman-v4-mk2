@@ -48,3 +48,24 @@ export * from './lib/auth.module';
 export { CurrentUser } from './lib/current-user.decorator';
 export { GqlAuthGuard } from './lib/guards/gql-auth.guard';
 ```
+
+## Update app.module.ts of Nextjs
+
+`apps/api/src/app/app.module.ts`
+
+```ts
+@Module({
+  imports: [
+    ...
+    // ---- RestAPI ---- //
+    AuthModule,
+
+    // ---- Graphql ---- //
+    // When using Mongoose, the DatabaseModule is required.
+    DatabaseModule,
+    UsersModule
+  ],
+  controllers: [AppController],
+  providers: [AppService]
+})
+```
