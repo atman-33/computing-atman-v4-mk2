@@ -16,15 +16,18 @@ export default async function Page() {
   const debugPages = [
     '/auth-test-1',
     '/auth-test-2',
+    '/auth-login-sample',
     '/loop-animation',
     '/shadcn-ui',
-    '/tailwindcss-sample'
+    '/tailwindcss-sample',
+    '/login',
+    '/signup'
   ];
 
   return (
     <>
       {NEXT_PUBLIC_IS_DEV === '1' && (
-        <div className=" m-2 items-center rounded-lg bg-red-400 p-4">
+        <div className=" m-2 items-center rounded-lg bg-purple-400 p-4">
           {debugPages.map((page) => {
             return (
               <div key={page}>
