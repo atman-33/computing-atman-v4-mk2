@@ -4,8 +4,8 @@ import { NEXT_PUBLIC_IS_DEV } from '@/config/index';
 import { Blog, allBlogs } from 'contentlayer/generated';
 import Link from 'next/link';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
-import backgroundImage from '../public/static/images/antoine-barres.jpg';
 import cloudsImage from '../public/static/images/clouds.png';
+import backgroundImage from '../public/static/images/coding.jpg';
 import fogImage from '../public/static/images/fog-low.png';
 import Main from './_components/Home';
 
@@ -21,7 +21,8 @@ export default async function Page() {
     '/shadcn-ui',
     '/tailwindcss-sample',
     '/login',
-    '/signup'
+    '/signup',
+    '/sites/booker'
   ];
 
   return (
