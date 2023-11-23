@@ -46,7 +46,7 @@ NEXT_PUBLIC_GISCUS_CATEGORY_ID=***
 
 NEXT_PUBLIC_GA_ID=***
 
-NEXT_PUBLIC_WEB_GQL_URL=https://xxx/api/graphql  *"xxx" is deployed url.
+NEXT_PUBLIC_API_GQL_URL=https://xxx/api/graphql  *"xxx" is deployed url.
 
 API_PORT=10000
 DB_URL=***
