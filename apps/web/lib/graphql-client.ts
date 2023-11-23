@@ -7,4 +7,4 @@ if (!NEXT_PUBLIC_API_GQL_URL) {
   throw new Error('NEXT_PUBLIC_API_GQL_URL is undefined');
 }
 
-export const gql = getGraphqlClient(NEXT_PUBLIC_API_GQL_URL);
+export const gqlClient = getGraphqlClient(NEXT_PUBLIC_API_GQL_URL);

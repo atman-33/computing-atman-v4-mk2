@@ -42,3 +42,10 @@ e.g. logout
         credentials: 'include'
       });
 ```
+
+## Add credentials to client class
+
+- axios
+- apollo client
+
+etc...

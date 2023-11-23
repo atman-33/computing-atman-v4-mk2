@@ -1,0 +1,13 @@
+mutation createUser($createUserData: CreateUserInput!) {
+  createUser(createUserData: $createUserData) {
+    _id
+    email
+  }
+}
+
+query getCurrentUser {
+  currentUser {
+    _id
+    email
+  }
+}
