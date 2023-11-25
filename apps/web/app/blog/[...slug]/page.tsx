@@ -3,11 +3,11 @@ import '@/styles/prism.css';
 import 'katex/dist/katex.css';
 
 import siteMetadata from '@/constants/site-metadata';
-import { components } from 'apps/web/app/blog/_components/MDXComponents';
-import PageTitle from 'apps/web/app/blog/_components/PageTitle';
-import PostBanner from 'apps/web/app/blog/_components/PostBanner';
-import PostLayout from 'apps/web/app/blog/_components/PostLayout';
-import PostSimple from 'apps/web/app/blog/_components/PostSimple';
+import { components } from '@/features/blog/components/MDXComponents';
+import PageTitle from '@/features/blog/components/PageTitle';
+import PostBanner from '@/features/blog/components/PostBanner';
+import PostLayout from '@/features/blog/components/PostLayout';
+import PostSimple from '@/features/blog/components/PostSimple';
 import type { Authors, Blog } from 'contentlayer/generated';
 import { allAuthors, allBlogs } from 'contentlayer/generated';
 import { Metadata } from 'next';

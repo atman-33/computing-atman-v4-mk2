@@ -1,10 +1,14 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Blog } from '.contentlayer/generated/types';
+import { Button } from '@/components/elements/Button';
 import Link from '@/components/elements/Link';
 import Tag from '@/components/elements/Tag';
 import Thumbnail from '@/components/elements/Thumbnail';
 import siteMetadata from '@/constants/site-metadata';
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { slug as githubSlug } from 'github-slugger';
 import { formatDate } from 'pliny/utils/formatDate';
 // import NewsletterForm from 'pliny/ui/NewsletterForm';
 
@@ -14,7 +18,7 @@ export default function Home({ posts }: { posts: Blog[] }) {
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
-        <div className="space-y-2 pb-8 pt-6 md:space-y-5">
+        <div className="flex flex-wrap space-y-2 pb-4 pt-6 md:space-y-5 md:space-x-5">
           <h1 className="md:leading-14 text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-4xl">
             Latest Posts
           </h1>
@@ -33,7 +37,10 @@ export default function Home({ posts }: { posts: Blog[] }) {
                     <dl>
                       <dt className="sr-only">Published on</dt>
                       <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                        <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                        <div className="flex flex-wrap items-center gap-x-2">
+                          <FontAwesomeIcon icon={faCalendarDays} className="h-[16px]" />
+                          <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                        </div>
                         <Thumbnail images={images} />
                       </dd>
                     </dl>
@@ -50,7 +57,7 @@ export default function Home({ posts }: { posts: Blog[] }) {
                           </h2>
                           <div className="flex flex-wrap">
                             {tags.map((tag: string) => (
-                              <Tag key={tag} text={tag} />
+                              <Tag key={tag} text={tag} href={`/blog/tags/${githubSlug(tag)}`} />
                             ))}
                           </div>
                         </div>
@@ -64,7 +71,7 @@ export default function Home({ posts }: { posts: Blog[] }) {
                           className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                           aria-label={`Read "${title}"`}
                         >
-                          Read more &rarr;
+                          <Button>Read more &rarr;</Button>
                         </Link>
                       </div>
                     </div>
@@ -82,7 +89,7 @@ export default function Home({ posts }: { posts: Blog[] }) {
             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
             aria-label="All posts"
           >
-            All Posts &rarr;
+            <Button>All Posts &rarr;</Button>
           </Link>
         </div>
       )}

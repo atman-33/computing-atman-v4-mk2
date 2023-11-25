@@ -1,5 +1,4 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import Link from '@/components/elements/Link';
 import Tag from '@/components/elements/Tag';
 import { slug } from 'github-slugger';
 import tagData from '../../../public/tag-data.json';
@@ -25,14 +24,7 @@ export default async function Page() {
             // console.log(t);
             return (
               <div key={t} className="mb-2 mr-5 mt-2">
-                <Tag text={t} />
-                <Link
-                  href={`/blog/tags/${slug(t)}`}
-                  className="-ml-2 text-sm font-semibold uppercase text-gray-600 dark:text-gray-300"
-                  aria-label={`View posts tagged ${t}`}
-                >
-                  {` (${tagCounts[t]})`}
-                </Link>
+                <Tag text={t} count={tagCounts[t]} href={`/blog/tags/${slug(t)}`} />
               </div>
             );
           })}

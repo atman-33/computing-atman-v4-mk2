@@ -9,7 +9,10 @@ module.exports = {
   mode: 'jit',
   darkMode: ['class'],
   content: [
-    join(__dirname, '{src,pages,components,layouts,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'),
+    join(
+      __dirname,
+      '{src,pages,components,layouts,features,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
+    ),
     // add blog mdx
     join(__dirname, './data/**/*.mdx'),
     // add pliny
@@ -35,7 +38,7 @@ module.exports = {
         '3xl': '1600px'
       },
       colors: {
-        primary: colors.pink,
+        primary: colors.cyan,
         gray: colors.gray,
         black: '#262217',
         beigeLight: '#FFFDF8',

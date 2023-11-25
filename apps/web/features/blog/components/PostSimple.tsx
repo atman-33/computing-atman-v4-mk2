@@ -2,9 +2,9 @@
 import Link from '@/components/elements/Link';
 import SectionContainer from '@/components/elements/SectionContainer';
 import siteMetadata from '@/constants/site-metadata';
-import Comments from 'apps/web/app/blog/_components/Comments';
-import PageTitle from 'apps/web/app/blog/_components/PageTitle';
-import ScrollTopAndComment from 'apps/web/app/blog/_components/ScrollTopAndComment';
+import Comments from '@/features/blog/components/Comments';
+import PageTitle from '@/features/blog/components/PageTitle';
+import ScrollTopAndComment from '@/features/blog/components/ScrollTopAndComment';
 import type { Blog } from 'contentlayer/generated';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { formatDate } from 'pliny/utils/formatDate';
