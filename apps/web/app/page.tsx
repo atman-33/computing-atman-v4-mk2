@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
 import cloudsImage from '../public/static/images/clouds.png';
 import backgroundImage from '../public/static/images/coding.jpg';
-import fogImage from '../public/static/images/fog-low.png';
 import Main from './_components/Home';
 
 export default async function Page() {
@@ -41,7 +40,7 @@ export default async function Page() {
 
       <HeroWithAnimation
         backgroundImage1={backgroundImage}
-        backgroundImage2={fogImage}
+        // backgroundImage2={fogImage}
         animationImage={cloudsImage}
         title="Computing Atman"
         description="This website is an information site on system development and programming related to IT."

@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@/components/elements/Button';
-import { Input } from '@/components/elements/Input';
 import {
   Form,
   FormControl,
@@ -10,7 +9,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '@/components/form/Form';
+} from '@/components/elements/Form';
+import { Input } from '@/components/elements/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -85,9 +85,7 @@ const SignUpForm = () => {
           />
 
           <div className="flex items-center justify-between">
-            <Button type="submit" className="bg-blue-600 text-white">
-              Create Account
-            </Button>
+            <Button type="submit">Create Account</Button>
           </div>
         </form>
       </Form>
