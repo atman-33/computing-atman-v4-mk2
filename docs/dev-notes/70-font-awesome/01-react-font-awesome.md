@@ -8,10 +8,8 @@ https://fontawesome.com/icons
 ## Install packages
 
 ```bash
-npm i --save @fortawesome/fontawesome-svg-core
-
-npm i --save @fortawesome/free-solid-svg-icons
-npm i --save @fortawesome/free-regular-svg-icons
-
-npm i --save @fortawesome/react-fontawesome@latest
+npm i @fortawesome/fontawesome-svg-core
+npm i @fortawesome/free-solid-svg-icons
+npm i @fortawesome/free-regular-svg-icons
+npm i @fortawesome/react-fontawesome@latest
 ```

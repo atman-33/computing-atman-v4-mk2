@@ -1,12 +1,16 @@
 /* eslint-disable @nx/enforce-module-boundaries */
+
+import '../styles/blog.css';
+
+import { Button } from '@/components/elements/Button';
 import Image from '@/components/elements/Image';
 import Link from '@/components/elements/Link';
 import SectionContainer from '@/components/elements/SectionContainer';
 import Tag from '@/components/elements/Tag';
 import siteMetadata from '@/constants/site-metadata';
-import Comments from 'apps/web/app/blog/_components/Comments';
-import PageTitle from 'apps/web/app/blog/_components/PageTitle';
-import ScrollTopAndComment from 'apps/web/app/blog/_components/ScrollTopAndComment';
+import Comments from '@/features/blog/components/Comments';
+import PageTitle from '@/features/blog/components/PageTitle';
+import ScrollTopAndComment from '@/features/blog/components/ScrollTopAndComment';
 import type { Authors, Blog } from 'contentlayer/generated';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { ReactNode } from 'react';
@@ -60,7 +64,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             <dl className="pb-10 pt-6 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
               <dt className="sr-only">Authors</dt>
               <dd>
-                <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
+                <ul className="flex flex-wrap justify-center gap-4 py-4 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
                   {authorDetails.map((author) => (
                     <li className="flex items-center space-x-2" key={author.name}>
                       {author.avatar && (
@@ -155,7 +159,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                   aria-label="Back to the blog"
                 >
-                  &larr; Back to the blog
+                  <Button>&larr; Back to the blog</Button>
                 </Link>
               </div>
             </footer>

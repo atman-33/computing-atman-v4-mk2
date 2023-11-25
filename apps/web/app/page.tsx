@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
 import cloudsImage from '../public/static/images/clouds.png';
 import backgroundImage from '../public/static/images/coding.jpg';
-import Main from './_components/Home';
+import Home from './_components/Home';
 
 export default async function Page() {
   const sortedPosts = sortPosts(allBlogs);
@@ -46,7 +46,7 @@ export default async function Page() {
         description="This website is an information site on system development and programming related to IT."
       />
 
-      <Main posts={posts as unknown as Blog[]} />
+      <Home posts={posts as unknown as Blog[]} />
     </>
   );
 }
