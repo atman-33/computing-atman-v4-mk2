@@ -1,3 +1,4 @@
+import { Button } from '@/components/elements/Button';
 import Image from './Image';
 import Link from './Link';
 
@@ -55,7 +56,7 @@ const Card = ({
             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 text-base font-medium leading-6"
             aria-label={`Link to ${title}`}
           >
-            Learn more &rarr;
+            <Button>Learn more &rarr;</Button>
           </Link>
         )}
       </div>

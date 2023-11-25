@@ -1,5 +1,4 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-
 import '../styles/blog.css';
 
 import { Button } from '@/components/elements/Button';
@@ -11,7 +10,10 @@ import siteMetadata from '@/constants/site-metadata';
 import Comments from '@/features/blog/components/Comments';
 import PageTitle from '@/features/blog/components/PageTitle';
 import ScrollTopAndComment from '@/features/blog/components/ScrollTopAndComment';
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Authors, Blog } from 'contentlayer/generated';
+import { slug as githubSlug } from 'github-slugger';
 import { CoreContent } from 'pliny/utils/contentlayer';
 import { ReactNode } from 'react';
 
@@ -34,7 +36,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
+const PostLayout = ({ content, authorDetails, next, prev, children }: LayoutProps) => {
   const { filePath, path, slug, date, title, tags } = content;
   const basePath = path.split('/')[0];
 
@@ -49,9 +51,12 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 <div>
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>
-                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
-                    </time>
+                    <div className="flex flex-wrap items-center justify-center gap-x-2">
+                      <FontAwesomeIcon icon={faCalendarDays} className="h-[16px]" />
+                      <time dateTime={date}>
+                        {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                      </time>
+                    </div>
                   </dd>
                 </div>
               </dl>
@@ -97,7 +102,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
-              <div className="prose dark:prose-invert max-w-none pb-8 pt-10">{children}</div>
+              <div className="prose dark:prose-invert blog max-w-none pb-8 pt-10">{children}</div>
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={discussUrl(path)} rel="nofollow">
                   Discuss on Twitter
@@ -123,7 +128,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     </h2>
                     <div className="flex flex-wrap">
                       {tags.map((tag) => (
-                        <Tag key={tag} text={tag} />
+                        <Tag key={tag} text={tag} href={`/blog/tags/${githubSlug(tag)}`} />
                       ))}
                     </div>
                   </div>
@@ -168,4 +173,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
       </article>
     </SectionContainer>
   );
-}
+};
+
+export default PostLayout;
