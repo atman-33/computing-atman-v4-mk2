@@ -11,6 +11,7 @@ import {
   FormMessage
 } from '@/components/elements/Form';
 import { Input } from '@/components/elements/Input';
+import { NEXT_PUBLIC_IS_DEV } from '@/config/index';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -32,14 +33,14 @@ const LoginForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: 'test-user1@gmail.com',
-      password: 'test1234'
+      email: NEXT_PUBLIC_IS_DEV === '1' ? 'test-user1@gmail.com' : '',
+      password: NEXT_PUBLIC_IS_DEV === '1' ? 'test1234' : ''
     }
   });
 
   const login = async () => {
     const response: any = await authApi.login(form.getValues('email'), form.getValues('password'));
-    console.log(response);
+    // console.log(response);
     if (response.error) {
       setError(response.message);
     } else {

@@ -2,9 +2,9 @@
 'use client';
 
 import DotFlasing from '@/components/elements/DotFlashing';
-/* eslint-disable @nx/enforce-module-boundaries */
 import authApi from '@/features/auth/api/auth';
 import { useRedirectPath } from '@/features/auth/hooks/useRedirectPath';
+import AddBookmark from '@/features/booker/components/AddBookmark';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -16,9 +16,9 @@ const Page = () => {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const data = await authApi.isAuthenticated();
-        // console.log(data);
-        if (data === true) {
+        const response = await authApi.isAuthenticated();
+        // console.log(response);
+        if (response === true) {
           console.log('authenticated');
         } else {
           console.log('not authenticated');
@@ -32,15 +32,21 @@ const Page = () => {
         setLoading(false);
       }
     };
-
-    checkAuthentication();
+    setTimeout(() => {
+      checkAuthentication();
+    }, 1000);
   }, []);
 
   if (loading) {
     return <DotFlasing />;
   }
 
-  return <div>{redirectPath}</div>;
+  return (
+    <div>
+      booker page...
+      <AddBookmark />
+    </div>
+  );
 };
 
 export default Page;

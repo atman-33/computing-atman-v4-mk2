@@ -51,7 +51,7 @@ export default function ListLayoutWithTags({
         </div>
 
         <div className="col-span-12 grid grid-cols-12">
-          <div className="hidden min-w-[280px] max-w-[280px] flex-wrap rounded shadow-md outline-1 outline-white dark:bg-gray-900/70 dark:shadow-gray-800/40 md:col-span-4 md:flex">
+          <div className="hidden min-w-[280px] max-w-[280px] flex-wrap dark:bg-gray-900/70 dark:shadow-gray-800/40 md:col-span-4 md:flex">
             <div className="py-4 px-6">
               {pathname.startsWith(`/blog/tags`) ? (
                 <Link
