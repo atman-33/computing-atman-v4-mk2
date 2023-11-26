@@ -15,10 +15,10 @@ const sitesData = [
     href: 'https://atman-33.github.io/hexo-material-blog-template/'
   },
   {
-    title: 'React Shadcn Samples',
+    title: 'React Samples',
     description: `This is a samples of react pages using shadcn.`,
-    imgSrc: '/static/images/sites/react-shadcn.png',
-    href: '/sites/react-shadcn-sample'
+    imgSrc: '/static/images/common/react.png',
+    href: '/sites/react-sample'
   }
   // {
   //   title: 'Booker',

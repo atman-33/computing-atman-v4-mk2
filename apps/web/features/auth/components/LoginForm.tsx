@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import authApi from '../api/auth';
+import { useRedirectPath } from '../hooks/useRedirectPath';
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,6 +27,7 @@ const formSchema = z.object({
 const LoginForm = () => {
   const [error, setError] = useState<string>('');
   const router = useRouter();
+  const { redirectPath } = useRedirectPath();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,10 +40,16 @@ const LoginForm = () => {
   const login = async () => {
     const response: any = await authApi.login(form.getValues('email'), form.getValues('password'));
     console.log(response);
-    if (response.message) {
+    if (response.error) {
       setError(response.message);
     } else {
       setError('');
+      // console.log('redirectPath:', redirectPath);
+      if (redirectPath) {
+        router.push(redirectPath);
+      } else {
+        router.push('/');
+      }
     }
   };
 

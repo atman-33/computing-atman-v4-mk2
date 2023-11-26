@@ -7,7 +7,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="mt-8">
       <div className="inline-flex space-x-1">
-        <Icon kind="home" href="/sites/react-shadcn-sample" target="" size={6} />
+        <Icon kind="home" href="/sites/react-sample" target="" size={6} />
         <span>Shadcn Sample Top</span>
       </div>
       <div>{children}</div>

@@ -6,7 +6,8 @@ import SectionContainer from '@/components/elements/SectionContainer';
 import GoogleAnalytics from '@/components/heads/GoogleAnalytics';
 import Footer from '@/components/layouts/Footer';
 import Header from '@/components/layouts/Header';
-import { ThemeProviders } from '@/components/providers/ThemeProviders';
+import StatesProvider from '@/components/providers/StatesProvider';
+import ThemeProvider from '@/components/providers/ThemeProvider';
 import siteMetadata from '@/constants/site-metadata';
 import { Metadata } from 'next';
 import { Analytics, AnalyticsConfig } from 'pliny/analytics';
@@ -74,18 +75,20 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       </head>
 
       <body className="overflow-x-hidden bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
-        <ThemeProviders defaultTheme={siteMetadata.theme}>
-          <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
-          <SectionContainer>
-            <div className="flex flex-col justify-between font-sans">
-              <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-                <Header />
-                {children}
-              </SearchProvider>
-              <Footer />
-            </div>
-          </SectionContainer>
-        </ThemeProviders>
+        <StatesProvider>
+          <ThemeProvider defaultTheme={siteMetadata.theme}>
+            <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
+            <SectionContainer>
+              <div className="flex flex-col justify-between font-sans">
+                <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
+                  <Header />
+                  {children}
+                </SearchProvider>
+                <Footer />
+              </div>
+            </SectionContainer>
+          </ThemeProvider>
+        </StatesProvider>
         <GoogleAnalytics />
       </body>
     </html>
