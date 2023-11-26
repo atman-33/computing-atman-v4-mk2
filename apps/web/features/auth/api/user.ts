@@ -31,7 +31,7 @@ const getCurrentUser = async () => {
       query: GetCurrentUserDocument
     })
     .then((data) => {
-      console.log('data:', data);
+      // console.log('data:', data);
       return data.data?.currentUser;
     })
     .catch((error) => {
