@@ -1,28 +1,46 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
+import DotFlasing from '@/components/elements/DotFlashing';
 /* eslint-disable @nx/enforce-module-boundaries */
 import authApi from '@/features/auth/api/auth';
+import { useRedirectPath } from '@/features/auth/hooks/useRedirectPath';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Page = () => {
   const router = useRouter();
-
-  // TODO: ログイン後にこのページに戻ってくる処理を追加（recoil を利用）
+  const [loading, setLoading] = useState(true);
+  const { redirectPath, setRedirectPath } = useRedirectPath();
 
   useEffect(() => {
-    authApi.isAuthenticated().then((data) => {
-      // console.log(data);
-      if (data === true) {
-        console.log('authenticated');
-      } else {
-        console.log('not authenticated');
-        router.push('/login');
+    const checkAuthentication = async () => {
+      try {
+        const data = await authApi.isAuthenticated();
+        // console.log(data);
+        if (data === true) {
+          console.log('authenticated');
+        } else {
+          console.log('not authenticated');
+          setRedirectPath('/sites/booker');
+          // console.log('redirectPath: ', redirectPath);
+          router.push('/login');
+        }
+      } catch (error) {
+        console.error('Error checking authentication', error);
+      } finally {
+        setLoading(false);
       }
-    });
-  }, [router]);
+    };
 
-  return <div>Page</div>;
+    checkAuthentication();
+  }, []);
+
+  if (loading) {
+    return <DotFlasing />;
+  }
+
+  return <div>{redirectPath}</div>;
 };
 
 export default Page;
