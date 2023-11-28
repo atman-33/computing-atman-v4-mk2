@@ -1,0 +1,43 @@
+{
+  "name": "api-feature-bookmarks",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/sites/booker/feature-bookmarks/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/api/sites/booker/feature-bookmarks",
+        "main": "libs/api/sites/booker/feature-bookmarks/src/index.ts",
+        "tsConfig": "libs/api/sites/booker/feature-bookmarks/tsconfig.lib.json",
+        "assets": ["libs/api/sites/booker/feature-bookmarks/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/api/sites/booker/feature-bookmarks/**/*.ts",
+          "libs/api/sites/booker/feature-bookmarks/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/api/sites/booker/feature-bookmarks/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": ["scope:api"]
+}
