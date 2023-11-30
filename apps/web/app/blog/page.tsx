@@ -4,7 +4,7 @@ import { allBlogs } from 'contentlayer/generated';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
 import { genPageMetadata } from '../seo';
 
-const POSTS_PER_PAGE = 5;
+const POSTS_PER_PAGE = 10;
 
 export const metadata = genPageMetadata({ title: 'Blog' });
 

@@ -12,8 +12,8 @@ export default function Thumbnail({ images }: { images: string[] | undefined }) 
       src={image}
       alt={image}
       className="my-2 h-auto max-w-sm rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30"
-      width={200}
-      height={200}
+      width={100}
+      height={100}
     />
   );
 }

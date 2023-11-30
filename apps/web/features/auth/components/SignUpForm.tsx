@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import userApi from '../api/user';
+import userApi from '../api/user-api';
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -55,7 +55,7 @@ const SignUpForm = () => {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(signUp)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(signUp)} className="w-full space-y-8 md:w-1/2">
           <FormField
             control={form.control}
             name="email"
