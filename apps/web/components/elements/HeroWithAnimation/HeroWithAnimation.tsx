@@ -42,7 +42,7 @@ export default function HeroWithAnimation(props: Props) {
             }}
           >
             <h1
-              className="mt-20 text-center text-4xl font-bold leading-snug tracking-tight text-white md:text-6xl lg:leading-tight"
+              className="mt-24 text-center text-4xl font-bold leading-snug tracking-tight text-white md:text-6xl lg:leading-tight"
               style={{
                 textShadow: '2px 2px 4px darkgray'
               }}

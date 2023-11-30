@@ -12,7 +12,7 @@ import { slug as githubSlug } from 'github-slugger';
 import { formatDate } from 'pliny/utils/formatDate';
 // import NewsletterForm from 'pliny/ui/NewsletterForm';
 
-const MAX_DISPLAY = 5;
+const MAX_DISPLAY = 10;
 
 export default function Home({ posts }: { posts: Blog[] }) {
   return (
@@ -31,9 +31,9 @@ export default function Home({ posts }: { posts: Blog[] }) {
           {posts.slice(0, MAX_DISPLAY).map((post: Blog) => {
             const { slug, date, title, summary, tags, images } = post;
             return (
-              <li key={slug} className="py-12">
+              <li key={slug} className="py-4">
                 <article>
-                  <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+                  <div className="space-y-2  xl:items-baseline xl:space-y-0">
                     <dl>
                       <dt className="sr-only">Published on</dt>
                       <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
@@ -41,20 +41,22 @@ export default function Home({ posts }: { posts: Blog[] }) {
                           <FontAwesomeIcon icon={faCalendarDays} className="h-[16px]" />
                           <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
                         </div>
-                        <Thumbnail images={images} />
+                        <Link
+                          href={`/blog/${slug}`}
+                          className="grid grid-cols-12 text-gray-900 dark:text-gray-100"
+                        >
+                          <div className="col-span-4 md:col-span-2">
+                            <Thumbnail images={images} />
+                          </div>
+                          <h2 className="justify-left col-span-8 flex items-center text-xl font-bold leading-8 tracking-tight md:col-span-10 md:text-2xl">
+                            {title}
+                          </h2>
+                        </Link>
                       </dd>
                     </dl>
                     <div className="space-y-5 xl:col-span-3">
                       <div className="space-y-6">
                         <div>
-                          <h2 className="text-2xl font-bold leading-8 tracking-tight">
-                            <Link
-                              href={`/blog/${slug}`}
-                              className="text-gray-900 dark:text-gray-100"
-                            >
-                              {title}
-                            </Link>
-                          </h2>
                           <div className="flex flex-wrap">
                             {tags.map((tag: string) => (
                               <Tag key={tag} text={tag} href={`/blog/tags/${githubSlug(tag)}`} />

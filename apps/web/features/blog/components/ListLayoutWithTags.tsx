@@ -45,7 +45,7 @@ export default function ListLayoutWithTags({
     <>
       <div className="grid grid-cols-12">
         <div className="col-span-12 pb-6 pt-6">
-          <h1 className="blog-page-title flex justify-center text-3xl font-extrabold uppercase">
+          <h1 className="blog-page-title flex justify-center text-xl font-extrabold uppercase">
             {title}
           </h1>
         </div>
@@ -94,8 +94,7 @@ export default function ListLayoutWithTags({
                 return (
                   <>
                     <li key={path} className="py-5">
-                      <article className="flex flex-col space-y-2 xl:space-y-0">
-                        <Thumbnail images={images} />
+                      <article className="space-y-2 xl:space-y-0">
                         <dl>
                           <dt className="sr-only">Published on</dt>
                           <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
@@ -105,13 +104,18 @@ export default function ListLayoutWithTags({
                             </div>
                           </dd>
                         </dl>
+                        <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
+                          <div className="grid grid-cols-12">
+                            <div className="col-span-4 md:col-span-3">
+                              <Thumbnail images={images} />
+                            </div>
+                            <h2 className="col-span-8 flex items-center text-2xl font-bold leading-8 tracking-tight md:col-span-9">
+                              {title}
+                            </h2>
+                          </div>
+                        </Link>
                         <div className="space-y-3">
                           <div>
-                            <h2 className="text-2xl font-bold leading-8 tracking-tight">
-                              <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
-                                {title}
-                              </Link>
-                            </h2>
                             <div className="flex flex-wrap">
                               {tags?.map((tag) => (
                                 <Tag key={tag} text={tag} href={`/blog/tags/${slug(tag)}`} />
