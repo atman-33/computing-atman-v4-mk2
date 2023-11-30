@@ -2,9 +2,9 @@
 'use client';
 
 import DotFlasing from '@/components/elements/DotFlashing';
-import authApi from '@/features/auth/api/auth';
+import authApi from '@/features/auth/api/auth-api';
 import { useRedirectPath } from '@/features/auth/hooks/useRedirectPath';
-import AddBookmark from '@/features/booker/components/AddBookmark';
+import CreateBookmark from '@/features/booker/components/CreateBookmark';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -44,7 +44,7 @@ const Page = () => {
   return (
     <div>
       booker page...
-      <AddBookmark />
+      <CreateBookmark />
     </div>
   );
 };

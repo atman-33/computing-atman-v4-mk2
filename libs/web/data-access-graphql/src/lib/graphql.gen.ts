@@ -15,6 +15,18 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Bookmark = {
+  __typename?: 'Bookmark';
+  _id: Scalars['String']['output'];
+  links: Array<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
+};
+
+export type CreateBookmarkInput = {
+  name: Scalars['String']['input'];
+};
+
 export type CreateSampleTodoInput = {
   completed: Scalars['Boolean']['input'];
   content: Scalars['String']['input'];
@@ -41,15 +53,30 @@ export type DeleteSampleUserInput = {
   _id: Scalars['String']['input'];
 };
 
+export type Link = {
+  __typename?: 'Link';
+  images: Maybe<Array<Scalars['String']['output']>>;
+  siteName: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createBookmark: Bookmark;
   createSampleTodo: SampleTodo;
   createSampleUser: SampleUser;
   createUser: User;
   deleteSampleTodo: Maybe<SampleTodo>;
   deleteSampleUser: Maybe<SampleUser>;
+  updateBookmark: Bookmark;
   updateSampleTodo: SampleTodo;
   updateSampleUser: SampleUser;
+};
+
+
+export type MutationCreateBookmarkArgs = {
+  createBookmarkData: CreateBookmarkInput;
 };
 
 
@@ -78,6 +105,11 @@ export type MutationDeleteSampleUserArgs = {
 };
 
 
+export type MutationUpdateBookmarkArgs = {
+  updateBookmarkData: UpdateBookmarkInput;
+};
+
+
 export type MutationUpdateSampleTodoArgs = {
   updateSampleTodoData: UpdateSampleTodoInput;
 };
@@ -89,12 +121,25 @@ export type MutationUpdateSampleUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  bookmark: Bookmark;
+  bookmarks: Array<Bookmark>;
   currentUser: User;
+  links: Array<Link>;
   sampleTodo: SampleTodo;
   sampleTodos: Array<SampleTodo>;
   sampleUser: SampleUser;
   sampleUsers: Array<SampleUser>;
   user: User;
+};
+
+
+export type QueryBookmarkArgs = {
+  _id: Scalars['String']['input'];
+};
+
+
+export type QueryLinksArgs = {
+  urls: Array<Scalars['String']['input']>;
 };
 
 
@@ -127,6 +172,11 @@ export type SampleUser = {
   hobbies: Maybe<Array<Scalars['String']['output']>>;
   premiumAccount: Scalars['Boolean']['output'];
   username: Scalars['String']['output'];
+};
+
+export type UpdateBookmarkInput = {
+  _id: Scalars['String']['input'];
+  links: Array<Scalars['String']['input']>;
 };
 
 export type UpdateSampleTodoInput = {
@@ -193,6 +243,18 @@ export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCurrentUserQuery = { __typename?: 'Query', currentUser: { __typename?: 'User', _id: string, email: string } };
 
+export type CreateBookmarkMutationVariables = Exact<{
+  createBookmarkData: CreateBookmarkInput;
+}>;
+
+
+export type CreateBookmarkMutation = { __typename?: 'Mutation', createBookmark: { __typename?: 'Bookmark', _id: string, name: string, userId: string } };
+
+export type GetBookmarksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBookmarksQuery = { __typename?: 'Query', bookmarks: Array<{ __typename?: 'Bookmark', _id: string, name: string, userId: string, links: Array<string> }> };
+
 
 export const GetSampleUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getSampleUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sampleUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"age"}},{"kind":"Field","name":{"kind":"Name","value":"hobbies"}},{"kind":"Field","name":{"kind":"Name","value":"premiumAccount"}}]}}]}}]} as unknown as DocumentNode<GetSampleUsersQuery, GetSampleUsersQueryVariables>;
 export const GetSampleTodosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getSampleTodos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sampleTodos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"editing"}},{"kind":"Field","name":{"kind":"Name","value":"completed"}}]}}]}}]} as unknown as DocumentNode<GetSampleTodosQuery, GetSampleTodosQueryVariables>;
@@ -201,3 +263,5 @@ export const DeleteSampleTodoDocument = {"kind":"Document","definitions":[{"kind
 export const UpdateSampleTodoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateSampleTodo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateSampleTodoData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateSampleTodoInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateSampleTodo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateSampleTodoData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateSampleTodoData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"editing"}},{"kind":"Field","name":{"kind":"Name","value":"completed"}}]}}]}}]} as unknown as DocumentNode<UpdateSampleTodoMutation, UpdateSampleTodoMutationVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createUserData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createUserData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createUserData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
+export const CreateBookmarkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createBookmarkData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateBookmarkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createBookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createBookmarkData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createBookmarkData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<CreateBookmarkMutation, CreateBookmarkMutationVariables>;
+export const GetBookmarksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getBookmarks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookmarks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"links"}}]}}]}}]} as unknown as DocumentNode<GetBookmarksQuery, GetBookmarksQueryVariables>;

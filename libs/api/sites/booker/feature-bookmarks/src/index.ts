@@ -1,1 +1,1 @@
-export * from './lib/api-feature-bookmarks';
+export * from './lib/bookmarks.module';

@@ -2,8 +2,8 @@
 
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Button } from '@/components/elements/Button';
-import authApi from '@/features/auth/api/auth';
-import userApi from '@/features/auth/api/user';
+import authApi from '@/features/auth/api/auth-api';
+import userApi from '@/features/auth/api/user-api';
 import LoginForm from '@/features/auth/components/LoginForm';
 import SignUpForm from '@/features/auth/components/SignUpForm';
 

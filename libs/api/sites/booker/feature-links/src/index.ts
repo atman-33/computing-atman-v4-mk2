@@ -1,1 +1,1 @@
-export * from './lib/api-feature-links';
+export * from './lib/links.module';

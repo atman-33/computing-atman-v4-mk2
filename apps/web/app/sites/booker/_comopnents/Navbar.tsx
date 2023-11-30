@@ -2,8 +2,8 @@
 
 /* eslint-disable @nx/enforce-module-boundaries */
 import Link from '@/components/elements/Link';
-import authApi from '@/features/auth/api/auth';
-import userApi from '@/features/auth/api/user';
+import authApi from '@/features/auth/api/auth-api';
+import userApi from '@/features/auth/api/user-api';
 import { useEffect, useState } from 'react';
 
 const Navbar = () => {
