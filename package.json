@@ -8,7 +8,7 @@
   "scripts": {
     "sereve:all": "npx concurrently --kill-others-on-fail \"npm:start:*\"",
     "----START----": "-------------------------",
-    "start:gql:watch": "graphql-codegen --config tools/graphql-codegen/codegen.yml --watch",
+    "start:gql:watch": "graphql-codegen --config tools/graphql-codegen/codegen.ts --watch",
     "start:db:watch": "npm run db:dockers:dev  && npm run db:migrate:dev && npm run db:seed:dev && prisma generate --watch",
     "start:verify-env": "npm run validate:web-env && npm run validate:api-env",
     "start:api": "nx serve api",
@@ -42,7 +42,6 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typed-document-node": "^5.0.1",
     "@graphql-codegen/typescript-operations": "^4.0.1",
     "@hookform/resolvers": "^3.3.1",
@@ -112,6 +111,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/cypress": "16.7.4",

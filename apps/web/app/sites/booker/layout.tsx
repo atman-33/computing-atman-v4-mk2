@@ -1,7 +1,8 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
+import Navbar from '@/features/booker/components/layouts/Navbar';
 import { ReactNode } from 'react';
-import Navbar from './_comopnents/Navbar';
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (

@@ -1,4 +1,4 @@
-import { gqlClient } from '@/lib/graphql-client';
+import { apolloClient } from '@/lib/apollo-client';
 import {
   CreateSampleTodoDocument,
   CreateSampleTodoInput,
@@ -10,7 +10,7 @@ import {
 } from '@libs/web/data-access-graphql';
 
 const getTodos = async () => {
-  const result = await gqlClient.query({
+  const result = await apolloClient.query({
     query: GetSampleTodosDocument
   });
 
@@ -18,7 +18,7 @@ const getTodos = async () => {
 };
 
 const createTodo = async (todo: CreateSampleTodoInput) => {
-  const result = await gqlClient.mutate({
+  const result = await apolloClient.mutate({
     mutation: CreateSampleTodoDocument,
     variables: {
       createSampleTodoData: todo
@@ -29,7 +29,7 @@ const createTodo = async (todo: CreateSampleTodoInput) => {
 };
 
 const updateTodo = async (todo: UpdateSampleTodoInput) => {
-  const result = await gqlClient.mutate({
+  const result = await apolloClient.mutate({
     mutation: UpdateSampleTodoDocument,
     variables: {
       updateSampleTodoData: todo
@@ -40,7 +40,7 @@ const updateTodo = async (todo: UpdateSampleTodoInput) => {
 };
 
 const deleteTodo = async (todo: DeleteSampleTodoInput) => {
-  const result = await gqlClient.mutate({
+  const result = await apolloClient.mutate({
     mutation: DeleteSampleTodoDocument,
     variables: {
       deleteSampleTodoData: todo

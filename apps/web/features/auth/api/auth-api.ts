@@ -1,4 +1,5 @@
 import { apiClient } from '@/lib/api-client';
+import { apolloClient } from '@/lib/apollo-client';
 import { AxiosError } from 'axios';
 
 const login = async (email: string, password: string) => {
@@ -24,6 +25,7 @@ const login = async (email: string, password: string) => {
 const logout = async () => {
   try {
     const response = await apiClient.post('/api/auth/logout');
+    apolloClient.clearStore();
     return response.data;
   } catch (error: AxiosError<unknown> | any) {
     return error.response.data;
