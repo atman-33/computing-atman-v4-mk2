@@ -22,10 +22,14 @@ import { useBookmark } from '../hooks/useBookmark';
 const CreateBookmark = () => {
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
-  const { setBookmarkIdAndName } = useBookmark();
+  const { bookmark, setBookmark } = useBookmark();
   const [createBookmark, { loading, error }] = useMutation(CreateBookmarkDocument);
 
-  const handleSubmit = async () => {
+  /**
+   * Create bookmark
+   * @returns
+   */
+  const handleCreateBookmark = async () => {
     if (!bookmarkName) {
       return;
     }
@@ -40,9 +44,11 @@ const CreateBookmark = () => {
         refetchQueries: [GetBookmarksDocument]
       });
 
-      setBookmarkIdAndName({
-        id: response.data?.createBookmark._id ?? '',
-        name: response.data?.createBookmark.name ?? ''
+      setBookmark({
+        ...bookmark,
+        _id: response.data?.createBookmark._id ?? '',
+        name: response.data?.createBookmark.name ?? '',
+        links: []
       });
     } catch (error) {
       console.log(error);
@@ -84,7 +90,7 @@ const CreateBookmark = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={handleSubmit}>
+            <Button type="submit" onClick={handleCreateBookmark}>
               Create!!
             </Button>
           </DialogFooter>

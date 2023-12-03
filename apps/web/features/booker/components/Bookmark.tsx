@@ -5,10 +5,13 @@ import { DeleteBookmarkDocument, GetBookmarksDocument } from '@libs/web/data-acc
 import { useBookmark } from '../hooks/useBookmark';
 import AddLink from './AddLink';
 
-const BookmarkLinks = () => {
+const Bookmark = () => {
   const { bookmark, resetBookmark } = useBookmark();
   const [deleteBookmark] = useMutation(DeleteBookmarkDocument);
 
+  /**
+   * Delete bookmark
+   */
   const handleDeleteBookmark = async () => {
     try {
       await deleteBookmark({
@@ -46,4 +49,4 @@ const BookmarkLinks = () => {
   );
 };
 
-export default BookmarkLinks;
+export default Bookmark;

@@ -23,9 +23,12 @@ const AddLink = () => {
   const { bookmark } = useBookmark();
   const [updateBookmark, { loading, error }] = useMutation(UpdateBookmarkDocument);
 
-  const handleSubmit = async () => {
-    console.log(bookmark._id);
-
+  /**
+   * Add link to bookmark
+   * @returns
+   */
+  const handleAddLink = async () => {
+    // console.log(bookmark._id);
     if (!url) {
       return;
     }
@@ -49,10 +52,10 @@ const AddLink = () => {
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setUrl('');
+      setOpen(false);
     }
-
-    setUrl('');
-    setOpen(false);
   };
 
   return (
@@ -89,7 +92,7 @@ const AddLink = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={handleSubmit}>
+            <Button type="submit" onClick={handleAddLink}>
               Create!!
             </Button>
           </DialogFooter>

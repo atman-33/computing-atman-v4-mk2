@@ -4,7 +4,7 @@
 import DotFlasing from '@/components/elements/DotFlashing';
 import authApi from '@/features/auth/api/auth-api';
 import { useRedirectPath } from '@/features/auth/hooks/useRedirectPath';
-import BookmarkLinks from '@/features/booker/components/BookmarkLinks';
+import Bookmark from '@/features/booker/components/Bookmark';
 import Bookmarks from '@/features/booker/components/Bookmarks';
 import CreateBookmark from '@/features/booker/components/CreateBookmark';
 import { useRouter } from 'next/navigation';
@@ -48,7 +48,7 @@ const Page = () => {
           <Bookmarks />
         </div>
         <div className="col-span-9">
-          <BookmarkLinks />
+          <Bookmark />
         </div>
       </div>
       <CreateBookmark />

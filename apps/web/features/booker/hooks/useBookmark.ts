@@ -9,21 +9,9 @@ export const useBookmark = () => {
    */
   const resetBookmark = useResetRecoilState(bookmarkState);
 
-  /**
-   * Set bookmark id and name
-   */
-  const setBookmarkIdAndName = ({ id, name }: { id: string; name: string }) => {
-    setBookmark({
-      ...bookmark,
-      _id: id,
-      name
-    });
-  };
-
   return {
     bookmark,
     setBookmark,
-    setBookmarkIdAndName,
     resetBookmark
   };
 };
