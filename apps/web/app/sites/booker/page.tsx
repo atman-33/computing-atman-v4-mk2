@@ -4,6 +4,7 @@
 import DotFlasing from '@/components/elements/DotFlashing';
 import authApi from '@/features/auth/api/auth-api';
 import { useRedirectPath } from '@/features/auth/hooks/useRedirectPath';
+import BookmarkLinks from '@/features/booker/components/BookmarkLinks';
 import Bookmarks from '@/features/booker/components/Bookmarks';
 import CreateBookmark from '@/features/booker/components/CreateBookmark';
 import { useRouter } from 'next/navigation';
@@ -42,12 +43,15 @@ const Page = () => {
 
   return (
     <>
-      <div>
-        <div className="mt-4">
+      <div className="mt-4 grid grid-cols-12">
+        <div className="col-span-3">
           <Bookmarks />
         </div>
-        <CreateBookmark />
+        <div className="col-span-9">
+          <BookmarkLinks />
+        </div>
       </div>
+      <CreateBookmark />
     </>
   );
 };

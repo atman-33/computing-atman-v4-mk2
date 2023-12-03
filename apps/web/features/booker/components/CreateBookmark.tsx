@@ -17,20 +17,21 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CreateBookmarkDocument, GetBookmarksDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
+import { useBookmark } from '../hooks/useBookmark';
 
 const CreateBookmark = () => {
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
+  const { setBookmarkIdAndName } = useBookmark();
   const [createBookmark, { loading, error }] = useMutation(CreateBookmarkDocument);
 
   const handleSubmit = async () => {
-    // console.log('submited');
     if (!bookmarkName) {
       return;
     }
 
     try {
-      await createBookmark({
+      const response = await createBookmark({
         variables: {
           createBookmarkData: {
             name: bookmarkName
@@ -38,11 +39,16 @@ const CreateBookmark = () => {
         },
         refetchQueries: [GetBookmarksDocument]
       });
-      setBookmarkName('');
+
+      setBookmarkIdAndName({
+        id: response.data?.createBookmark._id ?? '',
+        name: response.data?.createBookmark.name ?? ''
+      });
     } catch (error) {
       console.log(error);
     }
 
+    setBookmarkName('');
     setOpen(false);
   };
 

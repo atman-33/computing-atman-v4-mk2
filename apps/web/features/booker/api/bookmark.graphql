@@ -14,3 +14,27 @@ query getBookmarks {
     links
   }
 }
+
+query getBookmark($_id: String!) {
+  bookmark(_id: $_id) {
+    _id
+    name
+    userId
+    links
+  }
+}
+
+mutation updateBookmark($updateBookmarkData: UpdateBookmarkInput!) {
+  updateBookmark(updateBookmarkData: $updateBookmarkData) {
+    _id
+    name
+    userId
+    links
+  }
+}
+
+mutation deleteBookmark($deleteBookmarkData: DeleteBookmarkInput!) {
+  deleteBookmark(deleteBookmarkData: $deleteBookmarkData) {
+    _id
+  }
+}

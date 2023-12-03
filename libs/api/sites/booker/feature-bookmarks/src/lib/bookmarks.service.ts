@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BookmarksRepository } from './bookmarks.repository';
 import { GetBookmarkArgs } from './dto/args/get-bookmark-args.dto';
 import { CreateBookmarkInput } from './dto/input/create-bookmark-input.dto';
+import { DeleteBookmarkInput } from './dto/input/delete-bookmark-input.dto';
 import { UpdateBookmarkInput } from './dto/input/update-bookmark-input.dto';
 import { BookmarkDocument } from './models/bookmark.schema';
 
@@ -38,6 +39,13 @@ export class BookmarksService {
       updateBookmarkData
     );
     return this.toModel(bookmarkDocument);
+  }
+
+  async deleteBookmark(deleteBookmarkArgs: DeleteBookmarkInput, userId: string) {
+    return await this.bookmarksRepository.deleteOne({
+      ...deleteBookmarkArgs,
+      userId
+    });
   }
 
   private toModel(bookmarkDocument: BookmarkDocument) {
