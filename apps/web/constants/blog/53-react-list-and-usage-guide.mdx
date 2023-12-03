@@ -1,26 +1,26 @@
 ---
 title: React用語一覧と利用ガイド
 date: '2023-11-07'
-lastmod: '2023-11-07'
+lastmod: '2023-12-03'
 tags: ['react', 'recoil', 'redux']
 images: ['/static/images/common/react.png']
 summary: Reactの用語とReactフックを解説。useState、useEffect、Recoil、Reduxなどの主要な機能とサンプルコードを提供。
 ---
 
-## React用語一覧と利用ガイド
+## React 用語一覧と利用ガイド
 
-Reactをマスターし、コンポーネントベースのアプリケーション開発を効率的に行うための用語解説とガイドを提供します。  
-Reactの基本から高度な概念まで理解しましょう。
+React をマスターし、コンポーネントベースのアプリケーション開発を効率的に行うための用語解説とガイドを提供します。  
+React の基本から高度な概念まで理解しましょう。
 
 <TOCInline toc={props.toc} exclude="React用語一覧と利用ガイド" />
 
-## Reactフック
+## React フック
 
-Reactフックは、関数コンポーネントで状態や副作用を扱うための特別な関数です。以下に主要なReactフックを説明し、サンプルコードも提供します。
+React フックは、関数コンポーネントで状態や副作用を扱うための特別な関数です。以下に主要な React フックを説明し、サンプルコードも提供します。
 
 ### useState
 
-`useState`は、関数コンポーネントで状態を管理するためのReactフックです。状態の保持と更新が可能です。
+`useState`は、関数コンポーネントで状態を管理するための React フックです。状態の保持と更新が可能です。
 
 ```jsx
 import React, { useState } from 'react';
@@ -39,7 +39,7 @@ function Counter() {
 
 ### useEffect
 
-`useEffect`は、関数コンポーネント内で副作用を制御するReactフックです。副作用は、DOMの変更や非同期処理など、関数外の影響を与える処理を指します。
+`useEffect`は、関数コンポーネント内で副作用を制御する React フックです。副作用は、DOM の変更や非同期処理など、関数外の影響を与える処理を指します。
 
 ```jsx
 import React, { useState, useEffect } from 'react';
@@ -63,9 +63,28 @@ function DataFetching() {
 }
 ```
 
+### useRef
+
+`useRef`は、関数コンポーネント内で DOM 要素や他の Ref オブジェクトにアクセスするために使用されます。
+
+```jsx
+import React, { useRef, useEffect } from 'react';
+
+function FocusInput() {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    // ページがロードされたときに input 要素にフォーカスを当てる
+    inputRef.current.focus();
+  }, []);
+
+  return <input ref={inputRef} type="text" />;
+}
+```
+
 ### useContext と createContext
 
-`useContext`と`createContext`を組み合わせて、コンテキストを使用できます。これにより、親からProps経由でデータを渡す必要がなくなります。
+`useContext`と`createContext`を組み合わせて、コンテキストを使用できます。これにより、親から Props 経由でデータを渡す必要がなくなります。
 
 ```jsx
 import React, { useContext, createContext } from 'react';
@@ -114,11 +133,11 @@ function List({ items }) {
 
 ## Recoil
 
-RecoilはReactアプリケーション内での状態管理を簡略化します。以下にRecoilの主要なフックを説明し、サンプルコードを提供します。
+Recoil は React アプリケーション内での状態管理を簡略化します。以下に Recoil の主要なフックを説明し、サンプルコードを提供します。
 
 ### useRecoilState
 
-`useRecoilState`は、useStateのようにステートを扱います。ステートが更新されると、それを使用するコンポーネントは再レンダリングされます。
+`useRecoilState`は、useState のようにステートを扱います。ステートが更新されると、それを使用するコンポーネントは再レンダリングされます。
 
 ```jsx
 import { useRecoilState } from 'recoil';
@@ -138,7 +157,7 @@ function MyComponent() {
 
 ### useRecoilValue
 
-`useRecoilValue`はRecoilValue型のデータを受け取り、ステートを利用します。ステートが更新されると、それを使用するコンポーネントは再レンダリングされます。
+`useRecoilValue`は RecoilValue 型のデータを受け取り、ステートを利用します。ステートが更新されると、それを使用するコンポーネントは再レンダリングされます。
 
 ```jsx
 import { useRecoilValue } from 'recoil';
@@ -153,7 +172,7 @@ function MyComponent() {
 
 ### useSetRecoilState
 
-`useSetRecoilState`はRecoilState型のデータを受け取り、ステートのセッター関数を提供します。ステートが更新しても、使用するコンポーネントは再レンダリングされません。
+`useSetRecoilState`は RecoilState 型のデータを受け取り、ステートのセッター関数を提供します。ステートが更新しても、使用するコンポーネントは再レンダリングされません。
 
 ```jsx
 import { useSetRecoilState } from 'recoil';
@@ -172,11 +191,11 @@ function MyComponent() {
 
 ## Redux
 
-Reduxは強力なグローバルステート管理ツールですが、Recoilの利用を検討することをお勧めします。以下はReduxの主要な関数とサンプルコードです。
+Redux は強力なグローバルステート管理ツールですが、Recoil の利用を検討することをお勧めします。以下は Redux の主要な関数とサンプルコードです。
 
 ### createSlice
 
-`createSlice`を使用すると、Reducerを生成し、Action TypeとAction Creatorが自動生成されます。
+`createSlice`を使用すると、Reducer を生成し、Action Type と Action Creator が自動生成されます。
 
 ```jsx
 import { createSlice } from '@reduxjs/toolkit';
@@ -186,8 +205,8 @@ const counterSlice = createSlice({
   initialState: 0,
   reducers: {
     increment: (state) => state + 1,
-    decrement: (state) => state - 1,
-  },
+    decrement: (state) => state - 1
+  }
 });
 
 export const { increment, decrement } = counterSlice.actions;
@@ -196,7 +215,7 @@ export default counterSlice.reducer;
 
 ### configureStore
 
-`configureStore`を使用して、作成したSliceを1つのストアに結合できます。
+`configureStore`を使用して、作成した Slice を 1 つのストアに結合できます。
 
 ```jsx
 import { configureStore } from '@reduxjs/toolkit';
@@ -204,8 +223,8 @@ import counterReducer from './counterSlice';
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
-  },
+    counter: counterReducer
+  }
 });
 ```
 
@@ -242,4 +261,4 @@ function CounterButtons() {
 }
 ```
 
-Reactとそのエコシステムの用語を理解し、これらのフックとツールを活用して効果的なアプリケーションを開発してみて下さい。
+React とそのエコシステムの用語を理解し、これらのフックとツールを活用して効果的なアプリケーションを開発してみて下さい。
