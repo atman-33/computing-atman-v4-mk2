@@ -12,21 +12,36 @@ import {
 } from '@/components/elements/Dialog';
 import { Input } from '@/components/elements/Input';
 import { Label } from '@/components/elements/Label';
+import { useMutation } from '@apollo/client';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CreateBookmarkDocument, GetBookmarksDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
-import bookmarkApi from '../api/bookmark-api';
 
 const CreateBookmark = () => {
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
+  const [createBookmark, { loading, error }] = useMutation(CreateBookmarkDocument);
 
   const handleSubmit = async () => {
     // console.log('submited');
-    const response = await bookmarkApi.createBookmark({
-      name: bookmarkName
-    });
-    console.log(response);
+    if (!bookmarkName) {
+      return;
+    }
+
+    try {
+      await createBookmark({
+        variables: {
+          createBookmarkData: {
+            name: bookmarkName
+          }
+        },
+        refetchQueries: [GetBookmarksDocument]
+      });
+      setBookmarkName('');
+    } catch (error) {
+      console.log(error);
+    }
 
     setOpen(false);
   };

@@ -55,9 +55,9 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <div className="w-full md:w-1/2">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(login)} className="w-full space-y-8 md:w-1/2">
+        <form onSubmit={form.handleSubmit(login)} className="space-y-8">
           <FormField
             control={form.control}
             name="email"
@@ -92,7 +92,7 @@ const LoginForm = () => {
         </form>
       </Form>
       <p className="mt-4 text-lg font-bold text-red-500">{error}</p>
-    </>
+    </div>
   );
 };
 

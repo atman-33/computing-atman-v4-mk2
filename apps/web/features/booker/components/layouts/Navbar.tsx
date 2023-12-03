@@ -3,20 +3,27 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import Link from '@/components/elements/Link';
 import authApi from '@/features/auth/api/auth-api';
-import userApi from '@/features/auth/api/user-api';
+import { useQuery } from '@apollo/client';
+import { GetCurrentUserDocument } from '@libs/web/data-access-graphql';
 import { useEffect, useState } from 'react';
 
 const Navbar = () => {
   const [mobileNavShow, setMobileNavShow] = useState(false);
   const [email, setEmail] = useState('');
+  const { data, loading, error } = useQuery(GetCurrentUserDocument);
 
   useEffect(() => {
-    userApi.getCurrentUser().then((response) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { email } = response as any;
-      setEmail(email);
-    });
-  }, []);
+    setEmail(data?.currentUser.email || '');
+  }, [data?.currentUser.email]);
+
+  if (loading) {
+    return <div></div>;
+  }
+
+  if (error) {
+    console.error(error);
+    return <div></div>;
+  }
 
   const handleShow = () => {
     setMobileNavShow(!mobileNavShow);

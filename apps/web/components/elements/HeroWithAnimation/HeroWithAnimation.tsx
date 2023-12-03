@@ -16,7 +16,7 @@ export default function HeroWithAnimation(props: Props) {
   return (
     <>
       <div
-        className="relative top-0 flex h-60 items-center justify-center bg-cover bg-scroll bg-center md:h-max"
+        className="relative top-0 -z-10 flex h-60 items-center justify-center bg-cover bg-scroll bg-center md:h-max"
         style={{
           backgroundImage: `url(${props.backgroundImage1.src})`,
           margin: '0 calc(50% - 50vw) 0',

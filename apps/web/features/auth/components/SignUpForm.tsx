@@ -11,12 +11,12 @@ import {
   FormMessage
 } from '@/components/elements/Form';
 import { Input } from '@/components/elements/Input';
+import { useMutation } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { CreateUserDocument } from '@libs/web/data-access-graphql';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import userApi from '../api/user-api';
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -24,7 +24,8 @@ const formSchema = z.object({
 });
 
 const SignUpForm = () => {
-  const [error, setError] = useState<string>('');
+  // const [error, setError] = useState<string>('');
+  const [createUser, { loading, error }] = useMutation(CreateUserDocument);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,26 +37,42 @@ const SignUpForm = () => {
   });
 
   const signUp = async () => {
-    const response: any = await userApi.createUser({
-      email: form.getValues('email'),
-      password: form.getValues('password')
-    });
-
-    // console.log(response);
-    if (response.error) {
-      setError(response.error);
-    } else {
-      setError('');
+    try {
+      await createUser({
+        variables: {
+          createUserData: {
+            email: form.getValues('email'),
+            password: form.getValues('password')
+          }
+        }
+      });
 
       // redirect to login page
       router.push('/login');
+    } catch (error) {
+      console.log(error);
     }
+
+    // const response: any = await userApi.createUser({
+    //   email: form.getValues('email'),
+    //   password: form.getValues('password')
+    // });
+
+    // // console.log(response);
+    // if (response.error) {
+    //   setError(response.error);
+    // } else {
+    //   setError('');
+
+    //   // redirect to login page
+    //   router.push('/login');
+    // }
   };
 
   return (
-    <>
+    <div className="w-full md:w-1/2">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(signUp)} className="w-full space-y-8 md:w-1/2">
+        <form onSubmit={form.handleSubmit(signUp)} className="space-y-8">
           <FormField
             control={form.control}
             name="email"
@@ -89,8 +106,8 @@ const SignUpForm = () => {
           </div>
         </form>
       </Form>
-      <p className="mt-4 text-lg font-bold text-red-500">{error}</p>
-    </>
+      <p className="mt-4 text-lg font-bold text-red-500">{error?.message}</p>
+    </div>
   );
 };
 

@@ -4,6 +4,7 @@
 import DotFlasing from '@/components/elements/DotFlashing';
 import authApi from '@/features/auth/api/auth-api';
 import { useRedirectPath } from '@/features/auth/hooks/useRedirectPath';
+import Bookmarks from '@/features/booker/components/Bookmarks';
 import CreateBookmark from '@/features/booker/components/CreateBookmark';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -43,7 +44,9 @@ const Page = () => {
 
   return (
     <div>
-      booker page...
+      <div className="mt-4">
+        <Bookmarks />
+      </div>
       <CreateBookmark />
     </div>
   );

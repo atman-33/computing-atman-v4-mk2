@@ -3,13 +3,17 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Button } from '@/components/elements/Button';
 import authApi from '@/features/auth/api/auth-api';
-import userApi from '@/features/auth/api/user-api';
 import LoginForm from '@/features/auth/components/LoginForm';
 import SignUpForm from '@/features/auth/components/SignUpForm';
+import { useApolloClient, useQuery } from '@apollo/client';
+import { GetCurrentUserDocument } from '@libs/web/data-access-graphql';
 
 const Page = () => {
+  const { data, refetch, loading, error } = useQuery(GetCurrentUserDocument);
+  const client = useApolloClient();
   const handleLogout = async () => {
     const response = await authApi.logout();
+    await client.clearStore();
     console.log(response);
   };
 
@@ -19,8 +23,9 @@ const Page = () => {
   };
 
   const handleGetCurrentUser = async () => {
-    const response = await userApi.getCurrentUser();
-    console.log(response);
+    refetch().then((data) => {
+      console.log(data);
+    });
   };
 
   return (

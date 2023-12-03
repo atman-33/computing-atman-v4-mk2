@@ -12,9 +12,10 @@ const Item = ({ todo }: { todo: SampleTodo }) => {
   const changeContent = (e: any) => setEditingContent(e.target.value);
 
   const toggleEditMode = () => {
-    const { __typename, ...omitTodo } = todo;
+    // console.log(todo);
     const newTodo = {
-      ...omitTodo,
+      _id: todo._id,
+      content: todo.content,
       editing: !todo.editing,
       completed: todo.completed
     };
@@ -24,11 +25,12 @@ const Item = ({ todo }: { todo: SampleTodo }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const confirmContent = (e: any) => {
     e.preventDefault();
-    const { __typename, ...omitTodo } = todo;
+    // const { __typename, ...omitTodo } = todo;
     const newTodo = {
-      ...omitTodo,
+      _id: todo._id,
       content: editingContent,
-      editing: !todo.editing
+      editing: !todo.editing,
+      completed: todo.completed
     };
     updateTodo(newTodo);
   };
@@ -44,7 +46,12 @@ const Item = ({ todo }: { todo: SampleTodo }) => {
       </Button>
       <form onSubmit={confirmContent} className="inline">
         {todo.editing ? (
-          <input type="text" value={editingContent} onChange={changeContent} />
+          <input
+            type="text"
+            value={editingContent}
+            onChange={changeContent}
+            className="dark:text-gray-900"
+          />
         ) : (
           <span onDoubleClick={toggleEditMode}>{todo.content}</span>
         )}

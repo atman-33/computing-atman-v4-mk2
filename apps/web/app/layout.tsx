@@ -6,6 +6,7 @@ import SectionContainer from '@/components/elements/SectionContainer';
 import GoogleAnalytics from '@/components/heads/GoogleAnalytics';
 import Footer from '@/components/layouts/Footer';
 import Header from '@/components/layouts/Header';
+import ApolloProvider from '@/components/providers/ApolloProvider';
 import StatesProvider from '@/components/providers/StatesProvider';
 import ThemeProvider from '@/components/providers/ThemeProvider';
 import siteMetadata from '@/constants/site-metadata';
@@ -75,20 +76,22 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       </head>
 
       <body className="overflow-x-hidden bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
-        <StatesProvider>
-          <ThemeProvider defaultTheme={siteMetadata.theme}>
-            <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
-            <SectionContainer>
-              <div className="flex flex-col justify-between font-sans">
-                <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-                  <Header />
-                  {children}
-                </SearchProvider>
-                <Footer />
-              </div>
-            </SectionContainer>
-          </ThemeProvider>
-        </StatesProvider>
+        <ApolloProvider>
+          <StatesProvider>
+            <ThemeProvider defaultTheme={siteMetadata.theme}>
+              <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
+              <SectionContainer>
+                <div className="flex flex-col justify-between font-sans">
+                  <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
+                    <Header />
+                    {children}
+                  </SearchProvider>
+                  <Footer />
+                </div>
+              </SectionContainer>
+            </ThemeProvider>
+          </StatesProvider>
+        </ApolloProvider>
         <GoogleAnalytics />
       </body>
     </html>
