@@ -20,7 +20,7 @@ import { useBookmark } from '../hooks/useBookmark';
 const AddLink = () => {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
-  const { bookmark } = useBookmark();
+  const { bookmark, setBookmark } = useBookmark();
   const [updateBookmark, { loading, error }] = useMutation(UpdateBookmarkDocument);
 
   /**
@@ -49,6 +49,11 @@ const AddLink = () => {
             }
           }
         ]
+      }).then((data) => {
+        setBookmark({
+          ...bookmark,
+          links: data.data?.updateBookmark.links ?? []
+        });
       });
     } catch (error) {
       console.log(error);

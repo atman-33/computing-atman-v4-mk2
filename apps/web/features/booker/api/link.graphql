@@ -1,7 +1,8 @@
-query links($urls: [String!]!) {
+query getLinks($urls: [String!]!) {
   links(urls: $urls) {
-    siteName
     title
+    siteName
+    description
     images
     url
   }

@@ -17,7 +17,12 @@ export class LinksService {
 
         while (retry < retryCount) {
           try {
-            linkPreview = await getLinkPreview(url);
+            linkPreview = await getLinkPreview(url, {
+              timeout: 1000,
+              headers: {
+                'User-Agent': 'googolebot'
+              }
+            }); // for debug => .then((res) => console.log(res));
             break;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (error: any) {

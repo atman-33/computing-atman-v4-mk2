@@ -17,7 +17,7 @@ const documents = {
     "query getSampleTodos {\n  sampleTodos {\n    _id\n    content\n    editing\n    completed\n  }\n}\n\nmutation createSampleTodo($createSampleTodoData: CreateSampleTodoInput!) {\n  createSampleTodo(createSampleTodoData: $createSampleTodoData) {\n    _id\n    content\n    editing\n    completed\n  }\n}\n\nmutation deleteSampleTodo($deleteSampleTodoData: DeleteSampleTodoInput!) {\n  deleteSampleTodo(deleteSampleTodoData: $deleteSampleTodoData) {\n    _id\n  }\n}\n\nmutation updateSampleTodo($updateSampleTodoData: UpdateSampleTodoInput!) {\n  updateSampleTodo(updateSampleTodoData: $updateSampleTodoData) {\n    _id\n    content\n    editing\n    completed\n  }\n}": types.GetSampleTodosDocument,
     "mutation createUser($createUserData: CreateUserInput!) {\n  createUser(createUserData: $createUserData) {\n    _id\n    email\n  }\n}\n\nquery getCurrentUser {\n  currentUser {\n    _id\n    email\n  }\n}": types.CreateUserDocument,
     "mutation createBookmark($createBookmarkData: CreateBookmarkInput!) {\n  createBookmark(createBookmarkData: $createBookmarkData) {\n    _id\n    name\n    userId\n  }\n}\n\nquery getBookmarks {\n  bookmarks {\n    _id\n    name\n    userId\n    links\n  }\n}\n\nquery getBookmark($_id: String!) {\n  bookmark(_id: $_id) {\n    _id\n    name\n    userId\n    links\n  }\n}\n\nmutation updateBookmark($updateBookmarkData: UpdateBookmarkInput!) {\n  updateBookmark(updateBookmarkData: $updateBookmarkData) {\n    _id\n    name\n    userId\n    links\n  }\n}\n\nmutation deleteBookmark($deleteBookmarkData: DeleteBookmarkInput!) {\n  deleteBookmark(deleteBookmarkData: $deleteBookmarkData) {\n    _id\n  }\n}": types.CreateBookmarkDocument,
-    "query links($urls: [String!]!) {\n  links(urls: $urls) {\n    siteName\n    title\n    images\n    url\n  }\n}": types.LinksDocument,
+    "query getLinks($urls: [String!]!) {\n  links(urls: $urls) {\n    title\n    siteName\n    description\n    images\n    url\n  }\n}": types.GetLinksDocument,
 };
 
 /**
@@ -53,7 +53,7 @@ export function graphql(source: "mutation createBookmark($createBookmarkData: Cr
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query links($urls: [String!]!) {\n  links(urls: $urls) {\n    siteName\n    title\n    images\n    url\n  }\n}"): (typeof documents)["query links($urls: [String!]!) {\n  links(urls: $urls) {\n    siteName\n    title\n    images\n    url\n  }\n}"];
+export function graphql(source: "query getLinks($urls: [String!]!) {\n  links(urls: $urls) {\n    title\n    siteName\n    description\n    images\n    url\n  }\n}"): (typeof documents)["query getLinks($urls: [String!]!) {\n  links(urls: $urls) {\n    title\n    siteName\n    description\n    images\n    url\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
