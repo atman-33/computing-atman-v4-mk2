@@ -24,7 +24,7 @@ https://dashboard.render.com/
 
 Build Command:  
 
- `node --version && npm install --force && npm run cd:build`
+ `node --version && npm install --force && nx reset && npm run cd:build`
 
 Start Command:  
 

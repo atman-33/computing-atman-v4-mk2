@@ -35,7 +35,7 @@ const Navbar = () => {
     });
   };
   return (
-    <nav className="mt-2 flex flex-wrap items-center justify-between rounded-2xl bg-cyan-800 py-2 px-4">
+    <nav className="mt-2 flex flex-wrap items-center justify-between rounded-xl bg-cyan-800 py-2 px-4">
       <div className="mr-6 flex flex-shrink-0 items-center text-white">
         <Link href="/sites/booker" className="text-xl font-semibold tracking-tight">
           Booker

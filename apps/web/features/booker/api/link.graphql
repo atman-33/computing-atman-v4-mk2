@@ -1,0 +1,9 @@
+query getLinks($urls: [String!]!) {
+  links(urls: $urls) {
+    title
+    siteName
+    description
+    images
+    url
+  }
+}

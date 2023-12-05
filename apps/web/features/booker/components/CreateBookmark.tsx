@@ -17,20 +17,25 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CreateBookmarkDocument, GetBookmarksDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
+import { useBookmarkId } from '../hooks/useBookmarkId';
 
 const CreateBookmark = () => {
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
+  const { bookmarkId, setBookmarkId } = useBookmarkId();
   const [createBookmark, { loading, error }] = useMutation(CreateBookmarkDocument);
 
-  const handleSubmit = async () => {
-    // console.log('submited');
+  /**
+   * Create bookmark
+   * @returns
+   */
+  const handleCreateBookmark = async () => {
     if (!bookmarkName) {
       return;
     }
 
     try {
-      await createBookmark({
+      const response = await createBookmark({
         variables: {
           createBookmarkData: {
             name: bookmarkName
@@ -38,11 +43,15 @@ const CreateBookmark = () => {
         },
         refetchQueries: [GetBookmarksDocument]
       });
-      setBookmarkName('');
+
+      setBookmarkId({
+        id: response.data?.createBookmark._id ?? ''
+      });
     } catch (error) {
       console.log(error);
     }
 
+    setBookmarkName('');
     setOpen(false);
   };
 
@@ -78,7 +87,7 @@ const CreateBookmark = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={handleSubmit}>
+            <Button type="submit" onClick={handleCreateBookmark}>
               Create!!
             </Button>
           </DialogFooter>
