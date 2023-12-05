@@ -1,20 +1,20 @@
 import { useQuery } from '@apollo/client';
 import { faFolderClosed } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Bookmark, GetBookmarksDocument } from '@libs/web/data-access-graphql';
-import { useBookmark } from '../hooks/useBookmark';
+import { GetBookmarksDocument } from '@libs/web/data-access-graphql';
+import { useBookmarkId } from '../hooks/useBookmarkId';
 
 const Bookmarks = () => {
   const { data: bookmarksData, loading, error } = useQuery(GetBookmarksDocument);
-  const { setBookmark } = useBookmark();
+  const { setBookmarkId } = useBookmarkId();
 
   if (loading) {
     return null;
   }
 
-  const handleShowBookmark = (bookmark: Bookmark) => () => {
-    // console.log(bookmark);
-    setBookmark(bookmark);
+  const handleShowBookmark = (id: string) => () => {
+    // console.log(id);
+    setBookmarkId({ id });
   };
 
   return (
@@ -26,7 +26,7 @@ const Bookmarks = () => {
           <li key={bookmark._id}>
             <button
               className="ml-1 flex flex-wrap items-center gap-x-2"
-              onClick={handleShowBookmark(bookmark)}
+              onClick={handleShowBookmark(bookmark._id)}
             >
               <FontAwesomeIcon icon={faFolderClosed} />
               <p>{bookmark.name}</p>

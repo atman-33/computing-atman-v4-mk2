@@ -7,20 +7,26 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   DeleteBookmarkDocument,
+  GetBookmarkDocument,
   GetBookmarksDocument,
   GetLinksDocument
 } from '@libs/web/data-access-graphql';
-import { useBookmark } from '../hooks/useBookmark';
+import { useBookmarkId } from '../hooks/useBookmarkId';
 import AddLink from './AddLink';
 
 const Bookmark = () => {
-  const { bookmark, resetBookmark } = useBookmark();
-  const [deleteBookmark] = useMutation(DeleteBookmarkDocument);
-  const { data: linksData, loading } = useQuery(GetLinksDocument, {
+  const { bookmarkId, resetBookmarkId } = useBookmarkId();
+  const { data: bookmarkData } = useQuery(GetBookmarkDocument, {
     variables: {
-      urls: bookmark.links
+      _id: bookmarkId.id
     }
   });
+  const { data: linksData, loading } = useQuery(GetLinksDocument, {
+    variables: {
+      urls: bookmarkData?.bookmark.links ?? []
+    }
+  });
+  const [deleteBookmark] = useMutation(DeleteBookmarkDocument);
 
   /**
    * Delete bookmark
@@ -30,13 +36,12 @@ const Bookmark = () => {
       await deleteBookmark({
         variables: {
           deleteBookmarkData: {
-            _id: bookmark._id
+            _id: bookmarkId.id
           }
         },
         refetchQueries: [GetBookmarksDocument]
       });
-      resetBookmark();
-      // console.log(bookmark);
+      resetBookmarkId();
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +50,7 @@ const Bookmark = () => {
   return (
     <>
       <div className="flex flex-wrap items-center justify-between">
-        <div className="text-lg font-bold">{bookmark.name}</div>
+        <div className="text-lg font-bold">{bookmarkData?.bookmark.name}</div>
         <div className="flex items-center gap-4">
           <AddLink />
           <button onClick={handleDeleteBookmark}>

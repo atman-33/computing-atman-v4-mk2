@@ -12,15 +12,20 @@ import {
 } from '@/components/elements/Dialog';
 import { Input } from '@/components/elements/Input';
 import { Label } from '@/components/elements/Label';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GetBookmarkDocument, UpdateBookmarkDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
-import { useBookmark } from '../hooks/useBookmark';
+import { useBookmarkId } from '../hooks/useBookmarkId';
 
 const AddLink = () => {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
-  const { bookmark, setBookmark } = useBookmark();
+  const { bookmarkId } = useBookmarkId();
+  const { data: bookmarkData } = useQuery(GetBookmarkDocument, {
+    variables: {
+      _id: bookmarkId.id
+    }
+  });
   const [updateBookmark, { loading, error }] = useMutation(UpdateBookmarkDocument);
 
   /**
@@ -28,7 +33,6 @@ const AddLink = () => {
    * @returns
    */
   const handleAddLink = async () => {
-    // console.log(bookmark._id);
     if (!url) {
       return;
     }
@@ -37,23 +41,18 @@ const AddLink = () => {
       await updateBookmark({
         variables: {
           updateBookmarkData: {
-            _id: bookmark._id,
-            links: [...bookmark.links, url]
+            _id: bookmarkId.id,
+            links: [...(bookmarkData?.bookmark.links ?? []), url]
           }
         },
         refetchQueries: [
           {
             query: GetBookmarkDocument,
             variables: {
-              _id: bookmark._id
+              _id: bookmarkId.id
             }
           }
         ]
-      }).then((data) => {
-        setBookmark({
-          ...bookmark,
-          links: data.data?.updateBookmark.links ?? []
-        });
       });
     } catch (error) {
       console.log(error);
@@ -71,7 +70,7 @@ const AddLink = () => {
             className="rounded-md"
             size={'sm'}
             onClick={() => setUrl('')}
-            disabled={!bookmark._id || bookmark._id === ''}
+            disabled={!bookmarkId.id || bookmarkId.id === ''}
           >
             ★ Add
           </Button>

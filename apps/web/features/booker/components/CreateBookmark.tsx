@@ -17,12 +17,12 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CreateBookmarkDocument, GetBookmarksDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
-import { useBookmark } from '../hooks/useBookmark';
+import { useBookmarkId } from '../hooks/useBookmarkId';
 
 const CreateBookmark = () => {
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
-  const { bookmark, setBookmark } = useBookmark();
+  const { bookmarkId, setBookmarkId } = useBookmarkId();
   const [createBookmark, { loading, error }] = useMutation(CreateBookmarkDocument);
 
   /**
@@ -44,11 +44,8 @@ const CreateBookmark = () => {
         refetchQueries: [GetBookmarksDocument]
       });
 
-      setBookmark({
-        ...bookmark,
-        _id: response.data?.createBookmark._id ?? '',
-        name: response.data?.createBookmark.name ?? '',
-        links: []
+      setBookmarkId({
+        id: response.data?.createBookmark._id ?? ''
       });
     } catch (error) {
       console.log(error);
