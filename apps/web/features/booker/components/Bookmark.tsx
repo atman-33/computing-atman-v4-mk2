@@ -21,7 +21,7 @@ const Bookmark = () => {
       _id: bookmarkId.id
     }
   });
-  const { data: linksData, loading } = useQuery(GetLinksDocument, {
+  const { data: linksData, loading: linksLoading } = useQuery(GetLinksDocument, {
     variables: {
       urls: bookmarkData?.bookmark.links ?? []
     }
@@ -59,7 +59,7 @@ const Bookmark = () => {
         </div>
       </div>
       <hr className="my-2" />
-      {loading ? (
+      {linksLoading ? (
         <DotFlashing />
       ) : (
         <ul>
