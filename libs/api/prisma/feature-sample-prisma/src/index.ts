@@ -1,1 +1,1 @@
-export * from './lib/api-feature-sample-prisma';
+export { SampleTodosModule } from './lib/sample-todos/sample-todos.module';

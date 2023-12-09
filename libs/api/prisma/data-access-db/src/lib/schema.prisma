@@ -10,35 +10,40 @@ datasource db {
 
 generator nestgraphql {
     provider                = "node node_modules/prisma-nestjs-graphql"
-    output                  = "../../../generated-db-types/src"
-    purgeOutput             = false
-    combineScalarFilters    = true
-    emitSingle              = true
+    output                  = "../../../generated-db-types/src/lib/@generated"
     noAtomicOperations      = true
+    combineScalarFilters    = true
+    reExport                = Single
+    emitSingle              = false
+    emitCompiled            = false
+    purgeOutput             = false
     // field validator
+    fields_Validator_from   = "class-validator"
     fields_Validator_input  = true
     fields_Validator_output = true
     fields_Validator_model  = true
-    fields_Validator_from   = "class-validator"
     // Args where|data nested validator
-    // decorate_1_type         = "*Args"
-    // decorate_1_field        = "@(data|where)"
-    // decorate_1_name         = ValidateNested
-    // decorate_1_from         = "class-validator"
-    // decorate_1_arguments    = "[]"
+    decorate_1_type         = "*Args"
+    decorate_1_field        = "@(data|where)"
+    decorate_1_name         = ValidateNested
+    decorate_1_from         = "class-validator"
+    decorate_1_arguments    = "[]"
 }
 
-// ---- Mongo db base model ------------------------------------- //
-// This model is necessary to create IntFilter
-model BaseModel {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    /// @Validator.IsString()
-    text      String?
-    /// @Validator.@IsInt()
-    int       Int?
-    float     Float?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+// ---- dummy for mongo db --------------------------------------- //
+// This model is necessary to create IntFilter etc.
+model Dummy {
+    //   id       String    @id
+    id      String    @id @default(auto()) @map("_id") @db.ObjectId
+    date    DateTime? @default(now())
+    int     Int?
+    float   Float?
+    bytes   Bytes?
+    //   decimal  Decimal // Keep as required (for compatibility check)
+    //   decimals Decimal[]
+    bigInt  BigInt?
+    json    Json?
+    friends String[]
 }
 
 // -------------------------------------------------------------- // 

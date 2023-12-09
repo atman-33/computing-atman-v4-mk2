@@ -3,8 +3,9 @@
 // // import { DatabaseByMongooseModule } from '@libs/api/mongoose/shared';
 // // import { BookmarksModule } from '@libs/api/sites/booker/feature-bookmarks';
 // // import { LinksModule } from '@libs/api/sites/booker/feature-links';
-import { AuthModule } from '@libs/api/feature-auth';
+// // import { AuthModule } from '@libs/api/feature-auth';
 import { ImageModule } from '@libs/api/feature-image';
+import { SampleTodosModule } from '@libs/api/prisma/feature-sample-prisma';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -26,10 +27,11 @@ import { AppService } from './app.service';
     }),
     // ---- RestAPI ---- //
     ImageModule,
-    AuthModule
+    // // AuthModule,
 
     // ---- Graphql ---- //
     // When using Mongoose, the DatabaseByMongooseModule is required.
+    SampleTodosModule
     // // DatabaseByMongooseModule,
     // // SampleTodosModule,
     // // SampleUsersModule,
