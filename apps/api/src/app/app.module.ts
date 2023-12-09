@@ -1,9 +1,10 @@
-import { AuthModule, UsersModule } from '@libs/api/feature-auth';
+// // import { AuthModule, UsersModule } from '@libs/api/feature-auth';
+// // import { SampleTodosModule, SampleUsersModule } from '@libs/api/mongoose/feature-sample-mongoose';
+// // import { DatabaseByMongooseModule } from '@libs/api/mongoose/shared';
+// // import { BookmarksModule } from '@libs/api/sites/booker/feature-bookmarks';
+// // import { LinksModule } from '@libs/api/sites/booker/feature-links';
+import { AuthModule } from '@libs/api/feature-auth';
 import { ImageModule } from '@libs/api/feature-image';
-import { SampleTodosModule, SampleUsersModule } from '@libs/api/mongoose/feature-sample-mongoose';
-import { DatabaseModule } from '@libs/api/mongoose/shared';
-import { BookmarksModule } from '@libs/api/sites/booker/feature-bookmarks';
-import { LinksModule } from '@libs/api/sites/booker/feature-links';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -25,16 +26,16 @@ import { AppService } from './app.service';
     }),
     // ---- RestAPI ---- //
     ImageModule,
-    AuthModule,
+    AuthModule
 
     // ---- Graphql ---- //
-    // When using Mongoose, the DatabaseModule is required.
-    DatabaseModule,
-    SampleTodosModule,
-    SampleUsersModule,
-    UsersModule,
-    BookmarksModule,
-    LinksModule
+    // When using Mongoose, the DatabaseByMongooseModule is required.
+    // // DatabaseByMongooseModule,
+    // // SampleTodosModule,
+    // // SampleUsersModule,
+    // // UsersModule,
+    // // BookmarksModule,
+    // // LinksModule
   ],
   controllers: [AppController],
   providers: [AppService]

@@ -1,3 +1,7 @@
+## update schema.prisma
+
+`libs/api/prisma/data-access-db/src/lib/schema.prisma`
+
 ## generate feature sample
 
 ```bash
@@ -14,16 +18,15 @@ npx nx generate @nx/js:library api-feature-sample-prisma --directory=libs/api/pr
 ### generate resolver
 
 ```bash
-nx g @nrwl/nest:resource --project=api-feature-sample-prisma --directory=lib --type="graphql-code-first" --crud --name sample
+nx g @nrwl/nest:resource --project=api-feature-sample-prisma --directory=lib --type="graphql-code-first" --crud --name sample-todos
 ```
 
 ### arange
 
-* move to generated files to lib folder
-* delete user folder
-* delete dto folder
-* delete entities folder
-* fix export in index.ts
+- move to generated files to lib folder
+- delete dto folder
+- delete entities folder
+- fix export in index.ts
 
 ```ts
 export * from './lib/sample.module';

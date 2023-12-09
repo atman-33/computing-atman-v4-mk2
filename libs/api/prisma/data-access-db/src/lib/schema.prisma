@@ -21,23 +21,32 @@ generator nestgraphql {
     fields_Validator_model  = true
     fields_Validator_from   = "class-validator"
     // Args where|data nested validator
-    decorate_1_type         = "*Args"
-    decorate_1_field        = "@(data|where)"
-    decorate_1_name         = ValidateNested
-    decorate_1_from         = "class-validator"
-    decorate_1_arguments    = "[]"
+    // decorate_1_type         = "*Args"
+    // decorate_1_field        = "@(data|where)"
+    // decorate_1_name         = ValidateNested
+    // decorate_1_from         = "class-validator"
+    // decorate_1_arguments    = "[]"
 }
 
-// ---- Mongo db model sample ------------------------------------- //
-model Sample {
-    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+// ---- Mongo db base model ------------------------------------- //
+// This model is necessary to create IntFilter
+model BaseModel {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
     /// @Validator.IsString()
-    text       String?
+    text      String?
     /// @Validator.@IsInt()
-    intValue   Int?
-    floatValue Float?
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+    int       Int?
+    float     Float?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
-// ---------------------------------------------------------------- // 
+// -------------------------------------------------------------- // 
+
+model SampleTodo {
+    id        String  @id @default(auto()) @map("_id") @db.ObjectId
+    /// @Validator.IsString()
+    content   String
+    editing   Boolean
+    completed Boolean
+}

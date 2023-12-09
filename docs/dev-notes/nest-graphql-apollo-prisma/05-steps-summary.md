@@ -14,6 +14,8 @@ package.json
 
 After that, auto updated `libs/api/prisma/generated-db-types/src/index.ts`
 
+> If you use MondoDB, not need `npx prisma migrate dev`. Insted, use command `npx prisma generate`
+
 3. Generate new feature
 
 Run nx command @nx/js:library xxx (xxx is feature).
