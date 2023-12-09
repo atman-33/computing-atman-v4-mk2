@@ -32,6 +32,9 @@
       ],
       "@libs/api/mongoose/shared": ["libs/api/mongoose/shared/src/index.ts"],
       "@libs/api/prisma/data-access-db": ["libs/api/prisma/data-access-db/src/index.ts"],
+      "@libs/api/prisma/feature-sample-prisma": [
+        "libs/api/prisma/feature-sample-prisma/src/index.ts"
+      ],
       "@libs/api/prisma/generated-db-types": ["libs/api/prisma/generated-db-types/src/index.ts"],
       "@libs/api/sites/booker/feature-bookmarks": [
         "libs/api/sites/booker/feature-bookmarks/src/index.ts"
