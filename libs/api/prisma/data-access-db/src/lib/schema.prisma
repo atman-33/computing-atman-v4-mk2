@@ -28,7 +28,7 @@ generator nestgraphql {
     decorate_1_arguments    = "[]"
 }
 
-// ---- Sample ---- // 
+// ---- Mongo db model sample ------------------------------------- //
 model Sample {
     id         String   @id @default(auto()) @map("_id") @db.ObjectId
     /// @Validator.IsString()
@@ -39,3 +39,5 @@ model Sample {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 }
+
+// ---------------------------------------------------------------- // 

@@ -3,7 +3,7 @@ import { GetSampleUserArgs } from './dto/args/get-sample-user-args.dto';
 import { CreateSampleUserInput } from './dto/input/create-sample-user-input.dto';
 import { DeleteSampleUserInput } from './dto/input/delete-sample-user-input.dto';
 import { UpdateSampleUserInput } from './dto/input/update-sample-todo-input.dto';
-import { SampleUserDocument } from './models/sample-todo.schema';
+import { SampleUserDocument } from './models/sample-user.schema';
 import { SampleUsersRepository } from './sample-users.repository';
 
 @Injectable()
