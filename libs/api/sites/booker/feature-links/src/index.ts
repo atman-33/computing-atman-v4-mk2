@@ -1,1 +1,1 @@
-export * from './lib/links.module';
+export { LinksModule } from './lib/links.module';

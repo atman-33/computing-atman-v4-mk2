@@ -23,7 +23,7 @@ const AddLink = () => {
   const { bookmarkId } = useBookmarkId();
   const { data: bookmarkData } = useQuery(GetBookmarkDocument, {
     variables: {
-      _id: bookmarkId.id
+      where: { id: bookmarkId.id ?? '' }
     }
   });
   const [updateBookmark, { loading, error }] = useMutation(UpdateBookmarkDocument);
@@ -40,16 +40,18 @@ const AddLink = () => {
     try {
       await updateBookmark({
         variables: {
-          updateBookmarkData: {
-            _id: bookmarkId.id,
+          data: {
+            name: bookmarkData?.bookmark.name,
+            userId: bookmarkData?.bookmark.userId,
             links: [...(bookmarkData?.bookmark.links ?? []), url]
-          }
+          },
+          where: { id: bookmarkId.id }
         },
         refetchQueries: [
           {
             query: GetBookmarkDocument,
             variables: {
-              _id: bookmarkId.id
+              where: { id: bookmarkId.id }
             }
           }
         ]

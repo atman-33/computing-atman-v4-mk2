@@ -1,7 +1,11 @@
-## generate feature(ex. feature-sample)
+## update schema.prisma
+
+`libs/api/prisma/data-access-db/src/lib/schema.prisma`
+
+## generate feature sample
 
 ```bash
-npx nx generate @nx/js:library api-feature-sample --directory=libs/api/feature-sample --importPath=@libs/api/feature-sample --tags=scope:api --bundler=swc
+npx nx generate @nx/js:library api-feature-sample-prisma --directory=libs/api/prisma/feature-sample-prisma --importPath=@libs/api/prisma/feature-sample-prisma --tags=scope:api --bundler=swc
 
 ✔ Which unit test runner would you like to use? · jest
 ```
@@ -14,16 +18,15 @@ npx nx generate @nx/js:library api-feature-sample --directory=libs/api/feature-s
 ### generate resolver
 
 ```bash
-nx g @nrwl/nest:resource --project=api-feature-sample --directory=lib --type="graphql-code-first" --crud --name sample
+nx g @nrwl/nest:resource --project=api-feature-sample-prisma --directory=lib --type="graphql-code-first" --crud --name sample-todos
 ```
 
 ### arange
 
-* move to generated files to lib folder
-* delete user folder
-* delete dto folder
-* delete entities folder
-* fix export in index.ts
+- move to generated files to lib folder
+- delete dto folder
+- delete entities folder
+- fix export in index.ts
 
 ```ts
 export * from './lib/sample.module';

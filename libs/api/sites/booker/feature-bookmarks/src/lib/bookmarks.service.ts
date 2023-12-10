@@ -1,57 +1,46 @@
+import { PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
-import { BookmarksRepository } from './bookmarks.repository';
-import { GetBookmarkArgs } from './dto/args/get-bookmark-args.dto';
-import { CreateBookmarkInput } from './dto/input/create-bookmark-input.dto';
-import { DeleteBookmarkInput } from './dto/input/delete-bookmark-input.dto';
-import { UpdateBookmarkInput } from './dto/input/update-bookmark-input.dto';
-import { BookmarkDocument } from './models/bookmark.schema';
+import {
+  DeleteOneBookmarkArgs,
+  FindUniqueBookmarkArgs,
+  UpdateOneBookmarkArgs
+} from './dto/bookmark.dto';
+import { CreateBookmarkInput } from './dto/create-bookmark-input.dto';
 
 @Injectable()
 export class BookmarksService {
-  constructor(private readonly bookmarksRepository: BookmarksRepository) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async createBookmark(createBookmarkData: CreateBookmarkInput, userId: string) {
-    const bookmarkDocument = await this.bookmarksRepository.create({
-      ...createBookmarkData,
-      links: [],
-      userId
+    return await this.prisma.bookmark.create({
+      data: {
+        ...createBookmarkData,
+        links: [],
+        userId
+      }
     });
-
-    return this.toModel(bookmarkDocument);
   }
 
   async getBookmarks(userId: string) {
-    const bookmarkDocuments = await this.bookmarksRepository.find({ userId });
-    return bookmarkDocuments.map((bookmark) => this.toModel(bookmark));
+    return await this.prisma.bookmark.findMany({ where: { userId } });
   }
 
-  async getBookmark(getBookmarkArgs: GetBookmarkArgs, userId: string) {
-    const bookmarkDocument = await this.bookmarksRepository.findOne({
-      ...getBookmarkArgs,
-      userId
-    });
-    return this.toModel(bookmarkDocument);
-  }
-
-  async updateBookmark(updateBookmarkData: UpdateBookmarkInput, userId: string) {
-    const bookmarkDocument = await this.bookmarksRepository.findOneAndUpdate(
-      { _id: updateBookmarkData._id, userId },
-      updateBookmarkData
-    );
-    return this.toModel(bookmarkDocument);
-  }
-
-  async deleteBookmark(deleteBookmarkArgs: DeleteBookmarkInput, userId: string) {
-    return await this.bookmarksRepository.deleteOne({
-      ...deleteBookmarkArgs,
-      userId
+  async getBookmark(findUniqueBookmarkArgs: FindUniqueBookmarkArgs) {
+    return await this.prisma.bookmark.findUnique({
+      where: findUniqueBookmarkArgs.where
     });
   }
 
-  private toModel(bookmarkDocument: BookmarkDocument) {
-    return {
-      ...bookmarkDocument,
-      _id: bookmarkDocument._id.toHexString()
-    };
+  async updateBookmark(updateOneBookmarkArgs: UpdateOneBookmarkArgs) {
+    return await this.prisma.bookmark.update({
+      where: updateOneBookmarkArgs.where,
+      data: updateOneBookmarkArgs.data
+    });
+  }
+
+  async deleteBookmark(deleteOneBookmarkArgs: DeleteOneBookmarkArgs) {
+    return await this.prisma.bookmark.delete({
+      where: deleteOneBookmarkArgs.where
+    });
   }
 }

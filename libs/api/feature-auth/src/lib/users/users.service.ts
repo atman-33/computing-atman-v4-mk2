@@ -1,51 +1,45 @@
+import { PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { GetUserArgs } from './dto/args/get-user-args.dto';
-import { CreateUserInput } from './dto/input/create-user-input.dto';
-import { User } from './models/user.model';
-import { UserDocument } from './models/user.schema';
-import { UsersRepository } from './users.repository';
+import { CreateOneUserArgs, FindUniqueUserArgs } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  async createUser(createUserData: CreateUserInput) {
-    await this.validateCreateUserData(createUserData);
-    const UserDocument = await this.usersRepository.create({
-      ...createUserData,
-      password: await bcrypt.hash(createUserData.password, 10)
+  async createUser(createOneUserArgs: CreateOneUserArgs) {
+    await this.validateCreateUserData(createOneUserArgs);
+    const userData = {
+      ...createOneUserArgs.data,
+      password: await bcrypt.hash(createOneUserArgs.data.password, 10)
+    };
+    return await this.prisma.user.create({
+      data: userData
     });
-    return this.toModel(UserDocument);
   }
 
-  private async validateCreateUserData(createUserData: CreateUserInput) {
-    try {
-      await this.usersRepository.findOne({ email: createUserData.email });
-    } catch (err) {
-      return;
+  private async validateCreateUserData(createOneUserArgs: CreateOneUserArgs) {
+    const user = await this.prisma.user.findUnique({
+      where: { email: createOneUserArgs.data.email }
+    });
+
+    if (user) {
+      throw new UnprocessableEntityException('Email already exists.');
     }
-    throw new UnprocessableEntityException('Email already exists.');
   }
 
-  async getUser(getUserArgs: GetUserArgs) {
-    const userDocument = await this.usersRepository.findOne(getUserArgs);
-    return this.toModel(userDocument);
+  async getUser(findUniqueUserArgs: FindUniqueUserArgs) {
+    return await this.prisma.user.findUnique({
+      where: findUniqueUserArgs.where
+    });
   }
 
   async validateUser(email: string, password: string) {
-    const userDocument = await this.usersRepository.findOne({ email });
-    const passwordIsValid = await bcrypt.compare(password, userDocument.password);
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    const passwordIsValid = await bcrypt.compare(password, user === null ? '' : user.password);
     if (!passwordIsValid) {
       throw new UnauthorizedException('Credentials are not valid.');
     }
-    return this.toModel(userDocument);
-  }
-
-  private toModel(userDocument: UserDocument): User {
-    return {
-      _id: userDocument._id.toHexString(),
-      email: userDocument.email
-    };
+    return user;
   }
 }

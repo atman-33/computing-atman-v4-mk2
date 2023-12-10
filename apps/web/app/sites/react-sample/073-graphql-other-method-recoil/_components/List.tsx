@@ -14,15 +14,15 @@ const List = () => {
 
   const complete = (id: string) => {
     // console.log('Done clicked!');
-    return () => deleteTodo({ _id: id });
+    return () => deleteTodo(id);
   };
 
   return (
     <div>
       {todos.map((todo) => {
         return (
-          <div key={todo._id} className="m-2 flex items-center">
-            <Button onClick={complete(todo._id)}>Done</Button>
+          <div key={todo.id} className="m-2 flex items-center">
+            <Button onClick={complete(todo.id)}>Done</Button>
             <span className="ml-2">{todo.content}</span>
           </div>
         );

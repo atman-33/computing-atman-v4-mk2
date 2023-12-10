@@ -1,12 +1,14 @@
 import { apolloClient } from '@/lib/apollo-client';
 import {
+  CreateOneSampleTodoArgs,
+  DeleteOneSampleTodoArgs,
+  UpdateOneSampleTodoArgs
+} from '@libs/api/prisma/generated-db-types';
+import {
   CreateSampleTodoDocument,
-  CreateSampleTodoInput,
   DeleteSampleTodoDocument,
-  DeleteSampleTodoInput,
   GetSampleTodosDocument,
-  UpdateSampleTodoDocument,
-  UpdateSampleTodoInput
+  UpdateSampleTodoDocument
 } from '@libs/web/data-access-graphql';
 
 const getTodos = async () => {
@@ -17,33 +19,34 @@ const getTodos = async () => {
   return result;
 };
 
-const createTodo = async (todo: CreateSampleTodoInput) => {
+const createTodo = async (createOneSampleTodoArgs: CreateOneSampleTodoArgs) => {
   const result = await apolloClient.mutate({
     mutation: CreateSampleTodoDocument,
     variables: {
-      createSampleTodoData: todo
+      data: createOneSampleTodoArgs.data
     }
   });
 
   return result;
 };
 
-const updateTodo = async (todo: UpdateSampleTodoInput) => {
+const updateTodo = async (updateOneSampleTodoArgs: UpdateOneSampleTodoArgs) => {
   const result = await apolloClient.mutate({
     mutation: UpdateSampleTodoDocument,
     variables: {
-      updateSampleTodoData: todo
+      data: updateOneSampleTodoArgs.data,
+      where: updateOneSampleTodoArgs.where
     }
   });
 
   return result;
 };
 
-const deleteTodo = async (todo: DeleteSampleTodoInput) => {
+const deleteTodo = async (deleteOneSampleTodoArgs: DeleteOneSampleTodoArgs) => {
   const result = await apolloClient.mutate({
     mutation: DeleteSampleTodoDocument,
     variables: {
-      deleteSampleTodoData: todo
+      where: deleteOneSampleTodoArgs.where
     }
   });
 
