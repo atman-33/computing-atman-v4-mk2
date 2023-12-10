@@ -14,12 +14,13 @@ const Item = ({ todo }: { todo: SampleTodo }) => {
   const toggleEditMode = () => {
     // console.log(todo);
     const newTodo = {
-      _id: todo._id,
+      id: todo.id,
       content: todo.content,
       editing: !todo.editing,
       completed: todo.completed
     };
-    updateTodo(newTodo);
+    const { id, ...rest } = newTodo;
+    updateTodo(id, rest);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,20 +28,21 @@ const Item = ({ todo }: { todo: SampleTodo }) => {
     e.preventDefault();
     // const { __typename, ...omitTodo } = todo;
     const newTodo = {
-      _id: todo._id,
+      id: todo.id,
       content: editingContent,
       editing: !todo.editing,
       completed: todo.completed
     };
-    updateTodo(newTodo);
+    const { id, ...rest } = newTodo;
+    updateTodo(id, rest);
   };
 
   const complete = (todo: SampleTodo) => {
-    deleteTodo({ _id: todo._id });
+    deleteTodo(todo.id);
   };
 
   return (
-    <div key={todo._id}>
+    <div key={todo.id}>
       <Button onClick={() => complete(todo)} className="mx-4">
         Done
       </Button>

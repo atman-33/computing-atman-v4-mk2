@@ -1,8 +1,7 @@
 import {
-  CreateSampleTodoInput,
-  DeleteSampleTodoInput,
   SampleTodo,
-  UpdateSampleTodoInput
+  SampleTodoCreateInput,
+  SampleTodoUpdateInput
 } from '@libs/web/data-access-graphql';
 import { useRecoilCallback, useRecoilState } from 'recoil';
 import { todosState } from '../_stores/todosState';
@@ -17,33 +16,40 @@ export const useTodos = () => {
     });
   });
 
-  const addTodo = useRecoilCallback(({ set }) => (newTodo: CreateSampleTodoInput) => {
-    todoApi.createTodo(newTodo).then((newTodo) => {
+  const addTodo = useRecoilCallback(({ set }) => (newTodo: SampleTodoCreateInput) => {
+    const { id, ...rest } = newTodo;
+    todoApi.createTodo({ data: rest }).then((newTodo) => {
       set(todosState, (todos) => [...todos, newTodo.data?.createSampleTodo as SampleTodo]);
     });
   });
 
-  const deleteTodo = useRecoilCallback(({ set }) => (todoToDelete: DeleteSampleTodoInput) => {
-    todoApi.deleteTodo(todoToDelete).then(() => {
+  const deleteTodo = useRecoilCallback(({ set }) => (id: string) => {
+    todoApi.deleteTodo({ where: { id: id } }).then(() => {
       set(todosState, (todos) => {
         return todos.filter((todo) => {
-          return todo._id !== todoToDelete._id;
+          return todo.id !== id;
         });
       });
     });
   });
 
-  const updateTodo = useRecoilCallback(({ set }) => (todoToUpdate: UpdateSampleTodoInput) => {
-    todoApi.updateTodo(todoToUpdate).then((todoToUpdate) => {
-      set(todosState, (todos) => {
-        return todos.map((todo) => {
-          return todo._id === todoToUpdate.data?.updateSampleTodo._id
-            ? { ...todo, ...todoToUpdate.data.updateSampleTodo }
-            : { ...todo };
-        });
-      });
-    });
-  });
+  const updateTodo = useRecoilCallback(
+    ({ set }) =>
+      (id: string, todoToUpdate: SampleTodoUpdateInput) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        todoApi
+          .updateTodo({ where: { id: id }, data: todoToUpdate as any })
+          .then((todoToUpdate) => {
+            set(todosState, (todos) => {
+              return todos.map((todo) => {
+                return todo.id === todoToUpdate.data?.updateSampleTodo.id
+                  ? { ...todo, ...todoToUpdate.data.updateSampleTodo }
+                  : { ...todo };
+              });
+            });
+          });
+      }
+  );
 
   return {
     todos,
