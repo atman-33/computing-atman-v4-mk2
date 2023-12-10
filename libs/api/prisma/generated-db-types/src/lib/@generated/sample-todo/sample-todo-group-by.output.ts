@@ -1,6 +1,5 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
-import * as Validator from 'class-validator';
 import { SampleTodoCountAggregate } from './sample-todo-count-aggregate.output';
 import { SampleTodoMinAggregate } from './sample-todo-min-aggregate.output';
 import { SampleTodoMaxAggregate } from './sample-todo-max-aggregate.output';
@@ -12,7 +11,6 @@ export class SampleTodoGroupBy {
     id!: string;
 
     @Field(() => String, {nullable:false})
-    @Validator.IsString()
     content!: string;
 
     @Field(() => Boolean, {nullable:false})

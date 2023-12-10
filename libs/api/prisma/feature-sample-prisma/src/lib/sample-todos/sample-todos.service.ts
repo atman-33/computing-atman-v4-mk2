@@ -18,8 +18,8 @@ export class SampleTodosService {
    * @param {CreateOneSampleTodoArgs} createOneSampleTodoArgs - The arguments to create a new sample todo.
    * @return {Promise<SampleTodo>} The newly created sample todo.
    */
-  create(createOneSampleTodoArgs: CreateOneSampleTodoArgs): Promise<SampleTodo> {
-    return this.prisma.sampleTodo.create({
+  async create(createOneSampleTodoArgs: CreateOneSampleTodoArgs): Promise<SampleTodo> {
+    return await this.prisma.sampleTodo.create({
       data: createOneSampleTodoArgs.data
     });
   }
@@ -29,8 +29,8 @@ export class SampleTodosService {
    *
    * @return {Promise<SampleTodo[]>} A promise that resolves with an array of sample todo items.
    */
-  findAll(): Promise<SampleTodo[]> {
-    return this.prisma.sampleTodo.findMany();
+  async findAll(): Promise<SampleTodo[]> {
+    return await this.prisma.sampleTodo.findMany();
   }
 
   /**
@@ -39,8 +39,8 @@ export class SampleTodosService {
    * @param {FindUniqueSampleTodoArgs} findUniqueSampleTodoArgs - The arguments used to find the unique sample todo.
    * @return {Promise<SampleTodo | null>} A promise that resolves to the unique sample todo, or null if not found.
    */
-  findOne(findUniqueSampleTodoArgs: FindUniqueSampleTodoArgs): Promise<SampleTodo | null> {
-    return this.prisma.sampleTodo.findUnique({
+  async findOne(findUniqueSampleTodoArgs: FindUniqueSampleTodoArgs): Promise<SampleTodo | null> {
+    return await this.prisma.sampleTodo.findUnique({
       where: findUniqueSampleTodoArgs.where
     });
   }
@@ -51,8 +51,8 @@ export class SampleTodosService {
    * @param {UpdateOneSampleTodoArgs} updateOneSampleTodoArgs - The arguments for updating a sample todo.
    * @return {Promise<SampleTodo>} - A promise that resolves to the updated sample todo.
    */
-  update(updateOneSampleTodoArgs: UpdateOneSampleTodoArgs): Promise<SampleTodo> {
-    return this.prisma.sampleTodo.update({
+  async update(updateOneSampleTodoArgs: UpdateOneSampleTodoArgs): Promise<SampleTodo> {
+    return await this.prisma.sampleTodo.update({
       where: updateOneSampleTodoArgs.where,
       data: updateOneSampleTodoArgs.data
     });
@@ -64,8 +64,8 @@ export class SampleTodosService {
    * @param {DeleteOneSampleTodoArgs} deleteOneSampleTodoArgs - The arguments for deleting a sample todo item.
    * @return {Promise<SampleTodo>} A promise that resolves to the deleted sample todo item.
    */
-  remove(deleteOneSampleTodoArgs: DeleteOneSampleTodoArgs): Promise<SampleTodo> {
-    return this.prisma.sampleTodo.delete({
+  async remove(deleteOneSampleTodoArgs: DeleteOneSampleTodoArgs): Promise<SampleTodo> {
+    return await this.prisma.sampleTodo.delete({
       where: deleteOneSampleTodoArgs.where
     });
   }

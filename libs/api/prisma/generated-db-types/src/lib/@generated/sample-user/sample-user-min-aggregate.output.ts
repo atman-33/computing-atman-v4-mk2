@@ -1,18 +1,19 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
+import { Int } from '@nestjs/graphql';
 
 @ObjectType()
-export class SampleTodoMaxAggregate {
+export class SampleUserMinAggregate {
 
     @Field(() => String, {nullable:true})
     id?: string;
 
     @Field(() => String, {nullable:true})
-    content?: string;
+    username?: string;
+
+    @Field(() => Int, {nullable:true})
+    age?: number;
 
     @Field(() => Boolean, {nullable:true})
-    editing?: boolean;
-
-    @Field(() => Boolean, {nullable:true})
-    completed?: boolean;
+    premiumAccount?: boolean;
 }

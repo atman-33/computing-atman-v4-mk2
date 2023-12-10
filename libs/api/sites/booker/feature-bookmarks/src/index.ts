@@ -1,1 +1,1 @@
-// export * from './lib/_backup/mongoose/bookmarks.module';
+export { BookmarksModule } from './lib/bookmarks.module';

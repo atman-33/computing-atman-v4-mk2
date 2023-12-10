@@ -13,27 +13,27 @@ export class SampleTodosResolver {
   constructor(private readonly sampleTodosService: SampleTodosService) {}
 
   @Mutation(() => SampleTodo)
-  createSampleTodo(@Args() createOneSampleTodoArgs: CreateOneSampleTodoArgs) {
-    return this.sampleTodosService.create(createOneSampleTodoArgs);
+  async createSampleTodo(@Args() createOneSampleTodoArgs: CreateOneSampleTodoArgs) {
+    return await this.sampleTodosService.create(createOneSampleTodoArgs);
   }
 
   @Query(() => [SampleTodo], { name: 'sampleTodos' })
-  findAll() {
-    return this.sampleTodosService.findAll();
+  async findAll() {
+    return await this.sampleTodosService.findAll();
   }
 
   @Query(() => SampleTodo, { name: 'sampleTodo' })
-  findOne(@Args() findUniqueSampleTodoArgs: FindUniqueSampleTodoArgs) {
-    return this.sampleTodosService.findOne(findUniqueSampleTodoArgs);
+  async findOne(@Args() findUniqueSampleTodoArgs: FindUniqueSampleTodoArgs) {
+    return await this.sampleTodosService.findOne(findUniqueSampleTodoArgs);
   }
 
   @Mutation(() => SampleTodo)
-  updateSampleTodo(@Args() updateOneSampleTodoArgs: UpdateOneSampleTodoArgs) {
-    return this.sampleTodosService.update(updateOneSampleTodoArgs);
+  async updateSampleTodo(@Args() updateOneSampleTodoArgs: UpdateOneSampleTodoArgs) {
+    return await this.sampleTodosService.update(updateOneSampleTodoArgs);
   }
 
   @Mutation(() => SampleTodo)
-  removeSampleTodo(@Args() deleteOneSampleTodoArgs: DeleteOneSampleTodoArgs) {
-    return this.sampleTodosService.remove(deleteOneSampleTodoArgs);
+  async removeSampleTodo(@Args() deleteOneSampleTodoArgs: DeleteOneSampleTodoArgs) {
+    return await this.sampleTodosService.remove(deleteOneSampleTodoArgs);
   }
 }

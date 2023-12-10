@@ -1,1 +1,1 @@
-// export * from './lib/_backup/mongoose/links.module';
+export { LinksModule } from './lib/links.module';

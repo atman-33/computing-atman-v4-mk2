@@ -48,13 +48,23 @@ model Dummy {
 
 // -------------------------------------------------------------- // 
 
+// ---- Sample -------------------------------------------------- //
 model SampleTodo {
     id        String  @id @default(auto()) @map("_id") @db.ObjectId
-    /// @Validator.IsString()
     content   String
     editing   Boolean
     completed Boolean
 }
+
+model SampleUser {
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    username       String
+    age            Int
+    hobbies        String[]
+    premiumAccount Boolean
+}
+
+// -------------------------------------------------------------- //
 
 model User {
     id       String @id @default(auto()) @map("_id") @db.ObjectId
