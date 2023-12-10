@@ -14,13 +14,15 @@ const Bookmark = () => {
   const { bookmarkId } = useBookmarkId();
   const { data: bookmarkData } = useQuery(GetBookmarkDocument, {
     variables: {
-      where: { id: bookmarkId.id ?? '' }
-    }
+      where: { id: bookmarkId.id }
+    },
+    skip: !bookmarkId.id
   });
   const { data: linksData, loading: linksLoading } = useQuery(GetLinksDocument, {
     variables: {
       urls: bookmarkData?.bookmark.links ?? []
-    }
+    },
+    skip: !bookmarkData
   });
 
   return (

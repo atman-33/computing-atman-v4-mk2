@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import authApi from '../api/auth-api';
+import { useIsAuthenticated } from '../hooks/useIsAuthenticated';
 import { useRedirectPath } from '../hooks/useRedirectPath';
 
 const formSchema = z.object({
@@ -29,6 +30,7 @@ const LoginForm = () => {
   const [error, setError] = useState<string>('');
   const router = useRouter();
   const { redirectPath } = useRedirectPath();
+  const { setIsAuthenticated } = useIsAuthenticated();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,6 +46,7 @@ const LoginForm = () => {
     if (response.error) {
       setError(response.message);
     } else {
+      setIsAuthenticated(true);
       setError('');
       // console.log('redirectPath:', redirectPath);
       if (redirectPath) {

@@ -1,3 +1,5 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+import useAuth from '@/features/auth/hooks/useAuth';
 import { useQuery } from '@apollo/client';
 import { faFolderClosed } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -5,6 +7,7 @@ import { GetBookmarksDocument } from '@libs/web/data-access-graphql';
 import { useBookmarkId } from '../hooks/useBookmarkId';
 
 const Bookmarks = () => {
+  const { requireAuth } = useAuth();
   const { data: bookmarksData, loading, error } = useQuery(GetBookmarksDocument);
   const { setBookmarkId } = useBookmarkId();
 
@@ -13,8 +16,9 @@ const Bookmarks = () => {
   }
 
   const handleShowBookmark = (id: string) => () => {
+    requireAuth();
     // console.log(id);
-    setBookmarkId({ id });
+    setBookmarkId({ id: id });
   };
 
   return (
