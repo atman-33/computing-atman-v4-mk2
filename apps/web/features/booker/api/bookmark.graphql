@@ -1,5 +1,5 @@
-mutation createBookmark($data: BookmarkCreateInput!) {
-  createBookmark(data: $data) {
+mutation createBookmark($createBookmarkData: CreateBookmarkInput!) {
+  createBookmark(createBookmarkData: $createBookmarkData) {
     id
     name
     userId

@@ -18,7 +18,7 @@ const Bookmark = () => {
   const { bookmarkId, resetBookmarkId } = useBookmarkId();
   const { data: bookmarkData } = useQuery(GetBookmarkDocument, {
     variables: {
-      _id: bookmarkId.id
+      where: { id: bookmarkId.id ?? '' }
     }
   });
   const { data: linksData, loading: linksLoading } = useQuery(GetLinksDocument, {
@@ -35,8 +35,8 @@ const Bookmark = () => {
     try {
       await deleteBookmark({
         variables: {
-          deleteBookmarkData: {
-            _id: bookmarkId.id
+          where: {
+            id: bookmarkId.id
           }
         },
         refetchQueries: [GetBookmarksDocument]

@@ -45,7 +45,7 @@ const CreateBookmark = () => {
       });
 
       setBookmarkId({
-        id: response.data?.createBookmark._id ?? ''
+        id: response.data?.createBookmark.id ?? ''
       });
     } catch (error) {
       console.log(error);

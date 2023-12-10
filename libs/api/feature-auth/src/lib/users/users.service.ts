@@ -9,21 +9,25 @@ export class UsersService {
 
   async createUser(createOneUserArgs: CreateOneUserArgs) {
     await this.validateCreateUserData(createOneUserArgs);
+    const userData = {
+      ...createOneUserArgs.data,
+      password: await bcrypt.hash(createOneUserArgs.data.password, 10)
+    };
     return await this.prisma.user.create({
-      data: createOneUserArgs.data
+      data: userData
     });
   }
 
   private async validateCreateUserData(createOneUserArgs: CreateOneUserArgs) {
-    try {
-      await this.prisma.user.findUnique({
-        where: { email: createOneUserArgs.data.email }
-      });
-    } catch (err) {
-      return;
+    const user = await this.prisma.user.findUnique({
+      where: { email: createOneUserArgs.data.email }
+    });
+
+    if (user) {
+      throw new UnprocessableEntityException('Email already exists.');
     }
-    throw new UnprocessableEntityException('Email already exists.');
   }
+
   async getUser(findUniqueUserArgs: FindUniqueUserArgs) {
     return await this.prisma.user.findUnique({
       where: findUniqueUserArgs.where

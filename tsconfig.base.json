@@ -66,6 +66,9 @@
       "@libs/api/sites/booker/feature-bookmarks": [
         "libs/api/sites/booker/feature-bookmarks/src/index.ts"
       ],
+      "@libs/api/mongoose/shared": [
+        "libs/api/mongoose/shared/src/index.ts"
+      ],
       "@libs/api/sites/booker/feature-links": [
         "libs/api/sites/booker/feature-links/src/index.ts"
       ],

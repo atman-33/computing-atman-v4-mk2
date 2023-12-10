@@ -40,7 +40,7 @@ const SignUpForm = () => {
     try {
       await createUser({
         variables: {
-          createUserData: {
+          data: {
             email: form.getValues('email'),
             password: form.getValues('password')
           }

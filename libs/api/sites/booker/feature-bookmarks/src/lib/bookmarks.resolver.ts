@@ -3,11 +3,11 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BookmarksService } from './bookmarks.service';
 import {
-  CreateOneBookmarkArgs,
   DeleteOneBookmarkArgs,
   FindUniqueBookmarkArgs,
   UpdateOneBookmarkArgs
 } from './dto/bookmark.dto';
+import { CreateBookmarkInput } from './dto/create-bookmark-input.dto';
 import { Bookmark } from './models/bookmark.model';
 
 @Resolver(() => Bookmark)
@@ -17,10 +17,10 @@ export class BookmarksResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark)
   async createBookmark(
-    @Args() createOneBookmarkArgs: CreateOneBookmarkArgs,
+    @Args('createBookmarkData') createBookmarkData: CreateBookmarkInput,
     @CurrentUser() user: User
   ) {
-    return await this.bookmarksService.createBookmark(createOneBookmarkArgs, user.id);
+    return await this.bookmarksService.createBookmark(createBookmarkData, user.id);
   }
 
   @UseGuards(GqlAuthGuard)

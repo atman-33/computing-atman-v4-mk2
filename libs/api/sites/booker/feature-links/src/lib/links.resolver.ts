@@ -12,6 +12,7 @@ export class LinksResolver {
   @UseGuards(GqlAuthGuard)
   @Query(() => [Link], { name: 'links' })
   async getLinks(@Args() getLinksArgs: GetLinksArgs) {
-    return this.linkService.getLinks(getLinksArgs);
+    // console.log(getLinksArgs);
+    return await this.linkService.getLinks(getLinksArgs);
   }
 }

@@ -1,20 +1,20 @@
 import { PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
 import {
-  CreateOneBookmarkArgs,
   DeleteOneBookmarkArgs,
   FindUniqueBookmarkArgs,
   UpdateOneBookmarkArgs
 } from './dto/bookmark.dto';
+import { CreateBookmarkInput } from './dto/create-bookmark-input.dto';
 
 @Injectable()
 export class BookmarksService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createBookmark(createOneBookmarkArgs: CreateOneBookmarkArgs, userId: string) {
+  async createBookmark(createBookmarkData: CreateBookmarkInput, userId: string) {
     return await this.prisma.bookmark.create({
       data: {
-        ...createOneBookmarkArgs.data,
+        ...createBookmarkData,
         links: [],
         userId
       }
