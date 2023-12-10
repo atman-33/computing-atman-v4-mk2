@@ -63,3 +63,16 @@ model User {
     /// @Validator.MinLength(8)
     password String
 }
+
+model Bookmark {
+    id     String   @id @default(auto()) @map("_id") @db.ObjectId
+    /// @Validator.IsString()
+    name   String
+    /// @Validator.IsString()
+    userId String
+    /// @IsArray()
+    /// @ArrayMinSize(0)
+    /// @ValidateNested({ each: true })
+    /// @IsString({ each: true })
+    links  String[]
+}

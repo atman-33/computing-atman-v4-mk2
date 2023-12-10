@@ -11,14 +11,14 @@ export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Mutation(() => User, { name: 'createUser' })
-  createUser(@Args('createOneUserArgs') createOneUserArgs: CreateOneUserArgs) {
-    return this.usersService.create(createOneUserArgs);
+  async createUser(@Args('createOneUserArgs') createOneUserArgs: CreateOneUserArgs) {
+    return await this.usersService.createUser(createOneUserArgs);
   }
 
   @UseGuards(GqlAuthGuard)
   @Query(() => User, { name: 'user' })
-  findOne(@Args('findUniqueUserArgs') findUniqueUserArgs: FindUniqueUserArgs) {
-    return this.usersService.findOne(findUniqueUserArgs);
+  async getUser(@Args('findUniqueUserArgs') findUniqueUserArgs: FindUniqueUserArgs) {
+    return await this.usersService.getUser(findUniqueUserArgs);
   }
 
   @UseGuards(GqlAuthGuard)

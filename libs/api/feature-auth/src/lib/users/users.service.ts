@@ -7,7 +7,7 @@ import { CreateOneUserArgs, FindUniqueUserArgs } from './dto/user.dto';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createOneUserArgs: CreateOneUserArgs) {
+  async createUser(createOneUserArgs: CreateOneUserArgs) {
     await this.validateCreateUserData(createOneUserArgs);
     return await this.prisma.user.create({
       data: createOneUserArgs.data
@@ -24,7 +24,7 @@ export class UsersService {
     }
     throw new UnprocessableEntityException('Email already exists.');
   }
-  async findOne(findUniqueUserArgs: FindUniqueUserArgs) {
+  async getUser(findUniqueUserArgs: FindUniqueUserArgs) {
     return await this.prisma.user.findUnique({
       where: findUniqueUserArgs.where
     });

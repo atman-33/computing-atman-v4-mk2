@@ -2,10 +2,12 @@ import { CurrentUser, GqlAuthGuard, User } from '@libs/api/feature-auth';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BookmarksService } from './bookmarks.service';
-import { GetBookmarkArgs } from './dto/args/get-bookmark-args.dto';
-import { CreateBookmarkInput } from './dto/input/create-bookmark-input.dto';
-import { DeleteBookmarkInput } from './dto/input/delete-bookmark-input.dto';
-import { UpdateBookmarkInput } from './dto/input/update-bookmark-input.dto';
+import {
+  CreateOneBookmarkArgs,
+  DeleteOneBookmarkArgs,
+  FindUniqueBookmarkArgs,
+  UpdateOneBookmarkArgs
+} from './dto/bookmark.dto';
 import { Bookmark } from './models/bookmark.model';
 
 @Resolver(() => Bookmark)
@@ -15,19 +17,30 @@ export class BookmarksResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark)
   async createBookmark(
-    @Args('createBookmarkData') createBookmarkData: CreateBookmarkInput,
+    @Args('createOneBookmarkArgs') createOneBookmarkArgs: CreateOneBookmarkArgs,
     @CurrentUser() user: User
   ) {
-    return this.bookmarksService.createBookmark(createBookmarkData, user._id);
+    return await this.bookmarksService.createBookmark(createOneBookmarkArgs, user.id);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query(() => [Bookmark], { name: 'bookmarks' })
+  async getBookmarks(@CurrentUser() user: User) {
+    return await this.bookmarksService.getBookmarks(user.id);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query(() => Bookmark, { name: 'bookmark' })
+  async getBookmark(@Args() findUniqueBookmarkArgs: FindUniqueBookmarkArgs) {
+    return await this.bookmarksService.getBookmark(findUniqueBookmarkArgs);
   }
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark)
   async updateBookmark(
-    @Args('updateBookmarkData') updateBookmarkData: UpdateBookmarkInput,
-    @CurrentUser() user: User
+    @Args('updateOneBookmarkArgs') updateOneBookmarkArgs: UpdateOneBookmarkArgs
   ) {
-    return this.bookmarksService.updateBookmark(updateBookmarkData, user._id);
+    return await this.bookmarksService.updateBookmark(updateOneBookmarkArgs);
   }
 
   /**
@@ -39,21 +52,8 @@ export class BookmarksResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark, { nullable: true })
   async deleteBookmark(
-    @Args('deleteBookmarkData') deleteBookmarkData: DeleteBookmarkInput,
-    @CurrentUser() user: User
+    @Args('deleteOneBookmarkArgs') deleteOneBookmarkArgs: DeleteOneBookmarkArgs
   ) {
-    return this.bookmarksService.deleteBookmark(deleteBookmarkData, user._id);
-  }
-
-  @UseGuards(GqlAuthGuard)
-  @Query(() => [Bookmark], { name: 'bookmarks' })
-  async getBookmarks(@CurrentUser() user: User) {
-    return this.bookmarksService.getBookmarks(user._id);
-  }
-
-  @UseGuards(GqlAuthGuard)
-  @Query(() => Bookmark, { name: 'bookmark' })
-  async getBookmark(@Args() getBookmarkArgs: GetBookmarkArgs, @CurrentUser() user: User) {
-    return this.bookmarksService.getBookmark(getBookmarkArgs, user._id);
+    return await this.bookmarksService.deleteBookmark(deleteOneBookmarkArgs);
   }
 }
