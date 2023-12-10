@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { UsersService } from '../../users/_backup/mongoose/users.service';
+import { UsersService } from '../../users/users.service';
 import { TokenPayload } from '../auth.service';
 
 @Injectable()
@@ -18,6 +18,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate({ userId }: TokenPayload) {
-    return this.usersService.getUser({ _id: userId });
+    return this.usersService.findOne({
+      where: {
+        id: userId
+      }
+    });
   }
 }
