@@ -33,7 +33,7 @@ export class SampleUsersResolver {
     return await this.sampleUsersService.update(updateOneSampleUserArgs);
   }
 
-  @Mutation(() => SampleUser)
+  @Mutation(() => SampleUser, { name: 'deleteSampleUser' })
   async removeSampleUser(@Args() deleteOneSampleUserArgs: DeleteOneSampleUserArgs) {
     return await this.sampleUsersService.remove(deleteOneSampleUserArgs);
   }

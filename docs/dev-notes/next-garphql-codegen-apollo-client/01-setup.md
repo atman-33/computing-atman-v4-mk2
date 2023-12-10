@@ -53,7 +53,8 @@ const codegenConfig: CodegenConfig = {
           defaultValue: false
         },
         scalars: {
-          Date: 'DateString'
+          DateTime: 'Date',
+          Date: 'Date'
         },
         enumsAsTypes: true
       }

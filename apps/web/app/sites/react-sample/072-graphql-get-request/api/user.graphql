@@ -1,6 +1,6 @@
 query getSampleUsers {
   sampleUsers {
-    _id
+    id
     username
     age
     hobbies

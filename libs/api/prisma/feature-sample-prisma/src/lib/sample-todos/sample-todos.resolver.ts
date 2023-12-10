@@ -32,7 +32,7 @@ export class SampleTodosResolver {
     return await this.sampleTodosService.update(updateOneSampleTodoArgs);
   }
 
-  @Mutation(() => SampleTodo)
+  @Mutation(() => SampleTodo, { name: 'deleteSampleTodo' })
   async removeSampleTodo(@Args() deleteOneSampleTodoArgs: DeleteOneSampleTodoArgs) {
     return await this.sampleTodosService.remove(deleteOneSampleTodoArgs);
   }
