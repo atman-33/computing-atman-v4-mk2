@@ -2,20 +2,16 @@
 import DotFlashing from '@/components/elements/DotFlashing';
 import Image from '@/components/elements/Image';
 import Link from '@/components/elements/Link';
-import { useMutation, useQuery } from '@apollo/client';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { useQuery } from '@apollo/client';
+import { faPager } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  DeleteBookmarkDocument,
-  GetBookmarkDocument,
-  GetBookmarksDocument,
-  GetLinksDocument
-} from '@libs/web/data-access-graphql';
+import { GetBookmarkDocument, GetLinksDocument } from '@libs/web/data-access-graphql';
 import { useBookmarkId } from '../hooks/useBookmarkId';
 import AddLink from './AddLink';
+import DeleteBookmark from './DeleteBookmark';
 
 const Bookmark = () => {
-  const { bookmarkId, resetBookmarkId } = useBookmarkId();
+  const { bookmarkId } = useBookmarkId();
   const { data: bookmarkData } = useQuery(GetBookmarkDocument, {
     variables: {
       where: { id: bookmarkId.id ?? '' }
@@ -26,26 +22,6 @@ const Bookmark = () => {
       urls: bookmarkData?.bookmark.links ?? []
     }
   });
-  const [deleteBookmark] = useMutation(DeleteBookmarkDocument);
-
-  /**
-   * Delete bookmark
-   */
-  const handleDeleteBookmark = async () => {
-    try {
-      await deleteBookmark({
-        variables: {
-          where: {
-            id: bookmarkId.id
-          }
-        },
-        refetchQueries: [GetBookmarksDocument]
-      });
-      resetBookmarkId();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <>
@@ -53,9 +29,7 @@ const Bookmark = () => {
         <div className="text-lg font-bold">{bookmarkData?.bookmark.name}</div>
         <div className="flex items-center gap-4">
           <AddLink />
-          <button onClick={handleDeleteBookmark}>
-            <FontAwesomeIcon icon={faTrashCan} size="lg" />
-          </button>
+          <DeleteBookmark />
         </div>
       </div>
       <hr className="my-2" />
@@ -65,21 +39,32 @@ const Bookmark = () => {
         <ul>
           {linksData?.links.map((link, index) => (
             <ul key={index}>
-              <li>
+              <li className="my-2">
                 <Link href={link.url} target="_blank">
-                  <div>{link.title}</div>
-                  <div>{link.siteName}</div>
-                  <div>{link.description}</div>
-                  {link.images && link.images.length > 0 && (
-                    <Image
-                      src={(link.images && link.images[0]) as string}
-                      alt={link.title}
-                      width={100}
-                      height={100}
-                    ></Image>
-                  )}
+                  <div className="grid grid-cols-12">
+                    <div className="col-span-2 pt-2">
+                      {link.images && link.images.length > 0 && (
+                        <Image
+                          src={(link.images && link.images[0]) as string}
+                          alt={link.title}
+                          width={80}
+                          height={80}
+                          className="rounded-md"
+                        ></Image>
+                      )}
+                    </div>
+                    <div className="col-span-10 mx-2">
+                      <div className="my-1 font-bold">{link.title}</div>
+                      <div className="my-1 text-xs">{link.description}</div>
+                      <div className="my-1 flex items-start gap-x-2 text-xs">
+                        <FontAwesomeIcon icon={faPager} className="h-[16px]" />
+                        <div>{link.siteName}</div>
+                      </div>
+                    </div>
+                  </div>
                 </Link>
               </li>
+              <hr />
             </ul>
           ))}
         </ul>
