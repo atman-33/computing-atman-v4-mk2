@@ -55,3 +55,11 @@ model SampleTodo {
     editing   Boolean
     completed Boolean
 }
+
+model User {
+    id       String @id @default(auto()) @map("_id") @db.ObjectId
+    /// @Validator.IsEmail()
+    email    String @unique
+    /// @Validator.MinLength(8)
+    password String
+}

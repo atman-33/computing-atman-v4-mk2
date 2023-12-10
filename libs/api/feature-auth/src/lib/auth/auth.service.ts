@@ -2,7 +2,7 @@ import { env } from '@libs/shared/config';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
-import { User } from '../users/models/user.model';
+import { User } from '../users/_backup/mongoose/models/user.model';
 
 export interface TokenPayload {
   userId: string;

@@ -1,6 +1,6 @@
 import { ExecutionContext, createParamDecorator } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { User } from '../users/models/user.model';
+import { User } from '../users/_backup/mongoose/models/user.model';
 
 export const getCurrentUserByContext = (context: ExecutionContext): User => {
   // for http
