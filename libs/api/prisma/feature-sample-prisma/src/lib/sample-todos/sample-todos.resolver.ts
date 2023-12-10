@@ -6,7 +6,7 @@ import {
   FindUniqueSampleTodoArgs,
   UpdateOneSampleTodoArgs
 } from './dto/sample-todo.dto';
-import { SampleTodo } from './entities/sample-todo.entity';
+import { SampleTodo } from './models/sample-todo.model';
 
 @Resolver(() => SampleTodo)
 export class SampleTodosResolver {
