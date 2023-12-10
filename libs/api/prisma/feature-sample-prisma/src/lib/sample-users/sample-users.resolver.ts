@@ -14,9 +14,7 @@ export class SampleUsersResolver {
   constructor(private readonly sampleUsersService: SampleUsersService) {}
 
   @Mutation(() => SampleUser)
-  async createSampleUser(
-    @Args('createOneSampleUserArgs') createOneSampleUserArgs: CreateOneSampleUserArgs
-  ) {
+  async createSampleUser(@Args() createOneSampleUserArgs: CreateOneSampleUserArgs) {
     return await this.sampleUsersService.create(createOneSampleUserArgs);
   }
 
@@ -26,23 +24,17 @@ export class SampleUsersResolver {
   }
 
   @Query(() => SampleUser, { name: 'sampleUser' })
-  async findOne(
-    @Args('findUniqueSampleUserArgs') findUniqueSampleUserArgs: FindUniqueSampleUserArgs
-  ) {
+  async findOne(@Args() findUniqueSampleUserArgs: FindUniqueSampleUserArgs) {
     return await this.sampleUsersService.findOne(findUniqueSampleUserArgs);
   }
 
   @Mutation(() => SampleUser)
-  async updateSampleUser(
-    @Args('updateOneSampleUserArgs') updateOneSampleUserArgs: UpdateOneSampleUserArgs
-  ) {
+  async updateSampleUser(@Args() updateOneSampleUserArgs: UpdateOneSampleUserArgs) {
     return await this.sampleUsersService.update(updateOneSampleUserArgs);
   }
 
   @Mutation(() => SampleUser)
-  async removeSampleUser(
-    @Args('deleteOneSampleUserArgs') deleteOneSampleUserArgs: DeleteOneSampleUserArgs
-  ) {
+  async removeSampleUser(@Args() deleteOneSampleUserArgs: DeleteOneSampleUserArgs) {
     return await this.sampleUsersService.remove(deleteOneSampleUserArgs);
   }
 }

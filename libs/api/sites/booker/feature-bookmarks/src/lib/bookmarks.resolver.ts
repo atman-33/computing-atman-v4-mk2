@@ -17,7 +17,7 @@ export class BookmarksResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark)
   async createBookmark(
-    @Args('createOneBookmarkArgs') createOneBookmarkArgs: CreateOneBookmarkArgs,
+    @Args() createOneBookmarkArgs: CreateOneBookmarkArgs,
     @CurrentUser() user: User
   ) {
     return await this.bookmarksService.createBookmark(createOneBookmarkArgs, user.id);
@@ -37,9 +37,7 @@ export class BookmarksResolver {
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark)
-  async updateBookmark(
-    @Args('updateOneBookmarkArgs') updateOneBookmarkArgs: UpdateOneBookmarkArgs
-  ) {
+  async updateBookmark(@Args() updateOneBookmarkArgs: UpdateOneBookmarkArgs) {
     return await this.bookmarksService.updateBookmark(updateOneBookmarkArgs);
   }
 
@@ -51,9 +49,7 @@ export class BookmarksResolver {
    */
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark, { nullable: true })
-  async deleteBookmark(
-    @Args('deleteOneBookmarkArgs') deleteOneBookmarkArgs: DeleteOneBookmarkArgs
-  ) {
+  async deleteBookmark(@Args() deleteOneBookmarkArgs: DeleteOneBookmarkArgs) {
     return await this.bookmarksService.deleteBookmark(deleteOneBookmarkArgs);
   }
 }
