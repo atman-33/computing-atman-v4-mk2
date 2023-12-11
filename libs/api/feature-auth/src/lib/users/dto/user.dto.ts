@@ -3,4 +3,4 @@ export {
   DeleteOneUserArgs,
   FindUniqueUserArgs,
   UpdateOneUserArgs
-} from '@libs/api/prisma/generated-db-types';
+} from '@libs/api/prisma/data-access-db';

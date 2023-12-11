@@ -1,1 +1,1 @@
-export { SampleTodo } from '@libs/api/prisma/generated-db-types';
+export { SampleTodo } from '@libs/api/prisma/data-access-db';

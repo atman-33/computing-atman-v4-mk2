@@ -1,1 +1,1 @@
-export { SampleUser } from '@libs/api/prisma/generated-db-types';
+export { SampleUser } from '@libs/api/prisma/data-access-db';

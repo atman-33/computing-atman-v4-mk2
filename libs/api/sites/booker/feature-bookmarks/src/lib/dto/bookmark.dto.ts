@@ -3,4 +3,4 @@ export {
   DeleteOneBookmarkArgs,
   FindUniqueBookmarkArgs,
   UpdateOneBookmarkArgs
-} from '@libs/api/prisma/generated-db-types';
+} from '@libs/api/prisma/data-access-db';

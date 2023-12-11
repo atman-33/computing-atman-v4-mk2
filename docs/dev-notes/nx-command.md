@@ -78,6 +78,12 @@ npm i
 npm i next@latest
 ```
 
+## nx remove
+
+```bash
+nx g @nx/workspace:remove my-feature-lib --forceRemove
+```
+
 ---
 
 # Angular
