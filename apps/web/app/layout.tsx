@@ -81,12 +81,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             <ThemeProvider defaultTheme={siteMetadata.theme}>
               <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
               <SectionContainer>
-                <div className="flex flex-col justify-between font-sans">
+                <div className="flex min-h-[100vh] flex-col justify-between font-sans">
                   <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
                     <Header />
-                    {children}
+                    <div className="flex-1">{children}</div>
+                    <Footer />
                   </SearchProvider>
-                  <Footer />
                 </div>
               </SectionContainer>
             </ThemeProvider>

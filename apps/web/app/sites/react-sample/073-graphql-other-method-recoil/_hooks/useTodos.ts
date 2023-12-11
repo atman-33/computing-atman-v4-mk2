@@ -1,8 +1,4 @@
-import {
-  CreateSampleTodoInput,
-  DeleteSampleTodoInput,
-  SampleTodo
-} from '@libs/web/data-access-graphql';
+import { SampleTodo, SampleTodoCreateInput } from '@libs/web/data-access-graphql';
 import { useRecoilState } from 'recoil';
 import { todosState } from '../_stores/todosState';
 import todoApi from '../api/todo';
@@ -31,17 +27,18 @@ export const useTodos = () => {
     });
   };
 
-  const addTodo = (newTodo: CreateSampleTodoInput) => {
-    todoApi.createTodo(newTodo).then((newTodo) => {
+  const addTodo = (newTodo: SampleTodoCreateInput) => {
+    const { id, ...rest } = newTodo;
+    todoApi.createTodo({ data: rest }).then((newTodo) => {
       setTodos((todos) => [...todos, newTodo.data?.createSampleTodo as SampleTodo]);
     });
   };
 
-  const deleteTodo = (todoToDelete: DeleteSampleTodoInput) => {
-    todoApi.deleteTodo(todoToDelete).then(() => {
+  const deleteTodo = (id: string) => {
+    todoApi.deleteTodo({ where: { id: id } }).then(() => {
       setTodos((todos) => {
         return todos.filter((todo) => {
-          return todo._id !== todoToDelete._id;
+          return todo.id !== id;
         });
       });
     });

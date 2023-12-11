@@ -3,6 +3,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import Link from '@/components/elements/Link';
 import authApi from '@/features/auth/api/auth-api';
+import { useIsAuthenticated } from '@/features/auth/hooks/useIsAuthenticated';
 import { useQuery } from '@apollo/client';
 import { GetCurrentUserDocument } from '@libs/web/data-access-graphql';
 import { useEffect, useState } from 'react';
@@ -11,6 +12,7 @@ const Navbar = () => {
   const [mobileNavShow, setMobileNavShow] = useState(false);
   const [email, setEmail] = useState('');
   const { data, loading, error } = useQuery(GetCurrentUserDocument);
+  const { setIsAuthenticated } = useIsAuthenticated();
 
   useEffect(() => {
     setEmail(data?.currentUser.email || '');
@@ -31,7 +33,8 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     authApi.logout().then(() => {
-      window.location.reload();
+      setIsAuthenticated(false);
+      // window.location.reload(); => this is not needed because using the useAuth hook
     });
   };
   return (

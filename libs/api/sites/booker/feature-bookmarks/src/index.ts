@@ -1,1 +1,1 @@
-export * from './lib/bookmarks.module';
+export { BookmarksModule } from './lib/bookmarks.module';

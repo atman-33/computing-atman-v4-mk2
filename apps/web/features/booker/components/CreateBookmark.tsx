@@ -12,6 +12,7 @@ import {
 } from '@/components/elements/Dialog';
 import { Input } from '@/components/elements/Input';
 import { Label } from '@/components/elements/Label';
+import useAuth from '@/features/auth/hooks/useAuth';
 import { useMutation } from '@apollo/client';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,6 +21,8 @@ import { useState } from 'react';
 import { useBookmarkId } from '../hooks/useBookmarkId';
 
 const CreateBookmark = () => {
+  const { requireAuth } = useAuth();
+
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
   const { bookmarkId, setBookmarkId } = useBookmarkId();
@@ -30,6 +33,7 @@ const CreateBookmark = () => {
    * @returns
    */
   const handleCreateBookmark = async () => {
+    requireAuth();
     if (!bookmarkName) {
       return;
     }
@@ -45,7 +49,7 @@ const CreateBookmark = () => {
       });
 
       setBookmarkId({
-        id: response.data?.createBookmark._id ?? ''
+        id: response.data?.createBookmark.id ?? ''
       });
     } catch (error) {
       console.log(error);

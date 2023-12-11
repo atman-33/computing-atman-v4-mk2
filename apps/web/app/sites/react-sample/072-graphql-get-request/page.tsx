@@ -32,7 +32,7 @@ const Page = () => {
       <ul>
         {users.map((user) => {
           return (
-            <div key={user._id} className="m-4">
+            <div key={user.id} className="m-4">
               <h3 className="font-medium">{user.username}</h3>
               <p>age: {user.age}</p>
               <p>hobbies: {user.hobbies?.join(', ')}</p>

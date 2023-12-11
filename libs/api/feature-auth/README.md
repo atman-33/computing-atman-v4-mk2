@@ -10,51 +10,8 @@ Run `nx build api-feature-auth` to build the library.
 
 Run `nx test api-feature-auth` to execute the unit tests via [Jest](https://jestjs.io).
 
-## How to debug
+### Generate users resolver
 
-1. createUser  
-
-`POST: http://localhost:3333/api/graphql`  
-
-```graphql
-mutation createUser{
-    createUser(
-        createUserData: {
-            email: "test-user1@gmail.com",
-            password: "test1234"
-        }
-    )
-    {
-        _id
-        email
-    }
-}
+```bash
+nx g @nrwl/nest:resource --project=api-feature-auth --directory=lib --type="graphql-code-first" --crud --name users
 ```
-
-2. login
-
-`POST:http://localhost:3333/api/auth/login`
-
-```json
-{
-    "email": "test-user1@gmail.com",
-    "password": "test1234"
-}
-```
-
-3. currentUser
-
-`POST: http://localhost:3333/api/graphql`  
-
-```graphql
-query currentUser{
-  currentUser{
-      _id
-      email
-  }
-}
-```
-
-4. logout
-
-`POST:http://localhost:3333/api/auth/logout`  

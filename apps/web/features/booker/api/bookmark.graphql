@@ -1,6 +1,6 @@
 mutation createBookmark($createBookmarkData: CreateBookmarkInput!) {
   createBookmark(createBookmarkData: $createBookmarkData) {
-    _id
+    id
     name
     userId
   }
@@ -8,33 +8,33 @@ mutation createBookmark($createBookmarkData: CreateBookmarkInput!) {
 
 query getBookmarks {
   bookmarks {
-    _id
+    id
     name
     userId
     links
   }
 }
 
-query getBookmark($_id: String!) {
-  bookmark(_id: $_id) {
-    _id
+query getBookmark($where: BookmarkWhereUniqueInput!) {
+  bookmark(where: $where) {
+    id
     name
     userId
     links
   }
 }
 
-mutation updateBookmark($updateBookmarkData: UpdateBookmarkInput!) {
-  updateBookmark(updateBookmarkData: $updateBookmarkData) {
-    _id
+mutation updateBookmark($data: BookmarkUpdateInput!, $where: BookmarkWhereUniqueInput!) {
+  updateBookmark(data: $data, where: $where) {
+    id
     name
     userId
     links
   }
 }
 
-mutation deleteBookmark($deleteBookmarkData: DeleteBookmarkInput!) {
-  deleteBookmark(deleteBookmarkData: $deleteBookmarkData) {
-    _id
+mutation deleteBookmark($where: BookmarkWhereUniqueInput!) {
+  deleteBookmark(where: $where) {
+    id
   }
 }

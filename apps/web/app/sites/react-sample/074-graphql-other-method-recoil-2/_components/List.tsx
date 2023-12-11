@@ -16,7 +16,7 @@ const List = () => {
     <div>
       {todos.map((todo) => {
         return (
-          <div key={todo._id} className="m-2 flex items-center">
+          <div key={todo.id} className="m-2 flex items-center">
             <Item todo={todo} />
           </div>
         );
