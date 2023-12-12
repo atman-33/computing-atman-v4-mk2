@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { BookmarkWhereInput } from './bookmark-where.input';
 import { StringFilter } from '../prisma/string-filter.input';
-import { StringListFilter } from '../prisma/string-list-filter.input';
+import { LinkListRelationFilter } from '../link/link-list-relation-filter.input';
 
 @InputType()
 export class BookmarkWhereUniqueInput {
@@ -25,6 +25,6 @@ export class BookmarkWhereUniqueInput {
     @Field(() => StringFilter, {nullable:true})
     userId?: StringFilter;
 
-    @Field(() => StringListFilter, {nullable:true})
-    links?: StringListFilter;
+    @Field(() => LinkListRelationFilter, {nullable:true})
+    links?: LinkListRelationFilter;
 }

@@ -15,7 +15,4 @@ export class BookmarkCreateManyInput {
     @Field(() => String, {nullable:false})
     @Validator.IsString()
     userId!: string;
-
-    @Field(() => [String], {nullable:true})
-    links?: Array<string>;
 }

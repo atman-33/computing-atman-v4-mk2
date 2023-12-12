@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-filter.input';
-import { StringListFilter } from '../prisma/string-list-filter.input';
 
 @InputType()
 export class BookmarkScalarWhereWithAggregatesInput {
@@ -23,7 +22,4 @@ export class BookmarkScalarWhereWithAggregatesInput {
 
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     userId?: StringWithAggregatesFilter;
-
-    @Field(() => StringListFilter, {nullable:true})
-    links?: StringListFilter;
 }

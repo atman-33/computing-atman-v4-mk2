@@ -14,8 +14,5 @@ export class BookmarkCountAggregateInput {
     userId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    links?: true;
-
-    @Field(() => Boolean, {nullable:true})
     _all?: true;
 }

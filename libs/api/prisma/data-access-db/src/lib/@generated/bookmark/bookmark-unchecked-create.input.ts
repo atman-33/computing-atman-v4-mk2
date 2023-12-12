@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import * as Validator from 'class-validator';
+import { LinkUncheckedCreateNestedManyWithoutBookmarkInput } from '../link/link-unchecked-create-nested-many-without-bookmark.input';
 
 @InputType()
 export class BookmarkUncheckedCreateInput {
@@ -16,6 +17,6 @@ export class BookmarkUncheckedCreateInput {
     @Validator.IsString()
     userId!: string;
 
-    @Field(() => [String], {nullable:true})
-    links?: Array<string>;
+    @Field(() => LinkUncheckedCreateNestedManyWithoutBookmarkInput, {nullable:true})
+    links?: LinkUncheckedCreateNestedManyWithoutBookmarkInput;
 }

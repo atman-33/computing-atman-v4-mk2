@@ -15,8 +15,5 @@ export class BookmarkCountAggregate {
     userId!: number;
 
     @Field(() => Int, {nullable:false})
-    links!: number;
-
-    @Field(() => Int, {nullable:false})
     _all!: number;
 }

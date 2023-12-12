@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import * as Validator from 'class-validator';
+import { HideField } from '@nestjs/graphql';
 import { UserCountAggregate } from './user-count-aggregate.output';
 import { UserMinAggregate } from './user-min-aggregate.output';
 import { UserMaxAggregate } from './user-max-aggregate.output';
@@ -15,8 +16,7 @@ export class UserGroupBy {
     @Validator.IsEmail()
     email!: string;
 
-    @Field(() => String, {nullable:false})
-    @Validator.MinLength(8)
+    @HideField()
     password!: string;
 
     @Field(() => UserCountAggregate, {nullable:true})

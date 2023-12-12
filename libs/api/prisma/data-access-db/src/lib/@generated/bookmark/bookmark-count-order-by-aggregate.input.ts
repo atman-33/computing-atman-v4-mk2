@@ -13,7 +13,4 @@ export class BookmarkCountOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     userId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    links?: keyof typeof SortOrder;
 }
