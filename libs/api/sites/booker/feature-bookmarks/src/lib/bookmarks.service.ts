@@ -15,7 +15,6 @@ export class BookmarksService {
     return await this.prisma.bookmark.create({
       data: {
         ...createBookmarkData,
-        links: [],
         userId
       }
     });
