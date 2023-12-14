@@ -5,11 +5,11 @@ const siteMetadata = {
   headerTitle: 'Computing Atman',
   description: 'A blog about system development and programming related to IT',
   language: 'en-us',
-  theme: 'dark', // system, dark or light
+  theme: 'light', // system, dark or light
   siteUrl: 'https://computing-atman.com',
   siteRepo: 'https://github.com/atman-33/computing-atman-v4-mk2',
   siteLogo: '/static/images/logo.png',
-  socialBanner: '/static/images/twitter-card.png',
+  socialBanner: '/static/images/coding.jpg',
   mastodon: '',
   email: '',
   github: 'https://github.com/atman-33',
