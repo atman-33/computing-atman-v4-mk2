@@ -1,8 +1,7 @@
-import { Link, PrismaService } from '@libs/api/prisma/data-access-db';
+import { FindManyLinkArgs, Link, PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
 import { getLinkPreview } from 'link-preview-js';
 import { CreateLinkInput } from './dto/create-link-input.dto';
-import { GetLinksArgs } from './dto/get-links-args.dto';
 
 type LinkPreview = {
   title?: string;
@@ -19,7 +18,7 @@ export class LinksService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createLink(createLinkInput: CreateLinkInput): Promise<Link> {
-    const linkPreview = await this.getLink(createLinkInput.url);
+    const linkPreview = await this.getLinkPreview(createLinkInput.url);
     return await this.prisma.link.create({
       data: {
         ...createLinkInput,
@@ -31,7 +30,11 @@ export class LinksService {
     });
   }
 
-  async getLink(url: string): Promise<LinkPreview> {
+  async getLinks(findManyLinkArgs: FindManyLinkArgs) {
+    return await this.prisma.link.findMany(findManyLinkArgs);
+  }
+
+  async getLinkPreview(url: string): Promise<LinkPreview> {
     let retry = 0;
     let linkPreview = null;
 
@@ -60,12 +63,10 @@ export class LinksService {
     return linkPreview as unknown as LinkPreview;
   }
 
-  async getLinks(getLinksArgs: GetLinksArgs): Promise<LinkPreview[]> {
-    const urls = getLinksArgs.urls ?? [];
-
+  async getLinkPreviews(urls: string[]): Promise<LinkPreview[]> {
     return Promise.all(
       urls.map(async (url) => {
-        const linkPreview = await this.getLink(url);
+        const linkPreview = await this.getLinkPreview(url);
         return {
           ...linkPreview
         };
