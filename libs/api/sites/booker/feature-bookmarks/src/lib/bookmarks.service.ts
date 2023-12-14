@@ -1,11 +1,19 @@
 import { PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import {
   DeleteOneBookmarkArgs,
   FindUniqueBookmarkArgs,
   UpdateOneBookmarkArgs
 } from './dto/bookmark.dto';
 import { CreateBookmarkInput } from './dto/create-bookmark-input.dto';
+
+/**
+ * Include (needed to get links)
+ */
+const include: Prisma.BookmarkInclude = {
+  links: true
+};
 
 @Injectable()
 export class BookmarksService {
@@ -26,7 +34,8 @@ export class BookmarksService {
 
   async getBookmark(findUniqueBookmarkArgs: FindUniqueBookmarkArgs) {
     return await this.prisma.bookmark.findUnique({
-      where: findUniqueBookmarkArgs.where
+      where: findUniqueBookmarkArgs.where,
+      include: include
     });
   }
 

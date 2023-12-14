@@ -11,7 +11,6 @@ query getBookmarks {
     id
     name
     userId
-    links
   }
 }
 
@@ -19,22 +18,27 @@ query getBookmark($where: BookmarkWhereUniqueInput!) {
   bookmark(where: $where) {
     id
     name
-    userId
-    links
+    links {
+      url
+      title
+      siteName
+      description
+      image
+    }
   }
 }
 
-mutation updateBookmark($data: BookmarkUpdateInput!, $where: BookmarkWhereUniqueInput!) {
-  updateBookmark(data: $data, where: $where) {
-    id
-    name
-    userId
-    links
-  }
-}
+# mutation updateBookmark($data: BookmarkUpdateInput!, $where: BookmarkWhereUniqueInput!) {
+#   updateBookmark(data: $data, where: $where) {
+#     id
+#     name
+#     userId
+#     links
+#   }
+# }
 
-mutation deleteBookmark($where: BookmarkWhereUniqueInput!) {
-  deleteBookmark(where: $where) {
-    id
-  }
-}
+# mutation deleteBookmark($where: BookmarkWhereUniqueInput!) {
+#   deleteBookmark(where: $where) {
+#     id
+#   }
+# }
