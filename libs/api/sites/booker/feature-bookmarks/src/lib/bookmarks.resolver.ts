@@ -17,7 +17,7 @@ export class BookmarksResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark)
   async createBookmark(
-    @Args('createBookmarkData') createBookmarkData: CreateBookmarkInput,
+    @Args('data') createBookmarkData: CreateBookmarkInput,
     @CurrentUser() user: User
   ) {
     return await this.bookmarksService.createBookmark(createBookmarkData, user.id);

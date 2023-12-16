@@ -1,9 +1,18 @@
-# query getLinks($urls: [String!]!) {
-#   links(urls: $urls) {
-#     title
-#     siteName
-#     description
-#     images
-#     url
-#   }
-# }
+query getLinks($where: LinkWhereInput!) {
+  links(where: $where) {
+    id
+    title
+    siteName
+    url
+    description
+    image
+  }
+}
+
+mutation createLink($data: CreateLinkInput!) {
+  createLink(data: $data) {
+    siteName
+    title
+    description
+  }
+}

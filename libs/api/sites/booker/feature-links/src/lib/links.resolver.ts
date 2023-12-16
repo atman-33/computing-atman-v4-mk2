@@ -19,7 +19,7 @@ export class LinksResolver {
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Link)
-  async createLink(@Args('createLinkInput') createLinkInput: CreateLinkInput) {
+  async createLink(@Args('data') createLinkInput: CreateLinkInput) {
     return await this.linkService.createLink(createLinkInput);
   }
 }
