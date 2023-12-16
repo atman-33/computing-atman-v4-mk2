@@ -41,7 +41,7 @@ const CreateBookmark = () => {
     try {
       const response = await createBookmark({
         variables: {
-          createBookmarkData: {
+          data: {
             name: bookmarkName
           }
         },

@@ -20,7 +20,11 @@ const Bookmark = () => {
   });
   const { data: linksData, loading: linksLoading } = useQuery(GetLinksDocument, {
     variables: {
-      urls: bookmarkData?.bookmark.links ?? []
+      where: {
+        bookmarkId: {
+          equals: bookmarkData?.bookmark.id
+        }
+      }
     },
     skip: !bookmarkData
   });
@@ -45,15 +49,13 @@ const Bookmark = () => {
                 <Link href={link.url} target="_blank">
                   <div className="grid grid-cols-12">
                     <div className="col-span-2 pt-2">
-                      {link.images && link.images.length > 0 && (
-                        <Image
-                          src={(link.images && link.images[0]) as string}
-                          alt={link.title}
-                          width={80}
-                          height={80}
-                          className="rounded-md"
-                        ></Image>
-                      )}
+                      <Image
+                        src={link.image ?? ''}
+                        alt={link.title ?? ''}
+                        width={80}
+                        height={80}
+                        className="rounded-md"
+                      ></Image>
                     </div>
                     <div className="col-span-10 mx-2">
                       <div className="my-1 font-bold">{link.title}</div>

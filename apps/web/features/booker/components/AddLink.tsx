@@ -13,24 +13,19 @@ import {
 import { Input } from '@/components/elements/Input';
 import { Label } from '@/components/elements/Label';
 import useAuth from '@/features/auth/hooks/useAuth';
-import { useMutation, useQuery } from '@apollo/client';
-import { GetBookmarkDocument, UpdateBookmarkDocument } from '@libs/web/data-access-graphql';
+import { useMutation } from '@apollo/client';
+import { CreateLinkDocument, GetLinksDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
 import { useBookmarkId } from '../hooks/useBookmarkId';
 
 const AddLink = () => {
-  const { requireAuth } = useAuth();
-
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
+
+  const { requireAuth } = useAuth();
   const { bookmarkId } = useBookmarkId();
-  const { data: bookmarkData } = useQuery(GetBookmarkDocument, {
-    variables: {
-      where: { id: bookmarkId.id }
-    },
-    skip: !bookmarkId.id
-  });
-  const [updateBookmark, { loading, error }] = useMutation(UpdateBookmarkDocument);
+
+  const [createLink, { loading, error }] = useMutation(CreateLinkDocument);
 
   /**
    * Add link to bookmark
@@ -44,20 +39,18 @@ const AddLink = () => {
     }
 
     try {
-      await updateBookmark({
+      await createLink({
         variables: {
           data: {
-            name: bookmarkData?.bookmark.name,
-            userId: bookmarkData?.bookmark.userId,
-            links: [...(bookmarkData?.bookmark.links ?? []), url]
-          },
-          where: { id: bookmarkId.id }
+            bookmarkId: bookmarkId.id,
+            url: url
+          }
         },
         refetchQueries: [
           {
-            query: GetBookmarkDocument,
+            query: GetLinksDocument,
             variables: {
-              where: { id: bookmarkId.id }
+              where: { bookmarkId: { equals: bookmarkId.id } }
             }
           }
         ]
