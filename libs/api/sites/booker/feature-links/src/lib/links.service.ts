@@ -1,4 +1,9 @@
-import { FindManyLinkArgs, Link, PrismaService } from '@libs/api/prisma/data-access-db';
+import {
+  DeleteOneLinkArgs,
+  FindManyLinkArgs,
+  Link,
+  PrismaService
+} from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
 import { getLinkPreview } from 'link-preview-js';
 import { CreateLinkInput } from './dto/create-link-input.dto';
@@ -72,5 +77,11 @@ export class LinksService {
         };
       })
     );
+  }
+
+  async deleteLink(deleteOneLinkArgs: DeleteOneLinkArgs) {
+    return await this.prisma.link.delete({
+      where: deleteOneLinkArgs.where
+    });
   }
 }

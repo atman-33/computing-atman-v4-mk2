@@ -36,8 +36,8 @@ export const useTodos = () => {
   const updateTodo = useRecoilCallback(
     ({ set }) =>
       (id: string, todoToUpdate: SampleTodoUpdateInput) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         todoApi
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .updateTodo({ where: { id: id }, data: todoToUpdate as any })
           .then((todoToUpdate) => {
             set(todosState, (todos) => {

@@ -16,3 +16,9 @@ mutation createLink($data: CreateLinkInput!) {
     description
   }
 }
+
+mutation deleteLink($where: LinkWhereUniqueInput!) {
+  deleteLink(where: $where) {
+    id
+  }
+}

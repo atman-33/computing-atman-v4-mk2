@@ -2,37 +2,21 @@
 import DotFlashing from '@/components/elements/DotFlashing';
 import Image from '@/components/elements/Image';
 import Link from '@/components/elements/Link';
-import { useQuery } from '@apollo/client';
 import { faPager } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GetBookmarkDocument, GetLinksDocument } from '@libs/web/data-access-graphql';
-import { useBookmarkId } from '../hooks/useBookmarkId';
+import { useBookmark } from '../hooks/useBookmark';
+import { useLinks } from '../hooks/useLinksState';
 import AddLink from './AddLink';
 import DeleteBookmark from './DeleteBookmark';
 
 const Bookmark = () => {
-  const { bookmarkId } = useBookmarkId();
-  const { data: bookmarkData } = useQuery(GetBookmarkDocument, {
-    variables: {
-      where: { id: bookmarkId.id }
-    },
-    skip: !bookmarkId.id
-  });
-  const { data: linksData, loading: linksLoading } = useQuery(GetLinksDocument, {
-    variables: {
-      where: {
-        bookmarkId: {
-          equals: bookmarkData?.bookmark.id
-        }
-      }
-    },
-    skip: !bookmarkData
-  });
+  const { bookmark } = useBookmark();
+  const { linksData, linksLoading } = useLinks(bookmark?.id);
 
   return (
     <>
       <div className="flex flex-wrap items-center justify-between">
-        <div className="text-lg font-bold">{bookmarkData?.bookmark.name}</div>
+        <div className="text-lg font-bold">{bookmark?.name ?? ''}</div>
         <div className="flex items-center gap-4">
           <AddLink />
           <DeleteBookmark />

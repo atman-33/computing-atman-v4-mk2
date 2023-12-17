@@ -12,55 +12,29 @@ import {
 } from '@/components/elements/Dialog';
 import { Input } from '@/components/elements/Input';
 import { Label } from '@/components/elements/Label';
-import useAuth from '@/features/auth/hooks/useAuth';
-import { useMutation } from '@apollo/client';
-import { CreateLinkDocument, GetLinksDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
-import { useBookmarkId } from '../hooks/useBookmarkId';
+import { useBookmark } from '../hooks/useBookmark';
+import { useLinks } from '../hooks/useLinksState';
 
 const AddLink = () => {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
 
-  const { requireAuth } = useAuth();
-  const { bookmarkId } = useBookmarkId();
-
-  const [createLink, { loading, error }] = useMutation(CreateLinkDocument);
+  const { bookmark } = useBookmark();
+  const { createLink } = useLinks(bookmark?.id);
 
   /**
    * Add link to bookmark
    * @returns
    */
   const handleAddLink = async () => {
-    requireAuth();
-
     if (!url) {
       return;
     }
 
-    try {
-      await createLink({
-        variables: {
-          data: {
-            bookmarkId: bookmarkId.id,
-            url: url
-          }
-        },
-        refetchQueries: [
-          {
-            query: GetLinksDocument,
-            variables: {
-              where: { bookmarkId: { equals: bookmarkId.id } }
-            }
-          }
-        ]
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setUrl('');
-      setOpen(false);
-    }
+    await createLink(url);
+    setUrl('');
+    setOpen(false);
   };
 
   return (
@@ -71,7 +45,7 @@ const AddLink = () => {
             className="rounded-md"
             size={'sm'}
             onClick={() => setUrl('')}
-            disabled={!bookmarkId.id || bookmarkId.id === ''}
+            disabled={!bookmark?.id || bookmark.id === ''}
           >
             ★ Add
           </Button>

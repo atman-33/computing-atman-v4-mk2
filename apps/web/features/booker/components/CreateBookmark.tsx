@@ -12,49 +12,25 @@ import {
 } from '@/components/elements/Dialog';
 import { Input } from '@/components/elements/Input';
 import { Label } from '@/components/elements/Label';
-import useAuth from '@/features/auth/hooks/useAuth';
-import { useMutation } from '@apollo/client';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CreateBookmarkDocument, GetBookmarksDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
-import { useBookmarkId } from '../hooks/useBookmarkId';
+import { useBookmark } from '../hooks/useBookmark';
 
 const CreateBookmark = () => {
-  const { requireAuth } = useAuth();
-
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
-  const { bookmarkId, setBookmarkId } = useBookmarkId();
-  const [createBookmark, { loading, error }] = useMutation(CreateBookmarkDocument);
+  const { createBookmark } = useBookmark();
 
   /**
    * Create bookmark
    * @returns
    */
   const handleCreateBookmark = async () => {
-    requireAuth();
     if (!bookmarkName) {
       return;
     }
-
-    try {
-      const response = await createBookmark({
-        variables: {
-          data: {
-            name: bookmarkName
-          }
-        },
-        refetchQueries: [GetBookmarksDocument]
-      });
-
-      setBookmarkId({
-        id: response.data?.createBookmark.id ?? ''
-      });
-    } catch (error) {
-      console.log(error);
-    }
-
+    await createBookmark(bookmarkName);
     setBookmarkName('');
     setOpen(false);
   };

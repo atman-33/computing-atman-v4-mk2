@@ -1,36 +1,17 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import useAuth from '@/features/auth/hooks/useAuth';
-import { useMutation } from '@apollo/client';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DeleteBookmarkDocument, GetBookmarksDocument } from '@libs/web/data-access-graphql';
-import { useBookmarkId } from '../hooks/useBookmarkId';
+import { useBookmark } from '../hooks/useBookmark';
 
 const DeleteBookmark = () => {
-  const { requireAuth } = useAuth();
-
-  const { bookmarkId, resetBookmarkId } = useBookmarkId();
-  const [deleteBookmark] = useMutation(DeleteBookmarkDocument);
+  const { bookmark, deleteBookmark, resetBookmark } = useBookmark();
 
   /**
    * Delete bookmark
    */
   const handleDeleteBookmark = async () => {
-    requireAuth();
-
-    try {
-      await deleteBookmark({
-        variables: {
-          where: {
-            id: bookmarkId.id
-          }
-        },
-        refetchQueries: [GetBookmarksDocument]
-      });
-      resetBookmarkId();
-    } catch (error) {
-      console.log(error);
-    }
+    await deleteBookmark(bookmark?.id ?? '');
+    resetBookmark();
   };
 
   return (

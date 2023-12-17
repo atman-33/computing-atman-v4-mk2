@@ -71,11 +71,13 @@
 - [x] リンクの画像含めた一覧機能を実装
 
 - [x] booker のデータ取得時に認証を再確認し、認証切れならloginに戻る処理を追加
+
 - [x] generate-db-types を廃止し、data-access-db に統合
 
 - [x] footer を下に配置（メイン部分に最小高さを設定する）
 
-- [ ] link の取得したデータをDBに格納するように変更
+- [x] link の取得したデータをDBに格納するように変更
+
 - [ ] add link した際に、linkが全てloading 表示になるのを改善
 - [ ] booker のサイドバーを固定&スクロール対応
 - [ ] signup した際にそのままlogin
