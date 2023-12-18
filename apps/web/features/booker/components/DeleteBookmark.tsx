@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @nx/enforce-module-boundaries */
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -25,7 +25,7 @@ const Page = () => {
   return (
     <>
       <div className="mt-4 grid grid-cols-12">
-        <div className="col-span-3">
+        <div className="col-span-3 mr-4">
           <Bookmarks />
         </div>
         <div className="col-span-9">
