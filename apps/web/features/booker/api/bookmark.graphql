@@ -28,8 +28,8 @@ query getBookmark($where: BookmarkWhereUniqueInput!) {
   }
 }
 
-mutation updateBookmark($data: BookmarkUpdateInput!, $where: BookmarkWhereUniqueInput!) {
-  updateBookmark(data: $data, where: $where) {
+mutation updateBookmark($data: UpdateBookmarkInput!) {
+  updateBookmark(data: $data) {
     id
     name
     userId

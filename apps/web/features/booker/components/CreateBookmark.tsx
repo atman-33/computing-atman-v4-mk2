@@ -49,9 +49,7 @@ const CreateBookmark = () => {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Create Bookmark</DialogTitle>
-            <DialogDescription>
-              {`Input your bookmark name here. Click create button when you're done.`}
-            </DialogDescription>
+            <DialogDescription>{`Input your bookmark name here.`}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="mx-4 grid grid-cols-5 items-center">

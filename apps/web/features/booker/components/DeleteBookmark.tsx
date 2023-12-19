@@ -1,6 +1,7 @@
 'use client';
 
 /* eslint-disable @nx/enforce-module-boundaries */
+import OkCancelDialog from '@/components/elements/OkCancelDialog';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useBookmark } from '../hooks/useBookmark';
@@ -17,9 +18,17 @@ const DeleteBookmark = () => {
   };
 
   return (
-    <button onClick={handleDeleteBookmark}>
-      <FontAwesomeIcon icon={faTrashCan} size="lg" />
-    </button>
+    <>
+      <OkCancelDialog
+        title={`Delete Bookmark ${bookmark?.name}`}
+        description="Are you sure you want to delete this bookmark?"
+        clickHandler={handleDeleteBookmark}
+      >
+        <button className={!bookmark?.id || bookmark.id === '' ? 'hidden' : ''}>
+          <FontAwesomeIcon icon={faTrashCan} size="lg" />
+        </button>
+      </OkCancelDialog>
+    </>
   );
 };
 

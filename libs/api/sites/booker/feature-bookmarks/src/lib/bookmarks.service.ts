@@ -1,12 +1,9 @@
 import { PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import {
-  DeleteOneBookmarkArgs,
-  FindUniqueBookmarkArgs,
-  UpdateOneBookmarkArgs
-} from './dto/bookmark.dto';
+import { DeleteOneBookmarkArgs, FindUniqueBookmarkArgs } from './dto/bookmark.dto';
 import { CreateBookmarkInput } from './dto/create-bookmark-input.dto';
+import { UpdateBookmarkInput } from './dto/update-bookmark-input.dto';
 
 /**
  * Include (needed to get links)
@@ -39,10 +36,14 @@ export class BookmarksService {
     });
   }
 
-  async updateBookmark(updateOneBookmarkArgs: UpdateOneBookmarkArgs) {
+  async updateBookmark(updateBookmarkData: UpdateBookmarkInput) {
     return await this.prisma.bookmark.update({
-      where: updateOneBookmarkArgs.where,
-      data: updateOneBookmarkArgs.data
+      where: {
+        id: updateBookmarkData.id
+      },
+      data: {
+        name: updateBookmarkData.name
+      }
     });
   }
 

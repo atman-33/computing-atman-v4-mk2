@@ -2,17 +2,17 @@
 
 /* eslint-disable @nx/enforce-module-boundaries */
 import DotFlashing from '@/components/elements/DotFlashing';
-import Image from '@/components/elements/Image';
 import { Input } from '@/components/elements/Input';
-import Link from '@/components/elements/Link';
 import { ScrollArea } from '@/components/elements/ScrollArea';
-import { faEdit, faPager, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useBookmark } from '../hooks/useBookmark';
 import { useLinks } from '../hooks/useLinksState';
 import AddLink from './AddLink';
 import DeleteBookmark from './DeleteBookmark';
+import EditBookmark from './EditBookmark';
+import LinkItem from './LinkItem';
 
 const Bookmark = () => {
   const { bookmark } = useBookmark();
@@ -25,7 +25,7 @@ const Bookmark = () => {
         <FontAwesomeIcon icon={faSearch} className="mx-2" />
         <Input
           type="text"
-          placeholder="Seach..."
+          placeholder="Search..."
           className="my-2 w-full"
           value={filterVal}
           onChange={(e) => setFilterVal(e.target.value)}
@@ -35,11 +35,9 @@ const Bookmark = () => {
       <div className="flex items-center justify-between">
         <div className="ml-4 text-lg font-bold">{bookmark?.name ?? ''}</div>
         <div className="flex items-center gap-4">
-          <button>
-            <FontAwesomeIcon icon={faEdit} size="lg" />
-          </button>
-          <DeleteBookmark />
-          <AddLink />
+          {bookmark?.id && <EditBookmark />}
+          {bookmark?.id && <DeleteBookmark />}
+          {bookmark?.id && <AddLink />}
         </div>
       </div>
       <hr className="my-2" />
@@ -55,36 +53,7 @@ const Bookmark = () => {
                   link.description?.toLowerCase().includes(filterVal.toLowerCase()) ||
                   link.siteName?.toLowerCase().includes(filterVal.toLowerCase())
               )
-              .map((link) => (
-                <div>
-                  <ul key={link.id} className="p-2 hover:bg-gray-300 dark:hover:bg-gray-700">
-                    <li className="">
-                      <Link href={link.url} target="_blank">
-                        <div className="grid grid-cols-12">
-                          <div className="col-span-2">
-                            <Image
-                              src={link.image ?? ''}
-                              alt={link.title ?? ''}
-                              width={80}
-                              height={80}
-                              className="rounded-md"
-                            ></Image>
-                          </div>
-                          <div className="col-span-10 mx-2">
-                            <div className="my-1 font-bold">{link.title}</div>
-                            <div className="my-1 text-xs">{link.description}</div>
-                            <div className="my-1 flex items-start gap-x-2 text-xs">
-                              <FontAwesomeIcon icon={faPager} className="h-[16px]" />
-                              <div>{link.siteName}</div>
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    </li>
-                  </ul>
-                  <hr />
-                </div>
-              ))}
+              .map((link) => link && <LinkItem key={link.id} link={link} />)}
           </ul>
         </ScrollArea>
       )}

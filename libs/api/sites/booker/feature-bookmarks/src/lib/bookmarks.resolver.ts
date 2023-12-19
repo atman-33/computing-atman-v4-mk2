@@ -2,12 +2,9 @@ import { CurrentUser, GqlAuthGuard, User } from '@libs/api/feature-auth';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BookmarksService } from './bookmarks.service';
-import {
-  DeleteOneBookmarkArgs,
-  FindUniqueBookmarkArgs,
-  UpdateOneBookmarkArgs
-} from './dto/bookmark.dto';
+import { DeleteOneBookmarkArgs, FindUniqueBookmarkArgs } from './dto/bookmark.dto';
 import { CreateBookmarkInput } from './dto/create-bookmark-input.dto';
+import { UpdateBookmarkInput } from './dto/update-bookmark-input.dto';
 import { Bookmark } from './models/bookmark.model';
 
 @Resolver(() => Bookmark)
@@ -37,8 +34,8 @@ export class BookmarksResolver {
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark)
-  async updateBookmark(@Args() updateOneBookmarkArgs: UpdateOneBookmarkArgs) {
-    return await this.bookmarksService.updateBookmark(updateOneBookmarkArgs);
+  async updateBookmark(@Args('data') updateBookmarkData: UpdateBookmarkInput) {
+    return await this.bookmarksService.updateBookmark(updateBookmarkData);
   }
 
   /**

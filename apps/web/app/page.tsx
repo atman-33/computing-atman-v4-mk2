@@ -21,6 +21,7 @@ export default async function Page() {
     '/tailwindcss-sample',
     '/login',
     '/signup',
+    '/ok-cancel-dialog',
     '/sites/booker'
   ];
 

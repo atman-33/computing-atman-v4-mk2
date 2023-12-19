@@ -35,7 +35,7 @@ const Bookmarks = () => {
         <FontAwesomeIcon icon={faSearch} className="mx-2" />
         <Input
           type="text"
-          placeholder="Seach..."
+          placeholder="Search..."
           className="my-2 w-full"
           value={filterVal}
           onChange={(e) => setFilterVal(e.target.value)}
