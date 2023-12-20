@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import * as Validator from 'class-validator';
+import { LinkUncheckedUpdateManyWithoutBookmarkNestedInput } from '../link/link-unchecked-update-many-without-bookmark-nested.input';
 
 @InputType()
 export class BookmarkUncheckedUpdateInput {
@@ -13,6 +14,6 @@ export class BookmarkUncheckedUpdateInput {
     @Validator.IsString()
     userId?: string;
 
-    @Field(() => [String], {nullable:true})
-    links?: Array<string>;
+    @Field(() => LinkUncheckedUpdateManyWithoutBookmarkNestedInput, {nullable:true})
+    links?: LinkUncheckedUpdateManyWithoutBookmarkNestedInput;
 }

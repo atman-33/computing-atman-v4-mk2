@@ -1,5 +1,5 @@
-mutation createBookmark($createBookmarkData: CreateBookmarkInput!) {
-  createBookmark(createBookmarkData: $createBookmarkData) {
+mutation createBookmark($data: CreateBookmarkInput!) {
+  createBookmark(data: $data) {
     id
     name
     userId
@@ -11,7 +11,6 @@ query getBookmarks {
     id
     name
     userId
-    links
   }
 }
 
@@ -19,17 +18,21 @@ query getBookmark($where: BookmarkWhereUniqueInput!) {
   bookmark(where: $where) {
     id
     name
-    userId
-    links
+    links {
+      url
+      title
+      siteName
+      description
+      image
+    }
   }
 }
 
-mutation updateBookmark($data: BookmarkUpdateInput!, $where: BookmarkWhereUniqueInput!) {
-  updateBookmark(data: $data, where: $where) {
+mutation updateBookmark($data: UpdateBookmarkInput!) {
+  updateBookmark(data: $data) {
     id
     name
     userId
-    links
   }
 }
 

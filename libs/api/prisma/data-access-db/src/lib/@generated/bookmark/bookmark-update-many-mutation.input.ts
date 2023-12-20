@@ -12,7 +12,4 @@ export class BookmarkUpdateManyMutationInput {
     @Field(() => String, {nullable:true})
     @Validator.IsString()
     userId?: string;
-
-    @Field(() => [String], {nullable:true})
-    links?: Array<string>;
 }

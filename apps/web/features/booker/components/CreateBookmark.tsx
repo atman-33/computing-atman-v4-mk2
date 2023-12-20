@@ -12,49 +12,25 @@ import {
 } from '@/components/elements/Dialog';
 import { Input } from '@/components/elements/Input';
 import { Label } from '@/components/elements/Label';
-import useAuth from '@/features/auth/hooks/useAuth';
-import { useMutation } from '@apollo/client';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CreateBookmarkDocument, GetBookmarksDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
-import { useBookmarkId } from '../hooks/useBookmarkId';
+import { useBookmark } from '../hooks/useBookmark';
 
 const CreateBookmark = () => {
-  const { requireAuth } = useAuth();
-
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
-  const { bookmarkId, setBookmarkId } = useBookmarkId();
-  const [createBookmark, { loading, error }] = useMutation(CreateBookmarkDocument);
+  const { createBookmark } = useBookmark();
 
   /**
    * Create bookmark
    * @returns
    */
   const handleCreateBookmark = async () => {
-    requireAuth();
     if (!bookmarkName) {
       return;
     }
-
-    try {
-      const response = await createBookmark({
-        variables: {
-          createBookmarkData: {
-            name: bookmarkName
-          }
-        },
-        refetchQueries: [GetBookmarksDocument]
-      });
-
-      setBookmarkId({
-        id: response.data?.createBookmark.id ?? ''
-      });
-    } catch (error) {
-      console.log(error);
-    }
-
+    await createBookmark(bookmarkName);
     setBookmarkName('');
     setOpen(false);
   };
@@ -73,9 +49,7 @@ const CreateBookmark = () => {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Create Bookmark</DialogTitle>
-            <DialogDescription>
-              {`Input your bookmark name here. Click create button when you're done.`}
-            </DialogDescription>
+            <DialogDescription>{`Input your bookmark name here.`}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="mx-4 grid grid-cols-5 items-center">

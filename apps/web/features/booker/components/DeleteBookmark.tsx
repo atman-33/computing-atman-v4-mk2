@@ -1,42 +1,34 @@
+'use client';
+
 /* eslint-disable @nx/enforce-module-boundaries */
-import useAuth from '@/features/auth/hooks/useAuth';
-import { useMutation } from '@apollo/client';
+import OkCancelDialog from '@/components/elements/OkCancelDialog';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DeleteBookmarkDocument, GetBookmarksDocument } from '@libs/web/data-access-graphql';
-import { useBookmarkId } from '../hooks/useBookmarkId';
+import { useBookmark } from '../hooks/useBookmark';
 
 const DeleteBookmark = () => {
-  const { requireAuth } = useAuth();
-
-  const { bookmarkId, resetBookmarkId } = useBookmarkId();
-  const [deleteBookmark] = useMutation(DeleteBookmarkDocument);
+  const { bookmark, deleteBookmark, resetBookmark } = useBookmark();
 
   /**
    * Delete bookmark
    */
   const handleDeleteBookmark = async () => {
-    requireAuth();
-
-    try {
-      await deleteBookmark({
-        variables: {
-          where: {
-            id: bookmarkId.id
-          }
-        },
-        refetchQueries: [GetBookmarksDocument]
-      });
-      resetBookmarkId();
-    } catch (error) {
-      console.log(error);
-    }
+    await deleteBookmark(bookmark?.id ?? '');
+    resetBookmark();
   };
 
   return (
-    <button onClick={handleDeleteBookmark}>
-      <FontAwesomeIcon icon={faTrashCan} size="lg" />
-    </button>
+    <>
+      <OkCancelDialog
+        title={`Delete Bookmark ${bookmark?.name}`}
+        description="Are you sure you want to delete this bookmark?"
+        clickHandler={handleDeleteBookmark}
+      >
+        <button className={!bookmark?.id || bookmark.id === '' ? 'hidden' : ''}>
+          <FontAwesomeIcon icon={faTrashCan} size="lg" />
+        </button>
+      </OkCancelDialog>
+    </>
   );
 };
 

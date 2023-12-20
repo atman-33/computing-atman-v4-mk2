@@ -40,4 +40,7 @@ export class StringFilter {
 
     @Field(() => StringFilter, {nullable:true})
     not?: StringFilter;
+
+    @Field(() => Boolean, {nullable:true})
+    isSet?: boolean;
 }

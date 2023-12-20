@@ -13,6 +13,8 @@ export class UserCreateManyInput {
     email!: string;
 
     @Field(() => String, {nullable:false})
+    @Validator.IsString()
     @Validator.MinLength(8)
+    @Validator.MaxLength(20)
     password!: string;
 }

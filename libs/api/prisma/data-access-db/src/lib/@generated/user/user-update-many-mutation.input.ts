@@ -10,6 +10,8 @@ export class UserUpdateManyMutationInput {
     email?: string;
 
     @Field(() => String, {nullable:true})
+    @Validator.IsString()
     @Validator.MinLength(8)
+    @Validator.MaxLength(20)
     password?: string;
 }

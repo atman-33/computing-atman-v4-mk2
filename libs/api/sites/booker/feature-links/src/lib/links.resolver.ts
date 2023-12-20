@@ -1,7 +1,8 @@
 import { GqlAuthGuard } from '@libs/api/feature-auth';
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Resolver } from '@nestjs/graphql';
-import { GetLinksArgs } from './dto/args/get-links-args.dto';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CreateLinkInput } from './dto/create-link-input.dto';
+import { DeleteOneLinkArgs, FindManyLinkArgs } from './dto/link.dto';
 import { LinksService } from './links.service';
 import { Link } from './models/link.model';
 
@@ -11,8 +12,20 @@ export class LinksResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => [Link], { name: 'links' })
-  async getLinks(@Args() getLinksArgs: GetLinksArgs) {
+  async getLinks(@Args() findManyLinkArgs: FindManyLinkArgs) {
     // console.log(getLinksArgs);
-    return await this.linkService.getLinks(getLinksArgs);
+    return await this.linkService.getLinks(findManyLinkArgs);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => Link)
+  async createLink(@Args('data') createLinkInput: CreateLinkInput) {
+    return await this.linkService.createLink(createLinkInput);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => Link)
+  async deleteLink(@Args() deleteOneLinkArgs: DeleteOneLinkArgs) {
+    return await this.linkService.deleteLink(deleteOneLinkArgs);
   }
 }

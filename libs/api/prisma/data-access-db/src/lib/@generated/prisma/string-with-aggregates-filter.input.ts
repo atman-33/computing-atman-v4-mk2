@@ -51,4 +51,7 @@ export class StringWithAggregatesFilter {
 
     @Field(() => StringFilter, {nullable:true})
     _max?: StringFilter;
+
+    @Field(() => Boolean, {nullable:true})
+    isSet?: boolean;
 }

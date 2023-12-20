@@ -12,62 +12,29 @@ import {
 } from '@/components/elements/Dialog';
 import { Input } from '@/components/elements/Input';
 import { Label } from '@/components/elements/Label';
-import useAuth from '@/features/auth/hooks/useAuth';
-import { useMutation, useQuery } from '@apollo/client';
-import { GetBookmarkDocument, UpdateBookmarkDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
-import { useBookmarkId } from '../hooks/useBookmarkId';
+import { useBookmark } from '../hooks/useBookmark';
+import { useLinks } from '../hooks/useLinksState';
 
 const AddLink = () => {
-  const { requireAuth } = useAuth();
-
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
-  const { bookmarkId } = useBookmarkId();
-  const { data: bookmarkData } = useQuery(GetBookmarkDocument, {
-    variables: {
-      where: { id: bookmarkId.id }
-    },
-    skip: !bookmarkId.id
-  });
-  const [updateBookmark, { loading, error }] = useMutation(UpdateBookmarkDocument);
+
+  const { bookmark } = useBookmark();
+  const { createLink } = useLinks(bookmark?.id);
 
   /**
    * Add link to bookmark
    * @returns
    */
   const handleAddLink = async () => {
-    requireAuth();
-
     if (!url) {
       return;
     }
 
-    try {
-      await updateBookmark({
-        variables: {
-          data: {
-            name: bookmarkData?.bookmark.name,
-            userId: bookmarkData?.bookmark.userId,
-            links: [...(bookmarkData?.bookmark.links ?? []), url]
-          },
-          where: { id: bookmarkId.id }
-        },
-        refetchQueries: [
-          {
-            query: GetBookmarkDocument,
-            variables: {
-              where: { id: bookmarkId.id }
-            }
-          }
-        ]
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setUrl('');
-      setOpen(false);
-    }
+    await createLink(url);
+    setUrl('');
+    setOpen(false);
   };
 
   return (
@@ -78,7 +45,7 @@ const AddLink = () => {
             className="rounded-md"
             size={'sm'}
             onClick={() => setUrl('')}
-            disabled={!bookmarkId.id || bookmarkId.id === ''}
+            disabled={!bookmark?.id || bookmark.id === ''}
           >
             ★ Add
           </Button>

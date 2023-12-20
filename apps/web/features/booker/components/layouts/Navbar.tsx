@@ -44,7 +44,7 @@ const Navbar = () => {
           Booker
         </Link>
       </div>
-      <div className="block lg:hidden">
+      <div className="block md:hidden">
         <button
           className="flex items-center rounded border border-teal-400 px-3 py-2 text-teal-200 hover:border-white hover:text-white"
           onClick={handleShow}
@@ -60,14 +60,14 @@ const Navbar = () => {
         </button>
       </div>
       <div
-        className={`block w-full flex-grow lg:flex lg:w-auto lg:items-center ${
+        className={`block w-full flex-grow md:flex md:w-auto md:items-center ${
           mobileNavShow ? 'block' : 'hidden'
         }`}
       >
-        <div className="text-sm lg:flex-grow">
+        <div className="text-sm md:flex-grow">
           {/* <a
             href="#responsive-header"
-            className="mt-4 mr-4 block text-teal-200 hover:text-white lg:mt-0 lg:inline-block"
+            className="mt-4 mr-4 block text-teal-200 hover:text-white md:mt-0 md:inline-block"
           >
             Examples
           </a> */}

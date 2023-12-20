@@ -20,8 +20,7 @@ export default function HeroWithAnimation(props: Props) {
         style={{
           backgroundImage: `url(${props.backgroundImage1.src})`,
           margin: '0 calc(50% - 50vw) 0',
-          width: '100vw',
-          filter: 'contrast(80%)'
+          width: '100vw'
         }}
       >
         <div

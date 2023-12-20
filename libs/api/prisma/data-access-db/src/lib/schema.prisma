@@ -70,19 +70,38 @@ model User {
     id       String @id @default(auto()) @map("_id") @db.ObjectId
     /// @Validator.IsEmail()
     email    String @unique
+    /// @Validator.IsString()
     /// @Validator.MinLength(8)
+    /// @Validator.MaxLength(20)
+    /// @HideField()
     password String
 }
 
 model Bookmark {
-    id     String   @id @default(auto()) @map("_id") @db.ObjectId
+    id     String @id @default(auto()) @map("_id") @db.ObjectId
     /// @Validator.IsString()
     name   String
     /// @Validator.IsString()
     userId String
-    /// @IsArray()
-    /// @ArrayMinSize(0)
-    /// @ValidateNested({ each: true })
-    /// @IsString({ each: true })
-    links  String[]
+
+    // ---- Relations ---- //
+    links Link[]
+}
+
+model Link {
+    id          String  @id @default(auto()) @map("_id") @db.ObjectId
+    /// @Validator.IsString()
+    url         String
+    /// @Validator.IsString()
+    title       String?
+    /// @Validator.IsString()
+    siteName    String?
+    /// @Validator.IsString()
+    description String?
+    /// @Validator.IsString()
+    image       String?
+
+    // ---- Relations ---- //
+    bookmark   Bookmark @relation(fields: [bookmarkId], references: [id])
+    bookmarkId String   @db.ObjectId
 }

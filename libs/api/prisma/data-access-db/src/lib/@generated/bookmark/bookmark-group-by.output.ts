@@ -19,9 +19,6 @@ export class BookmarkGroupBy {
     @Validator.IsString()
     userId!: string;
 
-    @Field(() => [String], {nullable:true})
-    links?: Array<string>;
-
     @Field(() => BookmarkCountAggregate, {nullable:true})
     _count?: BookmarkCountAggregate;
 
