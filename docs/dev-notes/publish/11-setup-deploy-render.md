@@ -50,6 +50,8 @@ NEXT_PUBLIC_API_GQL_URL=https://xxx/api/graphql  *"xxx" is deployed url.
 
 API_PORT=10000
 DB_URL=***
+
+PRODUCTION_ORIGIN=https://computing-atman.com
 ```
 
 `PORT: 10000` (PORT 10000 is default port of render.com)

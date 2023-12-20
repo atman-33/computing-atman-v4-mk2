@@ -13,29 +13,33 @@ export default async function Page() {
   const posts = allCoreContent(sortedPosts);
 
   const debugPages = [
+    '/auth-login-sample',
     '/auth-test-1',
     '/auth-test-2',
-    '/auth-login-sample',
+    '/hover-button',
     '/loop-animation',
+    '/ok-cancel-dialog',
     '/shadcn-ui',
     '/tailwindcss-sample',
     '/login',
     '/signup',
-    '/ok-cancel-dialog',
     '/sites/booker'
   ];
 
   return (
     <>
       {NEXT_PUBLIC_IS_DEV === '1' && (
-        <div className=" m-2 items-center rounded-lg bg-purple-400 p-4">
-          {debugPages.map((page) => {
-            return (
-              <div key={page}>
-                <Link href={page}>{page}</Link>
-              </div>
-            );
-          })}
+        <div className=" m-2 items-center rounded-lg bg-purple-400 p-2 pl-4">
+          <h2 className="text-xl font-bold">Debug</h2>
+          <div>
+            {debugPages.map((page) => {
+              return (
+                <div key={page}>
+                  <Link href={page}>{page}</Link>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 
