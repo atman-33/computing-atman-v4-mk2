@@ -40,6 +40,7 @@ const CreateBookmark = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <button className="fixed bottom-8 right-8" onClick={() => setBookmarkName('')}>
+            <span className="absolute bottom-16 text-xs">Bookmark</span>
             <FontAwesomeIcon
               icon={faPlus}
               className="text-primary-500 dark:text-primary-400 h-10 w-10 cursor-pointer rounded-full bg-gray-200 p-2 transition-all hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"

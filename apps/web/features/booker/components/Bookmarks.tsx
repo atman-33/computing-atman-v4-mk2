@@ -41,7 +41,7 @@ const Bookmarks = () => {
           onChange={(e) => setFilterVal(e.target.value)}
         />
       </div>
-      <h2 className="my-2 text-sm font-bold">Bookmarks</h2>
+      <h2 className="my-2 text-xl font-bold">Bookmarks</h2>
 
       <ScrollArea className="h-[60vh] p-2">
         <ul className="grid grid-cols-1 gap-2">
@@ -50,7 +50,7 @@ const Bookmarks = () => {
             .map((bookmark) => (
               <li key={bookmark.id} className="flex flex-wrap">
                 <button
-                  className="ml-1 flex  items-center gap-x-2"
+                  className="ml-1 flex items-center gap-x-2"
                   onClick={handleShowBookmark(bookmark)}
                 >
                   <FontAwesomeIcon icon={faFolderClosed} />
