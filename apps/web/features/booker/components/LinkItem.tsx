@@ -6,6 +6,7 @@ import Image from '@/components/elements/Image';
 import Link from '@/components/elements/Link';
 import { faPager } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEditLinkShow } from '../hooks/useEditLinkShow';
 
 type Props = {
   id: string;
@@ -17,13 +18,19 @@ type Props = {
 };
 
 const LinkItem = ({ link }: { link: Props }) => {
-  const handleEditLink = () => {
-    console.log('edit link');
+  // const router = useRouter();
+  const { setEditLinkShow } = useEditLinkShow();
+
+  const handleShowEditLink = () => {
+    // console.log('edit link');
+    // router.push(`/sites/booker/link?id=${link.id}`);
+
+    setEditLinkShow(true);
   };
 
   return (
     <div>
-      <HoverEditButton clickHandler={() => handleEditLink()} className="right-12 top-2">
+      <HoverEditButton clickHandler={() => handleShowEditLink()} className="right-12 top-2">
         <ul key={link.id} className="min-h-[80px] p-2 hover:bg-gray-300 dark:hover:bg-gray-700">
           <li className="">
             <Link href={link.url} target="_blank">

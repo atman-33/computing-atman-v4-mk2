@@ -5,7 +5,6 @@ import 'pliny/search/algolia.css';
 import SectionContainer from '@/components/elements/SectionContainer';
 import GoogleAnalytics from '@/components/heads/GoogleAnalytics';
 import Footer from '@/components/layouts/Footer';
-import Header from '@/components/layouts/Header';
 import ApolloProvider from '@/components/providers/ApolloProvider';
 import StatesProvider from '@/components/providers/StatesProvider';
 import ThemeProvider from '@/components/providers/ThemeProvider';
@@ -14,6 +13,7 @@ import { Metadata } from 'next';
 import { Analytics, AnalyticsConfig } from 'pliny/analytics';
 import { SearchConfig, SearchProvider } from 'pliny/search';
 import { ReactNode } from 'react';
+import DynamicHeader from './_components/DynamicHeader';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -83,7 +83,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
               <SectionContainer>
                 <div className="flex min-h-[100vh] flex-col justify-between font-sans">
                   <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-                    <Header />
+                    <DynamicHeader />
                     <div className="flex-1">{children}</div>
                     <Footer />
                   </SearchProvider>

@@ -8,7 +8,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useBookmark } from '../hooks/useBookmark';
-import { useLinks } from '../hooks/useLinksState';
+import { useEditLinkShow } from '../hooks/useEditLinkShow';
+import { useLinks } from '../hooks/useLinks';
 import AddLink from './AddLink';
 import DeleteBookmark from './DeleteBookmark';
 import EditBookmark from './EditBookmark';
@@ -17,28 +18,30 @@ import LinkItem from './LinkItem';
 const Bookmark = () => {
   const { bookmark } = useBookmark();
   const { linksData, linksLoading } = useLinks(bookmark?.id);
+  const { editLinkShow } = useEditLinkShow();
   const [filterVal, setFilterVal] = useState('');
 
   return (
     <>
-      <div className="flex  items-center">
-        <FontAwesomeIcon icon={faSearch} className="mx-2" />
-        <Input
-          type="text"
-          placeholder="Search..."
-          className="my-2 w-full"
-          value={filterVal}
-          onChange={(e) => setFilterVal(e.target.value)}
-        />
-      </div>
-
       <div className="flex items-center justify-between">
         <div className="ml-4 text-lg font-bold">{bookmark?.name ?? ''}</div>
-        <div className="flex items-center gap-4">
-          {bookmark?.id && <EditBookmark />}
-          {bookmark?.id && <DeleteBookmark />}
-          {bookmark?.id && <AddLink />}
-        </div>
+        {!editLinkShow && (
+          <div className="flex items-center gap-4">
+            <div className="flex items-center">
+              <FontAwesomeIcon icon={faSearch} className="mx-2" />
+              <Input
+                type="text"
+                placeholder="Search..."
+                className="my-2 w-full"
+                value={filterVal}
+                onChange={(e) => setFilterVal(e.target.value)}
+              />
+            </div>
+            {bookmark?.id && <EditBookmark />}
+            {bookmark?.id && <DeleteBookmark />}
+            {bookmark?.id && <AddLink />}
+          </div>
+        )}
       </div>
       <hr className="my-2" />
       {linksLoading ? (

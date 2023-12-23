@@ -15,7 +15,7 @@ import { Label } from '@/components/elements/Label';
 import Spinner from '@/components/elements/Spinner';
 import { useState } from 'react';
 import { useBookmark } from '../hooks/useBookmark';
-import { useLinks } from '../hooks/useLinksState';
+import { useLinks } from '../hooks/useLinks';
 
 const AddLink = () => {
   const [open, setOpen] = useState(false);
