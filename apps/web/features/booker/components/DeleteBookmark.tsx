@@ -7,13 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useBookmark } from '../hooks/useBookmark';
 
 const DeleteBookmark = () => {
-  const { bookmark, deleteBookmark, resetBookmark } = useBookmark();
+  const { bookmark, deleteBookmark, deleteBookmarkLoading, resetBookmark } = useBookmark();
 
   /**
    * Delete bookmark
    */
-  const handleDeleteBookmark = async () => {
-    await deleteBookmark(bookmark?.id ?? '');
+  const handleDeleteBookmark = () => {
+    deleteBookmark(bookmark?.id ?? '');
     resetBookmark();
   };
 
@@ -24,7 +24,10 @@ const DeleteBookmark = () => {
         description="Are you sure you want to delete this bookmark?"
         clickHandler={handleDeleteBookmark}
       >
-        <button className={!bookmark?.id || bookmark.id === '' ? 'hidden' : ''}>
+        <button
+          className={!bookmark?.id || bookmark.id === '' ? 'hidden' : ''}
+          disabled={deleteBookmarkLoading}
+        >
           <FontAwesomeIcon icon={faTrashCan} size="lg" />
         </button>
       </OkCancelDialog>

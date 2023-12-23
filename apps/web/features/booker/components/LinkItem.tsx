@@ -23,7 +23,7 @@ const LinkItem = ({ link }: { link: Props }) => {
 
   return (
     <div>
-      <HoverEditButton clickHandler={() => handleEditLink()}>
+      <HoverEditButton clickHandler={() => handleEditLink()} className="right-12 top-2">
         <ul key={link.id} className="min-h-[80px] p-2 hover:bg-gray-300 dark:hover:bg-gray-700">
           <li className="">
             <Link href={link.url} target="_blank">

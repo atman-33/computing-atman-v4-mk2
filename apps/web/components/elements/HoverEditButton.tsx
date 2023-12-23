@@ -7,10 +7,11 @@ import { useState } from 'react';
 type Props = {
   children: React.ReactNode;
   clickHandler: () => void;
+  className?: string;
 };
 
 const HoverEditButton = (props: Props) => {
-  const { children, clickHandler } = props;
+  const { children, clickHandler, className } = props;
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -29,8 +30,8 @@ const HoverEditButton = (props: Props) => {
           {children}
           <div>
             {isHovered && (
-              <button className="absolute right-10 top-2" onClick={clickHandler}>
-                <FontAwesomeIcon icon={faEdit} size="2xl" />
+              <button className={`absolute ${className}`} onClick={clickHandler}>
+                <FontAwesomeIcon icon={faEdit} size="xl" />
               </button>
             )}
           </div>

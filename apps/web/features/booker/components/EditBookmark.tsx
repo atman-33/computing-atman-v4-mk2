@@ -20,17 +20,17 @@ import { useBookmark } from '../hooks/useBookmark';
 const EditBookmark = () => {
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
-  const { bookmark, updateBookmark } = useBookmark();
+  const { bookmark, updateBookmark, updateBookmarkLoading } = useBookmark();
 
   /**
    * Edit bookmark
    * @returns
    */
-  const handleEditBookmark = async () => {
+  const handleEditBookmark = () => {
     if (!bookmarkName) {
       return;
     }
-    await updateBookmark(bookmark?.id ?? '', bookmarkName);
+    updateBookmark(bookmark?.id ?? '', bookmarkName);
     setBookmarkName('');
     setOpen(false);
   };
@@ -42,6 +42,7 @@ const EditBookmark = () => {
           <button
             className={!bookmark?.id || bookmark.id === '' ? 'hidden' : ''}
             onClick={() => setBookmarkName('')}
+            disabled={updateBookmarkLoading}
           >
             <FontAwesomeIcon icon={faEdit} size="lg" />
           </button>

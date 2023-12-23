@@ -20,17 +20,17 @@ import { useBookmark } from '../hooks/useBookmark';
 const CreateBookmark = () => {
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
-  const { createBookmark } = useBookmark();
+  const { createBookmark, createBookmarkLoading } = useBookmark();
 
   /**
    * Create bookmark
    * @returns
    */
-  const handleCreateBookmark = async () => {
+  const handleCreateBookmark = () => {
     if (!bookmarkName) {
       return;
     }
-    await createBookmark(bookmarkName);
+    createBookmark(bookmarkName);
     setBookmarkName('');
     setOpen(false);
   };
@@ -39,7 +39,11 @@ const CreateBookmark = () => {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <button className="fixed bottom-8 right-8" onClick={() => setBookmarkName('')}>
+          <button
+            className="fixed bottom-8 right-8"
+            onClick={() => setBookmarkName('')}
+            disabled={createBookmarkLoading}
+          >
             <span className="absolute bottom-16 text-xs">Bookmark</span>
             <FontAwesomeIcon
               icon={faPlus}

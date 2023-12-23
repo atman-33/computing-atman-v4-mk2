@@ -9,8 +9,10 @@ import {
 
 export const useLinks = (bookmarkId: string | undefined) => {
   const { requireAuth } = useAuth();
-  const [createLinkMutation] = useMutation(CreateLinkDocument);
-  const [deleteLinkMutation] = useMutation(DeleteLinkDocument);
+  const [createLinkMutation, { loading: createLinkLoading, error: createLinkError }] =
+    useMutation(CreateLinkDocument);
+  const [deleteLinkMutation, { loading: deleteLinkLoading, error: deleteLinkError }] =
+    useMutation(DeleteLinkDocument);
 
   /**
    * Get links
@@ -94,6 +96,10 @@ export const useLinks = (bookmarkId: string | undefined) => {
     linksData,
     linksLoading,
     createLink,
-    deleteLink
+    createLinkLoading,
+    createLinkError,
+    deleteLink,
+    deleteLinkLoading,
+    deleteLinkError
   };
 };

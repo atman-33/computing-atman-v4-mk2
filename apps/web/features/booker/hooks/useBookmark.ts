@@ -14,9 +14,12 @@ import { bookmarkState } from '../stores/bookmarkState';
 export const useBookmark = () => {
   const { requireAuth } = useAuth();
   const [bookmark, setBookmark] = useRecoilState(bookmarkState);
-  const [createBookmarkMutation /* { loading, error } */] = useMutation(CreateBookmarkDocument);
-  const [updateBookmarkMutation] = useMutation(UpdateBookmarkDocument);
-  const [deleteBookmarkMutation] = useMutation(DeleteBookmarkDocument);
+  const [createBookmarkMutation, { loading: createBookmarkLoading, error: createBookmarkError }] =
+    useMutation(CreateBookmarkDocument);
+  const [updateBookmarkMutation, { loading: updateBookmarkLoading, error: updateBookmarkError }] =
+    useMutation(UpdateBookmarkDocument);
+  const [deleteBookmarkMutation, { loading: deleteBookmarkLoading, error: deleteBookmarkError }] =
+    useMutation(DeleteBookmarkDocument);
 
   /**
    * Reset bookmark
@@ -104,7 +107,13 @@ export const useBookmark = () => {
     setBookmark,
     resetBookmark,
     createBookmark,
+    createBookmarkLoading,
+    createBookmarkError,
     updateBookmark,
-    deleteBookmark
+    updateBookmarkLoading,
+    updateBookmarkError,
+    deleteBookmark,
+    deleteBookmarkLoading,
+    deleteBookmarkError
   };
 };
