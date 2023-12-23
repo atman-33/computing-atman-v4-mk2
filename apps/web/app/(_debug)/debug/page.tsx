@@ -2,9 +2,11 @@
 import Link from '@/components/elements/Link';
 
 const debugPages = [
+  '/debug/animate-spin',
   '/debug/auth-login-sample',
   '/debug/auth-test-1',
   '/debug/auth-test-2',
+  '/debug/dynamic-routes',
   '/debug/hover-button',
   '/debug/loop-animation',
   '/debug/ok-cancel-dialog',

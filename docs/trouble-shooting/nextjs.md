@@ -93,3 +93,23 @@ module.exports = nextConfig;
 ```
 
 > Reference URL: https://zenn.dev/kisukeyas/articles/6f679a67db3883
+
+## Not support Dynamic routes when using static export
+
+2023/12/22  
+
+error sample:  
+
+```txt
+Server Error
+Error: Page "/sites/booker/link/[id]/page" is missing exported function "generateStaticParams()", which is required with "output: export" config.
+```
+
+In this time, Nextjs does not support dynamic routes when using static export.
+In other words, we cannot use `[id]` etc.
+
+> If the above ids [id] already determined, you can use dynamic routes when using static export.
+
+> Reference URL:  
+> https://blog.stin.ink/articles/static-exports-with-nextjs-app-router
+> https://stackoverflow.com/questions/77177956/next-js-static-export-with-dynamic-routes
