@@ -7,24 +7,15 @@ import Link from '@/components/elements/Link';
 import { faPager } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEditLinkShow } from '../hooks/useEditLinkShow';
+import { useEditingLink } from '../hooks/useEditingLink';
+import { Link as BookmarkLink } from '../types';
 
-type Props = {
-  id: string;
-  url: string;
-  title: string | null;
-  description: string | null;
-  siteName: string | null;
-  image: string | null;
-};
-
-const LinkItem = ({ link }: { link: Props }) => {
-  // const router = useRouter();
+const LinkItem = ({ link }: { link: BookmarkLink }) => {
   const { setEditLinkShow } = useEditLinkShow();
+  const { setEditingLink } = useEditingLink();
 
   const handleShowEditLink = () => {
-    // console.log('edit link');
-    // router.push(`/sites/booker/link?id=${link.id}`);
-
+    setEditingLink(link);
     setEditLinkShow(true);
   };
 

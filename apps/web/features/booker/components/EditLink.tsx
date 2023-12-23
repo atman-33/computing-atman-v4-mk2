@@ -1,20 +1,24 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 'use client';
 
+import Image from '@/components/elements/Image';
+import Link from '@/components/elements/Link';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEditLinkShow } from '../hooks/useEditLinkShow';
+import { useEditingLink } from '../hooks/useEditingLink';
 
 const EditLink = () => {
   const { editLinkShow, setEditLinkShow } = useEditLinkShow();
+  const { editingLink, setEditingLink } = useEditingLink();
+
+  if (!editingLink) {
+    return null;
+  }
+  const { url, title, description, siteName, image, bookmarkId } = editingLink;
 
   const handleEditShow = () => {
     setEditLinkShow((status) => {
-      // if (status) {
-      //   document.body.style.overflow = 'auto';
-      // } else {
-      //   // Prevent scrolling
-      //   document.body.style.overflow = 'hidden';
-      // }
       return !status;
     });
   };
@@ -28,9 +32,39 @@ const EditLink = () => {
           }`}
         >
           <div className="flex justify-end">
-            <button className="mr-8 mt-11">
+            <button className="mr-8 mt-4">
               <FontAwesomeIcon icon={faXmark} onClick={handleEditShow} size="2xl" />
             </button>
+          </div>
+          <div>
+            <div className="flex items-center gap-4">
+              <Image
+                src={image ?? ''}
+                alt={title ?? ''}
+                width={80}
+                height={80}
+                className="rounded-md"
+              ></Image>
+              <Link href={url} className="font-bold" target="_blank">
+                {url}
+              </Link>
+            </div>
+            <div className="m-4 grid grid-cols-12">
+              <div className="col-span-3">Bookmark ID</div>
+              <div className="col-span-9">{bookmarkId}</div>
+            </div>
+            <div className="m-4 grid grid-cols-12">
+              <div className="col-span-3">Title</div>
+              <div className="col-span-9">{title}</div>
+            </div>
+            <div className="m-4 grid grid-cols-12">
+              <div className="col-span-3">Site Name</div>
+              <div className="col-span-9">{siteName}</div>
+            </div>
+            <div className="m-4 grid grid-cols-12">
+              <div className="col-span-3">Description</div>
+              <div className="col-span-9">{description}</div>
+            </div>
           </div>
         </div>
       )}

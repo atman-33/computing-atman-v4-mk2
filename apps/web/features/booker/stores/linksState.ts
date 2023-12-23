@@ -1,5 +1,5 @@
-import { Link } from '@libs/web/data-access-graphql';
 import { atomFamily } from 'recoil';
+import { Link } from '../types';
 
 type BookmarkId = string;
 
