@@ -40,4 +40,13 @@ export class AuthService {
       expires: expires
     });
   }
+
+  async generateJwt(user: User) {
+    const tokenPayload: TokenPayload = {
+      userId: user.id
+    };
+
+    const token = await this.jwtService.signAsync(tokenPayload);
+    return token;
+  }
 }

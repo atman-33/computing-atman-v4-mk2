@@ -19,7 +19,11 @@ async function bootstrap() {
 
   console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
   app.enableCors({
-    origin: env.PRODUCTION_ORIGIN || 'http://localhost:4200',
+    origin: [
+      env.PRODUCTION_ORIGIN || 'http://localhost:4200',
+      'http://localhost:3333',
+      'http://localhost:3000'
+    ],
     credentials: true
   });
 
