@@ -13,7 +13,10 @@ const DeleteBookmark = () => {
    * Delete bookmark
    */
   const handleDeleteBookmark = () => {
-    deleteBookmark(bookmark?.id ?? '');
+    if (!bookmark?.id) {
+      return;
+    }
+    deleteBookmark(bookmark.id);
     resetBookmark();
   };
 

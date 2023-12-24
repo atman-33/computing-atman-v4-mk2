@@ -7,6 +7,10 @@ query getLinks($where: LinkWhereInput!) {
     description
     image
     bookmarkId
+    bookmark {
+      id
+      name
+    }
   }
 }
 

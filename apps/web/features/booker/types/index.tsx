@@ -11,4 +11,8 @@ export type Link = {
   siteName: string | null;
   image: string | null;
   bookmarkId: string;
+  bookmark: {
+    id: string;
+    name: string;
+  };
 };

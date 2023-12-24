@@ -5,6 +5,7 @@ import {
   PrismaService
 } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { getLinkPreview } from 'link-preview-js';
 import { CreateLinkInput } from './dto/create-link-input.dto';
 
@@ -13,6 +14,10 @@ type LinkPreview = {
   siteName?: string;
   description?: string;
   images?: string[];
+};
+
+const include: Prisma.LinkInclude = {
+  bookmark: true
 };
 
 @Injectable()
@@ -36,7 +41,10 @@ export class LinksService {
   }
 
   async getLinks(findManyLinkArgs: FindManyLinkArgs) {
-    return await this.prisma.link.findMany(findManyLinkArgs);
+    return await this.prisma.link.findMany({
+      where: findManyLinkArgs.where,
+      include: include
+    });
   }
 
   async getLinkPreview(url: string): Promise<LinkPreview> {
