@@ -7,19 +7,27 @@ import Link from '@/components/elements/Link';
 import OkCancelDialog from '@/components/elements/OkCancelDialog';
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useComboBoxSelectedBookmark } from '../hooks/useComboBoxSelectedBookmark';
 import { useEditLinkShow } from '../hooks/useEditLinkShow';
 import { useEditingLink } from '../hooks/useEditingLink';
 import { useLinks } from '../hooks/useLinks';
+import BookmarkComboBox from './BookmarkComboBox';
 
 const EditLink = () => {
   const { editLinkShow, setEditLinkShow } = useEditLinkShow();
   const { editingLink, setEditingLink } = useEditingLink();
   const { deleteLink, deleteLinkLoading } = useLinks(editingLink?.bookmarkId);
+  const { setComboBoxSelectedBookmark } = useComboBoxSelectedBookmark();
 
   if (!editingLink) {
     return null;
   }
+
   const { url, title, description, siteName, image, bookmark } = editingLink;
+  setComboBoxSelectedBookmark({
+    id: bookmark.id,
+    name: bookmark.name
+  });
 
   const handleEditShow = () => {
     setEditLinkShow((status) => {
@@ -74,6 +82,7 @@ const EditLink = () => {
               <div className="col-span-3">Bookmark</div>
               <div className="col-span-9">{bookmark.name}</div>
             </div>
+            <BookmarkComboBox />
             <div className="m-4 grid grid-cols-12">
               <div className="col-span-3">Title</div>
               <div className="col-span-9">{title}</div>
