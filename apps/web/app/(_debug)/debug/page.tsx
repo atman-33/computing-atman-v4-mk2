@@ -6,6 +6,7 @@ const debugPages = [
   '/debug/auth-login-sample',
   '/debug/auth-test-1',
   '/debug/auth-test-2',
+  '/debug/combobox',
   '/debug/dynamic-routes',
   '/debug/hover-button',
   '/debug/loop-animation',

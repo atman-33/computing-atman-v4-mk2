@@ -1,7 +1,7 @@
+import { ComboboxItem } from '@/components/elements/Combobox';
 import { atom } from 'recoil';
-import { Bookmark } from '../types';
 
-export const comboBoxSelectedBookmarkState = atom<Bookmark | null>({
+export const comboBoxSelectedBookmarkState = atom<ComboboxItem | undefined>({
   key: 'booker/comboBoxSelectedBookmarkState',
-  default: null
+  default: undefined
 });
