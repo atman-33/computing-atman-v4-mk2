@@ -18,7 +18,7 @@ const HoverButton2 = ({ children }: { children: React.ReactNode[] }) => {
   return (
     <>
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <div className="relative flex items-center">
+        <div className="relative">
           {childrenArray[0]}
           <div>{isHovered && <div>{childrenArray[1]}</div>}</div>
         </div>

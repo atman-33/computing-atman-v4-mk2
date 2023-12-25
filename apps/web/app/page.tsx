@@ -1,8 +1,10 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import HeroWithAnimation from '@/components/elements/HeroWithAnimation/HeroWithAnimation';
+import Link from '@/components/elements/Link';
 import { NEXT_PUBLIC_IS_DEV } from '@/config/index';
+import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Blog, allBlogs } from 'contentlayer/generated';
-import Link from 'next/link';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
 import cloudsImage from '../public/static/images/clouds.png';
 import backgroundImage from '../public/static/images/coding.jpg';
@@ -12,34 +14,15 @@ export default async function Page() {
   const sortedPosts = sortPosts(allBlogs);
   const posts = allCoreContent(sortedPosts);
 
-  const debugPages = [
-    '/auth-login-sample',
-    '/auth-test-1',
-    '/auth-test-2',
-    '/hover-button',
-    '/loop-animation',
-    '/ok-cancel-dialog',
-    '/shadcn-ui',
-    '/tailwindcss-sample',
-    '/login',
-    '/signup',
-    '/sites/booker'
-  ];
-
   return (
     <>
       {NEXT_PUBLIC_IS_DEV === '1' && (
-        <div className=" m-2 items-center rounded-lg bg-purple-400 p-2 pl-4">
-          <h2 className="text-xl font-bold">Debug</h2>
-          <div>
-            {debugPages.map((page) => {
-              return (
-                <div key={page}>
-                  <Link href={page}>{page}</Link>
-                </div>
-              );
-            })}
-          </div>
+        <div className="m-2 items-center rounded-lg bg-red-400 p-2 pl-4">
+          <Link href="/debug">
+            <span className="flex flex-wrap">
+              <FontAwesomeIcon icon={faArrowAltCircleRight} className="mr-2 h-6 w-6" /> Go to Debug
+            </span>
+          </Link>
         </div>
       )}
 

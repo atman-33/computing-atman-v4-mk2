@@ -38,7 +38,7 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({ where: { email } });
     const passwordIsValid = await bcrypt.compare(password, user === null ? '' : user.password);
     if (!passwordIsValid) {
-      throw new UnauthorizedException('Credentials are not valid.');
+      throw new UnauthorizedException('Email or password is incorrect.');
     }
     return user;
   }

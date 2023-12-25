@@ -1,6 +1,7 @@
 'use client';
 
-import { Button } from '@/components/elements/Button';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
   clickHandler: () => void;
 };
 
-const HoverButton = (props: Props) => {
+const HoverEditButton = (props: Props) => {
   const { children, clickHandler } = props;
 
   const [isHovered, setIsHovered] = useState(false);
@@ -24,13 +25,13 @@ const HoverButton = (props: Props) => {
   return (
     <>
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <div className="relative flex items-center">
+        <div className="relative">
           {children}
           <div>
             {isHovered && (
-              <Button className="absolute right-10 top-5" onClick={clickHandler}>
-                Button
-              </Button>
+              <button className="absolute right-10 top-5" onClick={clickHandler}>
+                <FontAwesomeIcon icon={faEdit} size="2xl" />
+              </button>
             )}
           </div>
         </div>
@@ -39,4 +40,4 @@ const HoverButton = (props: Props) => {
   );
 };
 
-export default HoverButton;
+export default HoverEditButton;

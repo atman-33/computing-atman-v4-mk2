@@ -4,7 +4,10 @@
 import Link from '@/components/elements/Link';
 import authApi from '@/features/auth/api/auth-api';
 import { useIsAuthenticated } from '@/features/auth/hooks/useIsAuthenticated';
+import { useIsHeaderVisible } from '@/hooks/useIsHeaderVisible';
 import { useQuery } from '@apollo/client';
+import { faBackward } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GetCurrentUserDocument } from '@libs/web/data-access-graphql';
 import { useEffect, useState } from 'react';
 
@@ -13,6 +16,7 @@ const Navbar = () => {
   const [email, setEmail] = useState('');
   const { data, loading, error } = useQuery(GetCurrentUserDocument);
   const { setIsAuthenticated } = useIsAuthenticated();
+  const { setIsHeaderVisible } = useIsHeaderVisible();
 
   useEffect(() => {
     setEmail(data?.currentUser.email || '');
@@ -27,6 +31,12 @@ const Navbar = () => {
     return <div></div>;
   }
 
+  const handleGoToTop = () => {
+    setIsHeaderVisible(true);
+    // use window.location.href because router.push is not working reloading the page
+    window.location.href = '/';
+  };
+
   const handleShow = () => {
     setMobileNavShow(!mobileNavShow);
   };
@@ -39,7 +49,10 @@ const Navbar = () => {
   };
   return (
     <nav className="mt-2 flex flex-wrap items-center justify-between rounded-xl bg-cyan-800 py-2 px-4">
-      <div className="mr-6 flex flex-shrink-0 items-center text-white">
+      <div className="mr-6 flex flex-shrink-0 items-center gap-x-4 text-white">
+        <button onClick={handleGoToTop}>
+          <FontAwesomeIcon icon={faBackward} size="xl" />
+        </button>
         <Link href="/sites/booker" className="text-xl font-semibold tracking-tight">
           Booker
         </Link>

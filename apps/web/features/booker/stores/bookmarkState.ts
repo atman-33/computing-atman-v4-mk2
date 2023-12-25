@@ -1,11 +1,7 @@
 import { atom } from 'recoil';
+import { Bookmark } from '../types';
 
-export type BookmarkType = {
-  id: string;
-  name: string;
-};
-
-export const bookmarkState = atom<BookmarkType | null>({
+export const bookmarkState = atom<Bookmark | undefined>({
   key: 'booker/bookmarkState',
-  default: null
+  default: undefined
 });

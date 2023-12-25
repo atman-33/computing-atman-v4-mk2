@@ -1,6 +1,6 @@
 'use client';
 
-import HoverButton from './_components/HoverButton';
+import HoverEditButton from './_components/HoverEditButton';
 
 const dummy = [
   {
@@ -30,12 +30,12 @@ const Page = () => {
       <div>
         {dummy.map((d, i) => {
           return (
-            <HoverButton key={i} clickHandler={() => handleClick(d.id)}>
+            <HoverEditButton key={i} clickHandler={() => handleClick(d.id)}>
               <div className="m-2 flex h-40 w-full items-center gap-4 rounded-lg bg-blue-200 p-8">
                 <div>{d.name}</div>
                 <div>{d.email}</div>
               </div>
-            </HoverButton>
+            </HoverEditButton>
           );
         })}
       </div>

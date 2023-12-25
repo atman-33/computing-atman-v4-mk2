@@ -6,6 +6,11 @@ query getLinks($where: LinkWhereInput!) {
     url
     description
     image
+    bookmarkId
+    bookmark {
+      id
+      name
+    }
   }
 }
 
@@ -20,5 +25,17 @@ mutation createLink($data: CreateLinkInput!) {
 mutation deleteLink($where: LinkWhereUniqueInput!) {
   deleteLink(where: $where) {
     id
+  }
+}
+
+mutation updateLink($data: UpdateLinkInput!) {
+  updateLink(data: $data) {
+    id
+    url
+    title
+    siteName
+    description
+    image
+    bookmarkId
   }
 }

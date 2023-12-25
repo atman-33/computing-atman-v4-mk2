@@ -24,11 +24,21 @@ https://dashboard.render.com/
 
 Build Command:  
 
- `node --version && npm install --force && nx reset && npm run cd:build`
+**No use Prisma**  
+```bash
+node --version && npm install --force && nx reset && npm run cd:build
+```
+
+**Use Prisma**  
+```bash
+node --version && npm install --force && nx reset && npx prisma generate && npm run cd:build
+```
 
 Start Command:  
 
- `npm run cd:api-start`
+```bash
+npm run cd:api-start
+```
 
 ### Environment Variables
 

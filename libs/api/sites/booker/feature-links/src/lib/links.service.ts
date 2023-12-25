@@ -5,14 +5,20 @@ import {
   PrismaService
 } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { getLinkPreview } from 'link-preview-js';
 import { CreateLinkInput } from './dto/create-link-input.dto';
+import { UpdateLinkInput } from './dto/update-link-input.dto';
 
 type LinkPreview = {
   title?: string;
   siteName?: string;
   description?: string;
   images?: string[];
+};
+
+const include: Prisma.LinkInclude = {
+  bookmark: true
 };
 
 @Injectable()
@@ -36,7 +42,10 @@ export class LinksService {
   }
 
   async getLinks(findManyLinkArgs: FindManyLinkArgs) {
-    return await this.prisma.link.findMany(findManyLinkArgs);
+    return await this.prisma.link.findMany({
+      where: findManyLinkArgs.where,
+      include: include
+    });
   }
 
   async getLinkPreview(url: string): Promise<LinkPreview> {
@@ -82,6 +91,21 @@ export class LinksService {
   async deleteLink(deleteOneLinkArgs: DeleteOneLinkArgs) {
     return await this.prisma.link.delete({
       where: deleteOneLinkArgs.where
+    });
+  }
+
+  async updateLink(updateLinkInput: UpdateLinkInput) {
+    const { id, url, title, siteName, description, image, bookmarkId } = updateLinkInput;
+    return await this.prisma.link.update({
+      where: { id: id },
+      data: {
+        url: url,
+        title: title,
+        siteName: siteName,
+        description: description,
+        image: image,
+        bookmarkId: bookmarkId
+      }
     });
   }
 }

@@ -12,27 +12,28 @@ import {
 } from '@/components/elements/Dialog';
 import { Input } from '@/components/elements/Input';
 import { Label } from '@/components/elements/Label';
+import Spinner from '@/components/elements/Spinner';
 import { useState } from 'react';
 import { useBookmark } from '../hooks/useBookmark';
-import { useLinks } from '../hooks/useLinksState';
+import { useLinks } from '../hooks/useLinks';
 
 const AddLink = () => {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
 
   const { bookmark } = useBookmark();
-  const { createLink } = useLinks(bookmark?.id);
+  const { createLink, createLinkLoading } = useLinks(bookmark?.id);
 
   /**
    * Add link to bookmark
    * @returns
    */
-  const handleAddLink = async () => {
+  const handleAddLink = () => {
     if (!url) {
       return;
     }
 
-    await createLink(url);
+    createLink(url);
     setUrl('');
     setOpen(false);
   };
@@ -45,9 +46,9 @@ const AddLink = () => {
             className="rounded-md"
             size={'sm'}
             onClick={() => setUrl('')}
-            disabled={!bookmark?.id || bookmark.id === ''}
+            disabled={!bookmark?.id || bookmark.id === '' || createLinkLoading}
           >
-            ★ Add
+            {createLinkLoading ? <Spinner /> : '★ Add'}
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

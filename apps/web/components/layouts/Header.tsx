@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @nx/enforce-module-boundaries */
 import headerNavLinks from '@/constants/header-nav-links';
 import siteMetadata from '@/constants/site-metadata';
@@ -8,7 +10,7 @@ import MobileNav from './MobileNav';
 import SearchButton from './SearchButton';
 import ThemeSwitch from './ThemeSwitch';
 
-const Header = async () => {
+const Header = () => {
   return (
     <header
       className="sticky top-0 z-10 flex items-center justify-between bg-slate-300 py-2 px-4 shadow-xl dark:bg-gray-800 md:px-10 md:py-4"

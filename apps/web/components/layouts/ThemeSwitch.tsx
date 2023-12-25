@@ -2,6 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import Spinner from '../elements/Spinner';
 
 const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false);
@@ -11,7 +12,7 @@ const ThemeSwitch = () => {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return null;
+    return <Spinner />;
   }
 
   return (

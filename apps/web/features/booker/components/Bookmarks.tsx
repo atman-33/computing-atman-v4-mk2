@@ -2,35 +2,36 @@
 
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Input } from '@/components/elements/Input';
-import { ScrollArea } from '@/components/elements/ScrollArea';
 import useAuth from '@/features/auth/hooks/useAuth';
-import { useQuery } from '@apollo/client';
 import { faFolderClosed, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GetBookmarksDocument } from '@libs/web/data-access-graphql';
 import { useState } from 'react';
 import { useBookmark } from '../hooks/useBookmark';
-import { BookmarkType } from '../stores/bookmarkState';
+import { useBookmarks } from '../hooks/useBookmarks';
+import { useEditLinkShow } from '../hooks/useEditLinkShow';
+import { Bookmark } from '../types';
 
 const Bookmarks = () => {
   const { requireAuth } = useAuth();
-  const { data: bookmarksData, loading, error } = useQuery(GetBookmarksDocument);
+  const { bookmarksData, bookmarksLoading, bookmarksError } = useBookmarks();
   const { setBookmark } = useBookmark();
+  const { editLinkShow } = useEditLinkShow();
+
   const [filterVal, setFilterVal] = useState('');
 
-  if (loading) {
+  if (bookmarksLoading) {
     return null;
   }
 
-  const handleShowBookmark = (bookmark: BookmarkType) => () => {
+  const handleShowBookmark = (bookmark: Bookmark) => () => {
     requireAuth();
     // console.log(id);
     setBookmark(bookmark);
   };
 
   return (
-    <div className="border-r-2">
-      {error && <div className="mt-4 text-red-500">{error?.message}</div>}
+    <>
+      {bookmarksError && <div className="mt-4 text-red-500">{bookmarksError?.message}</div>}
       <div className="mr-2  flex items-center">
         <FontAwesomeIcon icon={faSearch} className="mx-2" />
         <Input
@@ -41,26 +42,25 @@ const Bookmarks = () => {
           onChange={(e) => setFilterVal(e.target.value)}
         />
       </div>
-      <h2 className="my-2 text-sm font-bold">Bookmarks</h2>
+      <h2 className="my-2 text-xl font-bold">Bookmarks</h2>
 
-      <ScrollArea className="h-[60vh] p-2">
-        <ul className="grid grid-cols-1 gap-2">
-          {bookmarksData?.bookmarks
-            .filter((bookmark) => bookmark.name.toLowerCase().includes(filterVal.toLowerCase()))
-            .map((bookmark) => (
-              <li key={bookmark.id} className="flex flex-wrap">
-                <button
-                  className="ml-1 flex  items-center gap-x-2"
-                  onClick={handleShowBookmark(bookmark)}
-                >
-                  <FontAwesomeIcon icon={faFolderClosed} />
-                  <p>{bookmark.name}</p>
-                </button>
-              </li>
-            ))}
-        </ul>
-      </ScrollArea>
-    </div>
+      <ul className="flex flex-col gap-2">
+        {bookmarksData?.bookmarks
+          .filter((bookmark) => bookmark.name.toLowerCase().includes(filterVal.toLowerCase()))
+          .map((bookmark) => (
+            <li key={bookmark.id} className="flex flex-wrap">
+              <button
+                className="ml-1 flex items-center gap-x-2"
+                onClick={handleShowBookmark(bookmark)}
+                disabled={editLinkShow}
+              >
+                <FontAwesomeIcon icon={faFolderClosed} />
+                <p>{bookmark.name}</p>
+              </button>
+            </li>
+          ))}
+      </ul>
+    </>
   );
 };
 export default Bookmarks;
