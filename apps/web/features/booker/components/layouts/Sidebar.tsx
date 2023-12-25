@@ -3,8 +3,8 @@ import { ReactNode } from 'react';
 
 const Sidebar = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="border-r-2">
-      <ScrollArea className="h-[60vh]">{children}</ScrollArea>
+    <div>
+      <ScrollArea className="h-[70vh]">{children}</ScrollArea>
     </div>
   );
 };

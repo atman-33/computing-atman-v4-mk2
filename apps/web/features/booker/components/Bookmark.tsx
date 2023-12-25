@@ -47,7 +47,7 @@ const Bookmark = () => {
       {linksLoading ? (
         <DotFlashing />
       ) : (
-        <ScrollArea className="h-[60vh]">
+        <ScrollArea className="h-[70vh]">
           <ul>
             {linksData?.links
               .filter(

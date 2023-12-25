@@ -22,7 +22,7 @@ const BookmarkComboBox = () => {
 
   const handleSelectBookmark = useCallback(
     (item: ComboboxItem) => {
-      console.log(`value: ${item.value}, label: ${item.label}`);
+      // console.log(`value: ${item.value}, label: ${item.label}`);
       setComboBoxSelectedBookmark(item);
     },
     [comboBoxSelectedBookmark]

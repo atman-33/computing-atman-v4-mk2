@@ -4,8 +4,10 @@ import { useMutation, useQuery } from '@apollo/client';
 import {
   CreateLinkDocument,
   DeleteLinkDocument,
-  GetLinksDocument
+  GetLinksDocument,
+  UpdateLinkDocument
 } from '@libs/web/data-access-graphql';
+import { UpdateLinkData } from '../types';
 
 export const useLinks = (bookmarkId: string | undefined) => {
   const { requireAuth } = useAuth();
@@ -13,6 +15,8 @@ export const useLinks = (bookmarkId: string | undefined) => {
     useMutation(CreateLinkDocument);
   const [deleteLinkMutation, { loading: deleteLinkLoading, error: deleteLinkError }] =
     useMutation(DeleteLinkDocument);
+  const [updateLinkMutation, { loading: updateLinkLoading, error: updateLinkError }] =
+    useMutation(UpdateLinkDocument);
 
   /**
    * Get links
@@ -92,6 +96,41 @@ export const useLinks = (bookmarkId: string | undefined) => {
     }
   };
 
+  /**
+   * Update link
+   * @param updateLinkDto
+   */
+  const updateLink = async (updateLinkData: UpdateLinkData) => {
+    requireAuth();
+    try {
+      await updateLinkMutation({
+        variables: {
+          data: updateLinkData
+        },
+        refetchQueries: [
+          {
+            query: GetLinksDocument,
+            variables: {
+              where: {
+                bookmarkId: {
+                  equals: bookmarkId
+                }
+              }
+            }
+          },
+          {
+            query: GetLinksDocument,
+            variables: {
+              where: { bookmarkId: { equals: updateLinkData.bookmarkId } }
+            }
+          }
+        ]
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     linksData,
     linksLoading,
@@ -100,6 +139,9 @@ export const useLinks = (bookmarkId: string | undefined) => {
     createLinkError,
     deleteLink,
     deleteLinkLoading,
-    deleteLinkError
+    deleteLinkError,
+    updateLink,
+    updateLinkLoading,
+    updateLinkError
   };
 };

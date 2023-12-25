@@ -27,3 +27,15 @@ mutation deleteLink($where: LinkWhereUniqueInput!) {
     id
   }
 }
+
+mutation updateLink($data: UpdateLinkInput!) {
+  updateLink(data: $data) {
+    id
+    url
+    title
+    siteName
+    description
+    image
+    bookmarkId
+  }
+}

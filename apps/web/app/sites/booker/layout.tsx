@@ -30,7 +30,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <>
       <Navbar />
       <div className="mt-2 grid grid-cols-12">
-        <div className="col-span-3 mr-4">
+        <div className="col-span-3 mr-4 border-r-2">
           <Sidebar>
             <Bookmarks />
           </Sidebar>
