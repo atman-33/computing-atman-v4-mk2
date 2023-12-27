@@ -378,7 +378,7 @@ export type QuerySampleUserArgs = {
 
 
 export type QueryTokenArgs = {
-  data: LoginUserInput;
+  loginUserData: LoginUserInput;
 };
 
 

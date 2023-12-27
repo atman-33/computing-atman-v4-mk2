@@ -11,8 +11,8 @@ export class AuthResolver {
   ) {}
 
   @Query(() => String, { name: 'token' })
-  async getToken(@Args('data') loginUserInput: LoginUserInput) {
-    const { email, password } = loginUserInput;
+  async getToken(@Args('loginUserData') loginUserData: LoginUserInput) {
+    const { email, password } = loginUserData;
     const user = await this.usersService.validateUser(email, password);
 
     if (!user) {

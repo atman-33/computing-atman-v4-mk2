@@ -2,7 +2,8 @@ import { GqlAuthGuard } from '@libs/api/feature-auth';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateLinkInput } from './dto/create-link-input.dto';
-import { DeleteOneLinkArgs, FindManyLinkArgs } from './dto/link.dto';
+import { DeleteLinkInput } from './dto/delete-link-input.dto';
+import { GetLinksArgs } from './dto/get-links-args.dto';
 import { UpdateLinkInput } from './dto/update-link-input.dto';
 import { LinksService } from './links.service';
 import { Link } from './models/link.model';
@@ -13,26 +14,26 @@ export class LinksResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => [Link], { name: 'links' })
-  async getLinks(@Args() findManyLinkArgs: FindManyLinkArgs) {
+  async getLinks(@Args() getLinksArgs: GetLinksArgs) {
     // console.log(getLinksArgs);
-    return await this.linkService.getLinks(findManyLinkArgs);
+    return await this.linkService.getLinks(getLinksArgs);
   }
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Link)
-  async createLink(@Args('data') createLinkInput: CreateLinkInput) {
-    return await this.linkService.createLink(createLinkInput);
+  async createLink(@Args('data') createLinkData: CreateLinkInput) {
+    return await this.linkService.createLink(createLinkData);
   }
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Link)
-  async deleteLink(@Args() deleteOneLinkArgs: DeleteOneLinkArgs) {
-    return await this.linkService.deleteLink(deleteOneLinkArgs);
+  async deleteLink(@Args() deleteLinkData: DeleteLinkInput) {
+    return await this.linkService.deleteLink(deleteLinkData);
   }
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Link)
-  async updateLink(@Args('data') updateLinkInput: UpdateLinkInput) {
-    return await this.linkService.updateLink(updateLinkInput);
+  async updateLink(@Args('data') updateLinkData: UpdateLinkInput) {
+    return await this.linkService.updateLink(updateLinkData);
   }
 }
