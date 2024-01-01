@@ -1,3 +1,9 @@
+// ---- Constants ---- //
+// const FOLDER_PATH = './libs/api/prisma/data-access-db/src/lib';
+const FOLDER_PATH = './tools/schema-codegen';
+const FILE_NAME = 'schema.prisma';
+// ------------------- //
+
 const fs = require('fs');
 const path = require('path');
 
@@ -12,19 +18,27 @@ const parsePrismaSchema = (schemaContent) => {
   const lines = schemaContent.split('\n').filter((line) => !line.trim().startsWith('//'));
   lines.forEach((line) => {
     const modelMatch = line.match(/^model\s+(\w+)\s+\{/);
-    const idMatch = line.match(/@id/);
-    const defaultMatch = line.match(/@default/);
 
     if (modelMatch) {
       if (currentModel) {
         models.push(currentModel);
       }
       currentModel = { model: modelMatch[1], columns: [] };
-    } else if (idMatch || defaultMatch) {
-      const columnMatch = line.match(/\s+(\w+)\s+(\w+)\s+/);
-      if (columnMatch) {
-        const columnName = columnMatch[1];
-        const type = columnMatch[2].toLowerCase();
+    } else {
+      const idMatch = line.match(/@id/);
+      const relationMatch = line.match(/@relation/);
+
+      if (!currentModel) {
+        return;
+      }
+      if (relationMatch) {
+        return;
+      }
+
+      const columnMatch = line.split(/\s+/).filter(Boolean);
+      if (columnMatch && columnMatch.length >= 2) {
+        const columnName = columnMatch[0];
+        const type = columnMatch[1];
         const key = idMatch ? 1 : 0;
         currentModel.columns.push({ name: columnName, type, key });
       }
@@ -51,7 +65,7 @@ const generateModelJson = (models) => {
   });
 };
 
-const filePath = path.join('./libs/api/prisma/data-access-db/src/lib', 'schema.prisma');
+const filePath = path.join(FOLDER_PATH, FILE_NAME);
 const schemaContent = readFile(filePath);
 const models = parsePrismaSchema(schemaContent);
 const modelJson = generateModelJson(models);
