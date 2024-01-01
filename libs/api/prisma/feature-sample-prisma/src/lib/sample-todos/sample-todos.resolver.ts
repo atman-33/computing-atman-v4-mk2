@@ -1,10 +1,9 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import {
-  CreateOneSampleTodoArgs,
-  DeleteOneSampleTodoArgs,
-  FindUniqueSampleTodoArgs,
-  UpdateOneSampleTodoArgs
-} from './dto/sample-todo.dto';
+
+import { CreateSampleTodoInput } from './dto/create-sample-todo-input.dto';
+import { DeleteSampleTodoInput } from './dto/delete-sample-todo-input.dto';
+import { GetSampleTodoArgs } from './dto/get-sample-todo-args.dto';
+import { UpdateSampleTodoInput } from './dto/update-sample-todo-input.dto';
 import { SampleTodo } from './models/sample-todo.model';
 import { SampleTodosService } from './sample-todos.service';
 
@@ -12,28 +11,28 @@ import { SampleTodosService } from './sample-todos.service';
 export class SampleTodosResolver {
   constructor(private readonly sampleTodosService: SampleTodosService) {}
 
-  @Mutation(() => SampleTodo)
-  async createSampleTodo(@Args() createOneSampleTodoArgs: CreateOneSampleTodoArgs) {
-    return await this.sampleTodosService.create(createOneSampleTodoArgs);
-  }
-
   @Query(() => [SampleTodo], { name: 'sampleTodos' })
-  async findAll() {
-    return await this.sampleTodosService.findAll();
+  async getSampleTodos() {
+    return await this.sampleTodosService.getSampleTodos();
   }
 
   @Query(() => SampleTodo, { name: 'sampleTodo' })
-  async findOne(@Args() findUniqueSampleTodoArgs: FindUniqueSampleTodoArgs) {
-    return await this.sampleTodosService.findOne(findUniqueSampleTodoArgs);
+  async getSampleTodo(@Args() getSampleTodoArgs: GetSampleTodoArgs) {
+    return await this.sampleTodosService.getSampleTodo(getSampleTodoArgs);
   }
 
   @Mutation(() => SampleTodo)
-  async updateSampleTodo(@Args() updateOneSampleTodoArgs: UpdateOneSampleTodoArgs) {
-    return await this.sampleTodosService.update(updateOneSampleTodoArgs);
+  async createSampleTodo(@Args() createSampleTodoData: CreateSampleTodoInput) {
+    return await this.sampleTodosService.createSampleTodo(createSampleTodoData);
+  }
+
+  @Mutation(() => SampleTodo)
+  async updateSampleTodo(@Args() updateSampleTodoData: UpdateSampleTodoInput) {
+    return await this.sampleTodosService.updateSampleTodo(updateSampleTodoData);
   }
 
   @Mutation(() => SampleTodo, { name: 'deleteSampleTodo' })
-  async removeSampleTodo(@Args() deleteOneSampleTodoArgs: DeleteOneSampleTodoArgs) {
-    return await this.sampleTodosService.remove(deleteOneSampleTodoArgs);
+  async deleteSampleTodo(@Args() deleteSampleTodoData: DeleteSampleTodoInput) {
+    return await this.sampleTodosService.deleteSampleTodo(deleteSampleTodoData);
   }
 }

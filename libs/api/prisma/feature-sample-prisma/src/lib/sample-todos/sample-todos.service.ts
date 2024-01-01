@@ -1,72 +1,36 @@
 import { PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
-import {
-  CreateOneSampleTodoArgs,
-  DeleteOneSampleTodoArgs,
-  FindUniqueSampleTodoArgs,
-  UpdateOneSampleTodoArgs
-} from './dto/sample-todo.dto';
-import { SampleTodo } from './models/sample-todo.model';
+import { CreateSampleTodoInput } from './dto/create-sample-todo-input.dto';
+import { DeleteSampleTodoInput } from './dto/delete-sample-todo-input.dto';
+import { GetSampleTodoArgs } from './dto/get-sample-todo-args.dto';
+import { UpdateSampleTodoInput } from './dto/update-sample-todo-input.dto';
 
 @Injectable()
 export class SampleTodosService {
   constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * Create a new sample todo.
-   *
-   * @param {CreateOneSampleTodoArgs} createOneSampleTodoArgs - The arguments to create a new sample todo.
-   * @return {Promise<SampleTodo>} The newly created sample todo.
-   */
-  async create(createOneSampleTodoArgs: CreateOneSampleTodoArgs): Promise<SampleTodo> {
-    return await this.prisma.sampleTodo.create({
-      data: createOneSampleTodoArgs.data
-    });
-  }
-
-  /**
-   * Retrieves all the sample todo items.
-   *
-   * @return {Promise<SampleTodo[]>} A promise that resolves with an array of sample todo items.
-   */
-  async findAll(): Promise<SampleTodo[]> {
+  async getSampleTodos() {
     return await this.prisma.sampleTodo.findMany();
   }
 
-  /**
-   * Retrieves a unique sample todo based on the provided arguments.
-   *
-   * @param {FindUniqueSampleTodoArgs} findUniqueSampleTodoArgs - The arguments used to find the unique sample todo.
-   * @return {Promise<SampleTodo | null>} A promise that resolves to the unique sample todo, or null if not found.
-   */
-  async findOne(findUniqueSampleTodoArgs: FindUniqueSampleTodoArgs): Promise<SampleTodo | null> {
-    return await this.prisma.sampleTodo.findUnique({
-      where: findUniqueSampleTodoArgs.where
-    });
+  async getSampleTodo(getSampleTodoArgs: GetSampleTodoArgs) {
+    return await this.prisma.sampleTodo.findUnique({ where: getSampleTodoArgs.where });
   }
 
-  /**
-   * Updates a sample todo based on the provided arguments.
-   *
-   * @param {UpdateOneSampleTodoArgs} updateOneSampleTodoArgs - The arguments for updating a sample todo.
-   * @return {Promise<SampleTodo>} - A promise that resolves to the updated sample todo.
-   */
-  async update(updateOneSampleTodoArgs: UpdateOneSampleTodoArgs): Promise<SampleTodo> {
+  async createSampleTodo(createSampleTodoData: CreateSampleTodoInput) {
+    return await this.prisma.sampleTodo.create({ data: createSampleTodoData.data });
+  }
+
+  async updateSampleTodo(updateSampleTodoData: UpdateSampleTodoInput) {
     return await this.prisma.sampleTodo.update({
-      where: updateOneSampleTodoArgs.where,
-      data: updateOneSampleTodoArgs.data
+      where: updateSampleTodoData.where,
+      data: updateSampleTodoData.data
     });
   }
 
-  /**
-   * Removes a sample todo item from the database.
-   *
-   * @param {DeleteOneSampleTodoArgs} deleteOneSampleTodoArgs - The arguments for deleting a sample todo item.
-   * @return {Promise<SampleTodo>} A promise that resolves to the deleted sample todo item.
-   */
-  async remove(deleteOneSampleTodoArgs: DeleteOneSampleTodoArgs): Promise<SampleTodo> {
+  async deleteSampleTodo(deleteSampleTodoData: DeleteSampleTodoInput) {
     return await this.prisma.sampleTodo.delete({
-      where: deleteOneSampleTodoArgs.where
+      where: deleteSampleTodoData.where
     });
   }
 }

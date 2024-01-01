@@ -21,12 +21,12 @@ export class __model_plural__Resolver {
     return await this.__model_plural_camel__Service.get__model__(get__model__Args);
   }
 
-  @Mutation(() => __model__)
+  @Mutation(() => __model__, { name: 'create__model__' })
   async create__model__(@Args() create__model__Data: Create__model__Input) {
     return await this.__model_plural_camel__Service.create__model__(create__model__Data);
   }
 
-  @Mutation(() => __model__)
+  @Mutation(() => __model__, { name: 'update__model__' })
   async update__model__(@Args() update__model__Data: Update__model__Input) {
     return await this.__model_plural_camel__Service.update__model__(update__model__Data);
   }
