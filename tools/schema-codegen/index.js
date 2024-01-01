@@ -3,86 +3,89 @@ const FOLDER_PATH = './libs/api/prisma/data-access-db/src/lib';
 const FILE_NAME = 'schema.prisma';
 // ------------------- //
 
+// ------------------------------------------------------------------------------
+// 1. Load modules
+// ------------------------------------------------------------------------------
 const fs = require('fs');
 const path = require('path');
-var pluralize = require('./lib/inflector.js');
+const parsePrismaSchema = require('./lib/parse-prisma-schema.js');
+// const { toKebabCase, toCamelcase, pascalToCamel } = require('./lib/utils.js');
 
-console.log(pluralize('book'));
-
+// ------------------------------------------------------------------------------
+// 2. Functions
+// ------------------------------------------------------------------------------
 const readFile = (filePath) => {
   return fs.readFileSync(filePath, 'utf-8');
 };
 
-const parsePrismaSchema = (schemaContent) => {
-  const models = [];
-  let currentModel = null;
-
-  // Split the schema content into lines
-  const lines = schemaContent.split('\n').filter((line) => !line.trim().startsWith('//'));
-
-  // Iterate over each line
-  lines.forEach((line) => {
-    // Check if the line defines a new model
-    const modelMatch = line.match(/^model\s+(\w+)\s+\{/);
-    if (modelMatch) {
-      // If a new model is found, push the current model to the models array
-      if (currentModel) {
-        models.push(currentModel);
-      }
-      // Create a new model object
-      currentModel = {
-        model: modelMatch[1],
-        plural: pluralize(modelMatch[1]),
-        columns: []
-      };
-    } else {
-      // Check if the line contains the @id or @relation annotation
-      const idMatch = line.match(/@id/);
-      const relationMatch = line.match(/@relation/);
-
-      // If there is no current model or the line contains a relation annotation, skip to the next line
-      if (!currentModel || relationMatch) {
-        return;
-      }
-
-      // Split the line into column name and type
-      const columnMatch = line.split(/\s+/).filter(Boolean);
-      if (columnMatch && columnMatch.length >= 2) {
-        const columnName = columnMatch[0];
-        const type = columnMatch[1];
-        // Set the key value based on whether the line contains the @id annotation
-        const key = idMatch ? 1 : 0;
-        // Add the column object to the current model's columns array
-        currentModel.columns.push({ name: columnName, type, key });
-      }
-    }
-  });
-
-  // Push the last current model to the models array
-  if (currentModel) {
-    models.push(currentModel);
+const createFile = (filePath, fileContent) => {
+  if (!fs.existsSync(filePath)) {
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
   }
-
-  return models;
+  fs.writeFileSync(path.join(filePath), fileContent, 'utf-8');
 };
 
-const generateModelJson = (models) => {
-  return models.map((model) => {
-    return {
-      model: model.model,
-      plural: model.plural,
-      columns: model.columns.map((column) => ({
-        name: column.name,
-        type: column.type,
-        key: column.key
-      }))
-    };
-  });
+const replaceFile = (fileContent, model) => {
+  fileContent = fileContent.replace(/__model__/g, model.model);
+  fileContent = fileContent.replace(/__model_plural__/g, model.plural);
+  fileContent = fileContent.replace(/__model_plural_kebab__/g, model.pluralKebab);
+  fileContent = fileContent.replace(/__model_plural_camel__/g, model.pluralCamel);
+  fileContent = fileContent.replace(/__model_kebab__/g, model.kebab);
+  fileContent = fileContent.replace(/__model_camel__/g, model.camel);
+  return fileContent;
 };
 
+// ------------------------------------------------------------------------------
+// 3. Main
+// ------------------------------------------------------------------------------
 const filePath = path.join(FOLDER_PATH, FILE_NAME);
 const schemaContent = readFile(filePath);
 const models = parsePrismaSchema(schemaContent);
-const modelJson = generateModelJson(models);
 
-console.log(JSON.stringify(modelJson, null, 2));
+// console.log(JSON.stringify(models, null, 2));
+
+models.forEach((model) => {
+  const sources = [
+    {
+      template: 'templates/dto/get-xxx-args.dto.txt',
+      output: `@generated/${model.kebab}/dto/get-${model.kebab}-args.dto.ts`
+    },
+    {
+      template: 'templates/dto/create-xxx-input.dto.txt',
+      output: `@generated/${model.kebab}/dto/create-${model.kebab}-input.dto.ts`
+    },
+    {
+      template: 'templates/dto/update-xxx-input.dto.txt',
+      output: `@generated/${model.kebab}/dto/update-${model.kebab}-input.dto.ts`
+    },
+    {
+      template: 'templates/dto/delete-xxx-input.dto.txt',
+      output: `@generated/${model.kebab}/dto/delete-${model.kebab}-input.dto.ts`
+    },
+    {
+      template: 'templates/models/xxx.model.txt',
+      output: `@generated/${model.kebab}/models/${model.kebab}.model.ts`
+    },
+    {
+      template: 'templates/module/xxxs.module.txt',
+      output: `@generated/${model.kebab}/module/${model.pluralKebab}.module.ts`
+    },
+    {
+      template: 'templates/module/xxxs.resolver.txt',
+      output: `@generated/${model.kebab}/module/${model.pluralKebab}.resolver.ts`
+    },
+    {
+      template: 'templates/module/xxxs.service.txt',
+      output: `@generated/${model.kebab}/module/${model.pluralKebab}.service.ts`
+    }
+  ];
+
+  sources.forEach((source) => {
+    let fileContent = readFile(path.join(__dirname, source.template));
+    fileContent = replaceFile(fileContent, model);
+    const outputPath = path.join(__dirname, source.output);
+    createFile(outputPath, fileContent);
+  });
+});
+
+console.log('Done!');

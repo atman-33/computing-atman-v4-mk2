@@ -1,0 +1,1 @@
+export { FindUnique__model__Args as Get__model__Args } from '@libs/api/prisma/data-access-db';
