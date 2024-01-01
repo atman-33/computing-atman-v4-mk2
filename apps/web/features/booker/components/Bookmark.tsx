@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useBookmark } from '../hooks/useBookmark';
 import { useEditLinkShow } from '../hooks/useEditLinkShow';
-import { useLinks } from '../hooks/useLinks';
+import { useLink } from '../hooks/useLink';
 import AddLink from './AddLink';
 import DeleteBookmark from './DeleteBookmark';
 import EditBookmark from './EditBookmark';
@@ -17,7 +17,7 @@ import LinkItem from './LinkItem';
 
 const Bookmark = () => {
   const { bookmark } = useBookmark();
-  const { linksData, linksLoading } = useLinks(bookmark?.id);
+  const { linksData, linksLoading } = useLink(bookmark?.id);
   const { editLinkShow } = useEditLinkShow();
   const [filterVal, setFilterVal] = useState('');
 

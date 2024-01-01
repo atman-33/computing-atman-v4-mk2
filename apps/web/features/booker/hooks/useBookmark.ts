@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 
 import useAuth from '@/features/auth/hooks/useAuth';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   CreateBookmarkDocument,
   DeleteBookmarkDocument,
@@ -14,6 +14,11 @@ import { bookmarkState } from '../stores/bookmarkState';
 export const useBookmark = () => {
   const { requireAuth } = useAuth();
   const [bookmark, setBookmark] = useRecoilState(bookmarkState);
+  const {
+    data: bookmarksData,
+    loading: bookmarksLoading,
+    error: bookmarksError
+  } = useQuery(GetBookmarksDocument);
   const [createBookmarkMutation, { loading: createBookmarkLoading, error: createBookmarkError }] =
     useMutation(CreateBookmarkDocument);
   const [updateBookmarkMutation, { loading: updateBookmarkLoading, error: updateBookmarkError }] =
@@ -106,6 +111,9 @@ export const useBookmark = () => {
     bookmark,
     setBookmark,
     resetBookmark,
+    bookmarksData,
+    bookmarksLoading,
+    bookmarksError,
     createBookmark,
     createBookmarkLoading,
     createBookmarkError,

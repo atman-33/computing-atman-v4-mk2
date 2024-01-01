@@ -3,13 +3,13 @@
 
 import { Combobox, ComboboxItem } from '@/components/elements/Combobox';
 import { useCallback, useState } from 'react';
-import { useBookmarks } from '../hooks/useBookmarks';
+import { useBookmark } from '../hooks/useBookmark';
 import { useComboBoxSelectedBookmark } from '../hooks/useComboBoxSelectedBookmark';
 
 const BookmarkComboBox = () => {
   const { comboBoxSelectedBookmark, setComboBoxSelectedBookmark } = useComboBoxSelectedBookmark();
 
-  const { bookmarksData } = useBookmarks();
+  const { bookmarksData } = useBookmark();
   const [bookmarkId, setBookmarkId] = useState<string>('');
 
   const items: ComboboxItem[] =

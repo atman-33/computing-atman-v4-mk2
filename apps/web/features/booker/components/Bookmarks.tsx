@@ -7,13 +7,12 @@ import { faFolderClosed, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useBookmark } from '../hooks/useBookmark';
-import { useBookmarks } from '../hooks/useBookmarks';
 import { useEditLinkShow } from '../hooks/useEditLinkShow';
 import { Bookmark } from '../types';
 
 const Bookmarks = () => {
   const { requireAuth } = useAuth();
-  const { bookmarksData, bookmarksLoading, bookmarksError } = useBookmarks();
+  const { bookmarksData, bookmarksLoading, bookmarksError } = useBookmark();
   const { setBookmark } = useBookmark();
   const { editLinkShow } = useEditLinkShow();
 
