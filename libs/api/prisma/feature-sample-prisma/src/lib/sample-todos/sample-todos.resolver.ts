@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { SampleTodosService } from '../sample-todos/sample-todos.service';
 import {
   CreateOneSampleTodoArgs,
   DeleteOneSampleTodoArgs,
@@ -7,6 +6,7 @@ import {
   UpdateOneSampleTodoArgs
 } from './dto/sample-todo.dto';
 import { SampleTodo } from './models/sample-todo.model';
+import { SampleTodosService } from './sample-todos.service';
 
 @Resolver(() => SampleTodo)
 export class SampleTodosResolver {
