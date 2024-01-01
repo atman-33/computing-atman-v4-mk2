@@ -15,14 +15,14 @@ import { Label } from '@/components/elements/Label';
 import Spinner from '@/components/elements/Spinner';
 import { useState } from 'react';
 import { useBookmark } from '../hooks/useBookmark';
-import { useLinks } from '../hooks/useLinks';
+import { useLink } from '../hooks/useLink';
 
 const AddLink = () => {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
 
   const { bookmark } = useBookmark();
-  const { createLink, createLinkLoading } = useLinks(bookmark?.id);
+  const { createLink, createLinkLoading } = useLink(bookmark?.id);
 
   /**
    * Add link to bookmark

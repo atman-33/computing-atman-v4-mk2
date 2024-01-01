@@ -50,3 +50,6 @@ Thumbs.db
 
 # google service account json
 /tools/google-indexing-api/service_account.json
+
+# schema-codegen generated files
+/tools/schema-codegen/@generated

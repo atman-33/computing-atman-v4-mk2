@@ -9,7 +9,7 @@ import {
 } from '@libs/web/data-access-graphql';
 import { UpdateLinkData } from '../types';
 
-export const useLinks = (bookmarkId: string | undefined) => {
+export const useLink = (bookmarkId: string | undefined) => {
   const { requireAuth } = useAuth();
   const [createLinkMutation, { loading: createLinkLoading, error: createLinkError }] =
     useMutation(CreateLinkDocument);
