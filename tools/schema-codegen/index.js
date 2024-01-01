@@ -5,6 +5,9 @@ const FILE_NAME = 'schema.prisma';
 
 const fs = require('fs');
 const path = require('path');
+var pluralize = require('./lib/inflector.js');
+
+console.log(pluralize('book'));
 
 const readFile = (filePath) => {
   return fs.readFileSync(filePath, 'utf-8');
@@ -27,7 +30,11 @@ const parsePrismaSchema = (schemaContent) => {
         models.push(currentModel);
       }
       // Create a new model object
-      currentModel = { model: modelMatch[1], columns: [] };
+      currentModel = {
+        model: modelMatch[1],
+        plural: pluralize(modelMatch[1]),
+        columns: []
+      };
     } else {
       // Check if the line contains the @id or @relation annotation
       const idMatch = line.match(/@id/);
@@ -63,6 +70,7 @@ const generateModelJson = (models) => {
   return models.map((model) => {
     return {
       model: model.model,
+      plural: model.plural,
       columns: model.columns.map((column) => ({
         name: column.name,
         type: column.type,
