@@ -7,6 +7,9 @@ export enum LinkScalarFieldEnum {
     siteName = "siteName",
     description = "description",
     image = "image",
+    displayOrder = "displayOrder",
+    createdAt = "createdAt",
+    updatedAt = "updatedAt",
     bookmarkId = "bookmarkId"
 }
 

@@ -15,6 +15,15 @@ export class BookmarkOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     userId?: keyof typeof SortOrder;
 
+    @Field(() => SortOrder, {nullable:true})
+    displayOrder?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    createdAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    updatedAt?: keyof typeof SortOrder;
+
     @Field(() => LinkOrderByRelationAggregateInput, {nullable:true})
     links?: LinkOrderByRelationAggregateInput;
 }

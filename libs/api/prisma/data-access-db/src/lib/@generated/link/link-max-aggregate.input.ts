@@ -23,5 +23,14 @@ export class LinkMaxAggregateInput {
     image?: true;
 
     @Field(() => Boolean, {nullable:true})
+    displayOrder?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    createdAt?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    updatedAt?: true;
+
+    @Field(() => Boolean, {nullable:true})
     bookmarkId?: true;
 }

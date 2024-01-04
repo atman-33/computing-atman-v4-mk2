@@ -1,5 +1,8 @@
 export { AggregateBookmark } from './bookmark/aggregate-bookmark.output';
 export { BookmarkAggregateArgs } from './bookmark/bookmark-aggregate.args';
+export { BookmarkAvgAggregateInput } from './bookmark/bookmark-avg-aggregate.input';
+export { BookmarkAvgAggregate } from './bookmark/bookmark-avg-aggregate.output';
+export { BookmarkAvgOrderByAggregateInput } from './bookmark/bookmark-avg-order-by-aggregate.input';
 export { BookmarkCountAggregateInput } from './bookmark/bookmark-count-aggregate.input';
 export { BookmarkCountAggregate } from './bookmark/bookmark-count-aggregate.output';
 export { BookmarkCountOrderByAggregateInput } from './bookmark/bookmark-count-order-by-aggregate.input';
@@ -23,6 +26,9 @@ export { BookmarkOrderByWithRelationInput } from './bookmark/bookmark-order-by-w
 export { BookmarkRelationFilter } from './bookmark/bookmark-relation-filter.input';
 export { BookmarkScalarFieldEnum } from './bookmark/bookmark-scalar-field.enum';
 export { BookmarkScalarWhereWithAggregatesInput } from './bookmark/bookmark-scalar-where-with-aggregates.input';
+export { BookmarkSumAggregateInput } from './bookmark/bookmark-sum-aggregate.input';
+export { BookmarkSumAggregate } from './bookmark/bookmark-sum-aggregate.output';
+export { BookmarkSumOrderByAggregateInput } from './bookmark/bookmark-sum-order-by-aggregate.input';
 export { BookmarkUncheckedCreateWithoutLinksInput } from './bookmark/bookmark-unchecked-create-without-links.input';
 export { BookmarkUncheckedCreateInput } from './bookmark/bookmark-unchecked-create.input';
 export { BookmarkUncheckedUpdateManyInput } from './bookmark/bookmark-unchecked-update-many.input';
@@ -108,6 +114,9 @@ export { FindManyLinkArgs } from './link/find-many-link.args';
 export { FindUniqueLinkOrThrowArgs } from './link/find-unique-link-or-throw.args';
 export { FindUniqueLinkArgs } from './link/find-unique-link.args';
 export { LinkAggregateArgs } from './link/link-aggregate.args';
+export { LinkAvgAggregateInput } from './link/link-avg-aggregate.input';
+export { LinkAvgAggregate } from './link/link-avg-aggregate.output';
+export { LinkAvgOrderByAggregateInput } from './link/link-avg-order-by-aggregate.input';
 export { LinkCountAggregateInput } from './link/link-count-aggregate.input';
 export { LinkCountAggregate } from './link/link-count-aggregate.output';
 export { LinkCountOrderByAggregateInput } from './link/link-count-order-by-aggregate.input';
@@ -133,6 +142,9 @@ export { LinkOrderByWithRelationInput } from './link/link-order-by-with-relation
 export { LinkScalarFieldEnum } from './link/link-scalar-field.enum';
 export { LinkScalarWhereWithAggregatesInput } from './link/link-scalar-where-with-aggregates.input';
 export { LinkScalarWhereInput } from './link/link-scalar-where.input';
+export { LinkSumAggregateInput } from './link/link-sum-aggregate.input';
+export { LinkSumAggregate } from './link/link-sum-aggregate.output';
+export { LinkSumOrderByAggregateInput } from './link/link-sum-order-by-aggregate.input';
 export { LinkUncheckedCreateNestedManyWithoutBookmarkInput } from './link/link-unchecked-create-nested-many-without-bookmark.input';
 export { LinkUncheckedCreateWithoutBookmarkInput } from './link/link-unchecked-create-without-bookmark.input';
 export { LinkUncheckedCreateInput } from './link/link-unchecked-create.input';

@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
+import { Int } from '@nestjs/graphql';
 import { Bookmark } from '../bookmark/bookmark.model';
 
 @ObjectType()
@@ -23,6 +24,15 @@ export class Link {
 
     @Field(() => String, {nullable:true})
     image!: string | null;
+
+    @Field(() => Int, {nullable:true})
+    displayOrder!: number | null;
+
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date;
+
+    @Field(() => Date, {nullable:false})
+    updatedAt!: Date;
 
     @Field(() => String, {nullable:false})
     bookmarkId!: string;

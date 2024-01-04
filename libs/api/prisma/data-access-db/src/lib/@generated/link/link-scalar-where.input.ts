@@ -1,6 +1,8 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
+import { IntFilter } from '../prisma/int-filter.input';
+import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
 @InputType()
 export class LinkScalarWhereInput {
@@ -31,6 +33,15 @@ export class LinkScalarWhereInput {
 
     @Field(() => StringFilter, {nullable:true})
     image?: StringFilter;
+
+    @Field(() => IntFilter, {nullable:true})
+    displayOrder?: IntFilter;
+
+    @Field(() => DateTimeFilter, {nullable:true})
+    createdAt?: DateTimeFilter;
+
+    @Field(() => DateTimeFilter, {nullable:true})
+    updatedAt?: DateTimeFilter;
 
     @Field(() => StringFilter, {nullable:true})
     bookmarkId?: StringFilter;

@@ -14,4 +14,10 @@ export class User {
 
     @HideField()
     password!: string;
+
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date;
+
+    @Field(() => Date, {nullable:false})
+    updatedAt!: Date;
 }

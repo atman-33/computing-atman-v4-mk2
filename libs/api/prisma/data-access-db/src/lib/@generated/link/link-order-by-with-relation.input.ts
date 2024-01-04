@@ -25,6 +25,15 @@ export class LinkOrderByWithRelationInput {
     image?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    displayOrder?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    createdAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    updatedAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     bookmarkId?: keyof typeof SortOrder;
 
     @Field(() => BookmarkOrderByWithRelationInput, {nullable:true})

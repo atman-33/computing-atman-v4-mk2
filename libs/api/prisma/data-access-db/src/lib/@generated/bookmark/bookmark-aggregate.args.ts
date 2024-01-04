@@ -8,6 +8,8 @@ import { Prisma } from '@prisma/client';
 import { BookmarkWhereUniqueInput } from './bookmark-where-unique.input';
 import { Int } from '@nestjs/graphql';
 import { BookmarkCountAggregateInput } from './bookmark-count-aggregate.input';
+import { BookmarkAvgAggregateInput } from './bookmark-avg-aggregate.input';
+import { BookmarkSumAggregateInput } from './bookmark-sum-aggregate.input';
 import { BookmarkMinAggregateInput } from './bookmark-min-aggregate.input';
 import { BookmarkMaxAggregateInput } from './bookmark-max-aggregate.input';
 
@@ -33,6 +35,12 @@ export class BookmarkAggregateArgs {
 
     @Field(() => BookmarkCountAggregateInput, {nullable:true})
     _count?: BookmarkCountAggregateInput;
+
+    @Field(() => BookmarkAvgAggregateInput, {nullable:true})
+    _avg?: BookmarkAvgAggregateInput;
+
+    @Field(() => BookmarkSumAggregateInput, {nullable:true})
+    _sum?: BookmarkSumAggregateInput;
 
     @Field(() => BookmarkMinAggregateInput, {nullable:true})
     _min?: BookmarkMinAggregateInput;

@@ -14,4 +14,10 @@ export class UserUpdateInput {
     @Validator.MinLength(8)
     @Validator.MaxLength(20)
     password?: string;
+
+    @Field(() => Date, {nullable:true})
+    createdAt?: Date | string;
+
+    @Field(() => Date, {nullable:true})
+    updatedAt?: Date | string;
 }
