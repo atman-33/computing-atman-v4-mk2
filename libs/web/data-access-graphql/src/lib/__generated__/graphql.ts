@@ -21,10 +21,17 @@ export type Scalars = {
 
 export type Bookmark = {
   _count: BookmarkCount;
+  createdAt: Scalars['DateTime']['output'];
+  displayOrder: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   links: Maybe<Array<Link>>;
   name: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
   userId: Scalars['String']['output'];
+};
+
+export type BookmarkAvgAggregate = {
+  displayOrder: Maybe<Scalars['Float']['output']>;
 };
 
 export type BookmarkCount = {
@@ -33,27 +40,39 @@ export type BookmarkCount = {
 
 export type BookmarkCountAggregate = {
   _all: Scalars['Int']['output'];
+  createdAt: Scalars['Int']['output'];
+  displayOrder: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
   name: Scalars['Int']['output'];
+  updatedAt: Scalars['Int']['output'];
   userId: Scalars['Int']['output'];
 };
 
 export type BookmarkMaxAggregate = {
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  displayOrder: Maybe<Scalars['Int']['output']>;
   id: Maybe<Scalars['String']['output']>;
   name: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
   userId: Maybe<Scalars['String']['output']>;
 };
 
 export type BookmarkMinAggregate = {
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  displayOrder: Maybe<Scalars['Int']['output']>;
   id: Maybe<Scalars['String']['output']>;
   name: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
   userId: Maybe<Scalars['String']['output']>;
 };
 
 export type BookmarkOrderByWithRelationInput = {
+  createdAt?: InputMaybe<SortOrder>;
+  displayOrder?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   links?: InputMaybe<LinkOrderByRelationAggregateInput>;
   name?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
   userId?: InputMaybe<SortOrder>;
 };
 
@@ -62,13 +81,20 @@ export type BookmarkRelationFilter = {
   isNot?: InputMaybe<BookmarkWhereInput>;
 };
 
+export type BookmarkSumAggregate = {
+  displayOrder: Maybe<Scalars['Int']['output']>;
+};
+
 export type BookmarkWhereInput = {
   AND?: InputMaybe<Array<BookmarkWhereInput>>;
   NOT?: InputMaybe<Array<BookmarkWhereInput>>;
   OR?: InputMaybe<Array<BookmarkWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  displayOrder?: InputMaybe<IntFilter>;
   id?: InputMaybe<StringFilter>;
   links?: InputMaybe<LinkListRelationFilter>;
   name?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
   userId?: InputMaybe<StringFilter>;
 };
 
@@ -76,9 +102,12 @@ export type BookmarkWhereUniqueInput = {
   AND?: InputMaybe<Array<BookmarkWhereInput>>;
   NOT?: InputMaybe<Array<BookmarkWhereInput>>;
   OR?: InputMaybe<Array<BookmarkWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  displayOrder?: InputMaybe<IntFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
   links?: InputMaybe<LinkListRelationFilter>;
   name?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
   userId?: InputMaybe<StringFilter>;
 };
 
@@ -88,12 +117,26 @@ export type BoolFilter = {
 };
 
 export type CreateBookmarkInput = {
+  displayOrder?: InputMaybe<Scalars['Int']['input']>;
   name: Scalars['String']['input'];
 };
 
 export type CreateLinkInput = {
   bookmarkId: Scalars['String']['input'];
+  displayOrder?: InputMaybe<Scalars['Int']['input']>;
   url: Scalars['String']['input'];
+};
+
+export type DateTimeFilter = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  isSet?: InputMaybe<Scalars['Boolean']['input']>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  not?: InputMaybe<DateTimeFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
 };
 
 export type DummyAvgAggregate = {
@@ -153,22 +196,32 @@ export type IntFilter = {
 export type Link = {
   bookmark: Bookmark;
   bookmarkId: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
   description: Maybe<Scalars['String']['output']>;
+  displayOrder: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   image: Maybe<Scalars['String']['output']>;
   siteName: Maybe<Scalars['String']['output']>;
   title: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
   url: Scalars['String']['output'];
+};
+
+export type LinkAvgAggregate = {
+  displayOrder: Maybe<Scalars['Float']['output']>;
 };
 
 export type LinkCountAggregate = {
   _all: Scalars['Int']['output'];
   bookmarkId: Scalars['Int']['output'];
+  createdAt: Scalars['Int']['output'];
   description: Scalars['Int']['output'];
+  displayOrder: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
   image: Scalars['Int']['output'];
   siteName: Scalars['Int']['output'];
   title: Scalars['Int']['output'];
+  updatedAt: Scalars['Int']['output'];
   url: Scalars['Int']['output'];
 };
 
@@ -180,21 +233,27 @@ export type LinkListRelationFilter = {
 
 export type LinkMaxAggregate = {
   bookmarkId: Maybe<Scalars['String']['output']>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
   description: Maybe<Scalars['String']['output']>;
+  displayOrder: Maybe<Scalars['Int']['output']>;
   id: Maybe<Scalars['String']['output']>;
   image: Maybe<Scalars['String']['output']>;
   siteName: Maybe<Scalars['String']['output']>;
   title: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
   url: Maybe<Scalars['String']['output']>;
 };
 
 export type LinkMinAggregate = {
   bookmarkId: Maybe<Scalars['String']['output']>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
   description: Maybe<Scalars['String']['output']>;
+  displayOrder: Maybe<Scalars['Int']['output']>;
   id: Maybe<Scalars['String']['output']>;
   image: Maybe<Scalars['String']['output']>;
   siteName: Maybe<Scalars['String']['output']>;
   title: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
   url: Maybe<Scalars['String']['output']>;
 };
 
@@ -205,22 +264,32 @@ export type LinkOrderByRelationAggregateInput = {
 export type LinkOrderByWithRelationInput = {
   bookmark?: InputMaybe<BookmarkOrderByWithRelationInput>;
   bookmarkId?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
+  displayOrder?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   siteName?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
   url?: InputMaybe<SortOrder>;
 };
 
 export type LinkScalarFieldEnum =
   | 'bookmarkId'
+  | 'createdAt'
   | 'description'
+  | 'displayOrder'
   | 'id'
   | 'image'
   | 'siteName'
   | 'title'
+  | 'updatedAt'
   | 'url';
+
+export type LinkSumAggregate = {
+  displayOrder: Maybe<Scalars['Int']['output']>;
+};
 
 export type LinkWhereInput = {
   AND?: InputMaybe<Array<LinkWhereInput>>;
@@ -228,11 +297,14 @@ export type LinkWhereInput = {
   OR?: InputMaybe<Array<LinkWhereInput>>;
   bookmark?: InputMaybe<BookmarkRelationFilter>;
   bookmarkId?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
+  displayOrder?: InputMaybe<IntFilter>;
   id?: InputMaybe<StringFilter>;
   image?: InputMaybe<StringFilter>;
   siteName?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
   url?: InputMaybe<StringFilter>;
 };
 
@@ -242,11 +314,14 @@ export type LinkWhereUniqueInput = {
   OR?: InputMaybe<Array<LinkWhereInput>>;
   bookmark?: InputMaybe<BookmarkRelationFilter>;
   bookmarkId?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
+  displayOrder?: InputMaybe<IntFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<StringFilter>;
   siteName?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
   url?: InputMaybe<StringFilter>;
 };
 
@@ -557,6 +632,7 @@ export type StringListFilter = {
 };
 
 export type UpdateBookmarkInput = {
+  displayOrder?: InputMaybe<Scalars['Int']['input']>;
   id: Scalars['String']['input'];
   name: Scalars['String']['input'];
 };
@@ -564,6 +640,7 @@ export type UpdateBookmarkInput = {
 export type UpdateLinkInput = {
   bookmarkId: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
+  displayOrder?: InputMaybe<Scalars['Int']['input']>;
   id: Scalars['String']['input'];
   image?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
@@ -572,48 +649,62 @@ export type UpdateLinkInput = {
 };
 
 export type User = {
+  createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type UserCountAggregate = {
   _all: Scalars['Int']['output'];
+  createdAt: Scalars['Int']['output'];
   email: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
+  updatedAt: Scalars['Int']['output'];
 };
 
 export type UserCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
   password: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type UserMaxAggregate = {
+  createdAt: Maybe<Scalars['DateTime']['output']>;
   email: Maybe<Scalars['String']['output']>;
   id: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type UserMinAggregate = {
+  createdAt: Maybe<Scalars['DateTime']['output']>;
   email: Maybe<Scalars['String']['output']>;
   id: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
   email?: InputMaybe<StringFilter>;
   id?: InputMaybe<StringFilter>;
   password?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
 export type UserWhereUniqueInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
   email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
 export type GetSampleUsersQueryVariables = Exact<{ [key: string]: never; }>;
@@ -665,12 +756,12 @@ export type CreateBookmarkMutationVariables = Exact<{
 }>;
 
 
-export type CreateBookmarkMutation = { createBookmark: { id: string, name: string, userId: string } };
+export type CreateBookmarkMutation = { createBookmark: { id: string, name: string, userId: string, displayOrder: number | null, createdAt: Date, updatedAt: Date } };
 
 export type GetBookmarksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBookmarksQuery = { bookmarks: Array<{ id: string, name: string, userId: string }> };
+export type GetBookmarksQuery = { bookmarks: Array<{ id: string, name: string, userId: string, displayOrder: number | null, createdAt: Date, updatedAt: Date }> };
 
 export type GetBookmarkQueryVariables = Exact<{
   where: BookmarkWhereUniqueInput;
@@ -684,7 +775,7 @@ export type UpdateBookmarkMutationVariables = Exact<{
 }>;
 
 
-export type UpdateBookmarkMutation = { updateBookmark: { id: string, name: string, userId: string } };
+export type UpdateBookmarkMutation = { updateBookmark: { id: string, name: string, userId: string, displayOrder: number | null } };
 
 export type DeleteBookmarkMutationVariables = Exact<{
   where: BookmarkWhereUniqueInput;
@@ -698,14 +789,14 @@ export type GetLinksQueryVariables = Exact<{
 }>;
 
 
-export type GetLinksQuery = { links: Array<{ id: string, title: string | null, siteName: string | null, url: string, description: string | null, image: string | null, bookmarkId: string, bookmark: { id: string, name: string } }> };
+export type GetLinksQuery = { links: Array<{ id: string, title: string | null, siteName: string | null, url: string, description: string | null, image: string | null, displayOrder: number | null, createdAt: Date, updatedAt: Date, bookmarkId: string, bookmark: { id: string, name: string } }> };
 
 export type CreateLinkMutationVariables = Exact<{
   data: CreateLinkInput;
 }>;
 
 
-export type CreateLinkMutation = { createLink: { siteName: string | null, title: string | null, description: string | null } };
+export type CreateLinkMutation = { createLink: { siteName: string | null, title: string | null, description: string | null, displayOrder: number | null } };
 
 export type DeleteLinkMutationVariables = Exact<{
   where: LinkWhereUniqueInput;
@@ -719,7 +810,7 @@ export type UpdateLinkMutationVariables = Exact<{
 }>;
 
 
-export type UpdateLinkMutation = { updateLink: { id: string, url: string, title: string | null, siteName: string | null, description: string | null, image: string | null, bookmarkId: string } };
+export type UpdateLinkMutation = { updateLink: { id: string, url: string, title: string | null, siteName: string | null, description: string | null, image: string | null, displayOrder: number | null, bookmarkId: string } };
 
 
 export const GetSampleUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getSampleUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sampleUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"age"}},{"kind":"Field","name":{"kind":"Name","value":"hobbies"}},{"kind":"Field","name":{"kind":"Name","value":"premiumAccount"}}]}}]}}]} as unknown as DocumentNode<GetSampleUsersQuery, GetSampleUsersQueryVariables>;
@@ -729,12 +820,12 @@ export const DeleteSampleTodoDocument = {"kind":"Document","definitions":[{"kind
 export const UpdateSampleTodoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateSampleTodo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SampleTodoUpdateInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SampleTodoWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateSampleTodo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"editing"}},{"kind":"Field","name":{"kind":"Name","value":"completed"}}]}}]}}]} as unknown as DocumentNode<UpdateSampleTodoMutation, UpdateSampleTodoMutationVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
-export const CreateBookmarkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateBookmarkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createBookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<CreateBookmarkMutation, CreateBookmarkMutationVariables>;
-export const GetBookmarksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getBookmarks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookmarks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<GetBookmarksQuery, GetBookmarksQueryVariables>;
+export const CreateBookmarkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateBookmarkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createBookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"displayOrder"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<CreateBookmarkMutation, CreateBookmarkMutationVariables>;
+export const GetBookmarksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getBookmarks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookmarks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"displayOrder"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<GetBookmarksQuery, GetBookmarksQueryVariables>;
 export const GetBookmarkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BookmarkWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]}}]} as unknown as DocumentNode<GetBookmarkQuery, GetBookmarkQueryVariables>;
-export const UpdateBookmarkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateBookmarkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateBookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<UpdateBookmarkMutation, UpdateBookmarkMutationVariables>;
+export const UpdateBookmarkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateBookmarkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateBookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"displayOrder"}}]}}]}}]} as unknown as DocumentNode<UpdateBookmarkMutation, UpdateBookmarkMutationVariables>;
 export const DeleteBookmarkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BookmarkWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteBookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>;
-export const GetLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LinkWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"links"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"bookmarkId"}},{"kind":"Field","name":{"kind":"Name","value":"bookmark"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetLinksQuery, GetLinksQueryVariables>;
-export const CreateLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<CreateLinkMutation, CreateLinkMutationVariables>;
+export const GetLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LinkWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"links"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"displayOrder"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"bookmarkId"}},{"kind":"Field","name":{"kind":"Name","value":"bookmark"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetLinksQuery, GetLinksQueryVariables>;
+export const CreateLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"displayOrder"}}]}}]}}]} as unknown as DocumentNode<CreateLinkMutation, CreateLinkMutationVariables>;
 export const DeleteLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LinkWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteLinkMutation, DeleteLinkMutationVariables>;
-export const UpdateLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"bookmarkId"}}]}}]}}]} as unknown as DocumentNode<UpdateLinkMutation, UpdateLinkMutationVariables>;
+export const UpdateLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"displayOrder"}},{"kind":"Field","name":{"kind":"Name","value":"bookmarkId"}}]}}]}}]} as unknown as DocumentNode<UpdateLinkMutation, UpdateLinkMutationVariables>;

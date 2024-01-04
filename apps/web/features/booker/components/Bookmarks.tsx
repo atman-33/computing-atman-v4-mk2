@@ -47,7 +47,7 @@ const Bookmarks = () => {
         {bookmarksData?.bookmarks
           .filter((bookmark) => bookmark.name.toLowerCase().includes(filterVal.toLowerCase()))
           .map((bookmark) => (
-            <li key={bookmark.id} className="flex flex-wrap">
+            <li key={bookmark.id} className="flex justify-between pr-4">
               <button
                 className="ml-1 flex items-center gap-x-2"
                 onClick={handleShowBookmark(bookmark)}
@@ -56,6 +56,7 @@ const Bookmarks = () => {
                 <FontAwesomeIcon icon={faFolderClosed} />
                 <p>{bookmark.name}</p>
               </button>
+              <p>{bookmark.displayOrder}</p>
             </li>
           ))}
       </ul>

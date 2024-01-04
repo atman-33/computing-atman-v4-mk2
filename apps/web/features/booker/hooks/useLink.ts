@@ -33,6 +33,17 @@ export const useLink = (bookmarkId: string | undefined) => {
   });
 
   /**
+   * Get max display order
+   * @returns
+   */
+  const getLinkMaxDisplayOrder = () => {
+    if (!linksData || linksData.links.length === 0) {
+      return 0;
+    }
+    return Math.max(...linksData.links.map((link) => link.displayOrder ?? 0));
+  };
+
+  /**
    * Create link
    * @param url
    */
@@ -47,7 +58,8 @@ export const useLink = (bookmarkId: string | undefined) => {
         variables: {
           data: {
             bookmarkId: bookmarkId ?? '',
-            url: url
+            url: url,
+            displayOrder: getLinkMaxDisplayOrder() + 1
           }
         },
         refetchQueries: [

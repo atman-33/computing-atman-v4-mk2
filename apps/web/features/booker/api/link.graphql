@@ -6,6 +6,9 @@ query getLinks($where: LinkWhereInput!) {
     url
     description
     image
+    displayOrder
+    createdAt
+    updatedAt
     bookmarkId
     bookmark {
       id
@@ -19,6 +22,7 @@ mutation createLink($data: CreateLinkInput!) {
     siteName
     title
     description
+    displayOrder
   }
 }
 
@@ -36,6 +40,7 @@ mutation updateLink($data: UpdateLinkInput!) {
     siteName
     description
     image
+    displayOrder
     bookmarkId
   }
 }

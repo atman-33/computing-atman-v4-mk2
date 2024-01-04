@@ -15,17 +15,17 @@ import { useLink } from '../hooks/useLink';
 import BookmarkComboBox from './BookmarkComboBox';
 
 const EditLink = () => {
-  // ----------------------------------------------------------------------
-  // State and hooks
-  // ----------------------------------------------------------------------
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 1. State and hooks
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
   const { editLinkShow, setEditLinkShow } = useEditLinkShow();
   const { editingLink, setEditingLink } = useEditingLink();
   const { deleteLink, deleteLinkLoading, updateLink } = useLink(editingLink?.bookmarkId);
   const { comboBoxSelectedBookmark, setComboBoxSelectedBookmark } = useComboBoxSelectedBookmark();
 
-  // ----------------------------------------------------------------------
-  // Effect
-  // ----------------------------------------------------------------------
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 2. Effect
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
   useEffect(() => {
     setComboBoxSelectedBookmark({
       value: editingLink?.bookmark.id ?? '',
@@ -33,9 +33,9 @@ const EditLink = () => {
     });
   }, [editingLink]);
 
-  // ----------------------------------------------------------------------
-  // Functions
-  // ----------------------------------------------------------------------
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 3. Functions
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
   const handleEditShow = () => {
     setEditLinkShow((status) => {
       return !status;
@@ -64,9 +64,9 @@ const EditLink = () => {
     setEditLinkShow(false);
   };
 
-  // ----------------------------------------------------------------------
-  // Render
-  // ----------------------------------------------------------------------
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 4. Render
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
   if (!editingLink) {
     return null;
   }

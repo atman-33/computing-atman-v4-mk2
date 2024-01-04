@@ -49,6 +49,12 @@ export class BookmarksService {
   }
 
   async deleteBookmark(deleteBookmarkData: DeleteBookmarkInput) {
+    await this.prisma.link.deleteMany({
+      where: {
+        bookmarkId: deleteBookmarkData.where.id
+      }
+    });
+
     return await this.prisma.bookmark.delete({
       where: deleteBookmarkData.where
     });
