@@ -51,13 +51,13 @@ const EditLink = () => {
   };
 
   const updateEditingLink = async () => {
-    console.log(comboBoxSelectedBookmark?.value ?? '');
+    // console.log(comboBoxSelectedBookmark?.value ?? '');
     updateLink({
       id: editingLink?.id ?? '',
       url: editingLink?.url ?? '',
       title: editingLink?.title ?? '',
-      description: editingLink?.description ?? '',
       siteName: editingLink?.siteName ?? '',
+      description: editingLink?.description ?? '',
       image: editingLink?.image ?? '',
       bookmarkId: comboBoxSelectedBookmark?.value ?? ''
     });

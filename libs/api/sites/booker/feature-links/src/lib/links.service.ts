@@ -93,6 +93,16 @@ export class LinksService {
 
   async updateLink(updateLinkData: UpdateLinkInput) {
     const { id, url, title, siteName, description, image, bookmarkId } = updateLinkData;
+    const maxDisplayOrderLink = await this.prisma.link.findMany({
+      where: { bookmarkId: bookmarkId },
+      orderBy: { displayOrder: 'desc' },
+      take: 1
+    });
+
+    // console.log(maxDisplayOrderLink);
+    const maxDisplayOrder =
+      maxDisplayOrderLink.length > 0 ? maxDisplayOrderLink[0].displayOrder : 0;
+
     return await this.prisma.link.update({
       where: { id: id },
       data: {
@@ -101,7 +111,8 @@ export class LinksService {
         siteName: siteName,
         description: description,
         image: image,
-        bookmarkId: bookmarkId
+        bookmarkId: bookmarkId,
+        displayOrder: maxDisplayOrder !== null ? maxDisplayOrder + 1 : 1
       }
     });
   }

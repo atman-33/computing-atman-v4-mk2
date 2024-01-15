@@ -5,9 +5,9 @@ import {
   CreateLinkDocument,
   DeleteLinkDocument,
   GetLinksDocument,
-  UpdateLinkDocument
+  UpdateLinkDocument,
+  UpdateLinkInput
 } from '@libs/web/data-access-graphql';
-import { UpdateLinkData } from '../types';
 
 export const useLink = (bookmarkId: string | undefined) => {
   const { requireAuth } = useAuth();
@@ -112,7 +112,7 @@ export const useLink = (bookmarkId: string | undefined) => {
    * Update link
    * @param updateLinkDto
    */
-  const updateLink = async (updateLinkData: UpdateLinkData) => {
+  const updateLink = async (updateLinkData: UpdateLinkInput) => {
     requireAuth();
     try {
       await updateLinkMutation({

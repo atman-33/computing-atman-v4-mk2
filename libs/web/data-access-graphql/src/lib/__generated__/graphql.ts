@@ -640,7 +640,6 @@ export type UpdateBookmarkInput = {
 export type UpdateLinkInput = {
   bookmarkId: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
-  displayOrder?: InputMaybe<Scalars['Int']['input']>;
   id: Scalars['String']['input'];
   image?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
