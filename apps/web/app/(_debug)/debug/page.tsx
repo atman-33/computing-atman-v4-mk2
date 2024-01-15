@@ -7,6 +7,7 @@ const debugPages = [
   '/debug/auth-test-1',
   '/debug/auth-test-2',
   '/debug/combobox',
+  '/debug/dnd-kit',
   '/debug/dynamic-routes',
   '/debug/hover-button',
   '/debug/loop-animation',
