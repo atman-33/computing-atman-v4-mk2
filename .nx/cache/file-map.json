@@ -216,181 +216,6 @@
   },
   "nxJsonPlugins": [],
   "projectFileMap": {
-    "api-feature-links": [
-      {
-        "file": "libs/api/sites/booker/feature-links/.eslintrc.json",
-        "hash": "177813992080273981"
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/.swcrc",
-        "hash": "2298411960666242159"
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/README.md",
-        "hash": "1111766952743042654"
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/jest.config.ts",
-        "hash": "18325997871274216394",
-        "deps": [
-          "npm:fs"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/package.json",
-        "hash": "895671388546980093",
-        "deps": [
-          "npm:@swc/helpers"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/project.json",
-        "hash": "16429821937889687863"
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/src/index.ts",
-        "hash": "12113316729436673800"
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/src/lib/dto/create-link-input.dto.ts",
-        "hash": "14503225258531604327",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/src/lib/dto/delete-link-input.dto.ts",
-        "hash": "8499008116031993810",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/src/lib/dto/get-links-args.dto.ts",
-        "hash": "2877993470537402015",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/src/lib/dto/update-link-input.dto.ts",
-        "hash": "16071811157175569583",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/src/lib/links.module.ts",
-        "hash": "2166893173473981252",
-        "deps": [
-          "api-data-access-db",
-          "npm:@nestjs/common"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/src/lib/links.resolver.ts",
-        "hash": "1448291280848995503",
-        "deps": [
-          "api-feature-auth",
-          "npm:@nestjs/common",
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/src/lib/links.service.ts",
-        "hash": "469344064965158373",
-        "deps": [
-          "api-data-access-db",
-          "npm:@nestjs/common",
-          "npm:@prisma/client",
-          "npm:link-preview-js"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/src/lib/models/link.model.ts",
-        "hash": "7998798302769473616",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/tsconfig.json",
-        "hash": "8720967645714115142"
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/tsconfig.lib.json",
-        "hash": "12621438852216795570"
-      },
-      {
-        "file": "libs/api/sites/booker/feature-links/tsconfig.spec.json",
-        "hash": "7346234701742871175"
-      }
-    ],
-    "data-access-graphql": [
-      {
-        "file": "libs/web/data-access-graphql/.eslintrc.json",
-        "hash": "12398963952796570856"
-      },
-      {
-        "file": "libs/web/data-access-graphql/.swcrc",
-        "hash": "2298411960666242159"
-      },
-      {
-        "file": "libs/web/data-access-graphql/README.md",
-        "hash": "8185140500150283400"
-      },
-      {
-        "file": "libs/web/data-access-graphql/package.json",
-        "hash": "5971848708586004660",
-        "deps": [
-          "npm:@swc/helpers"
-        ]
-      },
-      {
-        "file": "libs/web/data-access-graphql/project.json",
-        "hash": "5606048430426462182"
-      },
-      {
-        "file": "libs/web/data-access-graphql/src/index.ts",
-        "hash": "12329879261392237532"
-      },
-      {
-        "file": "libs/web/data-access-graphql/src/lib/__generated__/fragment-masking.ts",
-        "hash": "6488971608313425657",
-        "deps": [
-          "npm:@graphql-typed-document-node/core",
-          "npm:graphql"
-        ]
-      },
-      {
-        "file": "libs/web/data-access-graphql/src/lib/__generated__/gql.ts",
-        "hash": "11987094242803353650",
-        "deps": [
-          "npm:@graphql-typed-document-node/core"
-        ]
-      },
-      {
-        "file": "libs/web/data-access-graphql/src/lib/__generated__/graphql.ts",
-        "hash": "14732648249890427786",
-        "deps": [
-          "npm:@graphql-typed-document-node/core"
-        ]
-      },
-      {
-        "file": "libs/web/data-access-graphql/src/lib/__generated__/index.ts",
-        "hash": "15145554174544902988"
-      },
-      {
-        "file": "libs/web/data-access-graphql/tsconfig.json",
-        "hash": "11362601880824838265"
-      },
-      {
-        "file": "libs/web/data-access-graphql/tsconfig.lib.json",
-        "hash": "5554291030212586824"
-      }
-    ],
     "api-feature-bookmarks": [
       {
         "file": "libs/api/sites/booker/feature-bookmarks/.eslintrc.json",
@@ -584,542 +409,6 @@
         "hash": "7346234701742871175"
       }
     ],
-    "api-mongoose-shared": [
-      {
-        "file": "libs/api/mongoose/shared/.eslintrc.json",
-        "hash": "4252687536473174249"
-      },
-      {
-        "file": "libs/api/mongoose/shared/.swcrc",
-        "hash": "2298411960666242159"
-      },
-      {
-        "file": "libs/api/mongoose/shared/README.md",
-        "hash": "2775675331257504369"
-      },
-      {
-        "file": "libs/api/mongoose/shared/package.json",
-        "hash": "7959998805917490344",
-        "deps": [
-          "npm:@swc/helpers"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/shared/project.json",
-        "hash": "4405767483469808981"
-      },
-      {
-        "file": "libs/api/mongoose/shared/src/index.ts",
-        "hash": "16608427484979321918"
-      },
-      {
-        "file": "libs/api/mongoose/shared/src/lib/connection/connection-args.dto.ts",
-        "hash": "2504777201835673221",
-        "deps": [
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/shared/src/lib/connection/connection-query-args.dto.ts",
-        "hash": "4859423471866240188",
-        "deps": [
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/shared/src/lib/connection/connection.model.ts",
-        "hash": "5603472008394475563",
-        "deps": [
-          "npm:@nestjs/common",
-          "npm:@nestjs/graphql",
-          "npm:mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/shared/src/lib/database/abstract.repository.ts",
-        "hash": "15403034342582744622",
-        "deps": [
-          "npm:@nestjs/common",
-          "npm:mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/shared/src/lib/database/abstract.schema.ts",
-        "hash": "14909551399295502282",
-        "deps": [
-          "npm:@nestjs/mongoose",
-          "npm:mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/shared/src/lib/database/database.module.ts",
-        "hash": "11539958647995460403",
-        "deps": [
-          "shared-config",
-          "npm:@nestjs/common",
-          "npm:@nestjs/mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/shared/src/lib/model/abstract.model.ts",
-        "hash": "10172221842969996354",
-        "deps": [
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/shared/tsconfig.json",
-        "hash": "9792494229513935008"
-      },
-      {
-        "file": "libs/api/mongoose/shared/tsconfig.lib.json",
-        "hash": "5419457303262888731"
-      }
-    ],
-    "api-feature-image": [
-      {
-        "file": "libs/api/feature-image/.eslintrc.json",
-        "hash": "12398963952796570856"
-      },
-      {
-        "file": "libs/api/feature-image/.swcrc",
-        "hash": "2298411960666242159"
-      },
-      {
-        "file": "libs/api/feature-image/README.md",
-        "hash": "1212271867647210256"
-      },
-      {
-        "file": "libs/api/feature-image/jest.config.ts",
-        "hash": "7053164478179770106",
-        "deps": [
-          "npm:fs"
-        ]
-      },
-      {
-        "file": "libs/api/feature-image/package.json",
-        "hash": "9084092642172366411",
-        "deps": [
-          "npm:@swc/helpers"
-        ]
-      },
-      {
-        "file": "libs/api/feature-image/project.json",
-        "hash": "9053924023682128288"
-      },
-      {
-        "file": "libs/api/feature-image/src/index.ts",
-        "hash": "15262524183988978273"
-      },
-      {
-        "file": "libs/api/feature-image/src/lib/image.controller.ts",
-        "hash": "10208335529488405339",
-        "deps": [
-          "npm:@nestjs/common",
-          "npm:express"
-        ]
-      },
-      {
-        "file": "libs/api/feature-image/src/lib/image.module.ts",
-        "hash": "3457619458107571113",
-        "deps": [
-          "npm:@nestjs/common"
-        ]
-      },
-      {
-        "file": "libs/api/feature-image/src/lib/image.service.ts",
-        "hash": "18289488004902911392",
-        "deps": [
-          "npm:@nestjs/common",
-          "npm:express",
-          "npm:node:path"
-        ]
-      },
-      {
-        "file": "libs/api/feature-image/tsconfig.json",
-        "hash": "1098465750514412960"
-      },
-      {
-        "file": "libs/api/feature-image/tsconfig.lib.json",
-        "hash": "5554291030212586824"
-      },
-      {
-        "file": "libs/api/feature-image/tsconfig.spec.json",
-        "hash": "12999169761713108731"
-      }
-    ],
-    "api-feature-sample-mongoose": [
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/.eslintrc.json",
-        "hash": "4252687536473174249"
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/.swcrc",
-        "hash": "2298411960666242159"
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/README.md",
-        "hash": "9965884509058114481"
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/jest.config.ts",
-        "hash": "8264908438968421676",
-        "deps": [
-          "npm:fs"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/package.json",
-        "hash": "5256182629976027040",
-        "deps": [
-          "npm:@swc/helpers"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/project.json",
-        "hash": "13039329843018273814"
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/index.ts",
-        "hash": "9866579844069836067"
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/dto/args/get-sample-todo-args.dto.ts",
-        "hash": "16631508300670360331",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/dto/input/create-sample-todo-input.dto.ts",
-        "hash": "14676715507182625533",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/dto/input/delete-sample-todo-input.dto.ts",
-        "hash": "11826245638672661247",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/dto/input/update-sample-todo-input.dto.ts",
-        "hash": "16670132567868083279",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/models/sample-todo.model.ts",
-        "hash": "12828153092911783344",
-        "deps": [
-          "api-mongoose-shared",
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/models/sample-todo.schema.ts",
-        "hash": "14831808153383653514",
-        "deps": [
-          "api-mongoose-shared",
-          "npm:@nestjs/mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/sample-todos.module.ts",
-        "hash": "7796199615712071637",
-        "deps": [
-          "npm:@nestjs/common",
-          "npm:@nestjs/mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/sample-todos.repository.ts",
-        "hash": "117361075592716423",
-        "deps": [
-          "api-mongoose-shared",
-          "npm:@nestjs/common",
-          "npm:@nestjs/mongoose",
-          "npm:mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/sample-todos.resolver.ts",
-        "hash": "2474521736697418114",
-        "deps": [
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/sample-todos.service.ts",
-        "hash": "5769712493771777294",
-        "deps": [
-          "npm:@nestjs/common"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/dto/args/get-sample-user-args.dto.ts",
-        "hash": "16827455846029826956",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/dto/input/create-sample-user-input.dto.ts",
-        "hash": "13163439294149314302",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/dto/input/delete-sample-user-input.dto.ts",
-        "hash": "17574494917655177280",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/dto/input/update-sample-todo-input.dto.ts",
-        "hash": "11340916739636329664",
-        "deps": [
-          "npm:@nestjs/graphql",
-          "npm:class-validator"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/models/sample-user.model.ts",
-        "hash": "14208363389245112428",
-        "deps": [
-          "api-mongoose-shared",
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/models/sample-user.schema.ts",
-        "hash": "17405147395610324599",
-        "deps": [
-          "api-mongoose-shared",
-          "npm:@nestjs/mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/sample-users.module.ts",
-        "hash": "8482817940792309453",
-        "deps": [
-          "npm:@nestjs/common",
-          "npm:@nestjs/mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/sample-users.repository.ts",
-        "hash": "11769097699056768754",
-        "deps": [
-          "api-mongoose-shared",
-          "npm:@nestjs/common",
-          "npm:@nestjs/mongoose",
-          "npm:mongoose"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/sample-users.resolver.ts",
-        "hash": "18242779902104057610",
-        "deps": [
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/sample-users.service.ts",
-        "hash": "3502873770274993063",
-        "deps": [
-          "npm:@nestjs/common"
-        ]
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/tsconfig.json",
-        "hash": "9584156853704587869"
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/tsconfig.lib.json",
-        "hash": "5419457303262888731"
-      },
-      {
-        "file": "libs/api/mongoose/feature-sample-mongoose/tsconfig.spec.json",
-        "hash": "5061965905856029477"
-      }
-    ],
-    "api-feature-sample-prisma": [
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/.eslintrc.json",
-        "hash": "4252687536473174249"
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/.swcrc",
-        "hash": "2298411960666242159"
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/README.md",
-        "hash": "10136565210739962414"
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/jest.config.ts",
-        "hash": "800510024935858269",
-        "deps": [
-          "npm:fs"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/package.json",
-        "hash": "2227461818385947918",
-        "deps": [
-          "npm:@swc/helpers"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/project.json",
-        "hash": "17847729005149866729"
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/index.ts",
-        "hash": "11140508634586256215"
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/dto/create-sample-todo-input.dto.ts",
-        "hash": "18240372607356284942",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/dto/delete-sample-todo-input.dto.ts",
-        "hash": "10583214713004361017",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/dto/get-sample-todo-args.dto.ts",
-        "hash": "5429932368450275714",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/dto/update-sample-todo-input.dto.ts",
-        "hash": "3467103995157730917",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/models/sample-todo.model.ts",
-        "hash": "13537176169626423993",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/sample-todos.module.ts",
-        "hash": "17843933484452526921",
-        "deps": [
-          "api-data-access-db",
-          "npm:@nestjs/common"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/sample-todos.resolver.ts",
-        "hash": "12603222011819513875",
-        "deps": [
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/sample-todos.service.ts",
-        "hash": "7252235068831294593",
-        "deps": [
-          "api-data-access-db",
-          "npm:@nestjs/common"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/dto/create-sample-user-input.dto.ts",
-        "hash": "14423921277149752273",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/dto/delete-sample-user-input.dto.ts",
-        "hash": "14958158732630329826",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/dto/get-sample-user-args.dto.ts",
-        "hash": "14073218406293946176",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/dto/update-sample-user-input.dto.ts",
-        "hash": "12283997485329068688",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/models/sample-user.model.ts",
-        "hash": "2472859929664933146",
-        "deps": [
-          "api-data-access-db"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/sample-users.module.ts",
-        "hash": "5411657808280202976",
-        "deps": [
-          "api-data-access-db",
-          "npm:@nestjs/common"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/sample-users.resolver.ts",
-        "hash": "8707647241778634499",
-        "deps": [
-          "npm:@nestjs/graphql"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/sample-users.service.ts",
-        "hash": "13876659273246327220",
-        "deps": [
-          "api-data-access-db",
-          "npm:@nestjs/common"
-        ]
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/tsconfig.json",
-        "hash": "9584156853704587869"
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/tsconfig.lib.json",
-        "hash": "5419457303262888731"
-      },
-      {
-        "file": "libs/api/prisma/feature-sample-prisma/tsconfig.spec.json",
-        "hash": "5061965905856029477"
-      }
-    ],
     "web-ui-shadcn": [
       {
         "file": "libs/web/ui-shadcn/.eslintrc.json",
@@ -1294,133 +583,76 @@
         "hash": "499693633990701572"
       }
     ],
-    "api-e2e": [
+    "api-feature-image": [
       {
-        "file": "apps/api-e2e/.eslintrc.json",
-        "hash": "13861748877169696160"
+        "file": "libs/api/feature-image/.eslintrc.json",
+        "hash": "12398963952796570856"
       },
       {
-        "file": "apps/api-e2e/jest.config.ts",
-        "hash": "5815415717999235924"
+        "file": "libs/api/feature-image/.swcrc",
+        "hash": "2298411960666242159"
       },
       {
-        "file": "apps/api-e2e/project.json",
-        "hash": "13018397385502356359"
+        "file": "libs/api/feature-image/README.md",
+        "hash": "1212271867647210256"
       },
       {
-        "file": "apps/api-e2e/src/api/api.spec.ts",
-        "hash": "2263470703898423778",
+        "file": "libs/api/feature-image/jest.config.ts",
+        "hash": "7053164478179770106",
         "deps": [
-          "npm:axios"
+          "npm:fs"
         ]
       },
       {
-        "file": "apps/api-e2e/src/support/global-setup.ts",
-        "hash": "14688124112638150235"
-      },
-      {
-        "file": "apps/api-e2e/src/support/global-teardown.ts",
-        "hash": "10856769668484651558"
-      },
-      {
-        "file": "apps/api-e2e/src/support/test-setup.ts",
-        "hash": "9379448616442792630",
+        "file": "libs/api/feature-image/package.json",
+        "hash": "9084092642172366411",
         "deps": [
-          "npm:axios"
+          "npm:@swc/helpers"
         ]
       },
       {
-        "file": "apps/api-e2e/tsconfig.json",
-        "hash": "15443990093475294480"
+        "file": "libs/api/feature-image/project.json",
+        "hash": "9053924023682128288"
       },
       {
-        "file": "apps/api-e2e/tsconfig.spec.json",
-        "hash": "14519349202314136898"
-      }
-    ],
-    "api": [
-      {
-        "file": "apps/api/.eslintrc.json",
-        "hash": "2295303304320410742"
+        "file": "libs/api/feature-image/src/index.ts",
+        "hash": "15262524183988978273"
       },
       {
-        "file": "apps/api/jest.config.ts",
-        "hash": "6320173860913249688"
+        "file": "libs/api/feature-image/src/lib/image.controller.ts",
+        "hash": "10208335529488405339",
+        "deps": [
+          "npm:@nestjs/common",
+          "npm:express"
+        ]
       },
       {
-        "file": "apps/api/project.json",
-        "hash": "10026264078386826458"
-      },
-      {
-        "file": "apps/api/src/app/app.controller.ts",
-        "hash": "9005150069945785676",
+        "file": "libs/api/feature-image/src/lib/image.module.ts",
+        "hash": "3457619458107571113",
         "deps": [
           "npm:@nestjs/common"
         ]
       },
       {
-        "file": "apps/api/src/app/app.module.ts",
-        "hash": "903055743920642602",
+        "file": "libs/api/feature-image/src/lib/image.service.ts",
+        "hash": "18289488004902911392",
         "deps": [
-          "api-feature-auth",
-          "api-feature-image",
-          "api-feature-sample-prisma",
-          "api-feature-bookmarks",
-          "api-feature-links",
-          "npm:@nestjs/apollo",
           "npm:@nestjs/common",
-          "npm:@nestjs/graphql",
-          "npm:@nestjs/serve-static",
-          "npm:path"
+          "npm:express",
+          "npm:node:path"
         ]
       },
       {
-        "file": "apps/api/src/app/app.service.ts",
-        "hash": "1398463054208547248",
-        "deps": [
-          "npm:@nestjs/common"
-        ]
+        "file": "libs/api/feature-image/tsconfig.json",
+        "hash": "1098465750514412960"
       },
       {
-        "file": "apps/api/src/assets/.gitkeep",
-        "hash": "3244421341483603138"
+        "file": "libs/api/feature-image/tsconfig.lib.json",
+        "hash": "5554291030212586824"
       },
       {
-        "file": "apps/api/src/assets/avatar.png",
-        "hash": "9933913812566113358"
-      },
-      {
-        "file": "apps/api/src/assets/images/google.png",
-        "hash": "902026649250282834"
-      },
-      {
-        "file": "apps/api/src/main.ts",
-        "hash": "5380346933908761631",
-        "deps": [
-          "shared-config",
-          "npm:@nestjs/common",
-          "npm:@nestjs/core",
-          "npm:cookie-parser"
-        ]
-      },
-      {
-        "file": "apps/api/tsconfig.app.json",
-        "hash": "17628448778285850515"
-      },
-      {
-        "file": "apps/api/tsconfig.json",
-        "hash": "3490524966360018312"
-      },
-      {
-        "file": "apps/api/tsconfig.spec.json",
-        "hash": "11550347367511341917"
-      },
-      {
-        "file": "apps/api/webpack.config.js",
-        "hash": "12759027257167031159",
-        "deps": [
-          "npm:@nx/webpack"
-        ]
+        "file": "libs/api/feature-image/tsconfig.spec.json",
+        "hash": "12999169761713108731"
       }
     ],
     "api-feature-auth": [
@@ -1694,46 +926,201 @@
         "hash": "12999169761713108731"
       }
     ],
-    "web-e2e": [
+    "api": [
       {
-        "file": "apps/web-e2e/.eslintrc.json",
-        "hash": "14060216369337943343"
+        "file": "apps/api/.eslintrc.json",
+        "hash": "2295303304320410742"
       },
       {
-        "file": "apps/web-e2e/cypress.config.ts",
-        "hash": "15414076024138857470",
+        "file": "apps/api/jest.config.ts",
+        "hash": "6320173860913249688"
+      },
+      {
+        "file": "apps/api/project.json",
+        "hash": "10026264078386826458"
+      },
+      {
+        "file": "apps/api/src/app/app.controller.ts",
+        "hash": "9005150069945785676",
         "deps": [
-          "npm:cypress",
-          "npm:@nx/cypress"
+          "npm:@nestjs/common"
         ]
       },
       {
-        "file": "apps/web-e2e/project.json",
-        "hash": "10798608622569599369"
+        "file": "apps/api/src/app/app.module.ts",
+        "hash": "903055743920642602",
+        "deps": [
+          "api-feature-auth",
+          "api-feature-image",
+          "api-feature-sample-prisma",
+          "api-feature-bookmarks",
+          "api-feature-links",
+          "npm:@nestjs/apollo",
+          "npm:@nestjs/common",
+          "npm:@nestjs/graphql",
+          "npm:@nestjs/serve-static",
+          "npm:path"
+        ]
       },
       {
-        "file": "apps/web-e2e/src/e2e/app.cy.ts",
-        "hash": "12487085710781836760"
+        "file": "apps/api/src/app/app.service.ts",
+        "hash": "1398463054208547248",
+        "deps": [
+          "npm:@nestjs/common"
+        ]
       },
       {
-        "file": "apps/web-e2e/src/fixtures/example.json",
-        "hash": "11614668686582597233"
+        "file": "apps/api/src/assets/.gitkeep",
+        "hash": "3244421341483603138"
       },
       {
-        "file": "apps/web-e2e/src/support/app.po.ts",
-        "hash": "11157016311132186162"
+        "file": "apps/api/src/assets/avatar.png",
+        "hash": "9933913812566113358"
       },
       {
-        "file": "apps/web-e2e/src/support/commands.ts",
-        "hash": "7314691991044890572"
+        "file": "apps/api/src/assets/images/google.png",
+        "hash": "902026649250282834"
       },
       {
-        "file": "apps/web-e2e/src/support/e2e.ts",
-        "hash": "3666078656922506009"
+        "file": "apps/api/src/main.ts",
+        "hash": "5380346933908761631",
+        "deps": [
+          "shared-config",
+          "npm:@nestjs/common",
+          "npm:@nestjs/core",
+          "npm:cookie-parser"
+        ]
       },
       {
-        "file": "apps/web-e2e/tsconfig.json",
-        "hash": "1788248097864730386"
+        "file": "apps/api/tsconfig.app.json",
+        "hash": "17628448778285850515"
+      },
+      {
+        "file": "apps/api/tsconfig.json",
+        "hash": "3490524966360018312"
+      },
+      {
+        "file": "apps/api/tsconfig.spec.json",
+        "hash": "11550347367511341917"
+      },
+      {
+        "file": "apps/api/webpack.config.js",
+        "hash": "12759027257167031159",
+        "deps": [
+          "npm:@nx/webpack"
+        ]
+      }
+    ],
+    "api-feature-links": [
+      {
+        "file": "libs/api/sites/booker/feature-links/.eslintrc.json",
+        "hash": "177813992080273981"
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/.swcrc",
+        "hash": "2298411960666242159"
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/README.md",
+        "hash": "1111766952743042654"
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/jest.config.ts",
+        "hash": "18325997871274216394",
+        "deps": [
+          "npm:fs"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/package.json",
+        "hash": "895671388546980093",
+        "deps": [
+          "npm:@swc/helpers"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/project.json",
+        "hash": "16429821937889687863"
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/src/index.ts",
+        "hash": "12113316729436673800"
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/src/lib/dto/create-link-input.dto.ts",
+        "hash": "14503225258531604327",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/src/lib/dto/delete-link-input.dto.ts",
+        "hash": "8499008116031993810",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/src/lib/dto/get-links-args.dto.ts",
+        "hash": "2877993470537402015",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/src/lib/dto/update-link-input.dto.ts",
+        "hash": "16071811157175569583",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/src/lib/links.module.ts",
+        "hash": "2166893173473981252",
+        "deps": [
+          "api-data-access-db",
+          "npm:@nestjs/common"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/src/lib/links.resolver.ts",
+        "hash": "1448291280848995503",
+        "deps": [
+          "api-feature-auth",
+          "npm:@nestjs/common",
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/src/lib/links.service.ts",
+        "hash": "469344064965158373",
+        "deps": [
+          "api-data-access-db",
+          "npm:@nestjs/common",
+          "npm:@prisma/client",
+          "npm:link-preview-js"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/src/lib/models/link.model.ts",
+        "hash": "7998798302769473616",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/tsconfig.json",
+        "hash": "8720967645714115142"
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/tsconfig.lib.json",
+        "hash": "12621438852216795570"
+      },
+      {
+        "file": "libs/api/sites/booker/feature-links/tsconfig.spec.json",
+        "hash": "7346234701742871175"
       }
     ],
     "api-data-access-db": [
@@ -4389,6 +3776,155 @@
         "hash": "5419457303262888731"
       }
     ],
+    "web-e2e": [
+      {
+        "file": "apps/web-e2e/.eslintrc.json",
+        "hash": "14060216369337943343"
+      },
+      {
+        "file": "apps/web-e2e/cypress.config.ts",
+        "hash": "15414076024138857470",
+        "deps": [
+          "npm:cypress",
+          "npm:@nx/cypress"
+        ]
+      },
+      {
+        "file": "apps/web-e2e/project.json",
+        "hash": "10798608622569599369"
+      },
+      {
+        "file": "apps/web-e2e/src/e2e/app.cy.ts",
+        "hash": "12487085710781836760"
+      },
+      {
+        "file": "apps/web-e2e/src/fixtures/example.json",
+        "hash": "11614668686582597233"
+      },
+      {
+        "file": "apps/web-e2e/src/support/app.po.ts",
+        "hash": "11157016311132186162"
+      },
+      {
+        "file": "apps/web-e2e/src/support/commands.ts",
+        "hash": "7314691991044890572"
+      },
+      {
+        "file": "apps/web-e2e/src/support/e2e.ts",
+        "hash": "3666078656922506009"
+      },
+      {
+        "file": "apps/web-e2e/tsconfig.json",
+        "hash": "1788248097864730386"
+      }
+    ],
+    "data-access-graphql": [
+      {
+        "file": "libs/web/data-access-graphql/.eslintrc.json",
+        "hash": "12398963952796570856"
+      },
+      {
+        "file": "libs/web/data-access-graphql/.swcrc",
+        "hash": "2298411960666242159"
+      },
+      {
+        "file": "libs/web/data-access-graphql/README.md",
+        "hash": "8185140500150283400"
+      },
+      {
+        "file": "libs/web/data-access-graphql/package.json",
+        "hash": "5971848708586004660",
+        "deps": [
+          "npm:@swc/helpers"
+        ]
+      },
+      {
+        "file": "libs/web/data-access-graphql/project.json",
+        "hash": "5606048430426462182"
+      },
+      {
+        "file": "libs/web/data-access-graphql/src/index.ts",
+        "hash": "12329879261392237532"
+      },
+      {
+        "file": "libs/web/data-access-graphql/src/lib/__generated__/fragment-masking.ts",
+        "hash": "6488971608313425657",
+        "deps": [
+          "npm:@graphql-typed-document-node/core",
+          "npm:graphql"
+        ]
+      },
+      {
+        "file": "libs/web/data-access-graphql/src/lib/__generated__/gql.ts",
+        "hash": "11987094242803353650",
+        "deps": [
+          "npm:@graphql-typed-document-node/core"
+        ]
+      },
+      {
+        "file": "libs/web/data-access-graphql/src/lib/__generated__/graphql.ts",
+        "hash": "14732648249890427786",
+        "deps": [
+          "npm:@graphql-typed-document-node/core"
+        ]
+      },
+      {
+        "file": "libs/web/data-access-graphql/src/lib/__generated__/index.ts",
+        "hash": "15145554174544902988"
+      },
+      {
+        "file": "libs/web/data-access-graphql/tsconfig.json",
+        "hash": "11362601880824838265"
+      },
+      {
+        "file": "libs/web/data-access-graphql/tsconfig.lib.json",
+        "hash": "5554291030212586824"
+      }
+    ],
+    "api-e2e": [
+      {
+        "file": "apps/api-e2e/.eslintrc.json",
+        "hash": "13861748877169696160"
+      },
+      {
+        "file": "apps/api-e2e/jest.config.ts",
+        "hash": "5815415717999235924"
+      },
+      {
+        "file": "apps/api-e2e/project.json",
+        "hash": "13018397385502356359"
+      },
+      {
+        "file": "apps/api-e2e/src/api/api.spec.ts",
+        "hash": "2263470703898423778",
+        "deps": [
+          "npm:axios"
+        ]
+      },
+      {
+        "file": "apps/api-e2e/src/support/global-setup.ts",
+        "hash": "14688124112638150235"
+      },
+      {
+        "file": "apps/api-e2e/src/support/global-teardown.ts",
+        "hash": "10856769668484651558"
+      },
+      {
+        "file": "apps/api-e2e/src/support/test-setup.ts",
+        "hash": "9379448616442792630",
+        "deps": [
+          "npm:axios"
+        ]
+      },
+      {
+        "file": "apps/api-e2e/tsconfig.json",
+        "hash": "15443990093475294480"
+      },
+      {
+        "file": "apps/api-e2e/tsconfig.spec.json",
+        "hash": "14519349202314136898"
+      }
+    ],
     "web": [
       {
         "file": "apps/web/.eslintrc.json",
@@ -4448,7 +3984,7 @@
       },
       {
         "file": "apps/web/app/(_debug)/debug/dnd-kit-3/_components/DraggableList.tsx",
-        "hash": "9877613756566361770",
+        "hash": "8716903445234960023",
         "deps": [
           "npm:@dnd-kit/core",
           "npm:@dnd-kit/sortable",
@@ -7276,7 +6812,7 @@
       },
       {
         "file": "apps/web/public/tag-data.json",
-        "hash": "3824235033371869884"
+        "hash": "17735915831394853536"
       },
       {
         "file": "apps/web/stores/README.md",
@@ -7333,6 +6869,470 @@
       {
         "file": "apps/web/utils/utils.ts",
         "hash": "17638015114355368660"
+      }
+    ],
+    "api-feature-sample-mongoose": [
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/.eslintrc.json",
+        "hash": "4252687536473174249"
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/.swcrc",
+        "hash": "2298411960666242159"
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/README.md",
+        "hash": "9965884509058114481"
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/jest.config.ts",
+        "hash": "8264908438968421676",
+        "deps": [
+          "npm:fs"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/package.json",
+        "hash": "5256182629976027040",
+        "deps": [
+          "npm:@swc/helpers"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/project.json",
+        "hash": "13039329843018273814"
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/index.ts",
+        "hash": "9866579844069836067"
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/dto/args/get-sample-todo-args.dto.ts",
+        "hash": "16631508300670360331",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/dto/input/create-sample-todo-input.dto.ts",
+        "hash": "14676715507182625533",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/dto/input/delete-sample-todo-input.dto.ts",
+        "hash": "11826245638672661247",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/dto/input/update-sample-todo-input.dto.ts",
+        "hash": "16670132567868083279",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/models/sample-todo.model.ts",
+        "hash": "12828153092911783344",
+        "deps": [
+          "api-mongoose-shared",
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/models/sample-todo.schema.ts",
+        "hash": "14831808153383653514",
+        "deps": [
+          "api-mongoose-shared",
+          "npm:@nestjs/mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/sample-todos.module.ts",
+        "hash": "7796199615712071637",
+        "deps": [
+          "npm:@nestjs/common",
+          "npm:@nestjs/mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/sample-todos.repository.ts",
+        "hash": "117361075592716423",
+        "deps": [
+          "api-mongoose-shared",
+          "npm:@nestjs/common",
+          "npm:@nestjs/mongoose",
+          "npm:mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/sample-todos.resolver.ts",
+        "hash": "2474521736697418114",
+        "deps": [
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-todos/sample-todos.service.ts",
+        "hash": "5769712493771777294",
+        "deps": [
+          "npm:@nestjs/common"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/dto/args/get-sample-user-args.dto.ts",
+        "hash": "16827455846029826956",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/dto/input/create-sample-user-input.dto.ts",
+        "hash": "13163439294149314302",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/dto/input/delete-sample-user-input.dto.ts",
+        "hash": "17574494917655177280",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/dto/input/update-sample-todo-input.dto.ts",
+        "hash": "11340916739636329664",
+        "deps": [
+          "npm:@nestjs/graphql",
+          "npm:class-validator"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/models/sample-user.model.ts",
+        "hash": "14208363389245112428",
+        "deps": [
+          "api-mongoose-shared",
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/models/sample-user.schema.ts",
+        "hash": "17405147395610324599",
+        "deps": [
+          "api-mongoose-shared",
+          "npm:@nestjs/mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/sample-users.module.ts",
+        "hash": "8482817940792309453",
+        "deps": [
+          "npm:@nestjs/common",
+          "npm:@nestjs/mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/sample-users.repository.ts",
+        "hash": "11769097699056768754",
+        "deps": [
+          "api-mongoose-shared",
+          "npm:@nestjs/common",
+          "npm:@nestjs/mongoose",
+          "npm:mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/sample-users.resolver.ts",
+        "hash": "18242779902104057610",
+        "deps": [
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/src/lib/sample-users/sample-users.service.ts",
+        "hash": "3502873770274993063",
+        "deps": [
+          "npm:@nestjs/common"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/tsconfig.json",
+        "hash": "9584156853704587869"
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/tsconfig.lib.json",
+        "hash": "5419457303262888731"
+      },
+      {
+        "file": "libs/api/mongoose/feature-sample-mongoose/tsconfig.spec.json",
+        "hash": "5061965905856029477"
+      }
+    ],
+    "api-mongoose-shared": [
+      {
+        "file": "libs/api/mongoose/shared/.eslintrc.json",
+        "hash": "4252687536473174249"
+      },
+      {
+        "file": "libs/api/mongoose/shared/.swcrc",
+        "hash": "2298411960666242159"
+      },
+      {
+        "file": "libs/api/mongoose/shared/README.md",
+        "hash": "2775675331257504369"
+      },
+      {
+        "file": "libs/api/mongoose/shared/package.json",
+        "hash": "7959998805917490344",
+        "deps": [
+          "npm:@swc/helpers"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/shared/project.json",
+        "hash": "4405767483469808981"
+      },
+      {
+        "file": "libs/api/mongoose/shared/src/index.ts",
+        "hash": "16608427484979321918"
+      },
+      {
+        "file": "libs/api/mongoose/shared/src/lib/connection/connection-args.dto.ts",
+        "hash": "2504777201835673221",
+        "deps": [
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/shared/src/lib/connection/connection-query-args.dto.ts",
+        "hash": "4859423471866240188",
+        "deps": [
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/shared/src/lib/connection/connection.model.ts",
+        "hash": "5603472008394475563",
+        "deps": [
+          "npm:@nestjs/common",
+          "npm:@nestjs/graphql",
+          "npm:mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/shared/src/lib/database/abstract.repository.ts",
+        "hash": "15403034342582744622",
+        "deps": [
+          "npm:@nestjs/common",
+          "npm:mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/shared/src/lib/database/abstract.schema.ts",
+        "hash": "14909551399295502282",
+        "deps": [
+          "npm:@nestjs/mongoose",
+          "npm:mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/shared/src/lib/database/database.module.ts",
+        "hash": "11539958647995460403",
+        "deps": [
+          "shared-config",
+          "npm:@nestjs/common",
+          "npm:@nestjs/mongoose"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/shared/src/lib/model/abstract.model.ts",
+        "hash": "10172221842969996354",
+        "deps": [
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/mongoose/shared/tsconfig.json",
+        "hash": "9792494229513935008"
+      },
+      {
+        "file": "libs/api/mongoose/shared/tsconfig.lib.json",
+        "hash": "5419457303262888731"
+      }
+    ],
+    "api-feature-sample-prisma": [
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/.eslintrc.json",
+        "hash": "4252687536473174249"
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/.swcrc",
+        "hash": "2298411960666242159"
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/README.md",
+        "hash": "10136565210739962414"
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/jest.config.ts",
+        "hash": "800510024935858269",
+        "deps": [
+          "npm:fs"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/package.json",
+        "hash": "2227461818385947918",
+        "deps": [
+          "npm:@swc/helpers"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/project.json",
+        "hash": "17847729005149866729"
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/index.ts",
+        "hash": "11140508634586256215"
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/dto/create-sample-todo-input.dto.ts",
+        "hash": "18240372607356284942",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/dto/delete-sample-todo-input.dto.ts",
+        "hash": "10583214713004361017",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/dto/get-sample-todo-args.dto.ts",
+        "hash": "5429932368450275714",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/dto/update-sample-todo-input.dto.ts",
+        "hash": "3467103995157730917",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/models/sample-todo.model.ts",
+        "hash": "13537176169626423993",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/sample-todos.module.ts",
+        "hash": "17843933484452526921",
+        "deps": [
+          "api-data-access-db",
+          "npm:@nestjs/common"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/sample-todos.resolver.ts",
+        "hash": "12603222011819513875",
+        "deps": [
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-todos/sample-todos.service.ts",
+        "hash": "7252235068831294593",
+        "deps": [
+          "api-data-access-db",
+          "npm:@nestjs/common"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/dto/create-sample-user-input.dto.ts",
+        "hash": "14423921277149752273",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/dto/delete-sample-user-input.dto.ts",
+        "hash": "14958158732630329826",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/dto/get-sample-user-args.dto.ts",
+        "hash": "14073218406293946176",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/dto/update-sample-user-input.dto.ts",
+        "hash": "12283997485329068688",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/models/sample-user.model.ts",
+        "hash": "2472859929664933146",
+        "deps": [
+          "api-data-access-db"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/sample-users.module.ts",
+        "hash": "5411657808280202976",
+        "deps": [
+          "api-data-access-db",
+          "npm:@nestjs/common"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/sample-users.resolver.ts",
+        "hash": "8707647241778634499",
+        "deps": [
+          "npm:@nestjs/graphql"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/src/lib/sample-users/sample-users.service.ts",
+        "hash": "13876659273246327220",
+        "deps": [
+          "api-data-access-db",
+          "npm:@nestjs/common"
+        ]
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/tsconfig.json",
+        "hash": "9584156853704587869"
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/tsconfig.lib.json",
+        "hash": "5419457303262888731"
+      },
+      {
+        "file": "libs/api/prisma/feature-sample-prisma/tsconfig.spec.json",
+        "hash": "5061965905856029477"
       }
     ],
     "shared-config": [

@@ -24,8 +24,9 @@ export interface HasId {
 
 type Props<T extends HasId> = {
   items: T[];
-  onDragStart: ComponentProps<typeof DndContext>['onDragStart'];
-  onDragEnd: ComponentProps<typeof DndContext>['onDragEnd'];
+  onDragStart?: ComponentProps<typeof DndContext>['onDragStart'];
+  onDragEnd?: ComponentProps<typeof DndContext>['onDragEnd'];
+  onDragOver?: ComponentProps<typeof DndContext>['onDragOver'];
   layout: 'horizontal' | 'vertical' | 'grid';
   children: ReactNode;
 };
@@ -34,6 +35,7 @@ export const DraggableList: FC<Props<HasId>> = ({
   items,
   onDragStart,
   onDragEnd,
+  onDragOver,
   layout,
   children
 }) => {
@@ -64,6 +66,7 @@ export const DraggableList: FC<Props<HasId>> = ({
       collisionDetection={closestCenter}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
+      onDragOver={onDragOver}
     >
       <SortableContext items={items} strategy={strategy}>
         <ul>{children}</ul>
