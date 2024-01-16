@@ -4,10 +4,12 @@ import Link from '@/components/elements/Link';
 const debugPages = [
   '/debug/animate-spin',
   '/debug/auth-login-sample',
-  '/debug/auth-test-1',
+  '/debug/auth-test',
   '/debug/auth-test-2',
   '/debug/combobox',
   '/debug/dnd-kit',
+  '/debug/dnd-kit-2',
+  '/debug/dnd-kit-3',
   '/debug/dynamic-routes',
   '/debug/hover-button',
   '/debug/loop-animation',

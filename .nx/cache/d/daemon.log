@@ -1,0 +1,14 @@
+[NX Daemon Server] - 2024-01-16T14:16:59.161Z - Started listening on: /tmp/60442e95568ecffc38d2/d.sock
+[NX Daemon Server] - 2024-01-16T14:16:59.165Z - [WATCHER]: Subscribed to changes within: /home/atman/sites/computing-atman-v4-mk2 (native)
+[NX Daemon Server] - 2024-01-16T14:16:59.167Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-01-16T14:16:59.168Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2024-01-16T14:16:59.171Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2024-01-16T14:16:59.262Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-01-16T14:16:59.263Z - [REQUEST]: 
+[NX Daemon Server] - 2024-01-16T14:16:59.264Z - [REQUEST]: 
+[NX Daemon Server] - 2024-01-16T14:17:00.055Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2024-01-16T14:17:00.074Z - Time taken for 'total for creating and serializing project graph' 883.6461079996079ms
+[NX Daemon Server] - 2024-01-16T14:17:00.074Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-01-16T14:17:00.085Z - Done responding to the client project-graph
+[NX Daemon Server] - 2024-01-16T14:17:00.086Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 884. Response time: 31.
+[NX Daemon Server] - 2024-01-16T14:17:00.911Z - Closed a connection. Number of open connections: 0
