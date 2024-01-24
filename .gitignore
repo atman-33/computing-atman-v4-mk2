@@ -45,6 +45,7 @@ Thumbs.db
 # Local dev files
 .nx
 .env.local
+logs
 
 # contentlayer
 .contentlayer
