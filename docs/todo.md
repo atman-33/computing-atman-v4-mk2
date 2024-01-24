@@ -93,6 +93,9 @@
 - [ ] signup した際にそのままlogin
 - [ ] リンクをドラッグアンドドロップで入れ替える処理を追加
 
+- [ ] Reactサンプルを shadcn ui サイト風に作成
+- [ ] Componentサンプルを shadcn ui サイト風に作成
+
 ### others
 
 - [ ] スライドショーアプリを作成

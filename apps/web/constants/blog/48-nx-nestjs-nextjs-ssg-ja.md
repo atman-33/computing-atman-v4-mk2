@@ -1,7 +1,7 @@
 ---
 title: Nx Nestjs から Nextjs の SSG （静的サイト）を配信する方法
 date: '2023-09-24'
-tags: ['nx', 'nest js', 'next js', 'ssg']
+tags: ['nx', 'nest-js', 'next-js', 'ssg']
 images: ['']
 summary: モノレポツールのNxを使い、NextjsのSSG機能で生成した静的サイトをNextjsから配信する方法を説明します。この方法を用いれば、フロントエンドとバックエンドが一つで対応できます。
 ---

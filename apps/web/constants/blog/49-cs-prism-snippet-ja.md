@@ -2,7 +2,7 @@
 title: C# Prism Template Pack コードスニペット（Visutl Studio Code）
 date: '2023-09-30'
 lastmod: '2023-09-30'
-tags: ['vs code', 'c sharp']
+tags: ['vs-code', 'c-sharp']
 images: ['']
 summary: C# Prism Template Pack の Visutl Studio Code 用スニペットです。
 ---
