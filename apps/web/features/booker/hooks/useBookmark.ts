@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 
 import useAuth from '@/features/auth/hooks/useAuth';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   CreateBookmarkDocument,
   DeleteBookmarkDocument,
@@ -14,6 +14,11 @@ import { bookmarkState } from '../stores/bookmarkState';
 export const useBookmark = () => {
   const { requireAuth } = useAuth();
   const [bookmark, setBookmark] = useRecoilState(bookmarkState);
+  const {
+    data: bookmarksData,
+    loading: bookmarksLoading,
+    error: bookmarksError
+  } = useQuery(GetBookmarksDocument);
   const [createBookmarkMutation, { loading: createBookmarkLoading, error: createBookmarkError }] =
     useMutation(CreateBookmarkDocument);
   const [updateBookmarkMutation, { loading: updateBookmarkLoading, error: updateBookmarkError }] =
@@ -27,10 +32,21 @@ export const useBookmark = () => {
   const resetBookmark = useResetRecoilState(bookmarkState);
 
   /**
+   * Get max display order
+   * @returns
+   */
+  const getBookmarkMaxDisplayOrder = () => {
+    if (!bookmarksData || bookmarksData.bookmarks.length === 0) {
+      return 0;
+    }
+    return Math.max(...bookmarksData.bookmarks.map((bookmark) => bookmark.displayOrder ?? 0));
+  };
+
+  /**
    * Create bookmark
    * @param bookmarkName
    */
-  const createBookmark = async (bookmarkName: string) => {
+  const createBookmark = async (bookmarkName: string, displayOrder?: number) => {
     // check if user is logged in
     requireAuth();
 
@@ -38,7 +54,8 @@ export const useBookmark = () => {
       const response = await createBookmarkMutation({
         variables: {
           data: {
-            name: bookmarkName
+            name: bookmarkName,
+            displayOrder: getBookmarkMaxDisplayOrder() + 1
           }
         },
         refetchQueries: [GetBookmarksDocument]
@@ -46,7 +63,8 @@ export const useBookmark = () => {
 
       setBookmark({
         id: response.data?.createBookmark.id ?? '',
-        name: response.data?.createBookmark.name ?? ''
+        name: response.data?.createBookmark.name ?? '',
+        displayOrder: response.data?.createBookmark.displayOrder ?? 0
       });
     } catch (error) {
       console.log(error);
@@ -74,7 +92,8 @@ export const useBookmark = () => {
 
       setBookmark({
         id: response.data?.updateBookmark.id ?? '',
-        name: response.data?.updateBookmark.name ?? ''
+        name: response.data?.updateBookmark.name ?? '',
+        displayOrder: response.data?.updateBookmark.displayOrder ?? 0
       });
     } catch (error) {
       console.log(error);
@@ -106,6 +125,9 @@ export const useBookmark = () => {
     bookmark,
     setBookmark,
     resetBookmark,
+    bookmarksData,
+    bookmarksLoading,
+    bookmarksError,
     createBookmark,
     createBookmarkLoading,
     createBookmarkError,

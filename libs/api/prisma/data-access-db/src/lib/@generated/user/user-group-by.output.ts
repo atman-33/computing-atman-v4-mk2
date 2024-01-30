@@ -19,6 +19,12 @@ export class UserGroupBy {
     @HideField()
     password!: string;
 
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date | string;
+
+    @Field(() => Date, {nullable:false})
+    updatedAt!: Date | string;
+
     @Field(() => UserCountAggregate, {nullable:true})
     _count?: UserCountAggregate;
 

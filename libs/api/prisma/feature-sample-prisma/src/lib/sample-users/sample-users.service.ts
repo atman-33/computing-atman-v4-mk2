@@ -1,34 +1,36 @@
 import { PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
-import {
-  CreateOneSampleUserArgs,
-  DeleteOneSampleUserArgs,
-  FindUniqueSampleUserArgs,
-  UpdateOneSampleUserArgs
-} from './dto/sample-user.dto';
+import { CreateSampleUserInput } from './dto/create-sample-user-input.dto';
+import { DeleteSampleUserInput } from './dto/delete-sample-user-input.dto';
+import { GetSampleUserArgs } from './dto/get-sample-user-args.dto';
+import { UpdateSampleUserInput } from './dto/update-sample-user-input.dto';
 
 @Injectable()
 export class SampleUsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createOneSampleUserArgs: CreateOneSampleUserArgs) {
-    return await this.prisma.sampleUser.create({ data: createOneSampleUserArgs.data });
-  }
-  async findAll() {
+  async getSampleUsers() {
     return await this.prisma.sampleUser.findMany();
   }
-  async findOne(findUniqueSampleUserArgs: FindUniqueSampleUserArgs) {
-    return await this.prisma.sampleUser.findUnique({ where: findUniqueSampleUserArgs.where });
+
+  async getSampleUser(getSampleUserArgs: GetSampleUserArgs) {
+    return await this.prisma.sampleUser.findUnique({ where: getSampleUserArgs.where });
   }
-  async update(updateOneSampleUserArgs: UpdateOneSampleUserArgs) {
+
+  async createSampleUser(createSampleUserData: CreateSampleUserInput) {
+    return await this.prisma.sampleUser.create({ data: createSampleUserData.data });
+  }
+
+  async updateSampleUser(updateSampleUserData: UpdateSampleUserInput) {
     return await this.prisma.sampleUser.update({
-      where: updateOneSampleUserArgs.where,
-      data: updateOneSampleUserArgs.data
+      where: updateSampleUserData.where,
+      data: updateSampleUserData.data
     });
   }
-  async remove(deleteOneSampleUserArgs: DeleteOneSampleUserArgs) {
+
+  async deleteSampleUser(deleteSampleUserData: DeleteSampleUserInput) {
     return await this.prisma.sampleUser.delete({
-      where: deleteOneSampleUserArgs.where
+      where: deleteSampleUserData.where
     });
   }
 }

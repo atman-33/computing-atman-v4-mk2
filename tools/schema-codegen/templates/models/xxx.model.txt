@@ -1,0 +1,1 @@
+export { __model__ } from '@libs/api/prisma/data-access-db';

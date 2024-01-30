@@ -1,11 +1,9 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import {
-  CreateOneSampleUserArgs,
-  DeleteOneSampleUserArgs,
-  FindUniqueSampleUserArgs,
-  UpdateOneSampleUserArgs
-} from './dto/sample-user.dto';
+import { CreateSampleUserInput } from './dto/create-sample-user-input.dto';
+import { DeleteSampleUserInput } from './dto/delete-sample-user-input.dto';
+import { GetSampleUserArgs } from './dto/get-sample-user-args.dto';
+import { UpdateSampleUserInput } from './dto/update-sample-user-input.dto';
 import { SampleUser } from './models/sample-user.model';
 import { SampleUsersService } from './sample-users.service';
 
@@ -13,28 +11,28 @@ import { SampleUsersService } from './sample-users.service';
 export class SampleUsersResolver {
   constructor(private readonly sampleUsersService: SampleUsersService) {}
 
-  @Mutation(() => SampleUser)
-  async createSampleUser(@Args() createOneSampleUserArgs: CreateOneSampleUserArgs) {
-    return await this.sampleUsersService.create(createOneSampleUserArgs);
-  }
-
   @Query(() => [SampleUser], { name: 'sampleUsers' })
-  async findAll() {
-    return await this.sampleUsersService.findAll();
+  async getSampleUsers() {
+    return await this.sampleUsersService.getSampleUsers();
   }
 
   @Query(() => SampleUser, { name: 'sampleUser' })
-  async findOne(@Args() findUniqueSampleUserArgs: FindUniqueSampleUserArgs) {
-    return await this.sampleUsersService.findOne(findUniqueSampleUserArgs);
+  async getSampleUser(@Args() getSampleUserArgs: GetSampleUserArgs) {
+    return await this.sampleUsersService.getSampleUser(getSampleUserArgs);
   }
 
   @Mutation(() => SampleUser)
-  async updateSampleUser(@Args() updateOneSampleUserArgs: UpdateOneSampleUserArgs) {
-    return await this.sampleUsersService.update(updateOneSampleUserArgs);
+  async createSampleUser(@Args() createSampleUserData: CreateSampleUserInput) {
+    return await this.sampleUsersService.createSampleUser(createSampleUserData);
+  }
+
+  @Mutation(() => SampleUser)
+  async updateSampleUser(@Args() updateSampleUserData: UpdateSampleUserInput) {
+    return await this.sampleUsersService.updateSampleUser(updateSampleUserData);
   }
 
   @Mutation(() => SampleUser, { name: 'deleteSampleUser' })
-  async removeSampleUser(@Args() deleteOneSampleUserArgs: DeleteOneSampleUserArgs) {
-    return await this.sampleUsersService.remove(deleteOneSampleUserArgs);
+  async deleteSampleUser(@Args() deleteSampleUserData: DeleteSampleUserInput) {
+    return await this.sampleUsersService.deleteSampleUser(deleteSampleUserData);
   }
 }

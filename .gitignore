@@ -42,11 +42,16 @@ Thumbs.db
 # Next.js
 .next
 
-# env
+# Local dev files
+.nx
 .env.local
+logs
 
 # contentlayer
 .contentlayer
 
 # google service account json
 /tools/google-indexing-api/service_account.json
+
+# schema-codegen generated files
+/tools/schema-codegen/@generated

@@ -5,11 +5,11 @@ import {
   CreateLinkDocument,
   DeleteLinkDocument,
   GetLinksDocument,
-  UpdateLinkDocument
+  UpdateLinkDocument,
+  UpdateLinkInput
 } from '@libs/web/data-access-graphql';
-import { UpdateLinkData } from '../types';
 
-export const useLinks = (bookmarkId: string | undefined) => {
+export const useLink = (bookmarkId: string | undefined) => {
   const { requireAuth } = useAuth();
   const [createLinkMutation, { loading: createLinkLoading, error: createLinkError }] =
     useMutation(CreateLinkDocument);
@@ -33,6 +33,17 @@ export const useLinks = (bookmarkId: string | undefined) => {
   });
 
   /**
+   * Get max display order
+   * @returns
+   */
+  const getLinkMaxDisplayOrder = () => {
+    if (!linksData || linksData.links.length === 0) {
+      return 0;
+    }
+    return Math.max(...linksData.links.map((link) => link.displayOrder ?? 0));
+  };
+
+  /**
    * Create link
    * @param url
    */
@@ -47,7 +58,8 @@ export const useLinks = (bookmarkId: string | undefined) => {
         variables: {
           data: {
             bookmarkId: bookmarkId ?? '',
-            url: url
+            url: url,
+            displayOrder: getLinkMaxDisplayOrder() + 1
           }
         },
         refetchQueries: [
@@ -100,7 +112,7 @@ export const useLinks = (bookmarkId: string | undefined) => {
    * Update link
    * @param updateLinkDto
    */
-  const updateLink = async (updateLinkData: UpdateLinkData) => {
+  const updateLink = async (updateLinkData: UpdateLinkInput) => {
     requireAuth();
     try {
       await updateLinkMutation({

@@ -1,0 +1,1 @@
+export { UpdateOne__model__Args as Update__model__Input } from '@libs/api/prisma/data-access-db';

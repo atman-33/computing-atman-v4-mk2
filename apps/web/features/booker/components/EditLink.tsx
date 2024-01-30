@@ -11,17 +11,21 @@ import { memo, useEffect } from 'react';
 import { useComboBoxSelectedBookmark } from '../hooks/useComboBoxSelectedBookmark';
 import { useEditLinkShow } from '../hooks/useEditLinkShow';
 import { useEditingLink } from '../hooks/useEditingLink';
-import { useLinks } from '../hooks/useLinks';
+import { useLink } from '../hooks/useLink';
 import BookmarkComboBox from './BookmarkComboBox';
 
 const EditLink = () => {
-  // ---- State and hooks ---- //
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 1. State and hooks
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
   const { editLinkShow, setEditLinkShow } = useEditLinkShow();
   const { editingLink, setEditingLink } = useEditingLink();
-  const { deleteLink, deleteLinkLoading, updateLink } = useLinks(editingLink?.bookmarkId);
+  const { deleteLink, deleteLinkLoading, updateLink } = useLink(editingLink?.bookmarkId);
   const { comboBoxSelectedBookmark, setComboBoxSelectedBookmark } = useComboBoxSelectedBookmark();
 
-  // ---- Effect ---- //
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 2. Effect
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
   useEffect(() => {
     setComboBoxSelectedBookmark({
       value: editingLink?.bookmark.id ?? '',
@@ -29,7 +33,9 @@ const EditLink = () => {
     });
   }, [editingLink]);
 
-  // ---- Functions ---- //
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 3. Functions
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
   const handleEditShow = () => {
     setEditLinkShow((status) => {
       return !status;
@@ -45,20 +51,22 @@ const EditLink = () => {
   };
 
   const updateEditingLink = async () => {
-    console.log(comboBoxSelectedBookmark?.value ?? '');
+    // console.log(comboBoxSelectedBookmark?.value ?? '');
     updateLink({
       id: editingLink?.id ?? '',
       url: editingLink?.url ?? '',
       title: editingLink?.title ?? '',
-      description: editingLink?.description ?? '',
       siteName: editingLink?.siteName ?? '',
+      description: editingLink?.description ?? '',
       image: editingLink?.image ?? '',
       bookmarkId: comboBoxSelectedBookmark?.value ?? ''
     });
     setEditLinkShow(false);
   };
 
-  // ---- Render ---- //
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 4. Render
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
   if (!editingLink) {
     return null;
   }

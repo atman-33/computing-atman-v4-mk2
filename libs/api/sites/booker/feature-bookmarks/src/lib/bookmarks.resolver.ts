@@ -2,8 +2,9 @@ import { CurrentUser, GqlAuthGuard, User } from '@libs/api/feature-auth';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BookmarksService } from './bookmarks.service';
-import { DeleteOneBookmarkArgs, FindUniqueBookmarkArgs } from './dto/bookmark.dto';
 import { CreateBookmarkInput } from './dto/create-bookmark-input.dto';
+import { DeleteBookmarkInput } from './dto/delete-bookmark-input.dto';
+import { GetBookmarkArgs } from './dto/get-bookmark-args.dto';
 import { UpdateBookmarkInput } from './dto/update-bookmark-input.dto';
 import { Bookmark } from './models/bookmark.model';
 
@@ -28,8 +29,8 @@ export class BookmarksResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => Bookmark, { name: 'bookmark' })
-  async getBookmark(@Args() findUniqueBookmarkArgs: FindUniqueBookmarkArgs) {
-    return await this.bookmarksService.getBookmark(findUniqueBookmarkArgs);
+  async getBookmark(@Args() getBookmarkArgs: GetBookmarkArgs) {
+    return await this.bookmarksService.getBookmark(getBookmarkArgs);
   }
 
   @UseGuards(GqlAuthGuard)
@@ -46,7 +47,7 @@ export class BookmarksResolver {
    */
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Bookmark, { nullable: true })
-  async deleteBookmark(@Args() deleteOneBookmarkArgs: DeleteOneBookmarkArgs) {
-    return await this.bookmarksService.deleteBookmark(deleteOneBookmarkArgs);
+  async deleteBookmark(@Args() deleteOneBookmarkData: DeleteBookmarkInput) {
+    return await this.bookmarksService.deleteBookmark(deleteOneBookmarkData);
   }
 }

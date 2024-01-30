@@ -1,13 +1,10 @@
-import {
-  DeleteOneLinkArgs,
-  FindManyLinkArgs,
-  Link,
-  PrismaService
-} from '@libs/api/prisma/data-access-db';
+import { Link, PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { getLinkPreview } from 'link-preview-js';
 import { CreateLinkInput } from './dto/create-link-input.dto';
+import { DeleteLinkInput } from './dto/delete-link-input.dto';
+import { GetLinksArgs } from './dto/get-links-args.dto';
 import { UpdateLinkInput } from './dto/update-link-input.dto';
 
 type LinkPreview = {
@@ -28,11 +25,11 @@ export class LinksService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async createLink(createLinkInput: CreateLinkInput): Promise<Link> {
-    const linkPreview = await this.getLinkPreview(createLinkInput.url);
+  async createLink(createLinkData: CreateLinkInput): Promise<Link> {
+    const linkPreview = await this.getLinkPreview(createLinkData.url);
     return await this.prisma.link.create({
       data: {
-        ...createLinkInput,
+        ...createLinkData,
         title: linkPreview.title,
         siteName: linkPreview.siteName,
         description: linkPreview.description,
@@ -41,9 +38,9 @@ export class LinksService {
     });
   }
 
-  async getLinks(findManyLinkArgs: FindManyLinkArgs) {
+  async getLinks(getLinksArgs: GetLinksArgs) {
     return await this.prisma.link.findMany({
-      where: findManyLinkArgs.where,
+      where: getLinksArgs.where,
       include: include
     });
   }
@@ -88,14 +85,24 @@ export class LinksService {
     );
   }
 
-  async deleteLink(deleteOneLinkArgs: DeleteOneLinkArgs) {
+  async deleteLink(deleteLinkData: DeleteLinkInput) {
     return await this.prisma.link.delete({
-      where: deleteOneLinkArgs.where
+      where: deleteLinkData.where
     });
   }
 
-  async updateLink(updateLinkInput: UpdateLinkInput) {
-    const { id, url, title, siteName, description, image, bookmarkId } = updateLinkInput;
+  async updateLink(updateLinkData: UpdateLinkInput) {
+    const { id, url, title, siteName, description, image, bookmarkId } = updateLinkData;
+    const maxDisplayOrderLink = await this.prisma.link.findMany({
+      where: { bookmarkId: bookmarkId },
+      orderBy: { displayOrder: 'desc' },
+      take: 1
+    });
+
+    // console.log(maxDisplayOrderLink);
+    const maxDisplayOrder =
+      maxDisplayOrderLink.length > 0 ? maxDisplayOrderLink[0].displayOrder : 0;
+
     return await this.prisma.link.update({
       where: { id: id },
       data: {
@@ -104,7 +111,8 @@ export class LinksService {
         siteName: siteName,
         description: description,
         image: image,
-        bookmarkId: bookmarkId
+        bookmarkId: bookmarkId,
+        displayOrder: maxDisplayOrder !== null ? maxDisplayOrder + 1 : 1
       }
     });
   }

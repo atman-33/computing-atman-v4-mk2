@@ -12,4 +12,13 @@ export class BookmarkMaxAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     userId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    displayOrder?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    createdAt?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    updatedAt?: true;
 }

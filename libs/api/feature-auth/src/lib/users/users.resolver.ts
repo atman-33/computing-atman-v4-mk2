@@ -2,7 +2,8 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
-import { CreateOneUserArgs, FindUniqueUserArgs } from './dto/user.dto';
+import { CreateUserInput } from './dto/create-user-input.dto';
+import { GetUserArgs } from './dto/get-user-args.dto';
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
 
@@ -11,14 +12,14 @@ export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Mutation(() => User, { name: 'createUser' })
-  async createUser(@Args() createOneUserArgs: CreateOneUserArgs) {
-    return await this.usersService.createUser(createOneUserArgs);
+  async createUser(@Args() createUserData: CreateUserInput) {
+    return await this.usersService.createUser(createUserData);
   }
 
   @UseGuards(GqlAuthGuard)
   @Query(() => User, { name: 'user' })
-  async getUser(@Args() findUniqueUserArgs: FindUniqueUserArgs) {
-    return await this.usersService.getUser(findUniqueUserArgs);
+  async getUser(@Args() getUserArgs: GetUserArgs) {
+    return await this.usersService.getUser(getUserArgs);
   }
 
   @UseGuards(GqlAuthGuard)

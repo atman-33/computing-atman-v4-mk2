@@ -1,8 +1,9 @@
 import { PrismaService } from '@libs/api/prisma/data-access-db';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { DeleteOneBookmarkArgs, FindUniqueBookmarkArgs } from './dto/bookmark.dto';
 import { CreateBookmarkInput } from './dto/create-bookmark-input.dto';
+import { DeleteBookmarkInput } from './dto/delete-bookmark-input.dto';
+import { GetBookmarkArgs } from './dto/get-bookmark-args.dto';
 import { UpdateBookmarkInput } from './dto/update-bookmark-input.dto';
 
 /**
@@ -29,9 +30,9 @@ export class BookmarksService {
     return await this.prisma.bookmark.findMany({ where: { userId } });
   }
 
-  async getBookmark(findUniqueBookmarkArgs: FindUniqueBookmarkArgs) {
+  async getBookmark(getBookmarkArgs: GetBookmarkArgs) {
     return await this.prisma.bookmark.findUnique({
-      where: findUniqueBookmarkArgs.where,
+      where: getBookmarkArgs.where,
       include: include
     });
   }
@@ -47,9 +48,15 @@ export class BookmarksService {
     });
   }
 
-  async deleteBookmark(deleteOneBookmarkArgs: DeleteOneBookmarkArgs) {
+  async deleteBookmark(deleteBookmarkData: DeleteBookmarkInput) {
+    await this.prisma.link.deleteMany({
+      where: {
+        bookmarkId: deleteBookmarkData.where.id
+      }
+    });
+
     return await this.prisma.bookmark.delete({
-      where: deleteOneBookmarkArgs.where
+      where: deleteBookmarkData.where
     });
   }
 }

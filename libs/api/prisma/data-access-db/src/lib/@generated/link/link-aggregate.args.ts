@@ -8,6 +8,8 @@ import { Prisma } from '@prisma/client';
 import { LinkWhereUniqueInput } from './link-where-unique.input';
 import { Int } from '@nestjs/graphql';
 import { LinkCountAggregateInput } from './link-count-aggregate.input';
+import { LinkAvgAggregateInput } from './link-avg-aggregate.input';
+import { LinkSumAggregateInput } from './link-sum-aggregate.input';
 import { LinkMinAggregateInput } from './link-min-aggregate.input';
 import { LinkMaxAggregateInput } from './link-max-aggregate.input';
 
@@ -33,6 +35,12 @@ export class LinkAggregateArgs {
 
     @Field(() => LinkCountAggregateInput, {nullable:true})
     _count?: LinkCountAggregateInput;
+
+    @Field(() => LinkAvgAggregateInput, {nullable:true})
+    _avg?: LinkAvgAggregateInput;
+
+    @Field(() => LinkSumAggregateInput, {nullable:true})
+    _sum?: LinkSumAggregateInput;
 
     @Field(() => LinkMinAggregateInput, {nullable:true})
     _min?: LinkMinAggregateInput;

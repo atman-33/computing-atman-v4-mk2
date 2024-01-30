@@ -1,0 +1,247 @@
+---
+title: Reactとdnd-kit/coreを使用してドラッグ&ドロップリストを作成
+date: '2024-01-30'
+lastmod: '2024-01-30'
+tags: ['react', 'dnd-kit']
+images: ['/static/blog/57/1-sample.gif']
+summary: Reactとdnd-kit/coreを使用してシームレスなドラッグ&ドロップリストを実装。基本的なコードとスタイリングの解説を提供
+---
+
+![image](/static/blog/57/1-sample.gif)
+
+ドラッグ&ドロップ機能は、現代のWebアプリケーションでよく見られる機能で、ユーザーがアイテムをシームレスに並べ替えることができるようにします。このチュートリアルでは、`dnd-kit/core`ライブラリを使用してReactアプリケーションでドラッグ&ドロップ機能を実装する方法について探ります。このライブラリの主要なコンポーネントを使用して、ドラッグ可能なアイテムの簡単なリストを作成します。
+
+## プロジェクトのセットアップ
+
+実装に入る前に、必要な依存関係をインストールします。Reactプロジェクトで`@dnd-kit/core`をインストールしてください。
+
+```bash
+npm i @dnd-kit/core @dnd-kit/sortable
+```
+
+ここからは、ドラッグ可能なリストのコンポーネントを作成していきます。
+
+## DraggableListコンポーネントの作成
+
+`DraggableList`コンポーネントは、ドラッグ可能なアイテムのコンテナとして機能します。`DraggableList.tsx`ファイルのコードは以下の通りです：
+
+```tsx:DraggableList.tsx(DraggableList)
+import {
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  UniqueIdentifier,
+  closestCenter,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  horizontalListSortingStrategy,
+  rectSortingStrategy,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { ComponentProps, FC, ReactNode, useMemo } from 'react';
+
+export interface HasId {
+  id: UniqueIdentifier;
+}
+
+type Props<T extends HasId> = {
+  items: T[];
+  onDragStart?: ComponentProps<typeof DndContext>['onDragStart'];
+  onDragEnd?: ComponentProps<typeof DndContext>['onDragEnd'];
+  onDragOver?: ComponentProps<typeof DndContext>['onDragOver'];
+  layout: 'horizontal' | 'vertical' | 'grid';
+  children: ReactNode;
+};
+// ドラッグ&ドロップ可能なリストアイテム
+export const DraggableList: FC<Props<HasId>> = ({
+  items,
+  onDragStart,
+  onDragEnd,
+  onDragOver,
+  layout,
+  children
+}) => {
+  // ドラッグ&ドロップする時に許可する入力
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates
+    })
+  );
+
+  // リストの種類
+  const strategy = useMemo(() => {
+    switch (layout) {
+      case 'horizontal':
+        return horizontalListSortingStrategy;
+      case 'vertical':
+        return verticalListSortingStrategy;
+      case 'grid':
+      default:
+        return rectSortingStrategy;
+    }
+  }, [layout]);
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDragOver={onDragOver}
+    >
+      <SortableContext items={items} strategy={strategy}>
+        <ul>{children}</ul>
+      </SortableContext>
+    </DndContext>
+  );
+};
+```
+
+このコンポーネントは、`@dnd-kit/core`によって提供される`DndContext`と`SortableContext`をセットアップします。また、リスト内の各アイテムをラップする`DraggableItem`コンポーネントを定義しています。
+
+## ドラッグ可能なアイテムの構築
+
+リスト内の各ドラッグ可能なアイテムは、`DraggableItem`コンポーネントで表されます。ユーザーインタラクションを向上させるために`DraggableHandle`も含まれています。コードは以下の通りです：
+
+```tsx:DraggableList.tsx(DraggableItem)
+// ドラッグ&ドロップ可能なリストアイテム
+export const DraggableItem: FC<{
+  id: HasId['id'];
+  children: ReactNode;
+}> = ({ id, children }) => {
+  const { setNodeRef, transform, transition } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  };
+
+  return (
+    <li ref={setNodeRef} style={style}>
+      {children}
+    </li>
+  );
+};
+
+// MyDraggableItemをドラッグ&ドロップするためのハンドル
+export const DraggableHandle: FC<{
+  id: HasId['id'];
+  children: ReactNode;
+}> = ({ id, children }) => {
+  const { attributes, listeners } = useSortable({ id });
+
+  return (
+    <div {...attributes} {...listeners}>
+      {children}
+    </div>
+  );
+};
+```
+
+このコンポーネントは`@dnd-kit/core`からの`useSortable`フックを使用してドラッグ＆ドロップの動作を処理します。
+
+## Pageコンポーネントでドラッグ＆ドロップを実装
+
+メインのページコンポーネント（`page.tsx`）では、`DraggableList`をインポートして使用し、製品のドラッグ可能なリストを作成しています。コードは以下の通りです：
+
+> Nextjs を利用したため、`page.tsx`ファイルとしていますが、通常のReactコンポーネントでも利用可能です。
+
+```jsx
+'use client';
+
+import { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FC, useCallback, useState } from 'react';
+import { DraggableHandle, DraggableItem, DraggableList } from './_components/DraggableList';
+
+// リソース:商品の型
+type Product = {
+  id: string;
+  name: string;
+  price: number;
+};
+
+const Products = [
+  {
+    id: '1',
+    name: '商品1',
+    price: 100
+  },
+  {
+    id: '2',
+    name: '商品2',
+    price: 200
+  },
+  {
+    id: '3',
+    name: '商品3',
+    price: 300
+  }
+];
+
+// 商品を表示するリストアイテム
+const ProductItem: FC<{
+  product: Product;
+}> = ({ product }) => (
+  <DraggableItem id={product.id}>
+    <div className="m-4 h-[100px] w-[200px] items-center rounded-md border-2 p-2 shadow-sm">
+      <div className="flex space-x-4">
+        <DraggableHandle id={product.id}>
+          <FontAwesomeIcon icon={faBars} className="m-4" size="lg" />
+        </DraggableHandle>
+        <p>{product.name}</p>
+        <p>¥ {product.price}</p>
+      </div>
+    </div>
+  </DraggableItem>
+);
+
+// ドラッグ&ドロップ可能な商品リスト
+const Page = () => {
+  // 一覧表示する商品群
+  const [products, setProducts] = useState<Product[]>(Products);
+
+  const onDragStart = useCallback((e: DragStartEvent) => {
+    console.log('onDragStart', e);
+  }, []);
+
+  const onDragEnd = useCallback((e: DragEndEvent) => {
+    console.log('onDragEnd', e);
+  }, []);
+
+  return (
+    <DraggableList
+      items={products}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      layout={'vertical'}
+    >
+      {products.map((product) => (
+        <ProductItem key={product.id} product={product} />
+      ))}
+    </DraggableList>
+  );
+};
+
+export default Page;
+```
+
+このコンポーネントは製品のリストを表示し、`onDragStart`および`onDragEnd`コールバックは関連するイベントをコンソールに記録します。
+
+## スタイリングとカスタマイズ
+
+アプリケーションのデザインに基づいてドラッグ可能なアイテムのスタイリングを自由にカスタマイズしてください。提供されたコードには、Tailwind CSSを使用した基本的なスタイリングが含まれています。
+
+## まとめ
+
+このチュートリアルでは、`react`と`@dnd-kit/core`を使用して簡単なドラッグ可能なリストを実装しました。このライブラリは、ドラッグ＆ドロップの相互作用を処理するための堅牢なツールセットを提供しており、シームレスなユーザーエクスペリエンスを簡単に作成できます。
+
+アニメーション、カスタムドラッグハンドルなど、この実装をさらに向上させることができます。追加のオプションや可能性については、`@dnd-kit/core`のドキュメントを探索してください。

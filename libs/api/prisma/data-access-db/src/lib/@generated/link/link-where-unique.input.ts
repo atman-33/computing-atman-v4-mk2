@@ -2,6 +2,8 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { LinkWhereInput } from './link-where.input';
 import { StringFilter } from '../prisma/string-filter.input';
+import { IntFilter } from '../prisma/int-filter.input';
+import { DateTimeFilter } from '../prisma/date-time-filter.input';
 import { BookmarkRelationFilter } from '../bookmark/bookmark-relation-filter.input';
 
 @InputType()
@@ -33,6 +35,15 @@ export class LinkWhereUniqueInput {
 
     @Field(() => StringFilter, {nullable:true})
     image?: StringFilter;
+
+    @Field(() => IntFilter, {nullable:true})
+    displayOrder?: IntFilter;
+
+    @Field(() => DateTimeFilter, {nullable:true})
+    createdAt?: DateTimeFilter;
+
+    @Field(() => DateTimeFilter, {nullable:true})
+    updatedAt?: DateTimeFilter;
 
     @Field(() => StringFilter, {nullable:true})
     bookmarkId?: StringFilter;

@@ -19,10 +19,21 @@ import { useBookmark } from '../hooks/useBookmark';
 import { useEditLinkShow } from '../hooks/useEditLinkShow';
 
 const CreateBookmark = () => {
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // State and hooks
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
   const [open, setOpen] = useState(false);
   const [bookmarkName, setBookmarkName] = useState('');
   const { editLinkShow } = useEditLinkShow();
   const { createBookmark, createBookmarkLoading } = useBookmark();
+
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 2. Effect
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 3. Functions
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 
   /**
    * Create bookmark
@@ -36,6 +47,10 @@ const CreateBookmark = () => {
     setBookmarkName('');
     setOpen(false);
   };
+
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+  // 4. Render
+  // ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 
   return (
     <>
