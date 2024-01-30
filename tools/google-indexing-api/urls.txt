@@ -1,3 +1,1 @@
-https://computing-atman.com/blog/54-nx-nestjs-mongodb-mongoose-part1/
-https://computing-atman.com/blog/55-nx-nestjs-mongodb-mongoose-part2/
-https://computing-atman.com/blog/56-nx-nestjs-mongodb-mongoose-part3/
+https://computing-atman.com/blog/57-react-draggable-list/
