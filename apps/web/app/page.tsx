@@ -2,7 +2,8 @@
 import HeroWithAnimation from '@/components/elements/HeroWithAnimation/HeroWithAnimation';
 import Link from '@/components/elements/Link';
 import { NEXT_PUBLIC_IS_DEV } from '@/config/index';
-import { faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { faReact } from '@fortawesome/free-brands-svg-icons';
+import { IconDefinition, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Blog, allBlogs } from 'contentlayer/generated';
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer';
@@ -33,6 +34,21 @@ export default async function Page() {
         title="Computing Atman"
         description="This website is an information site on system development and programming related to IT."
       />
+
+      <div className="mt-4">
+        <h1 className="text-3xl font-extrabold">Sites</h1>
+
+        <Link href="/">
+          <div className="m-3 flex items-center space-x-4 rounded-md">
+            <button className="flex h-10 w-10 transform items-center justify-center rounded-full bg-gray-500 text-lg font-semibold text-white hover:bg-gray-600">
+              <FontAwesomeIcon icon={faReact as IconDefinition} className="h-8 w-8" />
+            </button>
+            <div className="rounded-md bg-gray-200 p-2 px-4 text-xl shadow-lg transition hover:translate-y-0.5 hover:shadow-sm dark:bg-gray-800">
+              React x Tailwindcss x Shadcn-ui Samples
+            </div>
+          </div>
+        </Link>
+      </div>
 
       <Home posts={posts as unknown as Blog[]} />
     </>

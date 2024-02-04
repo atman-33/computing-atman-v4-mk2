@@ -19,7 +19,7 @@ export default function Home({ posts }: { posts: Blog[] }) {
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="flex flex-wrap space-y-2 pb-4 pt-6 md:space-y-5 md:space-x-5">
-          <h1 className="md:leading-14 text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-4xl">
+          <h1 className="md:leading-14 text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:leading-10">
             Latest Posts
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
