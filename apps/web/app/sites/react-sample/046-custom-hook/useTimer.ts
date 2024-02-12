@@ -32,7 +32,7 @@ const useTimer = () => {
   }, [time]);
 
   useLayoutEffect(() => {
-    const _time = parseInt(window.localStorage.getItem('time_key') ?? '');
+    const _time = parseInt(window.localStorage.getItem('time-key') ?? '');
     if (!isNaN(_time)) {
       setTime(_time);
     }
